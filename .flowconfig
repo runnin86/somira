@@ -1,4 +1,4 @@
-[ignore]
+2[ignore]
 
 # We fork some components by platform.
 .*/*.web.js
