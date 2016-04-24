@@ -625,7 +625,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = somira;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/somira.app/somira";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/收米拉.app/收米拉";
 			};
 			name = Debug;
 		};
@@ -642,7 +642,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = somira;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/somira.app/somira";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/收米拉.app/收米拉";
 			};
 			name = Release;
 		};
