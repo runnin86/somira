@@ -1,6 +1,6 @@
 var React = require('react-native');
-var { 
-  TouchableHighlight, 
+var {
+  TouchableHighlight,
   Text ,
   Image,
   View
@@ -44,7 +44,7 @@ Ruby China，对！没错！
 
         <TouchableHighlight onPress={() => this._onPress('ReactNative somira', 'http://github.com/henter/ReactNativesomira')}>
           <Text style={Style.link}>
-            http://github.com/henter/ReactNativesomira
+            https://github.com/runnin86/somira
           </Text>
         </TouchableHighlight>
 
@@ -66,7 +66,3 @@ Ruby China，对！没错！
 });
 
 module.exports = About;
-
-
-
-
