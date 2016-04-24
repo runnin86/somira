@@ -1243,13 +1243,54 @@ return Array.from(arr);}};})(
 
 
 typeof global!=='undefined'?global:typeof self!=='undefined'?self:this);
+(
+function(GLOBAL){
+
+
+
+
+
+
+
+function getInvalidGlobalUseError(name){
+return new Error(
+'You are trying to render the global '+name+' variable as a '+
+'React element. You probably forgot to require '+name+'.');}
+
+
+GLOBAL.Text={
+get defaultProps(){
+throw getInvalidGlobalUseError('Text');}};
+
+
+GLOBAL.Image={
+get defaultProps(){
+throw getInvalidGlobalUseError('Image');}};
+
+
+
+if(GLOBAL.document){
+GLOBAL.document.createElement=null;}
+
+
+
+
+GLOBAL.MutationObserver=undefined;})(
+this);
 __d('somira/index.ios.js',function(global, require, module, exports) {  'use strict';
 
 
 
 
 
-var React=require('react-native/Libraries/react-native/react-native.js');var 
+var React=require('react-native/Libraries/react-native/react-native.js');
+
+var HappyPurchase=require('somira/App/Views/Purchase/HappyPurchase.js');
+var UserCenter=require('somira/App/Views/User/UserCenter.js');
+var ShoppingCart=require('somira/App/Views/Cart/ShoppingCart.js');
+var Test=require('somira/App/Test/test.js');
+var Util=require('somira/App/Common/Util.js');var 
+
 
 AppRegistry=
 
@@ -1257,89 +1298,99 @@ AppRegistry=
 
 
 
-React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var TabBarIOS=React.TabBarIOS;var NavigatorIOS=React.NavigatorIOS;
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var TabBarIOS=React.TabBarIOS;var NavigatorIOS=React.NavigatorIOS;
+
+StatusBarIOS.setHidden(false);
 
 var somira=React.createClass({displayName:'somira',
 getInitialState:function(){
 return {
-selectedTab:'home'};},
+selectedTab:'hp',
+notifyCartCount:18,
+notifyUserCount:1};},
+
+
+changeTab:function(tabName){
+this.setState({
+selectedTab:tabName});},
 
 
 render:function(){var _this=this;
 return (
-React.createElement(TabBarIOS,{selectedTab:this.state.selectedTab},
-React.createElement(TabBarIOS.Item,{accessibilityLabel:"Excellent",
-selected:this.state.selectedTab==='home',
-title:'精华',
-name:'home',
-icon:{uri:'icon.png',isStatic:true},
-onPress:function(){
-_this.setState({
-selectedTab:'home'});}},
-
-
-React.createElement(NavigatorIOS,{style:Style.container,
+React.createElement(TabBarIOS,null,
+React.createElement(TabBarIOS.Item,{
+title:'乐夺宝',icon:{uri:'乐夺宝',scale:3,isStatic:true},
+selected:this.state.selectedTab==='hp',
+onPress:function(){_this.changeTab('hp');}},
+React.createElement(NavigatorIOS,{style:css.container,
+barTintColor:Util.headerColor,
 tintColor:'#333344',
+navigationBarHidden:false,
 initialRoute:{
-title:'社区精华',
-component:require('somira/App/Views/Home/Home.js')},
-
-itemWrapperStyle:Style.navigator})),
-
-
-React.createElement(TabBarIOS.Item,{accessibilityLabel:"Nodes",
-selected:this.state.selectedTab==='nodes',
-title:'节点分类',
-name:'nodes',
-icon:{uri:'nodes.png'},
-onPress:function(){
-_this.setState({
-selectedTab:'nodes'});}},
+title:'乐夺宝',
+component:HappyPurchase,
+wrapperStyle:css.wrapperStyle}})),
 
 
 
-React.createElement(NavigatorIOS,{style:Style.container,
+React.createElement(TabBarIOS.Item,{
+title:'购物车',icon:{uri:'购物车',scale:3,isStatic:true},
+badge:this.state.notifyCartCount>0?this.state.notifyCartCount:undefined,
+selected:this.state.selectedTab==='sc',
+onPress:function(){_this.changeTab('sc');}},
+React.createElement(NavigatorIOS,{style:css.container,
+barTintColor:Util.headerColor,
 tintColor:'#333344',
+navigationBarHidden:true,
 initialRoute:{
-title:'节点分类',
-component:require('somira/App/Views/Home/Nodes.js')},
-
-itemWrapperStyle:Style.navigator})),
-
-
-
-React.createElement(TabBarIOS.Item,{accessibilityLabel:"About",
-selected:this.state.selectedTab==='about',
-title:'关于',
-name:'about',
-icon:{uri:'reactnative_logo.png'},
-onPress:function(){
-_this.setState({
-selectedTab:'about'});}},
+title:'购物车',
+component:ShoppingCart,
+wrapperStyle:css.wrapperStyle}})),
 
 
 
-React.createElement(NavigatorIOS,{style:Style.container,
+React.createElement(TabBarIOS.Item,{
+title:'个人中心',icon:{uri:'个人中心',scale:3,isStatic:true},
+badge:this.state.notifyUserCount>0?this.state.notifyUserCount:undefined,
+selected:this.state.selectedTab==='uc',
+onPress:function(){_this.changeTab('uc');}},
+React.createElement(NavigatorIOS,{style:css.container,
+barTintColor:Util.headerColor,
 tintColor:'#333344',
+navigationBarHidden:true,
 initialRoute:{
-title:'About',
-component:require('somira/App/Views/Home/About.js')},
-
-itemWrapperStyle:Style.navigator}))));}});
-
+title:'个人中心',
+component:UserCenter,
+wrapperStyle:css.wrapperStyle}})),
 
 
 
+React.createElement(TabBarIOS.Item,{
+title:'测试部件',icon:{uri:'icon',isStatic:true},
+selected:this.state.selectedTab==='test',
+onPress:function(){_this.changeTab('test');}},
+React.createElement(NavigatorIOS,{style:css.container,
+barTintColor:Util.headerColor,
+tintColor:'#333344',
+navigationBarHidden:true,
+initialRoute:{
+title:'测试部件',
+component:Test,
+wrapperStyle:css.wrapperStyle}}))));}});
 
 
 
-var Style=StyleSheet.create({
-container:{
-flex:1,
+
+
+
+
+var css=StyleSheet.create({
+wrapperStyle:{
 backgroundColor:'#E7EAEC'},
 
-navigator:{
-backgroundColor:'#E7EAEC'}});
+container:{
+flex:1}});
 
 
 
@@ -59453,1058 +59504,2542 @@ return ReactMount.getNodeFromInstance(componentOrElement);}
 
 module.exports=findDOMNode;
 });
-__d('somira/App/Views/Home/Home.js',function(global, require, module, exports) {  'use strict';
-var React=require('react-native/Libraries/react-native/react-native.js');var 
+__d('somira/App/Views/Purchase/HappyPurchase.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Swiper=require('react-native-swiper/dist/index.js');
+var Util=require('somira/App/Common/Util.js');
+var ItemList=require('somira/App/Component/HappyPurchase/ItemList.js');
+var ItemDetail=require('somira/App/Component/HappyPurchase/ItemDetail.js');
+var Tabs=require('somira/App/Common/Tabs.js');
+
+var LatestAnnounced=require('somira/App/Component/HappyPurchase/LatestAnnounced.js');
+var Recharge=require('somira/App/Component/HappyPurchase/Recharge.js');
+var Help=require('somira/App/Component/HappyPurchase/Help.js');var 
 
 
-Text=
-
-
-
-React.Text;var View=React.View;var ListView=React.ListView;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;
-
-var Api=require('somira/App/Network/API.js');
-var TopicListCell=require('somira/App/Views/Topic/ListCell.js');
-var TopicView=require('somira/App/Views/Topic/View.js');
-
-var Style=React.StyleSheet.create({
-container:{
-backgroundColor:'#eeeeee',
-flex:1,
-justifyContent:'center',
-alignItems:'center'},
-
-listView:{
-marginTop:65,
-marginBottom:0}});
+StyleSheet=
 
 
 
 
-var CACHE=[];
 
-var TopicList=React.createClass({displayName:'TopicList',
+
+
+React.StyleSheet;var Text=React.Text;var View=React.View;var Image=React.Image;var ListView=React.ListView;var TouchableOpacity=React.TouchableOpacity;var ScrollView=React.ScrollView;var Platform=React.Platform;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){var _this=this;
+var cateId=this.state.cateId;
+var tabDataSource=this.state.tabData;
+return (
+React.createElement(View,{style:css.flex},
+React.createElement(ScrollView,{stickyHeaderIndices:[3]},
+
+React.createElement(Swiper,{style:css.wrapper,height:Util.size['height']/4.5,
+onMomentumScrollEnd:function(e,state,context){},
+dot:React.createElement(View,{style:{backgroundColor:'rgba(0,0,0,.2)',width:5,height:5,borderRadius:4,marginLeft:3,marginRight:3,marginTop:3,marginBottom:3}}),
+activeDot:React.createElement(View,{style:{backgroundColor:'#000',width:8,height:8,borderRadius:4,marginLeft:3,marginRight:3,marginTop:3,marginBottom:3}}),
+paginationStyle:{
+bottom:5,left:null,right:10},
+loop:true,autoplay:true},
+React.createElement(View,{style:css.slide,title:React.createElement(Text,{numberOfLines:1})},
+React.createElement(Image,{style:css.flex,source:{uri:'http://c.hiphotos.baidu.com/image/w%3D310/sign=0dff10a81c30e924cfa49a307c096e66/7acb0a46f21fbe096194ceb468600c338644ad43.jpg'}})),
+
+React.createElement(View,{style:css.slide,title:React.createElement(Text,{numberOfLines:1})},
+React.createElement(Image,{style:css.flex,source:{uri:'http://a.hiphotos.baidu.com/image/w%3D310/sign=4459912736a85edffa8cf822795509d8/bba1cd11728b4710417a05bbc1cec3fdfc032374.jpg'}})),
+
+React.createElement(View,{style:css.slide,title:React.createElement(Text,{numberOfLines:1})},
+React.createElement(Image,{style:css.flex,source:{uri:'http://e.hiphotos.baidu.com/image/w%3D310/sign=9a8b4d497ed98d1076d40a30113eb807/0823dd54564e9258655f5d5b9e82d158ccbf4e18.jpg'}})),
+
+React.createElement(View,{style:css.slide,title:React.createElement(Text,{numberOfLines:1})},
+React.createElement(Image,{style:css.flex,source:{uri:'http://e.hiphotos.baidu.com/image/w%3D310/sign=2da0245f79ec54e741ec1c1f89399bfd/9d82d158ccbf6c818c958589be3eb13533fa4034.jpg'}}))),
+
+
+
+
+React.createElement(ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderTipsRow}),
+
+
+React.createElement(Swiper,{showsButtons:false,height:30,showsPagination:false,
+autoplay:true,autoplayTimeout:5,horizontal:false},
+this.state.scrollMsgList.map(function(item,i){
+return (
+React.createElement(View,{style:css.scrollMsg,key:i},
+React.createElement(Image,{style:({marginTop:4},css.resizeMode),source:require('image!喇叭')}),
+React.createElement(Text,{style:css.scrollText},
+item.title)));})),
+
+
+
+
+
+
+
+React.createElement(Tabs,{updateCateItem:function(cateId){return _this.setState({cateId:cateId});},
+initData:{tabDataSource:tabDataSource}}),
+
+
+React.createElement(ItemList,{cateId:cateId,onSelect:function(item){return _this.selectItem(item);}}))));},
+
+
+
+
 getInitialState:function(){
+var ds=new ListView.DataSource({rowHasChanged:function(r1,r2){return r1!==r2;}});
 return {
-dataSource:new ListView.DataSource({
-rowHasChanged:function(r1,r2){return r1!==r2;}}),
+dataSource:ds.cloneWithRows([[
+{title:'最新揭晓',id:'latest',img:'最新揭晓'},
+{title:'充值',id:'recharge',img:'充值'},
+{title:'帮助',id:'help',img:'帮助-1'}]]),
 
-loaded:false,
-loadingPage:0,
-currentPage:0};},
+tabData:[
+{
+code:0,
+name:'全部商品'},
+{
+code:'1',
+name:'十元专场',
+link:'http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1',
+icon:''}],
+
+
+cateId:0,
+scrollMsgList:[]};},
 
 
 componentDidMount:function(){
-this.fetchData(1);},
+this.setState({
+scrollMsgList:[
+{title:'恭喜156****3355夺得 iPhone6s Plus 128G'},
+{title:'恭喜138****8888夺得 BMW X6'},
+{title:'恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换'}]});},
 
-cache:function(items){
-for(var i in items){
-CACHE.push(items[i]);}},
 
 
-fetchData:function(page){var _this=this;
-console.log('loading page '+page+'...');
+_renderTipsRow:function(row){
+var tipsList=[];
+for(var i in row){
+
+var appendRow=
+React.createElement(TouchableOpacity,{key:row[i].id,style:{width:Util.size['width']/row.length},
+onPress:this._goForward.bind(this,row[i].title,row[i].id)},
+React.createElement(View,{style:css.tipsCenter},
+React.createElement(Image,{style:css.tipsImg,source:{uri:row[i].img}})),
+
+React.createElement(View,{style:[css.tipsCenter]},
+React.createElement(Text,{style:css.tipsText},row[i].title)));
+
+
+
+tipsList.push(appendRow);}
+
+
+return (
+React.createElement(View,{style:[css.tipItem,css.row]},
+tipsList));},
+
+
+
+_goForward:function(title,id){var _this2=this;
+if(id=='latest'){
+this.props.navigator.push({
+component:LatestAnnounced,
+leftButtonIcon:Image.propTypes.source,
+navigationBarHidden:false,
+onLeftButtonPress:function(){return _this2.props.navigator.pop();},
+title:title});}else 
+
+if(id=='recharge'){
+this.props.navigator.push({
+component:Recharge,
+navigationBarHidden:false,
+title:title});}else 
+
+if(id=='help'){
+if(Platform.OS==='ios'){
+this.props.navigator.push({
+component:Help,
+navigationBarHidden:false,
+title:title});}else 
+
+{}}},
+
+
+
+
+
+selectItem:function(item){var _this3=this;
+
+if(Platform.OS==='ios'){
+this.props.navigator.push({
+title:item.txt,
+component:ItemDetail,
+leftButtonTitle:'返回',
+navigationBarHidden:false,
+onLeftButtonPress:function(){return _this3.props.navigator.pop();},
+passProps:{
+item:item}});}else 
+
+
+{}}});
+
+
+
+
+
+var css=StyleSheet.create({
+wrapper:{},
+
+
+slide:{
+flex:1,
+justifyContent:'center',
+backgroundColor:'#F5FCFF'},
+
+row:{
+flexDirection:'row',
+justifyContent:'center',
+padding:8,
+backgroundColor:'#F5FCFF'},
+
+flex:{
+flex:1},
+
+tipsCenter:{
+justifyContent:'center',
+alignItems:'center'},
+
+tipItem:{
+marginTop:0,
+borderTopWidth:Util.pixel,
+borderBottomWidth:Util.pixel,
+borderColor:'#ddd',
+paddingTop:6,
+paddingBottom:6},
+
+tipsText:{
+marginTop:4,
+fontSize:10},
+
+tipsImg:{
+width:36,
+height:36,
+borderRadius:18},
+
+scrollMsg:{
+flexDirection:'row',
+height:30,
+backgroundColor:'#F5FCFF',
+borderTopColor:'#eeeeee',
+borderTopWidth:1},
+
+scrollText:{
+height:30,
+marginLeft:4,
+marginTop:10,
+fontSize:12,
+color:'red',
+backgroundColor:'#F5FCFF'},
+
+resizeMode:{
+width:26,
+height:20,
+marginLeft:8,
+marginTop:6,
+backgroundColor:'transparent',
+resizeMode:Image.resizeMode.contain}});
+});
+__d('react-native-swiper/dist/index.js',function(global, require, module, exports) {  'use strict';
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+
+
+
+
+
+
+
+
+
+
+var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+var _reactNative2=_interopRequireDefault(_reactNative);
+
+var _reactTimerMixin=require('react-timer-mixin/TimerMixin.js');
+
+var _reactTimerMixin2=_interopRequireDefault(_reactTimerMixin);
+
+function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+
+var _Dimensions$get=_reactNative.Dimensions.get('window');
+
+var width=_Dimensions$get.width;
+var height=_Dimensions$get.height;
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+backgroundColor:'transparent',
+position:'relative'},
+
+
+wrapper:{
+backgroundColor:'transparent'},
+
+
+slide:{
+backgroundColor:'transparent'},
+
+
+pagination_x:{
+position:'absolute',
+bottom:25,
+left:0,
+right:0,
+flexDirection:'row',
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'transparent'},
+
+
+pagination_y:{
+position:'absolute',
+right:15,
+top:0,
+bottom:0,
+flexDirection:'column',
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'transparent'},
+
+
+title:{
+height:30,
+justifyContent:'center',
+position:'absolute',
+paddingLeft:10,
+bottom:-30,
+left:0,
+flexWrap:'nowrap',
+width:250,
+backgroundColor:'transparent'},
+
+
+buttonWrapper:{
+backgroundColor:'transparent',
+flexDirection:'row',
+position:'absolute',
+top:0,
+left:0,
+flex:1,
+paddingHorizontal:10,
+paddingVertical:10,
+justifyContent:'space-between',
+alignItems:'center'},
+
+
+buttonText:{
+fontSize:50,
+color:'#007aff',
+fontFamily:'Arial'}});
+
+
+
+
+
+module.exports=_reactNative2.default.createClass({
+displayName:'exports',
+
+
+
+
+
+propTypes:{
+horizontal:_reactNative2.default.PropTypes.bool,
+children:_reactNative2.default.PropTypes.node.isRequired,
+style:_reactNative.View.propTypes.style,
+pagingEnabled:_reactNative2.default.PropTypes.bool,
+showsHorizontalScrollIndicator:_reactNative2.default.PropTypes.bool,
+showsVerticalScrollIndicator:_reactNative2.default.PropTypes.bool,
+bounces:_reactNative2.default.PropTypes.bool,
+scrollsToTop:_reactNative2.default.PropTypes.bool,
+removeClippedSubviews:_reactNative2.default.PropTypes.bool,
+automaticallyAdjustContentInsets:_reactNative2.default.PropTypes.bool,
+showsPagination:_reactNative2.default.PropTypes.bool,
+showsButtons:_reactNative2.default.PropTypes.bool,
+loop:_reactNative2.default.PropTypes.bool,
+autoplay:_reactNative2.default.PropTypes.bool,
+autoplayTimeout:_reactNative2.default.PropTypes.number,
+autoplayDirection:_reactNative2.default.PropTypes.bool,
+index:_reactNative2.default.PropTypes.number,
+renderPagination:_reactNative2.default.PropTypes.func},
+
+
+mixins:[_reactTimerMixin2.default],
+
+
+
+
+
+
+getDefaultProps:function getDefaultProps(){
+return {
+horizontal:true,
+pagingEnabled:true,
+showsHorizontalScrollIndicator:false,
+showsVerticalScrollIndicator:false,
+bounces:false,
+scrollsToTop:false,
+removeClippedSubviews:true,
+automaticallyAdjustContentInsets:false,
+showsPagination:true,
+showsButtons:false,
+loop:true,
+autoplay:false,
+autoplayTimeout:2.5,
+autoplayDirection:true,
+index:0};},
+
+
+
+
+
+
+
+getInitialState:function getInitialState(){
+return this.initState(this.props);},
+
+
+
+
+
+
+autoplayTimer:null,
+
+componentWillMount:function componentWillMount(){
+this.props=this.injectState(this.props);},
+
+componentWillReceiveProps:function componentWillReceiveProps(props){
+this.setState(this.initState(props));},
+
+componentDidMount:function componentDidMount(){
+this.autoplay();},
+
+initState:function initState(props){
+var initState={
+isScrolling:false,
+autoplayEnd:false};
+
+
+initState.total=props.children?props.children.length||1:0;
+initState.index=initState.total>1?Math.min(props.index,initState.total-1):0;
+
+
+initState.dir=props.horizontal==false?'y':'x';
+initState.width=props.width||width;
+initState.height=props.height||height;
+initState.offset={};
+
+if(initState.total>1){
+var setup=props.loop?1:initState.index;
+initState.offset[initState.dir]=initState.dir=='y'?initState.height*setup:initState.width*setup;}
+
+return initState;},
+
+
+
+
+
+autoplay:function autoplay(){
+var _this=this;
+
+if(!Array.isArray(this.props.children)||!this.props.autoplay||this.state.isScrolling||this.state.autoplayEnd)return;
+
+clearTimeout(this.autoplayTimer);
+
+this.autoplayTimer=this.setTimeout(function(){
+if(!_this.props.loop&&(_this.props.autoplayDirection?_this.state.index==_this.state.total-1:_this.state.index==0))return _this.setState({
+autoplayEnd:true});
+
+_this.scrollTo(_this.props.autoplayDirection?1:-1);},
+this.props.autoplayTimeout*1000);},
+
+
+
+
+
+
+onScrollBegin:function onScrollBegin(e){
+var _this2=this;
+
 
 this.setState({
-loaded:false,
-loadingPage:page});
+isScrolling:true});
 
 
-var limit=50;
-var offset=(page-1)*limit;
-
-console.log(Api.HomeTopics(offset,limit));
-fetch(Api.HomeTopics(offset,limit)).
-then(function(response){
-
-return response.json();}).
-
-catch(function(error){
-React.AlertIOS.alert(
-'error',
-'请求失败:'+error.message);}).
-
-
-then(function(responseData){
-_this.cache(responseData.topics);
-
-console.log('loaded data, page'+page);
-
-if(responseData.error){
-React.AlertIOS.alert(
-'error',
-responseData.error);}else 
-
-{
-_this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(CACHE),
-loaded:true,
-currentPage:_this.state.currentPage+1});}}).
-
-
-
-done();},
-
-
-render:function(){
-if(this.state.loadingPage==1&&!this.state.loaded){
-return (
-React.createElement(View,{style:{height:50}},
-React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}})));}
-
-
-
-return this.renderTopicList();},
-
-
-renderFooter:function(){
-if(this.state.loaded){
-return React.createElement(View,{style:{marginVertical:30}},React.createElement(Text,null,'...'));}
-
-return React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}});},
-
-
-onEndReached:function(){
-if(!this.state.loaded){
-return;}
-
-return this.fetchData(this.state.currentPage+1);},
-
-
-renderTopicList:function(){
-
-return (
-React.createElement(ListView,{
-style:Style.listView,
-ref:'listview',
-pageSize:15,
-dataSource:this.state.dataSource,
-renderFooter:this.renderFooter,
-renderRow:this.renderTopicListCell,
-onEndReached:this.onEndReached,
-automaticallyAdjustContentInsets:false,
-showsVerticalScrollIndicator:false}));},
-
-
-
-renderTopicListCell:function(data){var _this2=this;
-return (
-React.createElement(TopicListCell,{
-onSelect:
-function(){return _this2.selectTopic(data);},
-
-data:data}));},
-
-
-selectTopic:function(data){
-this.props.navigator.push({
-title:'详细'+(data.replies_count?'（'+data.replies_count.toString()+'条回复）':''),
-component:TopicView,
-passProps:{
-data:data}});}});
+this.setTimeout(function(){
+_this2.props.onScrollBeginDrag&&_this2.props.onScrollBeginDrag(e,_this2.state,_this2);});},
 
 
 
 
 
 
-module.exports=TopicList;
+
+onScrollEnd:function onScrollEnd(e){
+var _this3=this;
+
+
+this.setState({
+isScrolling:false});
+
+
+this.updateIndex(e.nativeEvent.contentOffset,this.state.dir);
+
+
+
+this.setTimeout(function(){
+_this3.autoplay();
+
+
+_this3.props.onMomentumScrollEnd&&_this3.props.onMomentumScrollEnd(e,_this3.state,_this3);});},
+
+
+
+
+
+
+
+
+updateIndex:function updateIndex(offset,dir){
+
+var state=this.state;
+var index=state.index;
+var diff=offset[dir]-state.offset[dir];
+var step=dir=='x'?state.width:state.height;
+
+
+if(!diff)return;
+
+
+
+index=index+diff/step;
+
+if(this.props.loop){
+if(index<=-1){
+index=state.total-1;
+offset[dir]=step*state.total;}else 
+if(index>=state.total){
+index=0;
+offset[dir]=step;}}
+
+
+
+this.setState({
+index:index,
+offset:offset});},
+
+
+
+
+
+
+
+scrollTo:function scrollTo(index){
+if(this.state.isScrolling||this.state.total<2)return;
+var state=this.state;
+var diff=(this.props.loop?1:0)+index+this.state.index;
+var x=0;
+var y=0;
+if(state.dir=='x')x=diff*state.width;
+if(state.dir=='y')y=diff*state.height;
+this.refs.scrollView&&this.refs.scrollView.scrollTo(y,x);
+
+
+this.setState({
+isScrolling:true,
+autoplayEnd:false});},
+
+
+
+
+
+
+
+renderPagination:function renderPagination(){
+
+
+if(this.state.total<=1)return null;
+
+var dots=[];
+var ActiveDot=this.props.activeDot||_reactNative2.default.createElement(_reactNative.View,{style:{
+backgroundColor:'#007aff',
+width:8,
+height:8,
+borderRadius:4,
+marginLeft:3,
+marginRight:3,
+marginTop:3,
+marginBottom:3}});
+
+var Dot=this.props.dot||_reactNative2.default.createElement(_reactNative.View,{style:{
+backgroundColor:'rgba(0,0,0,.2)',
+width:8,
+height:8,
+borderRadius:4,
+marginLeft:3,
+marginRight:3,
+marginTop:3,
+marginBottom:3}});
+
+for(var i=0;i<this.state.total;i++){
+dots.push(i===this.state.index?_reactNative2.default.cloneElement(ActiveDot,{key:i}):_reactNative2.default.cloneElement(Dot,{key:i}));}
+
+
+return _reactNative2.default.createElement(
+_reactNative.View,
+{pointerEvents:'none',style:[styles['pagination_'+this.state.dir],this.props.paginationStyle]},
+dots);},
+
+
+renderTitle:function renderTitle(){
+var child=this.props.children[this.state.index];
+var title=child&&child.props.title;
+return title?_reactNative2.default.createElement(
+_reactNative.View,
+{style:styles.title},
+this.props.children[this.state.index].props.title):
+null;},
+
+renderNextButton:function renderNextButton(){
+var _this4=this;
+
+var button=undefined;
+
+if(this.props.loop||this.state.index!=this.state.total-1){
+button=this.props.nextButton||_reactNative2.default.createElement(
+_reactNative.Text,
+{style:styles.buttonText},
+'›');}
+
+
+
+return _reactNative2.default.createElement(
+_reactNative.TouchableOpacity,
+{onPress:function onPress(){
+return button!==null&&_this4.scrollTo.call(_this4,1);}},
+
+_reactNative2.default.createElement(
+_reactNative.View,
+null,
+button));},
+
+
+
+renderPrevButton:function renderPrevButton(){
+var _this5=this;
+
+var button=null;
+
+if(this.props.loop||this.state.index!=0){
+button=this.props.prevButton||_reactNative2.default.createElement(
+_reactNative.Text,
+{style:styles.buttonText},
+'‹');}
+
+
+
+return _reactNative2.default.createElement(
+_reactNative.TouchableOpacity,
+{onPress:function onPress(){
+return button!==null&&_this5.scrollTo.call(_this5,-1);}},
+
+_reactNative2.default.createElement(
+_reactNative.View,
+null,
+button));},
+
+
+
+renderButtons:function renderButtons(){
+return _reactNative2.default.createElement(
+_reactNative.View,
+{pointerEvents:'box-none',style:[styles.buttonWrapper,{width:this.state.width,height:this.state.height},this.props.buttonWrapperStyle]},
+this.renderPrevButton(),
+this.renderNextButton());},
+
+
+renderScrollView:function renderScrollView(pages){
+if(_reactNative.Platform.OS==='ios')return _reactNative2.default.createElement(
+_reactNative.ScrollView,
+_extends({ref:'scrollView'},
+this.props,{
+contentContainerStyle:[styles.wrapper,this.props.style],
+contentOffset:this.state.offset,
+onScrollBeginDrag:this.onScrollBegin,
+onMomentumScrollEnd:this.onScrollEnd}),
+pages);
+
+return _reactNative2.default.createElement(
+_reactNative.ViewPagerAndroid,
+{ref:'scrollView',
+style:{flex:1}},
+pages);},
+
+
+
+
+
+
+
+
+injectState:function injectState(props){
+var _this6=this;
+
+
+
+
+
+
+
+
+
+for(var prop in props){
+
+if(typeof props[prop]==='function'&&prop!=='onMomentumScrollEnd'&&prop!=='renderPagination'&&prop!=='onScrollBeginDrag'){
+(function(){
+var originResponder=props[prop];
+props[prop]=function(e){
+return originResponder(e,_this6.state,_this6);};})();}}
+
+
+
+
+
+return props;},
+
+
+
+
+
+
+render:function render(){
+var state=this.state;
+var props=this.props;
+var children=props.children;
+var index=state.index;
+var total=state.total;
+var loop=props.loop;
+var dir=state.dir;
+var key=0;
+
+var pages=[];
+var pageStyle=[{width:state.width,height:state.height},styles.slide];
+
+
+if(total>1){
+
+
+pages=Object.keys(children);
+if(loop){
+pages.unshift(total-1);
+pages.push(0);}
+
+
+pages=pages.map(function(page,i){
+return _reactNative2.default.createElement(
+_reactNative.View,
+{style:pageStyle,key:i},
+children[page]);});}else 
+
+
+pages=_reactNative2.default.createElement(
+_reactNative.View,
+{style:pageStyle},
+children);
+
+
+return _reactNative2.default.createElement(
+_reactNative.View,
+{style:[styles.container,{
+width:state.width,
+height:state.height}]},
+
+this.renderScrollView(pages),
+props.showsPagination&&(props.renderPagination?this.props.renderPagination(state.index,state.total,this):this.renderPagination()),
+this.renderTitle(),
+this.props.showsButtons&&this.renderButtons());}});
 });
-__d('somira/App/Network/API.js',function(global, require, module, exports) {  'use strict';
-var BASE='https://ruby-china.org/api/v3/';
-var ACCESS_TOKEN='495c7bef0f438c5505ebdecabd4fce87ac7764f79ccaed608412f3199041d66d';
+__d('react-timer-mixin/TimerMixin.js',function(global, require, module, exports) {  'use strict';
 
-function api(api,v){
-if(v instanceof Object){
-var p=Object.keys(v).map(function(k){
-return encodeURIComponent(k)+"="+encodeURIComponent(v[k]);}).
-join('&');}else 
-if(v){
-var p=v;}else 
+
+
+
+
+
+
+
+
+
+var GLOBAL=typeof window==='undefined'?global:window;
+
+var setter=function(_setter,_clearer,array){
+return function(callback,delta){
+var id=_setter(function(){
+_clearer.call(this,id);
+callback.apply(this,arguments);}.
+bind(this),delta);
+
+if(!this[array]){
+this[array]=[id];}else 
 {
-var p='';}
+this[array].push(id);}
 
-return BASE+api+'?access_token='+ACCESS_TOKEN+'&'+p;}
-
-
-function getNodes(){
-return api('nodes.json');}
+return id;};};
 
 
-function getComments(topic_id,offset,limit){
-return api('topics/'+topic_id+'/replies.json',{'offset':offset,'limit':limit});}
+
+var clearer=function(_clearer,array){
+return function(id){
+if(this[array]){
+var index=this[array].indexOf(id);
+if(index!==-1){
+this[array].splice(index,1);}}
 
 
-function getHomeTopics(offset,limit){
-return api('topics.json',{'type':'excellent','offset':offset,'limit':limit});}
+_clearer(id);};};
 
 
-function getNodeTopics(node_id,offset,limit){
-return api('topics.json',{'node_id':node_id,'offset':offset,'limit':limit});}
+
+var _timeouts='TimerMixin_timeouts';
+var _clearTimeout=clearer(GLOBAL.clearTimeout,_timeouts);
+var _setTimeout=setter(GLOBAL.setTimeout,_clearTimeout,_timeouts);
+
+var _intervals='TimerMixin_intervals';
+var _clearInterval=clearer(GLOBAL.clearInterval,_intervals);
+var _setInterval=setter(GLOBAL.setInterval,function(){},_intervals);
+
+var _immediates='TimerMixin_immediates';
+var _clearImmediate=clearer(GLOBAL.clearImmediate,_immediates);
+var _setImmediate=setter(GLOBAL.setImmediate,_clearImmediate,_immediates);
+
+var _rafs='TimerMixin_rafs';
+var _cancelAnimationFrame=clearer(GLOBAL.cancelAnimationFrame,_rafs);
+var _requestAnimationFrame=setter(GLOBAL.requestAnimationFrame,_cancelAnimationFrame,_rafs);
+
+var TimerMixin={
+componentWillUnmount:function(){
+this[_timeouts]&&this[_timeouts].forEach(function(id){
+GLOBAL.clearTimeout(id);});
+
+this[_timeouts]=null;
+this[_intervals]&&this[_intervals].forEach(function(id){
+GLOBAL.clearInterval(id);});
+
+this[_intervals]=null;
+this[_immediates]&&this[_immediates].forEach(function(id){
+GLOBAL.clearImmediate(id);});
+
+this[_immediates]=null;
+this[_rafs]&&this[_rafs].forEach(function(id){
+GLOBAL.cancelAnimationFrame(id);});
+
+this[_rafs]=null;},
 
 
-function getTopic(id){
-return api('topics/'+id+'.json');}
+setTimeout:_setTimeout,
+clearTimeout:_clearTimeout,
 
+setInterval:_setInterval,
+clearInterval:_clearInterval,
+
+setImmediate:_setImmediate,
+clearImmediate:_clearImmediate,
+
+requestAnimationFrame:_requestAnimationFrame,
+cancelAnimationFrame:_cancelAnimationFrame};
+
+
+module.exports=TimerMixin;
+});
+__d('somira/App/Common/Util.js',function(global, require, module, exports) {  var 
+
+
+
+
+
+React=require('react-native/Libraries/react-native/react-native.js');
+var Dimensions=require('Dimensions');var 
+
+
+PixelRatio=
+
+React.PixelRatio;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;
 
 module.exports={
-Nodes:getNodes,
-HomeTopics:getHomeTopics,
-NodeTopics:getNodeTopics,
-Topic:getTopic,
-Comments:getComments};
+
+pixel:1/PixelRatio.get(),
+
+headerColor:'OrangeRed',
+
+size:{
+width:Dimensions.get('window').width,
+height:Dimensions.get('window').height},
+
+
+
+
+
+
+
+get:function(url,successCallback,failCallback){
+fetch(url).
+then(function(response){return response.text();}).
+then(function(responseText){
+successCallback(JSON.parse(responseText));}).
+
+catch(function(err){
+console.log("错误信息:"+err);
+failCallback(err);});},
+
+
+
+loading:React.createElement(ActivityIndicatorIOS,{color:'#3E00FF',
+style:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+marginTop:Dimensions.get('window').height/2-150}})};
 });
-__d('somira/App/Views/Topic/ListCell.js',function(global, require, module, exports) {  var 
-React=require('react-native/Libraries/react-native/react-native.js');var 
+__d('somira/App/Component/HappyPurchase/ItemList.js',function(global, require, module, exports) {  'use strict';
 
-
-View=
-
-
-
-React.View;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var Image=React.Image;
-
-var Style=require('somira/App/Views/Topic/ListCellStyleSheet.js');
-var timeago=require('somira/App/Views/Topic/timeago.js');
-
-
-module.exports=React.createClass({displayName:'exports',
-render:function(){
-var data=this.props.data;
-var avatar_url=data.user.avatar_url;
-if(avatar_url.substr(0,2)=='//'){
-avatar_url='https:'+avatar_url;}
-
-return (
-React.createElement(TouchableHighlight,{onPress:this.props.onSelect,underlayColor:'#eeeeee'},
-React.createElement(View,{style:Style.container},
-React.createElement(Image,{style:Style.avatar,
-source:{
-uri:avatar_url}}),
-
-
-React.createElement(View,{style:Style.topic},
-React.createElement(Text,{style:Style.title},
-data.title),
-
-this.renderInfo()),
-
-
-this.renderCommentCount())));},
-
-
-
-
-
-renderCommentCount:function(){
-var data=this.props.data;
-if(data.replies_count){
-var comment_width=24+data.replies_count.toString().length*8;
-return (
-React.createElement(View,{style:Style.replyNumWrapper},
-React.createElement(View,{style:[Style.replyNum,{width:comment_width}]},
-React.createElement(Text,{style:Style.replyNumText},data.replies_count))));}
-
-
-
-
-return;},
-
-
-renderInfo:function(){
-var data=this.props.data;
-if(data.replied_at){
-return (
-React.createElement(Text,{style:Style.info},
-React.createElement(Text,{style:Style.node_name},data.node_name),' •',
-React.createElement(Text,{style:Style.user},data.user.login),' •',
-React.createElement(Text,null,'最后由'),
-React.createElement(Text,{style:Style.user},data.node_name),
-React.createElement(Text,{style:Style.time},'于',timeago(data.replied_at),'发布')));}
-
-
-
-return (
-React.createElement(Text,{style:Style.info},
-React.createElement(Text,{style:Style.node_name},data.node_name),' •',
-React.createElement(Text,{style:Style.user},data.user.login),' •',
-React.createElement(Text,{style:Style.time},'于',timeago(data.replied_at),'发布')));}});
-});
-__d('somira/App/Views/Topic/ListCellStyleSheet.js',function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');
+var ItemCell=require('somira/App/Component/HappyPurchase/ItemCell.js');
+var Util=require('somira/App/Common/Util.js');var 
 
-module.exports=React.StyleSheet.create({
-container:{
-backgroundColor:'#ffffff',
-flex:1,
-flexDirection:'row',
-justifyContent:'center',
-padding:10,
-borderBottomWidth:1,
-borderColor:'#E2E2E2'},
 
-avatar:{
-alignSelf:'center',
-width:50,
-height:50,
-marginRight:10,
-justifyContent:'center',
-borderRadius:3},
+StyleSheet=
 
 
 
-title:{
-fontSize:14,
-textAlign:'left',
-color:'#356DD0'},
 
-topic:{
-flex:1,
-marginBottom:5},
+React.StyleSheet;var ListView=React.ListView;var Text=React.Text;var Image=React.Image;var View=React.View;
 
-info:{
-color:'#aaaaaa',
-fontSize:12,
-textAlign:'left',
-marginTop:5},
-
-content:{
-fontSize:12,
-color:'#555555'},
-
-
-
-replyNumWrapper:{
-width:30,
-marginLeft:8,
-marginRight:2,
-justifyContent:'center',
-alignSelf:'center'},
-
-replyNum:{
-backgroundColor:'#98acdf',
-
-flex:1,
-alignItems:'flex-start',
-height:18,
-
-justifyContent:'center',
-borderRadius:10,
-paddingTop:2,
-paddingBottom:2,
-paddingLeft:10,
-paddingRight:10},
-
-replyNumText:{
-color:'#ffffff',
-fontWeight:'bold'},
-
-node_name:{
-backgroundColor:'#f5f5f5',
-color:'#778087',
-marginRight:5},
-
-user:{
-color:'#666666',
-marginRight:5,
-marginLeft:5}});
-});
-__d('somira/App/Views/Topic/timeago.js',function(global, require, module, exports) {  /*
- * node-timeago
- * Cam Pedersen
- * <diffference@gmail.com>
- * Oct 6, 2011
- * Timeago is a jQuery plugin that makes it easy to support automatically
- * updating fuzzy timestamps (e.g. "4 minutes ago" or "about 1 day ago").
- *
- * @name timeago
- * @version 0.10.0
- * @requires jQuery v1.2.3+
- * @author Ryan McGeary
- * @license MIT License - http://www.opensource.org/licenses/mit-license.php
- *
- * For usage and examples, visit:
- * http://timeago.yarp.com/
- *
- * Copyright (c) 2008-2011, Ryan McGeary (ryanonjavascript -[at]- mcgeary [*dot*] org)
- */
-module.exports=function(timestamp){
-if(timestamp instanceof Date){
-return inWords(timestamp);}else 
-if(typeof timestamp==="string"){
-return inWords(parse(timestamp));}else 
-if(typeof timestamp==="number"){
-return inWords(new Date(timestamp));}};
-
-
-
-var settings={
-allowFuture:false,
-_strings:{
-prefixAgo:null,
-prefixFromNow:null,
-suffixAgo:"ago",
-suffixFromNow:"from now",
-seconds:"less than a minute",
-minute:"about a minute",
-minutes:"%d minutes",
-hour:"about an hour",
-hours:"about %d hours",
-day:"a day",
-days:"%d days",
-month:"about a month",
-months:"%d months",
-year:"about a year",
-years:"%d years",
-numbers:[]},
-
-strings:{
-prefixAgo:null,
-prefixFromNow:"现在",
-suffixAgo:"前",
-suffixFromNow:null,
-seconds:"1分钟",
-minute:"1分钟",
-minutes:"%d分钟",
-hour:"1小时",
-hours:"%d小时",
-day:"1天",
-days:"%d天",
-month:"1个月",
-months:"%d月",
-year:"1年",
-years:"%d年",
-numbers:[],
-wordSeparator:""}};
-
-
-
-var $l=settings.strings;
-
-module.exports.settings=settings;
-
-$l.inWords=function(distanceMillis){
-var prefix=$l.prefixAgo;
-var suffix=$l.suffixAgo;
-if(settings.allowFuture){
-if(distanceMillis<0){
-prefix=$l.prefixFromNow;
-suffix=$l.suffixFromNow;}}
-
-
-
-var seconds=Math.abs(distanceMillis)/1000;
-var minutes=seconds/60;
-var hours=minutes/60;
-var days=hours/24;
-var years=days/365;
-
-function substitute(stringOrFunction,number){
-var string=typeof stringOrFunction==='function'?stringOrFunction(number,distanceMillis):stringOrFunction;
-var value=$l.numbers&&$l.numbers[number]||number;
-return string.replace(/%d/i,value);}
-
-
-var words=seconds<45&&substitute($l.seconds,Math.round(seconds))||
-seconds<90&&substitute($l.minute,1)||
-minutes<45&&substitute($l.minutes,Math.round(minutes))||
-minutes<90&&substitute($l.hour,1)||
-hours<24&&substitute($l.hours,Math.round(hours))||
-hours<48&&substitute($l.day,1)||
-days<30&&substitute($l.days,Math.floor(days))||
-days<60&&substitute($l.month,1)||
-days<365&&substitute($l.months,Math.floor(days/30))||
-years<2&&substitute($l.year,1)||
-substitute($l.years,Math.floor(years));
-
-return [prefix,words,suffix].join("").toString().trim();};
-
-
-function parse(iso8601){
-if(!iso8601)return;
-var s=iso8601.trim();
-s=s.replace(/\.\d\d\d+/,"");
-s=s.replace(/-/,"/").replace(/-/,"/");
-s=s.replace(/T/," ").replace(/Z/," UTC");
-s=s.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2");
-return new Date(s);}
-
-
-$l.parse=parse;
-
-function inWords(date){
-return $l.inWords(distance(date));}
-
-
-function distance(date){
-return new Date().getTime()-date.getTime();}
-});
-__d('somira/App/Views/Topic/View.js',function(global, require, module, exports) {  'use strict';
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-
-
-Text=
-
-
-
-
-
-React.Text;var View=React.View;var Image=React.Image;var ListView=React.ListView;var ScrollView=React.ScrollView;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;
-
-var Style=require('somira/App/Views/Topic/StyleSheet.js');
-var Api=require('somira/App/Network/API.js');
-
-var CommentCell=require('somira/App/Views/Topic/CommentCell.js');
-var timeago=require('somira/App/Views/Topic/timeago.js');
-
-var TOPIC_ID=0;
-var CACHE=[];
-
-var TopicView=React.createClass({displayName:'TopicView',
-getInitialState:function(){
-return {
-commentsDataSource:new ListView.DataSource({
-rowHasChanged:function(r1,r2){return r1!==r2;}}),
-
-loaded:false,
-comment_loaded:false,
-commentLoadingPage:0,
-currentPage:0};},
-
-
-componentDidMount:function(){
-this.fetchData();
-this.fetchCommentData(1);},
-
-cache:function(items){
-for(var i in items){
-CACHE.push(items[i]);}},
-
-
-
-fetchData:function(){var _this=this;
-console.log(Api.Topic(this.props.data.id));
-fetch(Api.Topic(this.props.data.id)).
-then(function(response){
-
-return response.json();}).
-
-then(function(responseData){
-_this.setState({
-topic:responseData.topic,
-loaded:true,
-comment_loaded:_this.state.comment_loaded});}).
-
-
-done();},
-
-fetchCommentData:function(page){var _this2=this;
-if(this.state.commentLoadingPage==page)
-return;
-
-var limit=50;
-var offset=(page-1)*limit;
-
-this.setState({commentLoadingPage:page});
-var topic_id=this.props.data.id;
-if(TOPIC_ID&&topic_id!=TOPIC_ID){
-CACHE=[];}
-
-
-console.log(Api.Comments(topic_id,offset,limit));
-fetch(Api.Comments(topic_id,offset,limit)).
-then(function(response){
-return response.json();}).
-
-then(function(responseData){
-TOPIC_ID=topic_id;
-_this2.cache(responseData.replies);
-
-_this2.setState({
-topic:_this2.state.topic,
-loaded:_this2.state.loaded,
-comment_loaded:true,
-commentsDataSource:_this2.state.commentsDataSource.cloneWithRows(CACHE),
-currentPage:page});}).
-
-
-done();},
-
-
-render:function(){
-return (
-React.createElement(View,{style:{flex:1,marginTop:65}},
-this.renderTopicHeader(),
-this.renderLoaded()));},
-
-
-
-
-renderLoaded:function(){
-if(!this.state.comment_loaded||!this.state.loaded){
-return (
-React.createElement(View,{style:{height:20,flex:1,justifyContent:'center',alignItems:'center'}},
-React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}})));}
-
-
-
-
-return (
-React.createElement(ListView,{renderHeader:this.renderTopicContent,
-dataSource:this.state.commentsDataSource,
-renderRow:this.renderComments,
-renderFooter:this.renderFooter,
-onEndReached:this.onEndReached,
-automaticallyAdjustContentInsets:false,
-showsVerticalScrollIndicator:false,
-style:Style.TopicList}));},
-
-
-
-renderFooter:function(){
-if(this.state.comment_loaded){
-return React.createElement(View,{style:{marginVertical:30}},React.createElement(Text,null));}
-
-return React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}});},
-
-
-onEndReached:function(){
-if(!this.state.comment_loaded){
-return;}
-
-return this.fetchCommentData(this.state.currentPage+1);},
-
-
-renderTopicContent:function(){
-return (
-React.createElement(View,{style:Style.container},
-React.createElement(View,{style:[Style.contentWrapper,{marginTop:-5}]},
-React.createElement(Text,{style:Style.content},
-this.state.topic.body))));},
-
-
-
-
-
-
-renderTopicHeader:function(){
-var data=this.props.data;
-var avatar_url=data.user.avatar_url;
-if(avatar_url.substr(0,2)=='//'){
-avatar_url='https:'+avatar_url;}
-
-
-return (
-React.createElement(View,{style:Style.header},
-React.createElement(View,{style:{flex:1}},
-React.createElement(Text,{style:Style.title},
-data.title),
-
-this.renderInfo()),
-
-React.createElement(Image,{style:Style.avatar,
-source:{
-uri:avatar_url}})));},
-
-
-
-
-
-renderInfo:function(){
-var data=this.props.data;
-if(data.replied_at){
-return (
-React.createElement(Text,{style:Style.info},
-React.createElement(Text,{style:Style.node_name},data.node_name),' •',
-React.createElement(Text,{style:Style.user},data.user.login),' •',
-React.createElement(Text,null,'最后由'),
-React.createElement(Text,{style:Style.user},data.node_name),
-React.createElement(Text,{style:Style.time},'于',timeago(data.replied_at),'发布')));}
-
-
-
-return (
-React.createElement(Text,{style:Style.info},
-React.createElement(Text,{style:Style.node_name},data.node_name),' •',
-React.createElement(Text,{style:Style.user},data.user.login),' •',
-React.createElement(Text,{style:Style.time},'于',timeago(data.replied_at),'发布')));},
-
-
-
-
-renderComments:function(data){
-return (
-React.createElement(CommentCell,{data:data}));}});
-
-
-
-
-
-module.exports=TopicView;
-});
-__d('somira/App/Views/Topic/StyleSheet.js',function(global, require, module, exports) {  'use strict';
-
-var React=require('react-native/Libraries/react-native/react-native.js');
-
-module.exports=React.StyleSheet.create({
-container:{
-flex:1,
-backgroundColor:'#ffffff'},
-
-header:{
-flexDirection:'row',
-backgroundColor:'#f5f5f5',
-borderColor:'#e9e9e9',
-borderBottomWidth:1,
-padding:5},
-
-title:{
-fontSize:16,
-fontWeight:'bold',
-textAlign:'left'},
-
-info:{
-fontSize:12,
-color:'#666666',
-textAlign:'left',
-marginTop:5},
-
-avatar:{
-width:50,
-height:50,
-marginLeft:5,
-borderRadius:4},
-
-contentWrapper:{
-borderBottomWidth:1,
-borderColor:'#cccccc'},
-
-content:{
-fontSize:14,
-color:'#666666',
-padding:10},
-
-node_name:{
-backgroundColor:'#f5f5f5',
-color:'#778087',
-marginRight:5},
-
-user:{
-color:'#666666',
-marginRight:5,
-marginLeft:5}});
-});
-__d('somira/App/Views/Topic/CommentCell.js',function(global, require, module, exports) {  var 
-React=require('react-native/Libraries/react-native/react-native.js');var 
-
-
-View=
-
-
-
-React.View;var Text=React.Text;var Image=React.Image;var StyleSheet=React.StyleSheet;
-
-var Style=StyleSheet.create({
-container:{
-backgroundColor:'#ffffff',
-flex:1,
-flexDirection:'row',
-justifyContent:'center',
-padding:8,
-borderBottomWidth:1,
-borderColor:'#eeeeee'},
-
-infobar:{
-flexDirection:'row'},
-
-content:{
-flex:1,
-marginBottom:5,
-marginLeft:10},
-
-nickname:{
-fontSize:12,
-color:'#356DD0'},
-
-info:{
-fontSize:12,
-marginLeft:5,
-color:'#666666'},
-
-comment:{
-fontSize:12,
-color:'#666666',
-paddingTop:5},
-
-avatar:{
-width:30,
-height:30,
-marginLeft:5,
-borderRadius:4}});
-
-
-
-var timeago=require('somira/App/Views/Topic/timeago.js');
+var API='http://ald.taobao.com/recommend.htm?appId=03507&areaId=330100&size=15&page=1&type=1';
 
 module.exports=React.createClass({displayName:'exports',
-render:function(){
-var data=this.props.data;
-var body=data.body_html.replace(/<\/?[^>]+>/g,'');
 
-var avatar_url=data.user.avatar_url;
-if(avatar_url.substr(0,2)=='//'){
-avatar_url='https:'+avatar_url;}
-
-
-return (
-React.createElement(View,{style:Style.container},
-React.createElement(Image,{style:Style.avatar,
-source:{
-uri:avatar_url}}),
-
-
-React.createElement(View,{style:Style.content},
-React.createElement(View,{style:Style.infobar},
-React.createElement(Text,{style:Style.nickname},
-data.user.name),
-
-
-React.createElement(Text,{style:Style.info},
-timeago(data.created_at))),
-
-
-
-React.createElement(Text,{style:Style.comment},
-body))));}});
-});
-__d('somira/App/Views/Home/Nodes.js',function(global, require, module, exports) {  'use strict';
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-
-
-Text=
-
-
-
-
-
-React.Text;var View=React.View;var ScrollView=React.ScrollView;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;var TouchableHighlight=React.TouchableHighlight;var PixelRatio=React.PixelRatio;
-
-var Api=require('somira/App/Network/API.js');
-var NodeCell=require('somira/App/Views/Home/NodeCell.js');
-
-var Style=React.StyleSheet.create({
-container:{
-backgroundColor:'#eeeeee',
-flex:1,
-justifyContent:'center',
-alignItems:'center'},
-
-nodes:{
-flex:1,
-padding:8,
-flexDirection:'row'},
-
-nodeWrapper:{
-flex:1,
-backgroundColor:'#ffffff',
-flexDirection:'row',
-justifyContent:'center',
-padding:8,
-margin:5,
-width:PixelRatio.get()===3?124:PixelRatio.getPixelSizeForLayoutSize(55),
-marginBottom:5},
-
-node:{
-fontSize:14,
-fontWeight:'bold',
-textAlign:'left',
-color:'#666E74'}});
-
-
-
-
-
-
-module.exports=React.createClass({displayName:'exports',
 getInitialState:function(){
 return {
-nodes:[],
+dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
 loaded:false};},
+
 
 
 componentDidMount:function(){
 this.fetchData();},
 
-fetchData:function(){var _this=this;
-fetch(Api.Nodes()).
-then(function(response){
-return response.json();}).
 
+
+componentWillReceiveProps:function(nextProps){
+
+this.setState({
+loaded:false});
+
+
+this.fetchData(nextProps.cateId);},
+
+
+fetchData:function(cateId){var _this=this;
+var apiUrl=cateId?API+'&cateId='+cateId:API;
+
+fetch(apiUrl).
+then(function(response){return response.json();}).
 then(function(responseData){
-if(!responseData.nodes){
-return;}else 
-{
-_this.setState({
-nodes:responseData.nodes,
-loaded:true});}}).
 
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(responseData.data),
+loaded:true});}).
 
 
 done();},
 
-render:function(){
+
+renderListView:function(){
+
 if(!this.state.loaded){
-return this.renderLoading();}
-
-return this.renderNodeList();},
-
-renderLoading:function(){
 return (
-React.createElement(View,{style:Style.container},
-React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}})));},
+React.createElement(Image,{style:css.loading,source:require('image!loading')}));}
 
-
-
-
-
-renderNodesAuto:function(){
-var nodes=this.state.nodes;
-var n=Math.ceil(nodes.length/3);
-var r=[];
-for(var i=1;i<=n;i++){
-r.push(nodes.slice((i-1)*3,i*3));}
 ;
-
-return r.map(this.renderNodes);},
-
-renderNodes:function(nodes){
-
 return (
-React.createElement(View,{style:Style.nodes},
-nodes.map(this.renderNodeCell)));},
+React.createElement(ListView,{contentInset:{top:0},
+dataSource:this.state.dataSource,
+renderRow:this.renderRow,
+style:css.listView}));},
 
 
 
-renderNodeList:function(){
+renderRow:function(item){
 return (
-React.createElement(ScrollView,{style:{marginTop:65,marginBottom:50}},
-this.renderNodesAuto()));},
+React.createElement(ItemCell,{item:item,onSelect:this.props.onSelect.bind(this,item)}));},
 
 
-
-renderNodeCell:function(data){var _this2=this;
+render:function(){
 return (
-React.createElement(TouchableHighlight,{
-onPress:
-function(){return _this2.selectNode(data);},
-
-underlayColor:'#eeeeee'},
-React.createElement(View,{style:Style.nodeWrapper},
-React.createElement(Text,{style:Style.node},
-data.name))));},
+this.renderListView());}});
 
 
 
 
 
+var css=StyleSheet.create({
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:Image.resizeMode.contain,
+width:Util.size['width']},
 
-
-
-selectNode:function(data){
-this.props.navigator.push({
-title:data.name,
-component:require('somira/App/Views/Topic/List.js'),
-passProps:{data:data}});}});
+listView:{}});
 });
-__d('somira/App/Views/Home/NodeCell.js',function(global, require, module, exports) {  var 
-React=require('react-native/Libraries/react-native/react-native.js');var 
-
-
-View=
+__d('somira/App/Component/HappyPurchase/ItemCell.js',function(global, require, module, exports) {  'use strict';
 
 
 
 
-React.View;var Text=React.Text;var ListView=React.ListView;var TouchableHighlight=React.TouchableHighlight;var StyleSheet=React.StyleSheet;
-
-var Style=StyleSheet.create({
-sectionCell:{
-backgroundColor:'#eeeeee',
-flex:1,
-justifyContent:'center',
-alignItems:'flex-start'},
-
-nodes:{
-flex:1,
-padding:8,
-flexDirection:'row'},
-
-sectionWrapper:{
-flex:1,
-backgroundColor:'#eeeeee',
-padding:20,
-justifyContent:'center',
-alignItems:'flex-start',
-alignSelf:'flex-start',
-borderBottomWidth:1,
-borderColor:'#eeeeee'},
-
-section:{
-fontSize:14,
-color:'#666666'},
+var React=require('react-native/Libraries/react-native/react-native.js');
+var Util=require('somira/App/Common/Util.js');
+var Progress=require('somira/App/Common/Progress.js');
+var Button=require('react-native-button/Button.js');var 
 
 
-nodeWrapper:{
-flex:1,
-backgroundColor:'#ffffff',
-flexDirection:'row',
-justifyContent:'center',
-padding:8,
-margin:5,
-width:110,
-borderWidth:1,
-borderColor:'#eeeeee',
-marginBottom:5},
-
-node:{
-fontSize:14,
-fontWeight:'bold',
-textAlign:'left',
-color:'#666E74'}});
+StyleSheet=
 
 
 
+React.StyleSheet;var TouchableOpacity=React.TouchableOpacity;var Text=React.Text;var View=React.View;var _require=
 
+require('react-native-animatable/index.js');var Image=_require.Image;
 
-var NodeCell=React.createClass({displayName:'NodeCell',
+module.exports=React.createClass({displayName:'exports',
+_animatables:{},
+_pushCart:function(event,id){
+this._animatables[id]['slideInLeft'](1000);},
+
 render:function(){var _this=this;
-var data=this.props.data;
+var item=this.props.item;
+var progressNum=parseFloat(item.originalprice)/(parseFloat(item.price)+parseFloat(item.originalprice));
+
 return (
-React.createElement(TouchableHighlight,{
-onPress:
-function(){return _this.props.onSelectNode(data);},
-
-underlayColor:'#eeeeee'},
-React.createElement(View,{style:Style.nodeWrapper},
-React.createElement(Text,{style:Style.node},
-data.name))));}});
+React.createElement(TouchableOpacity,{onPress:this.props.onSelect},
+React.createElement(View,{style:css.container},
+React.createElement(Image,{ref:function(component){return _this._animatables[item.id]=component;},style:css.goodImg,source:{uri:'http:'+item.img}}),
+React.createElement(View,{style:css.goodInfo},
+React.createElement(Text,{style:css.goodTit,numberOfLines:2},item.txt),
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10}),numberOfLines:1},item.explain),
 
 
 
 
+
+
+React.createElement(View,{style:css.progress},
+React.createElement(Progress,{progress:progressNum})),
+
+React.createElement(View,{style:css.goodRow},
+React.createElement(View,null,
+React.createElement(Text,{style:css.redPrice},
+item.originalprice),
+
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10})},'总需')),
+
+React.createElement(View,null,
+React.createElement(Text,{style:css.whitePrice},
+item.price),
+
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10})},'剩余')),
+
+React.createElement(View,{style:css.goodBtnWarp},
+React.createElement(Button,{onPress:function(name){return _this._pushCart(_this,item.id);}},
+React.createElement(Text,{style:css.goodBtn},'参与'))))))));}});
+
+
+
+
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+paddingTop:10,
+paddingBottom:2,
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+
+goodImg:{
+width:60,
+height:60,
+marginRight:15,
+left:10},
+
+
+goodInfo:{
+flex:1,
+flexDirection:'column'},
+
+goodTit:{
+
+color:'#000000',
+textAlign:'left',
+marginRight:2},
+
+
+goodRow:{
+flexDirection:'row',
+alignItems:'center',
+marginBottom:10},
+
+redPrice:{
+color:'#c40001',
+width:(Util.size['width']-70)/2},
+
+whitePrice:{
+fontSize:12,
+color:'#b0b0b0'},
+
+
+goodExtra:{
+flexDirection:'row',
+alignItems:'center',
+justifyContent:'space-between'},
+
+goodSold:{
+color:'#b0b0b0'},
+
+goodBtnWarp:{
+position:'absolute',
+right:20,
+top:1,
+
+borderWidth:1,
+padding:5,
+borderColor:'#3164ce',
+borderRadius:3},
+
+goodBtn:{
+color:'#3164ce'},
+
+progress:{
+width:Util.size['width']-158,
+marginTop:5,
+marginBottom:5}});
+});
+__d('somira/App/Common/Progress.js',function(global, require, module, exports) {  'use strict';
+
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+ProgressViewIOS=
+
+
+React.ProgressViewIOS;var StyleSheet=React.StyleSheet;var View=React.View;
+
+module.exports=React.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+progress:0};},
+
+
+componentDidMount:function(){},
+
+
+
+
+componentWillReceiveProps:function(nextProps){
+this.setState({
+progress:nextProps.progress,
+color:nextProps.color});},
+
+
+render:function(){
+return (
+React.createElement(View,{style:styles.container},
+React.createElement(ProgressViewIOS,{style:styles.progressView,progressTintColor:this.state.color,progress:this.state.progress})));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+marginTop:-20,
+backgroundColor:'transparent'},
+
+progressView:{
+marginTop:20}});
+});
+__d('react-native-button/Button.js',function(global, require, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+PropTypes=
+
+
+
+
+React.PropTypes;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;
+
+var coalesceNonElementChildren=require('react-native-button/coalesceNonElementChildren.js');
+
+var systemButtonOpacity=0.2;
+
+var Button=React.createClass({displayName:'Button',
+propTypes:babelHelpers.extends({},
+TouchableOpacity.propTypes,{
+containerStyle:View.propTypes.style,
+disabled:PropTypes.bool,
+style:Text.propTypes.style,
+styleDisabled:Text.propTypes.style}),
+
+
+render:function(){
+var touchableProps={
+activeOpacity:this._computeActiveOpacity()};
+
+if(!this.props.disabled){
+touchableProps.onPress=this.props.onPress;
+touchableProps.onPressIn=this.props.onPressIn;
+touchableProps.onPressOut=this.props.onPressOut;
+touchableProps.onLongPress=this.props.onLongPress;}
+
+
+return (
+React.createElement(TouchableOpacity,babelHelpers.extends({},touchableProps,{testID:this.props.testID,style:this.props.containerStyle}),
+this._renderGroupedChildren()));},
+
+
+
+
+_renderGroupedChildren:function(){var 
+disabled=this.props.disabled;
+var style=[
+styles.text,
+disabled?styles.disabledText:null,
+this.props.style,
+disabled?this.props.styleDisabled:null];
+
+
+var children=coalesceNonElementChildren(this.props.children,function(children,index){
+return (
+React.createElement(Text,{key:index,style:style},
+children));});
+
+
+
+
+switch(children.length){
+case 0:
+return null;
+case 1:
+return children[0];
+default:
+return React.createElement(View,{style:styles.group},children);}},
+
+
+
+_computeActiveOpacity:function(){
+if(this.props.disabled){
+return 1;}
+
+return this.props.activeOpacity!=null?
+this.props.activeOpacity:
+systemButtonOpacity;}});
+
+
+
+var styles=StyleSheet.create({
+text:{
+color:'#007aff',
+fontFamily:'.HelveticaNeueInterface-MediumP4',
+fontSize:17,
+fontWeight:'bold',
+textAlign:'center'},
+
+disabledText:{
+color:'#dcdcdc'},
+
+group:{
+flexDirection:'row',
+justifyContent:'space-between',
+alignItems:'center'}});
+
+
+
+module.exports=Button;
+});
+__d('react-native-button/coalesceNonElementChildren.js',function(global, require, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native.js');
+
+function coalesceNonElementChildren(children,coalesceNodes){
+var coalescedChildren=[];
+
+var contiguousNonElements=[];
+React.Children.forEach(children,function(child){
+if(!React.isValidElement(child)){
+contiguousNonElements.push(child);
+return;}
+
+
+if(contiguousNonElements.length){
+coalescedChildren.push(
+coalesceNodes(contiguousNonElements,coalescedChildren.length));
+
+contiguousNonElements=[];}
+
+
+coalescedChildren.push(child);});
+
+
+if(contiguousNonElements.length){
+coalescedChildren.push(
+coalesceNodes(contiguousNonElements,coalescedChildren.length));}
+
+
+
+return coalescedChildren;}
+
+
+module.exports=coalesceNonElementChildren;
+});
+__d('react-native-animatable/index.js',function(global, require, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+StyleSheet=
+
+
+
+
+
+
+
+React.StyleSheet;var PropTypes=React.PropTypes;var Animated=React.Animated;var Easing=React.Easing;var Dimensions=React.Dimensions;var View=React.View;var Text=React.Text;var Image=React.Image;
+
+
+
+var createKeyedArray=function(obj){
+return Object.keys(obj).map(function(key){
+var keyed={};
+keyed[key]=obj[key];
+return keyed;});};
+
+
+
+
+
+
+
+
+var getAnimationValueForDirection=function(direction,originOrDestination,verticalValue,horizontalValue){
+var isVertical=originOrDestination==='up'||originOrDestination==='down';
+var modifier=(isVertical&&direction==='out'?-1:1)*(originOrDestination==='down'||originOrDestination==='left'?-1:1);
+return modifier*(isVertical?verticalValue:horizontalValue);};
+
+
+
+
+var LAYOUT_DEPENDENT_ANIMATIONS=[
+'slide',
+'fade',
+'wobble',
+'lightSpeed'];
+
+
+
+var TRANSFORM_STYLE_PROPERTIES=[
+'rotate',
+'rotateX',
+'rotateY',
+'rotateZ',
+'scale',
+'scaleX',
+'scaleY',
+'translateX',
+'translateY',
+'skewX',
+'skewY'];
+
+
+
+var INTERPOLATION_STYLE_PROPERTIES=[
+
+'rotate',
+'rotateX',
+'rotateY',
+'rotateZ',
+'skewX',
+'skewY',
+'transformMatrix',
+
+'backgroundColor',
+'borderColor',
+'borderTopColor',
+'borderRightColor',
+'borderBottomColor',
+'borderLeftColor',
+'shadowColor',
+
+'color',
+'textDecorationColor'];
+
+
+var EASING_FUNCTIONS={
+'linear':Easing.linear,
+'ease':Easing.ease,
+'ease-in':Easing.in(Easing.ease),
+'ease-out':Easing.out(Easing.ease),
+'ease-in-out':Easing.inOut(Easing.ease)};
+
+
+
+var wrapStyleTransforms=function(style){
+var wrapped={};
+Object.keys(style).forEach(function(key){
+if(TRANSFORM_STYLE_PROPERTIES.indexOf(key)!==-1){
+if(!wrapped.transform){
+wrapped.transform=[];}
+
+var transform={};
+transform[key]=style[key];
+wrapped.transform.push(transform);}else 
+{
+wrapped[key]=style[key];}});
+
+
+return wrapped;};
+
+
+
+var getAnimationTarget=function(iteration,direction){
+switch(direction){
+case 'reverse':return 0;
+case 'alternate':return iteration%2?0:1;
+case 'alternate-reverse':return iteration%2?1:0;
+case 'normal':
+default:return 1;}};
+
+
+
+
+var getAnimationOrigin=function(iteration,direction){
+return getAnimationTarget(iteration,direction)?0:1;};
+
+
+var getDefaultStyleValue=function(key){
+if(key==='backgroundColor'){
+return 'rgba(0,0,0,0)';}
+
+if(key==='color'||key.indexOf('Color')!==-1){
+return 'rgba(0,0,0,1)';}
+
+if(key.indexOf('rotate')!==-1||key.indexOf('skew')!==-1){
+return '0deg';}
+
+if(key==='fontSize'){
+return 14;}
+
+if(key==='opacity'){
+return 1;}
+
+return 0;};
+
+
+
+var getStyleValues=function(keys,style){
+if(!StyleSheet.flatten){
+throw new Error('StyleSheet.flatten not available, upgrade React Native or polyfill with StyleSheet.flatten = require(\'flattenStyle\');');}
+
+var values={};
+var style=babelHelpers.extends({},StyleSheet.flatten(style));
+if(style.transform){
+style.transform.forEach(function(transform){
+var key=Object.keys(transform)[0];
+style[key]=transform[key];});
+
+delete style.transform;}
+
+if(typeof keys==='string'){
+keys=[keys];}
+
+keys.forEach(function(key){
+values[key]=key in style?style[key]:getDefaultStyleValue(key);});
+
+return values;};
+
+
+
+var createAnimatableComponent=function(component){
+var Animatable=Animated.createAnimatedComponent(component);
+return React.createClass({
+propTypes:{
+animation:PropTypes.string,
+onAnimationBegin:PropTypes.func,
+onAnimationEnd:PropTypes.func,
+transition:PropTypes.oneOfType([
+PropTypes.string,
+PropTypes.arrayOf(PropTypes.string)]),
+
+transitionValue:PropTypes.any,
+duration:PropTypes.number,
+direction:PropTypes.oneOf(['normal','reverse','alternate','alternate-reverse']),
+delay:PropTypes.number,
+easing:PropTypes.oneOf(Object.keys(EASING_FUNCTIONS)),
+iterationCount:function(props,propName,componentName){
+var val=props[propName];
+if(val!=='infinite'&&!(typeof val==='number'&&val>=1)){
+return new Error('iterationCount must be a positive number or "infinite"');}}},
+
+
+
+
+getDefaultProps:function(){
+return {
+iterationCount:1,
+onAnimationBegin:function(){},
+onAnimationEnd:function(){}};},
+
+
+
+getInitialState:function(){
+var state={
+animationValue:new Animated.Value(getAnimationOrigin(0,this.props.direction)),
+animationStyle:{},
+transitionStyle:{},
+transitionValues:{},
+currentTransitionValues:{}};
+
+if(this.props.transition){
+return babelHelpers.extends({},
+state,
+this.initializeTransitionState(this.props.transition));}
+
+
+return state;},
+
+
+initializeTransitionState:function(transitionKeys){
+var transitionValues={};
+var styleValues={};
+var style=this.props.style;
+if(this.props.transitionValue!==undefined){
+console.warn('transitionValue is deprecated, use regular style prop instead.');
+var transitionStyle={};
+transitionStyle[this.props.transition]=this.props.transitionValue;
+style=[style,transitionStyle];}
+
+
+var currentTransitionValues=getStyleValues(transitionKeys,style);
+Object.keys(currentTransitionValues).forEach(function(key){
+var value=currentTransitionValues[key];
+if(INTERPOLATION_STYLE_PROPERTIES.indexOf(key)!==-1){
+transitionValues[key]=new Animated.Value(0);
+styleValues[key]=value;}else 
+{
+transitionValues[key]=styleValues[key]=new Animated.Value(value);}});
+
+
+
+return {
+transitionStyle:styleValues,
+transitionValues:transitionValues,
+currentTransitionValues:currentTransitionValues};},
+
+
+
+getTransitionState:function(transitionKeys){var _this=this;
+if(typeof transitionKeys==='string'){
+transitionKeys=[transitionKeys];}var _state=
+
+this.state;var transitionValues=_state.transitionValues;var currentTransitionValues=_state.currentTransitionValues;var transitionStyle=_state.transitionStyle;
+var missingKeys=transitionKeys.filter(function(key){return !_this.state.transitionValues[key];});
+if(missingKeys.length){
+var transitionState=this.initializeTransitionState(missingKeys);
+transitionValues=babelHelpers.extends({},transitionValues,transitionState.transitionValues);
+currentTransitionValues=babelHelpers.extends({},currentTransitionValues,transitionState.currentTransitionValues);
+transitionStyle=babelHelpers.extends({},transitionStyle,transitionState.transitionStyle);}
+
+return {transitionValues:transitionValues,currentTransitionValues:currentTransitionValues,transitionStyle:transitionStyle};},
+
+
+setNativeProps:function(nativeProps){
+this._root.setNativeProps(nativeProps);},
+
+
+componentDidMount:function(){var _this2=this;var _props=
+this.props;var animation=_props.animation;var duration=_props.duration;var delay=_props.delay;var onAnimationBegin=_props.onAnimationBegin;var onAnimationEnd=_props.onAnimationEnd;
+if(animation){
+if(delay){
+this.setState({scheduledAnimation:animation});
+this._timer=setTimeout(function(){
+onAnimationBegin();
+_this2.setState({scheduledAnimation:false},function(){return _this2[animation](duration).then(onAnimationEnd);});
+_this2._timer=false;},
+delay);
+return;}
+
+for(var i=LAYOUT_DEPENDENT_ANIMATIONS.length-1;i>=0;i--){
+if(animation.indexOf(LAYOUT_DEPENDENT_ANIMATIONS[i])===0){
+this.setState({scheduledAnimation:animation});
+return;}}
+
+;
+onAnimationBegin();
+this[animation](duration).then(onAnimationEnd);}},
+
+
+
+componentWillUnmount:function(){
+if(this._timer){
+clearTimeout(this._timer);}},
+
+
+
+componentWillReceiveProps:function(props){var 
+animation=props.animation;var duration=props.duration;var easing=props.easing;var transition=props.transition;var transitionValue=props.transitionValue;var onAnimationBegin=props.onAnimationBegin;var onAnimationEnd=props.onAnimationEnd;
+
+if(transition){
+var transitionValues={};
+var style=props.style;
+if(transitionValue!==undefined){
+var transitionStyle={};
+transitionStyle[transition]=transitionValue;
+style=[style,transitionStyle];}
+
+var values=getStyleValues(transition,style);
+this.transitionTo(values,duration,easing);}else 
+if(animation!==this.props.animation){
+if(animation){
+if(this.state.scheduledAnimation){
+this.setState({scheduledAnimation:animation});}else 
+{
+onAnimationBegin();
+this[animation](duration).then(onAnimationEnd);}}else 
+
+{
+this.stopAnimation();}}},
+
+
+
+
+_handleLayout:function(event){var _this3=this;var _props2=
+this.props;var duration=_props2.duration;var onLayout=_props2.onLayout;var onAnimationBegin=_props2.onAnimationBegin;var onAnimationEnd=_props2.onAnimationEnd;var 
+scheduledAnimation=this.state.scheduledAnimation;
+
+this._layout=event.nativeEvent.layout;
+if(onLayout){
+onLayout(event);}
+
+
+if(scheduledAnimation&&!this._timer){
+onAnimationBegin();
+this.setState({scheduledAnimation:false},function(){
+_this3[scheduledAnimation](duration).then(onAnimationEnd);});}},
+
+
+
+
+animate:function(duration,animationStyle){var _this4=this;
+return new Promise(function(resolve,reject){
+_this4.setState({
+animationStyle:animationStyle},
+function(){return _this4._startAnimation(duration,0,resolve);});});},
+
+
+
+stopAnimation:function(){
+this.setState({
+scheduledAnimation:false,
+animationStyle:{}});
+
+this.state.animationValue.stopAnimation();
+if(this._timer){
+clearTimeout(this._timer);
+this._timer=false;}},
+
+
+
+_startAnimation:function(duration,iteration,callback){var _this5=this;var 
+animationValue=this.state.animationValue;var _props3=
+this.props;var direction=_props3.direction;var easing=_props3.easing;var iterationCount=_props3.iterationCount;
+easing=easing||'ease-in-out';
+iteration=iteration||0;
+var fromValue=getAnimationOrigin(iteration,direction);
+var toValue=getAnimationTarget(iteration,direction);
+animationValue.setValue(fromValue);
+
+
+if((
+direction==='reverse'||
+direction==='alternate'&&!toValue||
+direction==='alternate-reverse'&&!toValue)&&
+easing.match(/^ease\-(in|out)$/)){
+if(easing.indexOf('-in')!==-1){
+easing=easing.replace('-in','-out');}else 
+{
+easing=easing.replace('-out','-in');}}
+
+
+Animated.timing(animationValue,{
+toValue:toValue,
+easing:EASING_FUNCTIONS[easing],
+isInteraction:!iterationCount,
+duration:duration||this.props.duration||1000}).
+start(function(endState){
+iteration++;
+if(endState.finished&&_this5.props.animation&&(iterationCount==='infinite'||iteration<iterationCount)){
+_this5._startAnimation(duration,iteration,callback);}else 
+if(callback){
+callback(endState);}});},
+
+
+
+
+transition:function(fromValues,toValues,duration,easing){
+
+if(arguments.length>4){
+var property=arguments[0];
+fromValues={};
+toValues={};
+fromValues[property]=arguments[1];
+toValues[property]=arguments[2];
+return this.transition(fromValues,toValues,arguments[3],arguments[4]);}
+
+
+var transitionKeys=Object.keys(toValues);var _getTransitionState=
+this.getTransitionState(transitionKeys);var transitionValues=_getTransitionState.transitionValues;var currentTransitionValues=_getTransitionState.currentTransitionValues;var transitionStyle=_getTransitionState.transitionStyle;
+
+transitionKeys.forEach(function(property){
+var fromValue=fromValues[property];
+var toValue=toValues[property];
+var transitionValue=transitionValues[property];
+if(!transitionValue){
+transitionValue=new Animated.Value(0);}
+
+transitionStyle[property]=transitionValue;
+
+if(INTERPOLATION_STYLE_PROPERTIES.indexOf(property)!==-1){
+transitionValue.setValue(0);
+transitionStyle[property]=transitionValue.interpolate({
+inputRange:[0,1],
+outputRange:[fromValue,toValue]});
+
+currentTransitionValues[property]=toValue;
+toValues[property]=1;}else 
+{
+transitionValue.setValue(fromValue);}});
+
+
+this.setState({transitionValues:transitionValues,transitionStyle:transitionStyle,currentTransitionValues:currentTransitionValues},function(){
+this._transitionToValues(toValues,duration||this.props.duration,easing);});},
+
+
+
+transitionTo:function(toValues,duration,easing){var _this6=this;
+
+if(arguments.length>3){
+var property=arguments[0];
+toValues={};
+toValues[property]=arguments[1];
+return this.transitionTo(toValues,arguments[2],arguments[3]);}var 
+
+
+currentTransitionValues=this.state.currentTransitionValues;
+
+var transitions={
+from:{},
+to:{}};
+
+
+Object.keys(toValues).forEach(function(property){
+var toValue=toValues[property];
+
+if(INTERPOLATION_STYLE_PROPERTIES.indexOf(property)===-1&&_this6.state.transitionStyle[property]&&_this6.state.transitionStyle[property]===_this6.state.transitionValues[property]){
+return _this6._transitionToValue(_this6.state.transitionValues[property],toValue,duration,easing);}
+
+
+var currentTransitionValue=currentTransitionValues[property];
+if(typeof currentTransitionValue==='undefined'&&_this6.props.style){
+var style=getStyleValues(property,_this6.props.style);
+currentTransitionValue=style[property];}
+
+transitions.from[property]=currentTransitionValue;
+transitions.to[property]=toValue;});
+
+
+if(Object.keys(transitions.from).length){
+this.transition(transitions.from,transitions.to,duration,easing);}},
+
+
+
+_transitionToValues:function(toValues,duration,easing){var _this7=this;
+Object.keys(toValues).forEach(function(property){
+var transitionValue=_this7.state.transitionValues[property];
+var toValue=toValues[property];
+_this7._transitionToValue(transitionValue,toValue,duration,easing);});},
+
+
+
+_transitionToValue:function(transitionValue,toValue,duration,easing){
+if(duration||easing){
+Animated.timing(transitionValue,{
+toValue:toValue,
+duration:duration||1000,
+easing:EASING_FUNCTIONS[easing||'ease-in-out']}).
+start();}else 
+{
+Animated.spring(transitionValue,{
+toValue:toValue}).
+start();}},
+
+
+
+bounce:function(duration){
+return this.animate(duration,{
+transform:[{
+translateY:this.state.animationValue.interpolate({
+inputRange:[0,0.2,0.4,0.43,0.53,0.7,0.8,0.9,1],
+outputRange:[0,0,-30,-30,0,-15,0,-4,0]})}]});},
+
+
+
+
+
+flash:function(duration,times){
+var inputRange=[0];
+var outputRange=[1];
+times=Math.abs(times||2)*2;
+for(var i=1;i<=times;i++){
+inputRange.push(i/times);
+outputRange.push(i%2?0:1);}
+
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:inputRange,outputRange:outputRange})});},
+
+
+
+
+jello:function(duration,skew,times){
+var inputRange=[0];
+var outputRange=['0 deg'];
+skew=skew||12.5;
+times=Math.abs(times||4)*2;
+for(var i=1;i<times;i++){
+inputRange.push(i/times);
+outputRange.push(skew/i*(i%2?-1:1)+' deg');}
+
+inputRange.push(1);
+outputRange.push('0 deg');
+
+return this.animate(duration,{
+transform:[{
+skewX:this.state.animationValue.interpolate({inputRange:inputRange,outputRange:outputRange})},
+{
+skewY:this.state.animationValue.interpolate({inputRange:inputRange,outputRange:outputRange})}]});},
+
+
+
+
+pulse:function(duration){
+return this.animate(duration,{
+transform:[{
+scale:this.state.animationValue.interpolate({
+inputRange:[0,0.5,1],
+outputRange:[1,1.05,1]})}]});},
+
+
+
+
+
+rubberBand:function(duration){
+return this.animate(duration,{
+transform:[{
+scaleX:this.state.animationValue.interpolate({
+inputRange:[0,0.3,0.4,0.5,0.65,0.75,1],
+outputRange:[1,1.25,0.75,1.15,0.95,1.05,1]})},
+
+{
+scaleY:this.state.animationValue.interpolate({
+inputRange:[0,0.3,0.4,0.5,0.65,0.75,1],
+outputRange:[1,0.75,1.25,0.85,1.05,0.95,1]})}]});},
+
+
+
+
+
+shake:function(duration,distance,times){
+var inputRange=[0];
+var outputRange=[0];
+distance=Math.abs(distance||10);
+times=Math.abs(times||5);
+for(var i=1;i<=times;i++){
+inputRange.push(i/times);
+outputRange.push(i===times?0:(i%2?1:-1)*distance);}
+
+return this.animate(duration,{
+transform:[{
+translateX:this.state.animationValue.interpolate({
+inputRange:inputRange,outputRange:outputRange})}]});},
+
+
+
+
+
+swing:function(duration){
+return this.animate(duration,{
+transform:[{
+rotateZ:this.state.animationValue.interpolate({
+inputRange:[0,0.2,0.4,0.6,0.8,1],
+outputRange:['0 deg','15 deg','-10 deg','5 deg','-5 deg','0 deg']})}]});},
+
+
+
+
+
+tada:function(duration){
+return this.animate(duration,{
+transform:[{
+scale:this.state.animationValue.interpolate({
+inputRange:[0,0.1,0.2,0.3,0.9,1],
+outputRange:[1,0.9,0.9,1.1,1.1,1]})},
+
+{
+rotateZ:this.state.animationValue.interpolate({
+inputRange:[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],
+outputRange:['0 deg','-3 deg','-3 deg','3 deg','-3 deg','3 deg','-3 deg','3 deg','-3 deg','3 deg','0 deg']})}]});},
+
+
+
+
+
+wobble:function(duration){
+var width=(this._layout||Dimensions.get('window')).width;
+return this.animate(duration,{
+transform:[{
+translateX:this.state.animationValue.interpolate({
+inputRange:[0,0.15,0.3,0.45,0.6,0.75,1],
+outputRange:[0,-0.25*width,0.2*width,-0.15*width,0.1*width,-0.05*width,1]})},
+
+{
+rotateZ:this.state.animationValue.interpolate({
+inputRange:[0,0.15,0.3,0.45,0.6,0.75,1],
+outputRange:['0 deg','-5 deg','3 deg','-3 deg','2 deg','-1 deg','0 deg']})}]});},
+
+
+
+
+
+_bounce:function(duration,direction,originOrDestination){
+var style={
+opacity:this.state.animationValue.interpolate({
+inputRange:direction==='in'?[0,0.6,1]:[0,0.55,1],
+outputRange:direction==='in'?[0,1,1]:[1,1,0]})};
+
+
+if(originOrDestination){
+style.transform=createKeyedArray(this._getBounceTransformation(direction,originOrDestination));}
+
+return this.animate(duration,style);},
+
+
+_getBounceTransformation:function(direction,originOrDestination){
+var windowSize=Dimensions.get('window');
+var animationValue=getAnimationValueForDirection(direction,originOrDestination,windowSize.height,windowSize.width);
+var translateKey=originOrDestination==='up'||originOrDestination==='down'?'translateY':'translateX';
+var modifier=animationValue>0?1:-1;
+
+var transformation={};
+transformation[translateKey]=this.state.animationValue.interpolate({
+inputRange:direction==='in'?[0,0.6,0.75,0.9,1]:[0,0.2,0.4,0.45,1],
+outputRange:direction==='in'?[animationValue,25*modifier,-10*modifier,5*modifier,0]:[0,10*modifier,-20*modifier,-20*modifier,animationValue]});
+
+return transformation;},
+
+
+bounceIn:function(duration){
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.6,1],
+outputRange:[0,1,1]}),
+
+transform:[{
+scale:this.state.animationValue.interpolate({
+inputRange:[0,0.2,0.4,0.6,0.8,1],
+outputRange:[0.3,1.1,0.9,1.03,0.97,1]})}]});},
+
+
+
+
+
+bounceOut:function(duration){
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.55,1],
+outputRange:[1,1,0]}),
+
+transform:[{
+scale:this.state.animationValue.interpolate({
+inputRange:[0,0.2,0.5,0.55,1],
+outputRange:[1,0.9,1.1,1.1,0.3]})}]});},
+
+
+
+
+
+bounceInDown:function(duration){
+return this._bounce(duration,'in','down');},
+
+
+bounceInUp:function(duration){
+return this._bounce(duration,'in','up');},
+
+
+bounceInLeft:function(duration){
+return this._bounce(duration,'in','left');},
+
+
+bounceInRight:function(duration){
+return this._bounce(duration,'in','right');},
+
+
+bounceOutDown:function(duration){
+return this._bounce(duration,'out','down');},
+
+
+bounceOutUp:function(duration){
+return this._bounce(duration,'out','up');},
+
+
+bounceOutLeft:function(duration){
+return this._bounce(duration,'out','left');},
+
+
+bounceOutRight:function(duration){
+return this._bounce(duration,'out','right');},
+
+
+flipInX:function(duration){
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.6,1],
+outputRange:[0,1,1]}),
+
+transform:[{
+rotateX:this.state.animationValue.interpolate({
+inputRange:[0,0.4,0.6,0.8,1],
+outputRange:['90 deg','-20 deg','10 deg','-5 deg','0 deg']})}]});},
+
+
+
+
+
+flipInY:function(duration){
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.6,1],
+outputRange:[0,1,1]}),
+
+transform:[{
+rotateY:this.state.animationValue.interpolate({
+inputRange:[0,0.4,0.6,0.8,1],
+outputRange:['90 deg','-20 deg','10 deg','-5 deg','0 deg']})}]});},
+
+
+
+
+
+flipOutX:function(duration){
+return this.animate(duration||750,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.3,1],
+outputRange:[1,1,0]}),
+
+transform:[{
+rotateX:this.state.animationValue.interpolate({
+inputRange:[0,0.3,1],
+outputRange:['0 deg','-20 deg','90 deg']})}]});},
+
+
+
+
+
+flipOutY:function(duration){
+return this.animate(duration||750,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.3,1],
+outputRange:[1,1,0]}),
+
+transform:[{
+rotateY:this.state.animationValue.interpolate({
+inputRange:[0,0.3,1],
+outputRange:['0 deg','-20 deg','90 deg']})}]});},
+
+
+
+
+
+lightSpeedIn:function(duration){
+var width=(this._layout||Dimensions.get('window')).width;
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.6,1],
+outputRange:[0,1,1]}),
+
+transform:[{
+translateX:this.state.animationValue.interpolate({
+inputRange:[0,0.6,1],
+outputRange:[width,0,0]})},
+
+{
+skewX:this.state.animationValue.interpolate({
+inputRange:[0,0.6,0.8,1],
+outputRange:['-30 deg','20 deg','-5 deg','0 deg']})}]});},
+
+
+
+
+
+lightSpeedOut:function(duration){
+var width=(this._layout||Dimensions.get('window')).width;
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,1],
+outputRange:[1,0]}),
+
+transform:[{
+translateX:this.state.animationValue.interpolate({
+inputRange:[0,1],
+outputRange:[0,width]})},
+
+{
+skewX:this.state.animationValue.interpolate({
+inputRange:[0,1],
+outputRange:['0 deg','30 deg']})}]});},
+
+
+
+
+
+_fade:function(duration,direction,originOrDestination,isBig){
+var style={
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,1],
+outputRange:direction==='in'?[0,1]:[1,0]})};
+
+
+if(originOrDestination){
+style.transform=createKeyedArray(this._getSlideTransformation(direction,originOrDestination,isBig));}
+
+return this.animate(duration,style);},
+
+
+fadeIn:function(duration){
+return this._fade(duration,'in');},
+
+
+fadeInDown:function(duration){
+return this._fade(duration,'in','down');},
+
+
+fadeInUp:function(duration){
+return this._fade(duration,'in','up');},
+
+
+fadeInLeft:function(duration){
+return this._fade(duration,'in','left');},
+
+
+fadeInRight:function(duration){
+return this._fade(duration,'in','right');},
+
+
+fadeOut:function(duration){
+return this._fade(duration,'out');},
+
+
+fadeOutDown:function(duration){
+return this._fade(duration,'out','down');},
+
+
+fadeOutUp:function(duration){
+return this._fade(duration,'out','up');},
+
+
+fadeOutLeft:function(duration){
+return this._fade(duration,'out','left');},
+
+
+fadeOutRight:function(duration){
+return this._fade(duration,'out','right');},
+
+
+fadeInDownBig:function(duration){
+return this._fade(duration,'in','down',true);},
+
+
+fadeInUpBig:function(duration){
+return this._fade(duration,'in','up',true);},
+
+
+fadeInLeftBig:function(duration){
+return this._fade(duration,'in','left',true);},
+
+
+fadeInRightBig:function(duration){
+return this._fade(duration,'in','right',true);},
+
+
+fadeOutDownBig:function(duration){
+return this._fade(duration,'out','down',true);},
+
+
+fadeOutUpBig:function(duration){
+return this._fade(duration,'out','up',true);},
+
+
+fadeOutLeftBig:function(duration){
+return this._fade(duration,'out','left',true);},
+
+
+fadeOutRightBig:function(duration){
+return this._fade(duration,'out','right',true);},
+
+
+_getSlideTransformation:function(direction,originOrDestination,isBig){
+var size=isBig||!this._layout?Dimensions.get('window'):this._layout;
+var animationValue=getAnimationValueForDirection(direction,originOrDestination,size.height,size.width);
+var translateKey=originOrDestination==='up'||originOrDestination==='down'?'translateY':'translateX';
+
+var transformation={};
+transformation[translateKey]=this.state.animationValue.interpolate({
+inputRange:[0,1],
+outputRange:direction==='in'?[animationValue,0]:[0,animationValue]});
+
+return transformation;},
+
+
+_slide:function(duration,direction,originOrDestination){
+return this.animate(duration,{
+transform:createKeyedArray(this._getSlideTransformation(direction,originOrDestination))});},
+
+
+
+slideInDown:function(duration){
+return this._slide(duration,'in','down');},
+
+
+slideInUp:function(duration){
+return this._slide(duration,'in','up');},
+
+
+slideInLeft:function(duration){
+return this._slide(duration,'in','left');},
+
+
+slideInRight:function(duration){
+return this._slide(duration,'in','right');},
+
+
+slideOutDown:function(duration){
+return this._slide(duration,'out','down');},
+
+
+slideOutUp:function(duration){
+return this._slide(duration,'out','up');},
+
+
+slideOutLeft:function(duration){
+return this._slide(duration,'out','left');},
+
+
+slideOutRight:function(duration){
+return this._slide(duration,'out','right');},
+
+
+_zoom:function(duration,direction,originOrDestination){
+var style={
+opacity:this.state.animationValue.interpolate({
+inputRange:direction==='in'?[0,0.6,1]:[0,0.4,1],
+outputRange:direction==='in'?[0,1,1]:[1,1,0]})};
+
+
+if(originOrDestination){
+style.transform=createKeyedArray(this._getZoomTransformation(direction,originOrDestination));}
+
+return this.animate(duration,style);},
+
+
+_getZoomTransformation:function(direction,originOrDestination){
+var windowSize=Dimensions.get('window');
+var animationValue=getAnimationValueForDirection(direction,originOrDestination,windowSize.height,windowSize.width);
+var translateKey=originOrDestination==='up'||originOrDestination==='down'?'translateY':'translateX';
+var modifier=animationValue>0?1:-1;
+
+var transformation={
+scale:this.state.animationValue.interpolate({
+inputRange:direction==='in'?[0,0.6,1]:[0,0.4,1],
+outputRange:direction==='in'?[0.1,0.457,1]:[1,0.457,0.1]})};
+
+
+transformation[translateKey]=this.state.animationValue.interpolate({
+inputRange:direction==='in'?[0,0.6,1]:[0,0.4,1],
+outputRange:direction==='in'?[animationValue,-60*modifier,0]:[0,-60*modifier,animationValue]});
+
+return transformation;},
+
+
+zoomIn:function(duration){
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.5,1],
+outputRange:[0,1,1]}),
+
+transform:[{
+scale:this.state.animationValue.interpolate({
+inputRange:[0,1],
+outputRange:[0.3,1]})}]});},
+
+
+
+
+
+zoomOut:function(duration){
+return this.animate(duration,{
+opacity:this.state.animationValue.interpolate({
+inputRange:[0,0.5,1],
+outputRange:[1,1,0]}),
+
+transform:[{
+scale:this.state.animationValue.interpolate({
+inputRange:[0,0.5,1],
+outputRange:[1,0.3,0]})}]});},
+
+
+
+
+
+zoomInDown:function(duration){
+return this._zoom(duration,'in','down');},
+
+
+zoomInUp:function(duration){
+return this._zoom(duration,'in','up');},
+
+
+zoomInLeft:function(duration){
+return this._zoom(duration,'in','left');},
+
+
+zoomInRight:function(duration){
+return this._zoom(duration,'in','right');},
+
+
+zoomOutDown:function(duration){
+return this._zoom(duration,'out','down');},
+
+
+zoomOutUp:function(duration){
+return this._zoom(duration,'out','up');},
+
+
+zoomOutLeft:function(duration){
+return this._zoom(duration,'out','left');},
+
+
+zoomOutRight:function(duration){
+return this._zoom(duration,'out','right');},
+
+
+render:function(){var _this8=this;var _props4=
+this.props;var style=_props4.style;var children=_props4.children;var onLayout=_props4.onLayout;var animation=_props4.animation;var duration=_props4.duration;var delay=_props4.delay;var transition=_props4.transition;var transitionValue=_props4.transitionValue;var props=babelHelpers.objectWithoutProperties(_props4,['style','children','onLayout','animation','duration','delay','transition','transitionValue']);
+if(animation&&transition){
+throw new Error('You cannot combine animation and transition props');}var 
+
+scheduledAnimation=this.state.scheduledAnimation;
+var hideStyle=scheduledAnimation&&scheduledAnimation.indexOf('In')!==-1?{opacity:0}:false;
+return React.createElement(Animatable,babelHelpers.extends({},
+props,{
+ref:function(component){return _this8._root=component;},
+onLayout:this._handleLayout,
+style:[
+style,
+this.state.animationStyle,
+wrapStyleTransforms(this.state.transitionStyle),
+hideStyle]}),
+
+children);}});};
+
+
+
+
+module.exports={
+createAnimatableComponent:createAnimatableComponent,
+View:createAnimatableComponent(View),
+Text:createAnimatableComponent(Text),
+Image:createAnimatableComponent(Image)};
+});
+__d('image!loading',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/loading.imageset/loading@2x.png","uri":"loading","width":30,"height":21,"deprecated":true};
+});
+__d('somira/App/Component/HappyPurchase/ItemDetail.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+AppRegistry=
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;
+
+module.exports=React.createClass({displayName:'exports',
+componentDidMount:function(){},
+
+
+
+
+
+render:function(){
+return (
+React.createElement(View,{style:css.container},
+React.createElement(Text,{style:css.welcome},'Welcome to ',
+this.props.item.explain,'!'),
+
+React.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+React.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
+__d('somira/App/Common/Tabs.js',function(global, require, module, exports) {  'use strict';
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');
+var Util=require('somira/App/Common/Util.js');
+var maxTabLength=4;var 
+
+
+StyleSheet=
+
+
+
+
+React.StyleSheet;var TouchableWithoutFeedback=React.TouchableWithoutFeedback;var Text=React.Text;var View=React.View;var ScrollView=React.ScrollView;
+
+
+var ItemTab=React.createClass({displayName:'ItemTab',
+render:function(){
+var item=this.props.item;
+return (
+React.createElement(View,{style:css.itemTab},'item.text'));}});
 
 
 
 
 module.exports=React.createClass({displayName:'exports',
+
+getDefaultProps:function(){
+return {
+api:'http://www.tmall.com/go/rgn/3c/wh-fp-m-index-teh.php?1'};},
+
+
+
+getInitialState:function(){
+return {
+dataSource:this.props.initData.tabDataSource,
+activeCatId:0};},
+
+
+
+handleCateChange:function(cateId){
+this.setState({
+activeCatId:cateId});
+
+
+
+this.props.updateCateItem&&this.props.updateCateItem(cateId);},
+
+
+renderItems:function(data){
+var me=this;
+var tabWidth=Util.size['width']/(me.state.dataSource.length>maxTabLength?maxTabLength:me.state.dataSource.length);
+return data.map(function(item,i){
+
+var style=me.state.activeCatId==item.code?css.itemActiveTab:{},
+styleTxt=me.state.activeCatId==item.code?css.itemActiveText:{};
+return (
+React.createElement(TouchableWithoutFeedback,{key:item.code,onPress:function(){return me.handleCateChange(item.code);}},
+React.createElement(View,{style:[css.itemTab,css.tabContainer,style,{width:tabWidth}],key:i},
+React.createElement(Text,{style:[css.itemText,styleTxt]},item.name))));});},
+
+
+
+
+
 render:function(){
-var data=this.props.data;
+var data=this.state.dataSource||[];
+
 return (
-React.createElement(View,{style:Style.sectionCell},
-React.createElement(View,{style:Style.sectionWrapper},
-React.createElement(Text,{style:Style.section},
-data.name))));},
+React.createElement(View,{style:{flexDirection:'row'}},
+
+data.length<=maxTabLength?
+
+this.renderItems(data):
+
+React.createElement(ScrollView,{ref:'scrollView',contentInset:{top:0},showsHorizontalScrollIndicator:true,
+style:css.tabContainer,contentContainerStyle:css.contentStyle,horizontal:true},
+this.renderItems(data))));}});
 
 
 
@@ -60513,259 +62048,898 @@ data.name))));},
 
 
 
-renderNodeCell:function(data){var _this2=this;
-return (
-React.createElement(NodeCell,{
-onSelectNode:this.props.onSelectNode,
-onSelectNode:
-function(data){return _this2.props.onSelectNode(data);},
+var css=StyleSheet.create({
+itemTab:{
+justifyContent:'center',
+height:40,
+paddingLeft:6,
+paddingRight:6,
+borderBottomWidth:3,
+borderBottomColor:'#F5FCFF'},
 
 
-data:data}));}});
-});
-__d('somira/App/Views/Topic/List.js',function(global, require, module, exports) {  'use strict';
-var React=require('react-native/Libraries/react-native/react-native.js');var 
+itemActiveTab:{
+borderBottomWidth:3,
+borderBottomColor:'#D91D36'},
 
+itemText:{
+color:'#757575',
+fontSize:14,
+textAlign:'center'},
 
-Text=
+itemActiveText:{
+color:'#D91D36',
+fontSize:14,
+fontWeight:'700'},
 
-
-
-React.Text;var View=React.View;var ListView=React.ListView;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;
-
-var Api=require('somira/App/Network/API.js');
-var TopicListCell=require('somira/App/Views/Topic/ListCell.js');
-var TopicView=require('somira/App/Views/Topic/View.js');
-
-var Style=React.StyleSheet.create({
-container:{
-backgroundColor:'#eeeeee',
+contentStyle:{
 flex:1,
+flexDirection:'row',
+justifyContent:'center'},
+
+tabContainer:{
+flex:1,
+height:40,
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+borderTopColor:'#eeeeee',
+borderTopWidth:1,
+backgroundColor:'#F5FCFF',
+marginTop:0}});
+});
+__d('somira/App/Component/HappyPurchase/LatestAnnounced.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+AppRegistry=
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){
+return (
+React.createElement(View,{style:css.container},
+React.createElement(Text,{style:css.welcome},'Welcome to 最新揭晓!'),
+
+
+React.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+React.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
+__d('somira/App/Component/HappyPurchase/Recharge.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+AppRegistry=
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){
+return (
+React.createElement(View,{style:css.container},
+React.createElement(Text,{style:css.welcome},'Welcome to 充值!'),
+
+
+React.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+React.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
+__d('somira/App/Component/HappyPurchase/Help.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Util=require('somira/App/Common/Util.js');var 
+
+
+AppRegistry=
+
+
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var ScrollView=React.ScrollView;var Image=React.Image;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){
+return (
+React.createElement(ScrollView,{contentContainerStyle:css.stage},
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'1. 充值问题?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'继续充值')),
+
+
+
+
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'2. 如何领奖?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'单注100万元以下奖金直接打到您的账户， 可以随时消费提现； 单注100万元以上奖金，请您放心，如果你中了大奖， 我们会有专人及时联系你，并全程协助您安全领奖。')),
+
+
+
+
+
+
+
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'3. 提现问题?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'找客服')),
+
+
+
+
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'4. 如何领奖?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'单注100万元以下奖金直接打到您的账户， 可以随时消费提现； 单注100万元以上奖金，请您放心，如果你中了大奖， 我们会有专人及时联系你，并全程协助您安全领奖。')),
+
+
+
+
+
+
+
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'5. 如何领奖?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'单注100万元以下奖金直接打到您的账户， 可以随时消费提现； 单注100万元以上奖金，请您放心，如果你中了大奖， 我们会有专人及时联系你，并全程协助您安全领奖。')),
+
+
+
+
+
+
+
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'1. 充值问题?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'继续充值')),
+
+
+
+
+React.createElement(View,{style:{left:10,marginTop:16}},
+React.createElement(Text,{style:{flex:1,fontSize:14,color:'red',top:-6}},'2. 如何领奖?'),
+React.createElement(Text,{style:{flex:1,fontSize:12,width:Util.size['width']-40,left:14}},'单注100万元以下奖金直接打到您的账户， 可以随时消费提现； 单注100万元以上奖金，请您放心，如果你中了大奖， 我们会有专人及时联系你，并全程协助您安全领奖。')),
+
+
+
+
+
+
+
+React.createElement(View,{style:{bottom:-10,marginTop:16,alignItems:'center',justifyContent:'center'}},
+React.createElement(Image,{style:css.resizeMode,source:require('image!温馨提示')}),
+React.createElement(Text,{style:{height:20,fontSize:10,color:'gray'}},'如果您的问题未能解决，请联系客服人员。'),
+
+
+React.createElement(Text,{style:{flex:1,fontSize:10,color:'gray',top:-6}},'客服电话400-000-0000'))));}});
+
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+stage:{
+backgroundColor:'#FFFFFF',
+paddingTop:0,
+paddingBottom:0},
+
+resizeMode:{
+width:120,
+paddingBottom:20,
+backgroundColor:'transparent',
+resizeMode:Image.resizeMode.contain}});
+});
+__d('image!温馨提示',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/温馨提示.imageset/温馨提示.png","uri":"温馨提示","width":203,"height":32,"deprecated":true};
+});
+__d('image!喇叭',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/喇叭.imageset/喇叭.png","uri":"喇叭","width":36,"height":26,"deprecated":true};
+});
+__d('somira/App/Views/User/UserCenter.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var NormalUserCenter=require('somira/App/Views/User/UserCenter-hp.js');
+var ItemDetail=require('somira/App/Component/ShoppingCart/ItemDetail.js');var 
+
+
+AppRegistry=
+
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var Platform=React.Platform;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){var _this=this;
+var userType=1;
+return (
+React.createElement(View,null,
+
+userType===1?
+React.createElement(NormalUserCenter,{onSelect:function(item){return _this.selectItem(item);}}):
+React.createElement(View,{style:css.container},
+React.createElement(Text,{style:css.welcome},'Welcome to userCenter!'),
+
+
+React.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+React.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2'))));},
+
+
+
+
+
+
+
+
+selectItem:function(item){
+
+if(Platform.OS==='ios'){
+this.props.navigator.push({
+title:'个人中心商品详细',
+component:ItemDetail,
+navigationBarHidden:false,
+passProps:{item:item}});}else 
+
+{}}});
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
+__d('somira/App/Views/User/UserCenter-hp.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+
+var ItemList=require('somira/App/Component/ShoppingCart/ItemList.js');
+var Util=require('somira/App/Common/Util.js');
+var Tabs=require('somira/App/Common/Tabs.js');
+var Button=require('react-native-button/Button.js');var 
+
+
+AppRegistry=
+
+
+
+
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var Image=React.Image;var TouchableOpacity=React.TouchableOpacity;var Alert=React.Alert;var Platform=React.Platform;
+
+module.exports=React.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+cateId:1,
+tabData:[
+{
+code:0,
+name:'所有参与'},
+{
+code:1,
+name:'历史记录',
+link:'http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1',
+icon:''}]};},
+
+
+
+
+_pop:function(msg){
+Alert.alert(
+'Alert Title',
+msg);
+
+return;},
+
+_handlePress:function(event){
+alert(event.type);},
+
+render:function(){var _this=this;
+var cateId=this.state.cateId;
+var tabDataSource=this.state.tabData;
+var userType=1;
+return (
+React.createElement(View,{style:css.flex},
+React.createElement(View,{style:[css.header]},
+React.createElement(View,{style:css.flexRow},
+React.createElement(View,{style:css.cellfixed},
+React.createElement(Image,{style:css.userPhoto,
+source:require('image!默认头像')})),
+
+React.createElement(View,{style:css.userDetail},
+React.createElement(Text,{style:css.userDesc,numberOfLines:2},'我有一只小海豚'),
+React.createElement(Text,{style:(css.userDesc,css.smallFont),numberOfLines:1},'余额:126666.00')),
+
+React.createElement(View,{style:css.cellfixed},
+React.createElement(View,{style:css.flexRow},
+React.createElement(Button,{onPress:function(type){return _this._handlePress({type:'消息'});}},
+React.createElement(Image,{style:css.btnPhotoMsg,
+source:require('image!消息按钮')})),
+
+React.createElement(Button,{onPress:function(type){return _this._handlePress({type:'设置'});}},
+React.createElement(Image,{style:css.btnPhotoSet,
+source:require('image!设置按钮')}))))),
+
+
+
+
+React.createElement(View,{style:css.center},
+React.createElement(Button,{containerStyle:css.rechargeBtn,
+onPress:function(type){return _this._handlePress({type:'充值'});}},
+React.createElement(Text,{style:css.rechargeBtnFont},'充值')))),
+
+
+
+
+
+React.createElement(Tabs,{updateCateItem:function(cateId){return _this.setState({cateId:cateId});},
+initData:{tabDataSource:tabDataSource}}),
+
+
+React.createElement(ItemList,{cateId:cateId,onSelect:this.props.onSelect})));}});
+
+
+
+
+
+
+var css=StyleSheet.create({
+flex:{
+flex:1},
+
+header:{
+height:Util.size['height']*0.26,
+backgroundColor:Util.headerColor,
+paddingTop:Util.size['height']*0.06},
+
+center:{
 justifyContent:'center',
 alignItems:'center'},
 
-listView:{
-marginTop:65,
-marginBottom:0}});
+rechargeBtn:{
+marginTop:10,
+
+width:Util.size['width']*0.76,
+height:25,
+overflow:'hidden',
+borderRadius:4,
+backgroundColor:'white'},
+
+rechargeBtnFont:{
+textAlign:'center',
+marginTop:4,
+color:'red'},
+
+flexRow:{
+
+flexDirection:'row'},
+
+cellfixed:{
+height:Util.size['height']*0.12,
+width:80,
+alignItems:'center',
+justifyContent:'center'},
+
+userDesc:{
+height:18,
+color:'#FFFFFF',
+textAlign:'left',
+marginRight:2,
+fontWeight:'bold'},
+
+userDetail:{
+flex:1,
+flexDirection:'column',
+height:Util.size['height']*0.12,
+justifyContent:'center',
+paddingTop:10},
+
+smallFont:{
+fontWeight:'100',
+fontSize:12,
+color:'#FFFFFF'},
+
+userPhoto:{
+width:50,
+height:50},
+
+btnPhotoMsg:{
+width:24,
+height:17,
+right:6,
+borderRadius:4,
+top:2},
+
+btnPhotoSet:{
+width:22,
+height:22,
+left:6}});
+});
+__d('somira/App/Component/ShoppingCart/ItemList.js',function(global, require, module, exports) {  'use strict';
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');
+var ItemCell=require('somira/App/Component/ShoppingCart/ItemCell.js');
+var Util=require('somira/App/Common/Util.js');var 
+
+
+StyleSheet=
 
 
 
-var NODE_ID=0;
-var CACHE=[];
 
-var TopicList=React.createClass({displayName:'TopicList',
+
+React.StyleSheet;var ListView=React.ListView;var Text=React.Text;var Image=React.Image;var View=React.View;var Platform=React.Platform;
+
+var API='http://ald.taobao.com/recommend.htm?appId=03507&areaId=330100&size=15&type=1';
+
+module.exports=React.createClass({displayName:'exports',
+
 getInitialState:function(){
 return {
-dataSource:new ListView.DataSource({
-rowHasChanged:function(r1,r2){return r1!==r2;}}),
+dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false};},
 
-loaded:false,
-loadingPage:0,
-currentPage:0,
-end:false};},
 
 
 componentDidMount:function(){
-this.fetchData(1);},
-
-cache:function(items){
-for(var i in items){
-CACHE.push(items[i]);}},
+this.fetchData();},
 
 
-fetchData:function(page){var _this=this;
-console.log('loading page '+page+'...');
-if(this.state.loadingPage==page)
-return;
+
+componentWillReceiveProps:function(nextProps){
 
 this.setState({
-loaded:false,
-loadingPage:page});
+loaded:false});
 
 
-var node_id=this.props.data.id;
-var limit=50;
-var offset=(page-1)*limit;
-if(node_id!=NODE_ID){
-CACHE=[];}
+this.fetchData(nextProps.cateId);},
 
 
-console.log(Api.NodeTopics(node_id,offset,limit));
-fetch(Api.NodeTopics(node_id,offset,limit)).
-then(function(response){
+fetchData:function(cateId){var _this=this;
+var apiUrl=cateId?API+'&cateId='+cateId:API;
+if(cateId>0){
+apiUrl+=cateId>1?'&page='+cateId:'&page=1';}
 
-return response.json();}).
+console.log(apiUrl);
 
-catch(function(error){
-React.AlertIOS.alert(
-'error',
-'请求失败:'+error.message);}).
-
-
+fetch(apiUrl).
+then(function(response){return response.json();}).
 then(function(responseData){
-if(!responseData.topics){
-_this.setState({end:true});
-return;}
 
-
-_this.cache(responseData.topics);
-NODE_ID=node_id;
-
-console.log('loaded data, page'+page);
-
-if(responseData.error){
-React.AlertIOS.alert(
-'error',
-responseData.error);}else 
-
-{
 _this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(CACHE),
-loaded:true,
-loading:false,
-end:false,
-currentPage:_this.state.currentPage+1});}}).
-
+dataSource:_this.state.dataSource.cloneWithRows(responseData.data),
+loaded:true});}).
 
 
 done();},
 
 
-render:function(){
-if(this.state.loadingPage==1&&!this.state.loaded){
+renderListView:function(){
+
+if(!this.state.loaded){
 return (
-React.createElement(View,{style:Style.container},
-React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}})));}
+React.createElement(Image,{style:css.loading,source:require('image!loading')}));}
 
-
-
-return this.renderTopicList();},
-
-
-renderFooter:function(){
-if(this.state.loaded){
-return React.createElement(View,{style:{marginVertical:30}},React.createElement(Text,null));}
-
-return React.createElement(ActivityIndicatorIOS,{color:'#356DD0',style:{marginVertical:30,marginBottom:30}});},
-
-
-onEndReached:function(){
-if(this.state.end||!this.state.loaded){
-return;}
-
-return this.fetchData(this.state.currentPage+1);},
-
-
-renderTopicList:function(){
-
+;
 return (
-React.createElement(ListView,{
-style:Style.listView,
-ref:'listview',
-pageSize:15,
+React.createElement(ListView,{contentInset:{top:0},
 dataSource:this.state.dataSource,
-renderFooter:this.renderFooter,
-renderRow:this.renderTopicListCell,
-onEndReached:this.onEndReached,
-automaticallyAdjustContentInsets:false,
-showsVerticalScrollIndicator:false}));},
+renderRow:this.renderRow,
+style:css.listView}));},
 
 
 
-renderTopicListCell:function(data){var _this2=this;
+renderRow:function(item){
 return (
-React.createElement(TopicListCell,{
-onSelect:
-function(){return _this2.selectTopic(data);},
-
-data:data}));},
+React.createElement(ItemCell,{item:item,onSelect:this.props.onSelect.bind(this,item)}));},
 
 
-selectTopic:function(data){
-this.props.navigator.push({
-title:'详细'+(data.replies_count?'（'+data.replies_count.toString()+'条回复）':''),
-component:TopicView,
-passProps:{
-data:data}});}});
+render:function(){
+return (
+this.renderListView());}});
 
 
 
 
 
+var css=StyleSheet.create({
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:Image.resizeMode.contain,
+width:Util.size['width']},
 
-module.exports=TopicList;
+listView:{}});
 });
-__d('somira/App/Views/Home/About.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
-
-TouchableHighlight=
+__d('somira/App/Component/ShoppingCart/ItemCell.js',function(global, require, module, exports) {  'use strict';
 
 
 
-React.TouchableHighlight;var Text=React.Text;var Image=React.Image;var View=React.View;
 
-var Style=React.StyleSheet.create({
+var React=require('react-native/Libraries/react-native/react-native.js');
+var Util=require('somira/App/Common/Util.js');
+var Progress=require('somira/App/Common/Progress.js');var 
+
+
+StyleSheet=
+
+
+
+
+React.StyleSheet;var TouchableOpacity=React.TouchableOpacity;var Text=React.Text;var Image=React.Image;var View=React.View;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){
+var item=this.props.item;
+var progressNum=parseFloat(item.originalprice)/(parseFloat(item.price)+parseFloat(item.originalprice));
+
+return (
+React.createElement(TouchableOpacity,{onPress:this.props.onSelect},
+React.createElement(View,{style:css.container},
+React.createElement(Image,{style:css.goodImg,source:{uri:'http:'+item.img}}),
+React.createElement(View,{style:css.goodInfo},
+React.createElement(Text,{style:css.goodTit,numberOfLines:2},item.txt),
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10}),numberOfLines:1},item.explain),
+
+
+
+
+
+
+React.createElement(View,{style:css.progress},
+React.createElement(Progress,{progress:progressNum})),
+
+React.createElement(View,{style:css.goodRow},
+React.createElement(View,null,
+React.createElement(Text,{style:css.redPrice},
+item.originalprice),
+
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10})},'总需')),
+
+React.createElement(View,null,
+React.createElement(Text,{style:css.whitePrice},
+item.price),
+
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10})},'剩余')),
+
+React.createElement(View,{style:css.goodBtnWarp},
+React.createElement(Text,{style:css.goodBtn},'参与')))))));}});
+
+
+
+
+
+
+
+
+
+
+var css=StyleSheet.create({
 container:{
-backgroundColor:'#ffffff',
+flex:1,
+paddingTop:10,
+paddingBottom:2,
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+
+goodImg:{
+width:60,
+height:60,
+marginRight:15,
+left:10},
+
+
+goodInfo:{
+flex:1,
+flexDirection:'column'},
+
+goodTit:{
+
+color:'#000000',
+textAlign:'left',
+marginRight:2},
+
+
+goodRow:{
+flexDirection:'row',
+alignItems:'center',
+marginBottom:10},
+
+redPrice:{
+color:'#c40001',
+width:(Util.size['width']-70)/2},
+
+whitePrice:{
+fontSize:12,
+color:'#b0b0b0'},
+
+
+goodExtra:{
+flexDirection:'row',
+alignItems:'center',
+justifyContent:'space-between'},
+
+goodSold:{
+color:'#b0b0b0'},
+
+goodBtnWarp:{
+position:'absolute',
+right:20,
+top:1,
+
+borderWidth:1,
+padding:5,
+borderColor:'#3164ce',
+borderRadius:3},
+
+goodBtn:{
+color:'#3164ce'},
+
+progress:{
+width:Util.size['width']-158,
+marginTop:5,
+marginBottom:5}});
+});
+__d('image!默认头像',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/默认头像.imageset/默认头像.png","uri":"默认头像","width":200,"height":200,"deprecated":true};
+});
+__d('image!消息按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/消息按钮.imageset/消息按钮.png","uri":"消息按钮","width":48,"height":36,"deprecated":true};
+});
+__d('image!设置按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/设置按钮.imageset/设置按钮.png","uri":"设置按钮","width":48,"height":48,"deprecated":true};
+});
+__d('somira/App/Component/ShoppingCart/ItemDetail.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+AppRegistry=
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;
+
+module.exports=React.createClass({displayName:'exports',
+render:function(){
+return (
+React.createElement(View,{style:css.container},
+React.createElement(Text,{style:css.welcome},'Welcome to ',
+this.props.item.explain,'!'),
+
+React.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+React.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
 flex:1,
 justifyContent:'center',
 alignItems:'center',
-padding:10},
+backgroundColor:'#F5FCFF'},
 
-ad:{
-fontSize:18,
-fontWeight:'bold',
-textAlign:'left'},
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
 
-link:{
-marginTop:20,
-color:'#356DD0'},
-
-logo:{
-height:150,
-width:150}});
-
-
-
-var About=React.createClass({displayName:'About',
-render:function(){var _this=this;
-return (
-React.createElement(View,{style:Style.container},
-React.createElement(Image,{style:Style.logo,source:{uri:'https://ruby-china-files.b0.upaiyun.com/assets/big_logo-5cdc3135cbb21938b8cd789bb9ffaa13.png'}}),
-React.createElement(Text,{style:Style.ad},'Ruby China，对！没错！'),
-
-
-React.createElement(Text,{style:Style.ad},'这里就是 Ruby 社区，目前这里已经是国内最权威的 Ruby 社区，拥有国内所有资深的 Ruby 工程师。'),
-
-
-
-
-React.createElement(TouchableHighlight,{onPress:function(){return _this._onPress('ReactNative somira','http://github.com/henter/ReactNativesomira');}},
-React.createElement(Text,{style:Style.link},'http://github.com/henter/ReactNativesomira'))));},
-
-
-
-
-
-
-
-
-
-
-_onPress:function(title,url){
-
-this.props.navigator.push({
-title:title,
-component:require('somira/App/Views/Web/index.js'),
-passProps:{url:url}});}});
-
-
-
-
-
-module.exports=About;
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
 });
-__d('somira/App/Views/Web/index.js',function(global, require, module, exports) {  'use strict';
+__d('somira/App/Views/Cart/ShoppingCart.js',function(global, require, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
 
+var ItemList=require('somira/App/Component/ShoppingCart/ItemList.js');
+var ItemDetail=require('somira/App/Component/ShoppingCart/ItemDetail.js');
+var Util=require('somira/App/Common/Util.js');
+var Tabs=require('somira/App/Common/Tabs.js');var 
+
+
+AppRegistry=
+
+
+
+
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var ScrollView=React.ScrollView;var TouchableOpacity=React.TouchableOpacity;var Alert=React.Alert;var Platform=React.Platform;
+
+module.exports=React.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+cateId:0};},
+
+
+_pop:function(msg){
+Alert.alert(
+'Alert Title',
+msg);
+
+return;},
+
+render:function(){var _this=this;
+var cateId=this.state.cateId;
+var userType=1;
+var tabLink='http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1';
+var tabDataSource=[
+{code:0,name:'我的方案'},
+{code:1,name:'乐夺宝',link:tabLink,icon:''}];
+
+return (
+React.createElement(View,{style:css.flex},
+React.createElement(View,{style:[css.header,css.row]},
+React.createElement(TouchableOpacity,{style:css.left,onPress:this._pop.bind(this,'管理')},
+React.createElement(Text,{style:css.fontFFF},'管理')),
+
+
+React.createElement(View,{style:(css.header,css.amount)},
+React.createElement(View,{style:css.center},
+React.createElement(Text,{style:(css.amountFontText,css.fontBold)},'合计:9828')),
+
+React.createElement(View,{style:css.center},
+React.createElement(Text,{style:css.amountFontText},'方案:715 乐夺宝:9113'))),
+
+
+
+React.createElement(View,{style:{backgroundColor:'#fefefe',top:22,width:1,height:48,right:0}}),
+
+React.createElement(TouchableOpacity,{style:css.right,onPress:this._pop.bind(this,'结算')},
+React.createElement(Text,{style:css.fontFFF},'结算'))),
+
+
+
+
+
+userType===1?
+React.createElement(Tabs,{updateCateItem:function(cateId){return _this.setState({cateId:cateId});},
+initData:{tabDataSource:tabDataSource}}):
+React.createElement(View,null),
+
+
+
+React.createElement(ItemList,{cateId:cateId,onSelect:function(item){return _this.selectItem(item);}})));},
+
+
+
+
+
+selectItem:function(item){
+
+if(Platform.OS==='ios'){
+this.props.navigator.push({
+title:item.txt,
+component:ItemDetail,
+navigationBarHidden:false,
+index:3,
+passProps:{item:item}});}else 
+
+{}}});
+
+
+
+
+
+var css=StyleSheet.create({
+flex:{
+flex:1},
+
+row:{
+flexDirection:'row'},
+
+header:{
+height:76,
+backgroundColor:Util.headerColor},
+
+fontFFF:{
+color:'#fff',
+fontSize:17,
+fontWeight:'bold'},
+
+left:{
+justifyContent:'center',
+left:16,
+marginBottom:-16},
+
+right:{
+justifyContent:'center',
+right:-16,
+marginBottom:-16},
+
+center:{
+justifyContent:'center',
+alignItems:'center'},
+
+amount:{
+justifyContent:'center',
+marginBottom:-16,
+alignItems:'flex-end',
+width:Util.size['width']-100,
+right:6},
+
+amountFontText:{
+color:'#fff',
+fontSize:12},
+
+fontBold:{
+color:'#fff',
+fontWeight:'bold'}});
+});
+__d('somira/App/Test/test.js',function(global, require, module, exports) {  'use strict';
 
 
 
@@ -60773,31 +62947,101 @@ __d('somira/App/Views/Web/index.js',function(global, require, module, exports) {
 
 var React=require('react-native/Libraries/react-native/react-native.js');var 
 
-View=
+StyleSheet=
 
 
-React.View;var WebView=React.WebView;var StyleSheet=React.StyleSheet;
+
+
+
+
+
+React.StyleSheet;var ScrollView=React.ScrollView;var Platform=React.Platform;var SliderIOS=React.SliderIOS;var TouchableWithoutFeedback=React.TouchableWithoutFeedback;var PixelRatio=React.PixelRatio;var View=React.View;var Text=React.Text;
+
+var Animatable=require('react-native-animatable/index.js');
+
+if(!StyleSheet.flatten){
+StyleSheet.flatten=require('flattenStyle');}
+
+
+var Example=React.createClass({displayName:'Example',
+render:function(){var _this=this;
+return (
+React.createElement(View,{style:styles.container},
+React.createElement(TouchableWithoutFeedback,{onPress:function(){return _this.refs.view.bounce(1800);}},
+React.createElement(Animatable.View,{ref:'view'},
+React.createElement(Text,null,'Bounce me!')))));}});
+
+
+
+
+
+
 
 var styles=StyleSheet.create({
 container:{
 flex:1,
-backgroundColor:'#F6F6EF',
-flexDirection:'column'}});
+backgroundColor:'#F5FCFF',
+alignItems:'center',
+justifyContent:'center'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10,
+marginTop:Platform.OS==='ios'?40:20},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:20},
+
+slider:{
+height:30,
+margin:10},
+
+toggle:{
+width:120,
+backgroundColor:'#333',
+borderRadius:3,
+padding:5,
+fontSize:14,
+alignSelf:'center',
+textAlign:'center',
+margin:10,
+color:'rgba(255, 255, 255, 1)'},
+
+toggledOn:{
+color:'rgba(255, 33, 33, 1)',
+fontSize:16,
+transform:[{
+rotate:'8deg'},
+{
+translateY:-20}]},
+
+
+sectionHeader:{
+borderTopWidth:1/PixelRatio.get(),
+borderColor:'#ccc',
+backgroundColor:'#F5FCFF',
+padding:10},
+
+sectionHeaderText:{
+textAlign:'center',
+fontSize:16},
+
+animatableName:{
+color:'white',
+fontSize:20,
+textAlign:'center'},
+
+animatable:{
+padding:20,
+margin:10}});
 
 
 
-var Web=React.createClass({displayName:'Web',
-render:function(){
-return (
-React.createElement(View,{style:styles.container},
-React.createElement(WebView,{url:this.props.url})));}});
-
-
-
-
-
-module.exports=Web;
+module.exports=Example;
 });
 ;require("InitializeJavaScriptAppEngine");
 ;require("somira/index.ios.js");
-__SSTOKENSTRING = "@generated SignedSource<<509c0ba2bb258dc28fef7cf301396fe8>>";
+//# sourceMappingURL=/index.ios.map
