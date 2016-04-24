@@ -1,4 +1,4 @@
-# ReactNativeSomira1
+# ReactNativeSomira
 ReactNative iOS APP for somira
 
 # 使用main.jsbundle
