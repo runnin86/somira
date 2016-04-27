@@ -31,8 +31,8 @@ module.exports = React.createClass({
 				<View style={css.container}>
           <Image ref={component => this._animatables[item.id] = component} style={css.goodImg} source={{uri : img}} />
 					<View style={css.goodInfo}>
-						<Text style={css.goodTit} numberOfLines={2}>{item.name}</Text>
-            <Text style={css.goodTit,{fontWeight : '100',fontSize : 9,marginTop : 3}} numberOfLines={1}>{item.content}</Text>
+						<Text style={css.goodTit,{fontSize : 14}} numberOfLines={2}>{item.name}</Text>
+            <Text style={css.goodTit,{fontWeight : '100',fontSize : 10,marginTop : 4}} numberOfLines={1}>{item.content}</Text>
             {/*
             <View style={css.goodRow}>
 							<Text style={css.redPrice}><Text style={css.yen}>&yen;</Text> {item.orderprice || item.codeCount}</Text>
@@ -95,7 +95,7 @@ var css = StyleSheet.create({
   	// height : 16,
   	color : '#000000',
     textAlign: 'left',
-    marginRight: 2,
+    // marginRight: 2,
   },
   // 价格
   goodRow : {
@@ -123,12 +123,12 @@ var css = StyleSheet.create({
   goodBtnWarp : {
   	position : 'absolute',
   	right : 20,
-  	top : 1
+  	top : -4
   },
   goodBtnImg: {
-    width: 28,
-    height: 28,
-    borderRadius: 14
+    width: 36,
+    height: 36,
+    borderRadius: 18
   },
   progress: {
     width: (Util.size['width']-158),

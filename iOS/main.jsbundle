@@ -59598,7 +59598,7 @@ tabData:[
 code:0,
 name:'全部商品'},
 {
-code:'1',
+code:'10',
 name:'十元专场',
 link:'http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1',
 icon:''}],
@@ -60434,7 +60434,7 @@ StyleSheet=
 
 React.StyleSheet;var ListView=React.ListView;var Text=React.Text;var Image=React.Image;var View=React.View;
 
-var API='http://ald.taobao.com/recommend.htm?appId=03507&areaId=330100&size=15&page=1&type=1';
+var API='http://123.57.217.199:9587/api/v1/sml/oneBuyProject';
 
 module.exports=React.createClass({displayName:'exports',
 
@@ -60460,15 +60460,16 @@ this.fetchData(nextProps.cateId);},
 
 
 fetchData:function(cateId){var _this=this;
-var apiUrl=cateId?API+'&cateId='+cateId:API;
+var apiUrl=cateId?API+'?price='+cateId:API;
 
 fetch(apiUrl).
 then(function(response){return response.json();}).
-then(function(responseData){
-
+then(function(_ref){var code=_ref.code;var msg=_ref.msg;var results=_ref.results;
+if(code===1){
 _this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(responseData.data),
-loaded:true});}).
+dataSource:_this.state.dataSource.cloneWithRows(results.list),
+loaded:true});}}).
+
 
 
 done();},
@@ -60539,15 +60540,15 @@ this._animatables[id]['slideInLeft'](1000);},
 
 render:function(){var _this=this;
 var item=this.props.item;
-var progressNum=parseFloat(item.originalprice)/(parseFloat(item.price)+parseFloat(item.originalprice));
-
+var progressNum=(parseFloat(item.totalCount)-parseFloat(item.codeCount))/parseFloat(item.totalCount);
+var img=item.images.split(',')[0];
 return (
 React.createElement(TouchableOpacity,{onPress:this.props.onSelect},
 React.createElement(View,{style:css.container},
-React.createElement(Image,{ref:function(component){return _this._animatables[item.id]=component;},style:css.goodImg,source:{uri:'http:'+item.img}}),
+React.createElement(Image,{ref:function(component){return _this._animatables[item.id]=component;},style:css.goodImg,source:{uri:img}}),
 React.createElement(View,{style:css.goodInfo},
-React.createElement(Text,{style:css.goodTit,numberOfLines:2},item.txt),
-React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10}),numberOfLines:1},item.explain),
+React.createElement(Text,{style:(css.goodTit,{fontSize:14}),numberOfLines:2},item.name),
+React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10,marginTop:4}),numberOfLines:1},item.content),
 
 
 
@@ -60560,19 +60561,19 @@ React.createElement(Progress,{progress:progressNum})),
 React.createElement(View,{style:css.goodRow},
 React.createElement(View,null,
 React.createElement(Text,{style:css.redPrice},
-item.originalprice),
+item.totalCount),
 
 React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10})},'总需')),
 
 React.createElement(View,null,
 React.createElement(Text,{style:css.whitePrice},
-item.price),
+item.codeCount),
 
 React.createElement(Text,{style:(css.goodTit,{fontWeight:'100',fontSize:10})},'剩余')),
 
 React.createElement(View,{style:css.goodBtnWarp},
 React.createElement(Button,{onPress:function(name){return _this._pushCart(_this,item.id);}},
-React.createElement(Text,{style:css.goodBtn},'参与'))))))));}});
+React.createElement(Image,{style:css.goodBtnImg,source:{uri:'icon_addcar_big_black'}}))))))));}});
 
 
 
@@ -60609,8 +60610,8 @@ flexDirection:'column'},
 goodTit:{
 
 color:'#000000',
-textAlign:'left',
-marginRight:2},
+textAlign:'left'},
+
 
 
 goodRow:{
@@ -60638,15 +60639,12 @@ color:'#b0b0b0'},
 goodBtnWarp:{
 position:'absolute',
 right:20,
-top:1,
+top:-4},
 
-borderWidth:1,
-padding:5,
-borderColor:'#3164ce',
-borderRadius:3},
-
-goodBtn:{
-color:'#3164ce'},
+goodBtnImg:{
+width:36,
+height:36,
+borderRadius:18},
 
 progress:{
 width:Util.size['width']-158,
@@ -60667,7 +60665,7 @@ React.ProgressViewIOS;var StyleSheet=React.StyleSheet;var View=React.View;
 module.exports=React.createClass({displayName:'exports',
 getInitialState:function(){
 return {
-progress:0};},
+progress:this.props.progress};},
 
 
 componentDidMount:function(){},
