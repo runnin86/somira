@@ -15,3 +15,9 @@ jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?p
 取消注释下面这一行
 
 // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+
+# 如何隐藏TabBarIOS
+文件： RCTWrapperViewController.m
+方法： - (void)viewWillAppear:(BOOL)animated
+插入语句：
+self.navigationController.tabBarController.tabBar.hidden=self.navigationController.childViewControllers.count>1?YES:NO;

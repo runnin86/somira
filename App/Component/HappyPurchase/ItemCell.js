@@ -57,7 +57,7 @@ module.exports = React.createClass({
               </View>
               <View style={css.goodBtnWarp}>
                 <Button onPress={(name)=>this._pushCart(this,item.id)}>
-                  <Text style={css.goodBtn}>参与</Text>
+                  <Image style={css.goodBtnImg} source={{uri: 'icon_addcar_big_black'}}/>
                 </Button>
               </View>
             </View>
@@ -70,72 +70,69 @@ module.exports = React.createClass({
 
 // 组件样式
 var css = StyleSheet.create({
-    container: {
-    	flex : 1,
-      paddingTop: 10,
-      paddingBottom: 2,
-      flexDirection: 'row',
-      borderBottomColor : '#eeeeee',
-      borderBottomWidth : 1,
-      backgroundColor: '#ffffff',
-    },
-    //左侧商品图
-    goodImg : {
-    	width : 60,
-    	height : 60,
-    	marginRight: 15,
-      left: 10
-    },
-    //右侧商品信息
-    goodInfo : {
-    	flex : 1,
-    	flexDirection : 'column'
-    },
-    goodTit : {
-    	// height : 16,
-    	color : '#000000',
-      textAlign: 'left',
-      marginRight: 2,
-    },
-    // 价格
-    goodRow : {
-    	flexDirection : 'row',
-    	alignItems: 'center',
-    	marginBottom : 10
-    },
-    redPrice : {
-    	color : '#c40001',
-      width: (Util.size['width']-70)/2
-    },
-    whitePrice : {
-    	fontSize : 12,
-    	color : '#b0b0b0'
-    },
-    // 购买及按钮
-    goodExtra : {
-    	flexDirection :'row',
-    	alignItems: 'center',
-    	justifyContent : 'space-between'
-    },
-    goodSold : {
-    	color : '#b0b0b0'
-    },
-    goodBtnWarp : {
-    	position : 'absolute',
-    	right : 20,
-    	top : 1,
-    	// height : 35,
-    	borderWidth : 1,
-    	padding : 5,
-    	borderColor : '#3164ce',
-    	borderRadius : 3
-    },
-    goodBtn : {
-    	color : '#3164ce'
-    },
-    progress: {
-      width: (Util.size['width']-158),
-      marginTop: 5,
-      marginBottom: 5
-    }
+  container: {
+  	flex : 1,
+    paddingTop: 10,
+    paddingBottom: 2,
+    flexDirection: 'row',
+    borderBottomColor : '#eeeeee',
+    borderBottomWidth : 1,
+    backgroundColor: '#ffffff',
+  },
+  //左侧商品图
+  goodImg : {
+  	width : 60,
+  	height : 60,
+  	marginRight: 15,
+    left: 10
+  },
+  //右侧商品信息
+  goodInfo : {
+  	flex : 1,
+  	flexDirection : 'column'
+  },
+  goodTit : {
+  	// height : 16,
+  	color : '#000000',
+    textAlign: 'left',
+    marginRight: 2,
+  },
+  // 价格
+  goodRow : {
+  	flexDirection : 'row',
+  	alignItems: 'center',
+  	marginBottom : 10
+  },
+  redPrice : {
+  	color : '#c40001',
+    width: (Util.size['width']-70)/2
+  },
+  whitePrice : {
+  	fontSize : 12,
+  	color : '#b0b0b0'
+  },
+  // 购买及按钮
+  goodExtra : {
+  	flexDirection :'row',
+  	alignItems: 'center',
+  	justifyContent : 'space-between'
+  },
+  goodSold : {
+  	color : '#b0b0b0'
+  },
+  goodBtnWarp : {
+  	position : 'absolute',
+  	right : 20,
+  	top : 1
+  },
+  goodBtnImg: {
+    width: 28,
+    height: 28,
+    borderRadius: 14
+  },
+  progress: {
+    width: (Util.size['width']-158),
+    marginTop: 5,
+    marginBottom: 5
+  }
 });
