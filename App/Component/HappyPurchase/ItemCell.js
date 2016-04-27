@@ -23,20 +23,20 @@ module.exports = React.createClass({
     this._animatables[id]['slideInLeft'](1000);
   },
 	render() {
-		var item = this.props.item;
-    var progressNum = parseFloat(item.originalprice) / (parseFloat(item.price)+parseFloat(item.originalprice));
-    //console.log(item.txt + ':' + progressNum);
+		let item = this.props.item;
+    let progressNum = (parseFloat(item.totalCount) - parseFloat(item.codeCount)) / parseFloat(item.totalCount);
+    let img = item.images.split(',')[0];
 		return (
 			<TouchableOpacity onPress={this.props.onSelect}>
 				<View style={css.container}>
-          <Image ref={component => this._animatables[item.id] = component} style={css.goodImg} source={{uri : 'http:' + item.img}} />
+          <Image ref={component => this._animatables[item.id] = component} style={css.goodImg} source={{uri : img}} />
 					<View style={css.goodInfo}>
-						<Text style={css.goodTit} numberOfLines={2}>{item.txt}</Text>
-            <Text style={css.goodTit,{fontWeight : '100',fontSize : 10}} numberOfLines={1}>{item.explain}</Text>
+						<Text style={css.goodTit} numberOfLines={2}>{item.name}</Text>
+            <Text style={css.goodTit,{fontWeight : '100',fontSize : 9,marginTop : 3}} numberOfLines={1}>{item.content}</Text>
             {/*
             <View style={css.goodRow}>
-							<Text style={css.redPrice}><Text style={css.yen}>&yen;</Text> {item.orderprice || item.price}</Text>
-							<Text style={css.whitePrice}>&yen;{item.originalprice}</Text>
+							<Text style={css.redPrice}><Text style={css.yen}>&yen;</Text> {item.orderprice || item.codeCount}</Text>
+							<Text style={css.whitePrice}>&yen;{item.totalCount}</Text>
 						</View>
             */}
             <View style={css.progress}>
@@ -45,13 +45,13 @@ module.exports = React.createClass({
             <View style={css.goodRow}>
               <View>
                 <Text style={css.redPrice}>
-                  {item.originalprice}
+                  {item.totalCount}
                 </Text>
                 <Text style={css.goodTit,{fontWeight:'100',fontSize:10}}>总需</Text>
               </View>
               <View>
                 <Text style={css.whitePrice}>
-                  {item.price}
+                  {item.codeCount}
                 </Text>
                 <Text style={css.goodTit,{fontWeight:'100',fontSize:10}}>剩余</Text>
               </View>

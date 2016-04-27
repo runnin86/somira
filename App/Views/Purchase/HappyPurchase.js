@@ -92,7 +92,7 @@ module.exports = React.createClass({
           code: 0,
           name: '全部商品'
         },{
-          code: '1',
+          code: '10',
           name: '十元专场',
           link: 'http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1',
           icon: ''

@@ -13,7 +13,7 @@ var {
   View,
 } = React;
 
-var API = 'http://ald.taobao.com/recommend.htm?appId=03507&areaId=330100&size=15&page=1&type=1';
+var API = 'http://123.57.217.199:9587/api/v1/sml/oneBuyProject';
 
 module.exports = React.createClass({
     //object在组件被挂载之前调用。状态化的组件应该实现这个方法，返回初始的state数据。
@@ -39,16 +39,17 @@ module.exports = React.createClass({
     },
     //拉取数据
     fetchData: function(cateId) {
-      var apiUrl = cateId ? API + '&cateId=' + cateId : API;
+      var apiUrl = cateId ? API + '?price=' + cateId : API;
       // console.log(cateId,apiUrl,'api')
       fetch(apiUrl)
           .then((response) => response.json())
-          .then((responseData) => {
-              // console.log('responseData',responseData);
+          .then(({code, msg, results}) => {
+            if (code === 1) {
               this.setState({
-                  dataSource: this.state.dataSource.cloneWithRows(responseData.data),
+                  dataSource: this.state.dataSource.cloneWithRows(results.list),
                   loaded: true
               });
+            }
         })
         .done();
     },
