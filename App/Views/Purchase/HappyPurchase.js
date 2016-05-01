@@ -164,10 +164,10 @@ module.exports = React.createClass({
   },
   //选中一行
   selectItem:function(item){
-    //console.log(item);
+    // console.log(item);
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: item.txt,
+        title: item.name,
         component: ItemDetail,
         leftButtonTitle: '返回',
         navigationBarHidden:false,
