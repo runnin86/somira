@@ -20,6 +20,8 @@ var {
   Platform
 } = React;
 
+var BannerUrl = 'http://123.57.217.199:9587/api/v1/sml/slider?type=1yg';
+
 module.exports = React.createClass({
   render: function() {
     var cateId = this.state.cateId;
@@ -35,18 +37,13 @@ module.exports = React.createClass({
             paginationStyle={{
               bottom: 5, left: null, right: 10,
             }} loop={true} autoplay={true}>
-            <View style={css.slide} title={<Text numberOfLines={1}></Text>}>
-              <Image style={css.flex} source={{uri: 'http://c.hiphotos.baidu.com/image/w%3D310/sign=0dff10a81c30e924cfa49a307c096e66/7acb0a46f21fbe096194ceb468600c338644ad43.jpg'}} />
-            </View>
-            <View style={css.slide} title={<Text numberOfLines={1}></Text>}>
-              <Image style={css.flex} source={{uri: 'http://a.hiphotos.baidu.com/image/w%3D310/sign=4459912736a85edffa8cf822795509d8/bba1cd11728b4710417a05bbc1cec3fdfc032374.jpg'}} />
-            </View>
-            <View style={css.slide} title={<Text numberOfLines={1}></Text>}>
-              <Image style={css.flex} source={{uri: 'http://e.hiphotos.baidu.com/image/w%3D310/sign=9a8b4d497ed98d1076d40a30113eb807/0823dd54564e9258655f5d5b9e82d158ccbf4e18.jpg'}} />
-            </View>
-            <View style={css.slide} title={<Text numberOfLines={1}></Text>}>
-              <Image style={css.flex} source={{uri: 'http://e.hiphotos.baidu.com/image/w%3D310/sign=2da0245f79ec54e741ec1c1f89399bfd/9d82d158ccbf6c818c958589be3eb13533fa4034.jpg'}} />
-            </View>
+            {this.state.bannerList.map(function(item,i){
+              return (
+                <View style={css.slide} title={<Text numberOfLines={1}></Text>} key={item.id}>
+                  <Image style={css.flex} source={{uri: item.img}} />
+                </View>
+              );
+            })}
           </Swiper>
 
           {/*快捷入口=最新揭晓,充值,帮助等*/}
@@ -99,9 +96,11 @@ module.exports = React.createClass({
         }
       ],
       cateId : 0,
-      scrollMsgList: []
+      scrollMsgList: [],
+      bannerList: []
     };
   },
+  //只调用一次，在render之后调用
   componentDidMount: function() {
     this.setState({
       scrollMsgList: [
@@ -110,6 +109,7 @@ module.exports = React.createClass({
         { title: '恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换' }
       ]
     });
+    this.fetchBannerData();
   },
   _renderTipsRow: function(row) {
     var tipsList = [];
@@ -167,7 +167,7 @@ module.exports = React.createClass({
     // console.log(item);
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: item.name,
+        title: '商品详情',
         component: ItemDetail,
         leftButtonTitle: '返回',
         navigationBarHidden:false,
@@ -180,6 +180,19 @@ module.exports = React.createClass({
       //android对应的处理
     }
   },
+  //拉取数据
+  fetchBannerData: function() {
+    fetch(BannerUrl)
+        .then((response) => response.json())
+        .then(({code, msg, info}) => {
+          if (code === 1) {
+            this.setState({
+                bannerList: info
+            });
+          }
+      })
+      .done();
+  }
 });
 
 var css = StyleSheet.create({
