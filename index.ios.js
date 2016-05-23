@@ -1,18 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
-
-var React = require('react-native');
-
-var HappyPurchase = require('./App/Views/Purchase/HappyPurchase');
-var UserCenter = require('./App/Views/User/UserCenter');
-var ShoppingCart = require('./App/Views/Cart/ShoppingCart');
-var Test = require('./App/Test/test');
-var Util = require('./App/Common/Util');
-
-var {
+import React, { Component } from 'react';
+import {
   AppRegistry,
   StyleSheet,
   Text,
@@ -20,7 +7,12 @@ var {
   StatusBarIOS,
   TabBarIOS,
   NavigatorIOS
-} = React;
+} from 'react-native';
+import HappyPurchase from './App/Views/Purchase/HappyPurchase';
+import UserCenter from './App/Views/User/UserCenter';
+import ShoppingCart from './App/Views/Cart/ShoppingCart';
+import Test from './App/Test/test';
+import Util from './App/Common/Util';
 
 StatusBarIOS.setHidden(false);
 

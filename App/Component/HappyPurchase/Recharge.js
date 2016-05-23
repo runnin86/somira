@@ -1,32 +1,31 @@
-var React = require('react-native');
-
-var {
+import React, { Component } from 'react';
+import {
   AppRegistry,
   StyleSheet,
   Text,
   View
-} = React;
+} from 'react-native';
 
 module.exports = React.createClass({
-  render: function() {
+  render() {
     return (
-      <View style={css.container}>
-        <Text style={css.welcome}>
-          Welcome to 充值!
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
         </Text>
-        <Text style={css.instructions}>
+        <Text style={styles.instructions}>
           To get started, edit index.ios.js
         </Text>
-        <Text style={css.instructions}>
+        <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu2
+          Cmd+D or shake for dev menu
         </Text>
       </View>
     );
   }
 });
 
-var css = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -44,3 +43,5 @@ var css = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+AppRegistry.registerComponent('demo', () => demo);

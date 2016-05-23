@@ -2,7 +2,7 @@
 ReactNative iOS APP for somira
 
 # 使用main.jsbundle
-1.在React Native项目根目录下运行 npm start
+1.在React Native项目根目录下运行 npm start(react-native run-ios --reset-cache)
 
 2.使用curl命令生成 main.jsbundle
 
