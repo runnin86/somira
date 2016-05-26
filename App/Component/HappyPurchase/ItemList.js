@@ -4,6 +4,7 @@
 var React = require('react-native');
 var ItemCell = require('./ItemCell');
 var Util = require('./../../Common/Util');
+import * as net from './../../Network/Interface';
 
 var {
   StyleSheet,
@@ -12,8 +13,6 @@ var {
   Image,
   View,
 } = React;
-
-var API = 'http://123.57.217.199:9587/api/v1/sml/oneBuyProject';
 
 module.exports = React.createClass({
     //object在组件被挂载之前调用。状态化的组件应该实现这个方法，返回初始的state数据。
@@ -39,9 +38,8 @@ module.exports = React.createClass({
     },
     //拉取数据
     fetchData: function(cateId) {
-      var apiUrl = cateId ? API + '?price=' + cateId : API;
-      // console.log(cateId,apiUrl,'api')
-      fetch(apiUrl)
+      let API = net.hpApi.home + (cateId> 0 ? '?price=' + cateId : '');
+      fetch(API)
           .then((response) => response.json())
           .then(({code, msg, results}) => {
             if (code === 1) {
@@ -50,8 +48,9 @@ module.exports = React.createClass({
                   loaded: true
               });
             }
-        })
-        .done();
+        }).catch((e) => {
+          console.log('获取乐夺宝商品列表失败:' + e)
+        });
     },
     //渲染列表
     renderListView : function(){

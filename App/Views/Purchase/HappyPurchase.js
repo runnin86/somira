@@ -8,6 +8,7 @@ var Tabs = require('../../Common/Tabs');
 var LatestAnnounced = require('../../Component/HappyPurchase/LatestAnnounced');
 var Recharge = require('../../Component/HappyPurchase/Recharge');
 var Help = require('../../Component/HappyPurchase/Help');
+import * as net from './../../Network/Interface';
 
 var {
   StyleSheet,
@@ -19,8 +20,6 @@ var {
   ScrollView,
   Platform
 } = React;
-
-var BannerUrl = 'http://123.57.217.199:9587/api/v1/sml/slider?type=1yg';
 
 module.exports = React.createClass({
   render: function() {
@@ -182,7 +181,8 @@ module.exports = React.createClass({
   },
   //拉取数据
   fetchBannerData: function() {
-    fetch(BannerUrl)
+    let bannerUrl = net.hpApi.banner;
+    fetch(bannerUrl)
         .then((response) => response.json())
         .then(({code, msg, info}) => {
           if (code === 1) {
@@ -190,8 +190,9 @@ module.exports = React.createClass({
                 bannerList: info
             });
           }
-      })
-      .done();
+      }).catch((e) => {
+        console.log('获取乐夺宝banner失败:' + e)
+      });
   }
 });
 

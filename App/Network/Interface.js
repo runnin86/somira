@@ -1,5 +1,5 @@
-const URL_COMMON = 'http://api.zqsml.com/api/v1/sml/'
-// const URL_COMMON = 'http://123.57.217.199:9587/api/v1/sml/'
+// const URL_COMMON = 'http://api.zqsml.com/api/v1/sml/'
+const URL_COMMON = 'http://123.57.217.199:9587/api/v1/sml/'
 
 // 方案接口地址
 export let planApi = {
@@ -71,8 +71,12 @@ export let userApi = {
   userSales: URL_COMMON + 'nowmflow',
   // 我的销量(上月)
   lastSales: URL_COMMON + 'lastmflow',
+  // 未读消息
+  newMsgTotal: URL_COMMON + 'newmsgtotal',
   // 我的消息
   userMessage: URL_COMMON + 'usermsg',
+  // 消息查询
+  queryMessage: URL_COMMON + 'msgbyid',
   // 我的消息(删除)
   delMessage: URL_COMMON + 'delmsgbyid',
   // 我的二维码
@@ -90,5 +94,7 @@ export let userApi = {
   // 我的账单打赏
   myreward: URL_COMMON + 'reward',
   // wtype  1：盈利提现 2:返佣提现
-  withdraw: URL_COMMON + 'withdraw'
+  withdraw: URL_COMMON + 'withdraw',
+  // 系统公告
+  notice: URL_COMMON + 'quenotice'
 }
