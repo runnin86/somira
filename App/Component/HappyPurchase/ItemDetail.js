@@ -11,7 +11,18 @@ var {
   View
 } = React;
 
+import * as Animatable from 'react-native-animatable';
+import Accordion from 'react-native-collapsible/Accordion';
+
 module.exports = React.createClass({
+  /*
+   * 获取实例初始状态(state，来自props)
+   */
+  getInitialState: function () {
+    return {
+      collapsed: true
+    }
+  },
   componentDidMount(){
     //console.log(this.props.item);
     this.setState({
@@ -67,11 +78,15 @@ module.exports = React.createClass({
             </View>
           </View>
         </View>
-        <View style={[css.container,css.borderBottom]}>
-          <Text style={{fontWeight:'100',fontSize:10}}>
-            获奖号码算法
-          </Text>
-        </View>
+        <Accordion
+          sections={[{
+            title: '获奖号码算法',
+            content: 'BACON_IPSUM',
+          }]}
+          renderHeader={this._renderHeader}
+          renderContent={this._renderContent}
+          duration={400}
+        />
         <View style={[css.container,css.borderBottom]}>
           <Text style={{fontWeight:'100',fontSize:10}}>
             您已参与10人次
@@ -94,7 +109,21 @@ module.exports = React.createClass({
         </View>
       </View>
     );
-  }
+  },
+  _renderHeader(section, i, isActive) {
+    return (
+      <Animatable.View duration={400} style={[css.container,css.borderBottom, isActive ? css.active : css.inactive]} transition="backgroundColor">
+        <Text style={css.headerText}>{section.title}</Text>
+      </Animatable.View>
+    );
+  },
+  _renderContent(section, i, isActive) {
+    return (
+      <Animatable.View duration={400}  style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
+        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>{section.content}</Animatable.Text>
+      </Animatable.View>
+    );
+  },
 });
 
 var css = StyleSheet.create({
@@ -142,5 +171,21 @@ var css = StyleSheet.create({
   },
   img: {
     resizeMode: 'contain'
-  }
+  },
+  headerText: {
+    // textAlign: 'center',
+    fontSize: 10,
+    fontWeight: '100',
+  },
+  content: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  active: {
+    backgroundColor: 'rgba(255,255,255,1)',
+  },
+  inactive: {
+    backgroundColor: 'rgba(245,252,255,1)',
+  },
 });

@@ -29,7 +29,7 @@ module.exports = React.createClass({
   /*
    * 获取实例初始状态(state，来自props)
    */
-  getinitialState: function () {
+  getInitialState: function () {
     return {
       on: this.props.on,
       name: this.props.name
