@@ -81,7 +81,12 @@ module.exports = React.createClass({
         <Accordion
           sections={[{
             title: '获奖号码算法',
-            content: 'BACON_IPSUM',
+            content: [
+              '一、取该商品号码购买完时所有商品的最后100条购买时间；',
+              '二、按时、分、秒、毫秒排列相加在除以该商品总人次后取余数；',
+              '三、余数在加上10000001 即为中奖的幸运号码；',
+              '四、余数是指在整数的除法中，只有能整除与不能整除两种情况。当不能整除时，就产生余数，如10/4=2 ... 2,2就是余数。'
+            ]
           }]}
           renderHeader={this._renderHeader}
           renderContent={this._renderContent}
@@ -119,8 +124,15 @@ module.exports = React.createClass({
   },
   _renderContent(section, i, isActive) {
     return (
-      <Animatable.View duration={400}  style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
-        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>{section.content}</Animatable.Text>
+      <Animatable.View duration={400} style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
+        {section.content.map(function(v,i){
+          return (
+            <Animatable.Text key={i} style={css.headerText}
+              animation={isActive ? 'bounceIn' : undefined}>
+              {v}
+            </Animatable.Text>
+          );
+        })}
       </Animatable.View>
     );
   },
@@ -179,13 +191,12 @@ var css = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
+    padding: 16,
   },
   active: {
-    backgroundColor: 'rgba(255,255,255,1)',
+    backgroundColor: 'rgba(245,252,255,1)',
   },
   inactive: {
-    backgroundColor: 'rgba(245,252,255,1)',
+    backgroundColor: 'rgba(255,255,255,1)',
   },
 });
