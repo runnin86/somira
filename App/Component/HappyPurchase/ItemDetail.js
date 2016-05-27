@@ -8,11 +8,16 @@ var {
   StyleSheet,
   Text,
   Image,
-  View
+  View,
 } = React;
 
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
+import ActionSheet from 'react-native-actionsheet';
+
+const buttons = ['取消', '确认退出', '😄😄😄', '哈哈哈'];
+const CANCEL_INDEX = 0;
+const DESTRUCTIVE_INDEX = 1;
 
 module.exports = React.createClass({
   /*
@@ -112,8 +117,24 @@ module.exports = React.createClass({
             参与记录
           </Text>
         </View>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={css.button} onPress={this.show}>SHOW</Text>
+            <ActionSheet
+                ref={(o) => this.ActionSheet = o}
+                title="确认要退出登录吗？"
+                options={buttons}
+                cancelButtonIndex={CANCEL_INDEX}
+                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                onPress={this._handlePress}
+            />
+        </View>
       </View>
     );
+  },
+  _handlePress(index) {
+  },
+  show() {
+      this.ActionSheet.show();
   },
   _renderHeader(section, i, isActive) {
     return (
@@ -199,4 +220,13 @@ var css = StyleSheet.create({
   inactive: {
     backgroundColor: 'rgba(255,255,255,1)',
   },
+  button: {
+    width: 200,
+    margin: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    color: '#fff',
+    textAlign: 'center',
+    backgroundColor: 'blue'
+  }
 });
