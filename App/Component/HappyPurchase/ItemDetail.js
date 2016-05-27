@@ -117,16 +117,16 @@ module.exports = React.createClass({
             参与记录
           </Text>
         </View>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={css.button} onPress={this.show}>SHOW</Text>
-            <ActionSheet
-                ref={(o) => this.ActionSheet = o}
-                title="确认要退出登录吗？"
-                options={buttons}
-                cancelButtonIndex={CANCEL_INDEX}
-                destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                onPress={this._handlePress}
-            />
+        <View style={css.cartBtnWarp}>
+          <Text style={css.cartBtn} onPress={this.show}>参与</Text>
+          <ActionSheet
+            ref={(o) => this.ActionSheet = o}
+            title="确认要退出登录吗？"
+            options={buttons}
+            cancelButtonIndex={CANCEL_INDEX}
+            destructiveButtonIndex={DESTRUCTIVE_INDEX}
+            onPress={this._handlePress}
+          />
         </View>
       </View>
     );
@@ -220,13 +220,23 @@ var css = StyleSheet.create({
   inactive: {
     backgroundColor: 'rgba(255,255,255,1)',
   },
-  button: {
-    width: 200,
-    margin: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
-    color: '#fff',
+  cartBtnWarp : {
+    // flex: 1, alignItems: 'center', justifyContent: 'center'
+    position : 'absolute',
+    left: 11,
+    bottom : 12,
+    borderWidth : 1,
+    // borderColor : '#3164ce',
+    borderRadius : 10,
+    backgroundColor: 'rgba(245,252,255,1)',
+  },
+  cartBtn : {
+    flex: 1,
     textAlign: 'center',
-    backgroundColor: 'blue'
-  }
+    justifyContent: 'center',
+    marginTop: 15,
+    height : 30,
+    width: Util.size.width-24,
+    color : '#3164ce',
+  },
 });
