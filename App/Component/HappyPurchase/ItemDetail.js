@@ -9,13 +9,17 @@ var {
   Text,
   Image,
   View,
+  ListView,
+  TouchableOpacity,
+  ScrollView
 } = React;
 
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
 import ActionSheet from 'react-native-actionsheet';
+import * as net from './../../Network/Interface';
 
-const buttons = ['取消', '确认退出', '😄😄😄', '哈哈哈'];
+const buttons = ['确认', '10 20 50 100 300', '😄😄😄', '需10元'];
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 1;
 
@@ -25,7 +29,8 @@ module.exports = React.createClass({
    */
   getInitialState: function () {
     return {
-      collapsed: true
+      collapsed: true,
+      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
   componentDidMount(){
@@ -33,6 +38,24 @@ module.exports = React.createClass({
     this.setState({
       item: this.props.item
     });
+    //拉取参与记录
+    this.fetchParticipation(this.props.item.id, this.props.item.number, 0);
+  },
+  //拉取参与记录数据
+  fetchParticipation: function(id, number, pagenum) {
+    let recordUrl = net.hpApi.all_partake +
+      '?projectId=' + id + '&number=' + number + '&pagenum=' + pagenum;
+    fetch(recordUrl)
+        .then((response) => response.json())
+        .then(({code, msg, results}) => {
+          if (code === 1) {
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(results.list)
+            });
+          }
+      }).catch((e) => {
+        console.log('获取乐夺宝参与记录失败:' + e)
+      });
   },
   render: function() {
     var item = this.props.item;
@@ -40,88 +63,107 @@ module.exports = React.createClass({
     let progressNum = (item.totalCount - item.codeCount) / item.totalCount;
     return (
       <View style={css.flex}>
-        {/*轮播图*/}
-        <Swiper height={200}
-          onMomentumScrollEnd={function(e, state, context){}}
-          dot={<View style={{backgroundColor:'rgba(0,0,0,.2)', width: 5, height: 5,borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
-          activeDot={<View style={{backgroundColor: '#000', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
-          paginationStyle={{
-            bottom: 5, left: null, right: 10,
-          }} loop={true} autoplay={true}>
-          {
-            item.images.split(',').map(function (i, key) {
-              return (
-                <View key={key} style={css.slide} title={<Text numberOfLines={1}></Text>}>
-                  <Image style={[css.flex,css.img]} source={{uri: i}} />
-                </View>
-              )
-            })
-          }
-        </Swiper>
-        <View style={[css.container,css.borderTop,css.borderBottom]}>
-          <View>
-            <Text style={{fontSize : 12}} numberOfLines={2}>{item.name}</Text>
-            <Text style={{fontWeight : '100',fontSize : 8,marginTop : 4}} numberOfLines={2}>
-              {item.content}
-            </Text>
-            <View style={css.progress}>
-              <Progress progress={progressNum}/>
-            </View>
-            <View style={css.goodRow}>
-              <View>
-                <Text style={css.redPrice}>
-                  {item.totalCount}
-                </Text>
-                <Text style={{fontWeight:'100',fontSize:10}}>总需</Text>
+        <ScrollView style={{marginTop:-65,marginBottom:20}}>
+          {/*轮播图*/}
+          <Swiper height={200}
+            onMomentumScrollEnd={function(e, state, context){}}
+            dot={<View style={{backgroundColor:'rgba(0,0,0,.2)', width: 5, height: 5,borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
+            activeDot={<View style={{backgroundColor: '#000', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
+            paginationStyle={{
+              bottom: 5, left: null, right: 10,
+            }} loop={true} autoplay={true}>
+            {
+              item.images.split(',').map(function (i, key) {
+                return (
+                  <View key={key} style={css.slide} title={<Text numberOfLines={1}></Text>}>
+                    <Image style={[css.flex,css.img]} source={{uri: i}} />
+                  </View>
+                )
+              })
+            }
+          </Swiper>
+          <View style={[css.container,css.borderTop,css.borderBottom]}>
+            <View>
+              <Text style={{fontSize : 12}} numberOfLines={2}>{item.name}</Text>
+              <Text style={{fontWeight : '100',fontSize : 8,marginTop : 4}} numberOfLines={2}>
+                {item.content}
+              </Text>
+              <View style={css.progress}>
+                <Progress progress={progressNum}/>
               </View>
-              <View>
-                <Text style={css.whitePrice}>
-                  {item.codeCount}
-                </Text>
-                <Text style={{fontWeight:'100',fontSize:10}}>剩余</Text>
+              <View style={css.goodRow}>
+                <View>
+                  <Text style={css.redPrice}>
+                    {item.totalCount}
+                  </Text>
+                  <Text style={{fontWeight:'100',fontSize:10}}>总需</Text>
+                </View>
+                <View>
+                  <Text style={css.whitePrice}>
+                    {item.codeCount}
+                  </Text>
+                  <Text style={{fontWeight:'100',fontSize:10}}>剩余</Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <Accordion
-          sections={[{
-            title: '获奖号码算法',
-            content: [
-              '一、取该商品号码购买完时所有商品的最后100条购买时间；',
-              '二、按时、分、秒、毫秒排列相加在除以该商品总人次后取余数；',
-              '三、余数在加上10000001 即为中奖的幸运号码；',
-              '四、余数是指在整数的除法中，只有能整除与不能整除两种情况。当不能整除时，就产生余数，如10/4=2 ... 2,2就是余数。'
-            ]
-          }]}
-          renderHeader={this._renderHeader}
-          renderContent={this._renderContent}
-          duration={400}
-        />
-        <View style={[css.container,css.borderBottom]}>
-          <Text style={{fontWeight:'100',fontSize:10}}>
-            您已参与10人次
-          </Text>
-          <Text style={{fontWeight:'100',fontSize:10,marginTop: 6}}>
-            参与号码:
-            <Text style={{fontSize:9}}>
-              1000482  1000878  1000261  1000110  1000987 1000172 1000333
+          <Accordion
+            sections={[{
+              title: '获奖号码算法',
+              content: [
+                '一、取该商品号码购买完时所有商品的最后100条购买时间；',
+                '二、按时、分、秒、毫秒排列相加在除以该商品总人次后取余数；',
+                '三、余数在加上10000001 即为中奖的幸运号码；',
+                '四、余数是指在整数的除法中，只有能整除与不能整除两种情况。当不能整除时，就产生余数，如10/4=2 ... 2,2就是余数。'
+              ]
+            }]}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent}
+            duration={400}
+          />
+          <Accordion
+            sections={[{
+              title: '参与码',
+              content: [
+                '您已参与10人次',
+                '参与号码:',
+                '1000482  1000878  1000261  1000110  1000987 1000172',
+                '1000582  1000578  1000561  1000510  1000587 1000572'
+              ]
+            }]}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent}
+            duration={400}
+          />
+          <View style={{height:4,backgroundColor:'#eee'}}>
+            <Text>
             </Text>
-          </Text>
-        </View>
-        <View style={{height:4,backgroundColor:'#eee'}}>
-          <Text>
-          </Text>
-        </View>
-        <View style={[css.container,css.borderTop,css.borderBottom]}>
-          <Text style={{fontWeight:'100',fontSize:10}}>
-            参与记录
-          </Text>
-        </View>
+          </View>
+          <View style={[css.container,css.borderTop]}>
+            <Text style={{fontWeight:'100',fontSize:10}}>
+              参与记录
+            </Text>
+            {
+              this.state.dataSource.getRowCount() > 0
+              ?
+              <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRecordRow}/>
+              :
+              <View style={{bottom:-10,marginTop:16,alignItems:'center',justifyContent: 'center'}}>
+                <Image style={css.resizeMode} source={require('image!温馨提示')}/>
+                <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+                  还没有人参与,赶快试试吧,万一中了呢?
+                </Text>
+              </View>
+            }
+          </View>
+        </ScrollView>
         <View style={css.cartBtnWarp}>
           <Text style={css.cartBtn} onPress={this.show}>参与</Text>
           <ActionSheet
             ref={(o) => this.ActionSheet = o}
-            title="确认要退出登录吗？"
+            title="请选择参与人次"
             options={buttons}
             cancelButtonIndex={CANCEL_INDEX}
             destructiveButtonIndex={DESTRUCTIVE_INDEX}
@@ -132,9 +174,26 @@ module.exports = React.createClass({
     );
   },
   _handlePress(index) {
+    console.log(index);
   },
   show() {
-      this.ActionSheet.show();
+    this.ActionSheet.show();
+  },
+  _renderRecordRow: function(row) {
+    return(
+      <View style={css.recordRow}>
+        <View style={css.recordCellFixed,{width:54}}>
+          <Image style={css.userImg} source={require('image!默认头像')} />
+          <Text style={{textAlign: 'center',fontWeight : '100',fontSize : 10}}>{row.user_name}</Text>
+        </View>
+				<View style={css.recordCell}>
+					<Text style={css.recordText}>{row.addTime}</Text>
+				</View>
+        <View style={{width:80},css.recordCellFixed}>
+          <Text style={css.recordText}>{row.payCount}人次</Text>
+        </View>
+			</View>
+    );
   },
   _renderHeader(section, i, isActive) {
     return (
@@ -238,5 +297,37 @@ var css = StyleSheet.create({
     height : 30,
     width: Util.size.width-24,
     color : '#3164ce',
+  },
+  recordRow : {
+    flexDirection : 'row',
+    borderBottomColor : '#eeeeee',
+    borderBottomWidth : 1,
+    backgroundColor: '#ffffff',
+  },
+  recordCell: {
+    flex:1,
+    height: 50,
+    justifyContent : 'center'
+  },
+  recordCellFixed: {
+    height: 50,
+    justifyContent : 'center'
+  },
+  recordText: {
+    fontSize: 12,
+    textAlign: 'center',
+    margin: 10
+  },
+  userImg: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginLeft:10
+  },
+  resizeMode: {
+    width: 120,
+    paddingBottom:20,
+    backgroundColor: 'transparent',
+    resizeMode:Image.resizeMode.contain,
   },
 });
