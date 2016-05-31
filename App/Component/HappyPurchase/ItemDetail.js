@@ -26,16 +26,12 @@ module.exports = React.createClass({
    */
   getInitialState: function () {
     return {
-      collapsed: true,
       show: false,
+      totalPrice: this.props.item.price,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
   componentDidMount(){
-    //console.log(this.props.item);
-    this.setState({
-      item: this.props.item
-    });
     //拉取参与记录
     this.fetchParticipation(this.props.item.id, this.props.item.number, 0);
   },
@@ -172,19 +168,24 @@ module.exports = React.createClass({
               </Text>
             </ActionSheet.Button>
             <View style={css.priceLabel}>
-              <Text style={{marginLeft:16,color: '#5f646e',fontSize:12,}}>
+              <Text onPress={()=>this.setState({totalPrice:10})}
+                style={{color: this.state.totalPrice===10?'#f6383a':'#0894ec',fontSize:12,marginLeft:16,}}>
                 10
               </Text>
-              <Text style={{color: '#5f646e',fontSize:12}}>
+              <Text onPress={()=>this.setState({totalPrice:20})}
+                style={{color: this.state.totalPrice===20?'#f6383a':'#0894ec',fontSize:12}}>
                 20
               </Text>
-              <Text style={{color: '#5f646e',fontSize:12}}>
+              <Text onPress={()=>this.setState({totalPrice:50})}
+                style={{color: this.state.totalPrice===50?'#f6383a':'#0894ec',fontSize:12}}>
                 50
               </Text>
-              <Text style={{color: '#5f646e',fontSize:12}}>
+              <Text onPress={()=>this.setState({totalPrice:100})}
+                style={{color: this.state.totalPrice===100?'#f6383a':'#0894ec',fontSize:12}}>
                 100
               </Text>
-              <Text style={{marginRight:16,color: '#5f646e',fontSize:12,}}>
+              <Text onPress={()=>this.setState({totalPrice:300})}
+                style={{color: this.state.totalPrice===300?'#f6383a':'#0894ec',fontSize:12,marginRight:16,}}>
                 300
               </Text>
             </View>
@@ -195,7 +196,11 @@ module.exports = React.createClass({
             </ActionSheet.Button>
             <ActionSheet.Button>
               <Text style={{color: '#5f646e',fontSize:12}}>
-                需10元
+                需
+                <Text style={{color: '#f6383a'}}>
+                  {' ' + this.state.totalPrice + ' '}
+                </Text>
+                元
               </Text>
             </ActionSheet.Button>
         </ActionSheet>
