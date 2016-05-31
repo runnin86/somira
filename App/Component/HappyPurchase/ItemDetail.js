@@ -16,12 +16,9 @@ var {
 
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
-import ActionSheet from 'react-native-actionsheet';
+import ActionSheet from 'react-native-action-sheet';
+import Button from 'react-native-button';
 import * as net from './../../Network/Interface';
-
-const buttons = ['确认', '10 20 50 100 300', '😄😄😄', '需10元'];
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 1;
 
 module.exports = React.createClass({
   /*
@@ -30,6 +27,7 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       collapsed: true,
+      show: false,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
@@ -159,25 +157,44 @@ module.exports = React.createClass({
             }
           </View>
         </ScrollView>
-        <View style={css.cartBtnWarp}>
-          <Text style={css.cartBtn} onPress={this.show}>参与</Text>
-          <ActionSheet
-            ref={(o) => this.ActionSheet = o}
-            title="请选择参与人次"
-            options={buttons}
-            cancelButtonIndex={CANCEL_INDEX}
-            destructiveButtonIndex={DESTRUCTIVE_INDEX}
-            onPress={this._handlePress}
-          />
-        </View>
+        <Button onPress={this.onOpen} style={css.cartBtn}>
+          立即夺宝
+        </Button>
+        <ActionSheet
+            visible={this.state.show}
+            onCancel={this.onCancel}
+            cancelText={'确认'}
+            buttonStyle={{marginTop:6, borderRadius:6,backgroundColor:'#f6383a'}}
+            textStyle={{color:'#FFFFFF'}}>
+            <ActionSheet.Button>
+              <Text style={css.btnFont}>
+                请选择参与人次
+              </Text>
+            </ActionSheet.Button>
+            <ActionSheet.Button>
+              <Text style={css.btnFont}>
+                10 20 50 100 300
+              </Text>
+            </ActionSheet.Button>
+            <ActionSheet.Button>
+              <Text style={css.btnFont}>
+                input
+              </Text>
+            </ActionSheet.Button>
+            <ActionSheet.Button>
+              <Text style={css.btnFont}>
+                需10元
+              </Text>
+            </ActionSheet.Button>
+        </ActionSheet>
       </View>
     );
   },
-  _handlePress(index) {
-    console.log(index);
+  onCancel() {
+    this.setState({show:false});
   },
-  show() {
-    this.ActionSheet.show();
+  onOpen() {
+    this.setState({show:true});
   },
   _renderRecordRow: function(row) {
     return(
@@ -279,25 +296,6 @@ var css = StyleSheet.create({
   inactive: {
     backgroundColor: 'rgba(255,255,255,1)',
   },
-  cartBtnWarp : {
-    // flex: 1, alignItems: 'center', justifyContent: 'center'
-    position : 'absolute',
-    left: 11,
-    bottom : 12,
-    borderWidth : 1,
-    // borderColor : '#3164ce',
-    borderRadius : 10,
-    backgroundColor: 'rgba(245,252,255,1)',
-  },
-  cartBtn : {
-    flex: 1,
-    textAlign: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    height : 30,
-    width: Util.size.width-24,
-    color : '#3164ce',
-  },
   recordRow : {
     flexDirection : 'row',
     borderBottomColor : '#eeeeee',
@@ -330,4 +328,22 @@ var css = StyleSheet.create({
     backgroundColor: 'transparent',
     resizeMode:Image.resizeMode.contain,
   },
+  cartBtn : {
+    color: '#FFFFFF',
+    lineHeight: 30,
+    marginTop:-16,
+    marginBottom:8,
+    marginLeft:10,
+    marginRight:10,
+    height:36,
+    overflow:'hidden',
+    borderWidth : 1,
+    borderRadius:10,
+    borderColor: '#FFFFFF',
+    backgroundColor: '#0894ec',
+  },
+  btnFont: {
+    fontSize: 12,
+    color: '#5f646e',
+  }
 });
