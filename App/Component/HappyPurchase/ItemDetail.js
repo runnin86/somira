@@ -7,6 +7,7 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
+  TextInput,
   Image,
   View,
   ListView,
@@ -167,7 +168,7 @@ module.exports = React.createClass({
                 请选择参与人次
               </Text>
             </ActionSheet.Button>
-            <View style={css.priceLabel}>
+            <View style={css.priceRow}>
               <Text onPress={()=>this.setState({totalPrice:10})}
                 style={{color: this.state.totalPrice===10?'#f6383a':'#0894ec',fontSize:12,marginLeft:16,}}>
                 10
@@ -189,11 +190,23 @@ module.exports = React.createClass({
                 300
               </Text>
             </View>
-            <ActionSheet.Button>
-              <Text style={{color: '#5f646e',fontSize:12}}>
-                input
-              </Text>
-            </ActionSheet.Button>
+            <View style={css.priceRow}>
+              <Image style={{height:25,width:25,marginLeft:10}} source={require("image!ic_goods_reduce")}/>
+              <TextInput
+                 style={css.textInput}
+                 autoCapitalize = 'none'
+                 autoCorrect={false}
+                 keyboardType='numeric'
+                 selectionColor={'red'}
+                 ref='textInput'
+                 maxLength={4}
+                 onChangeText={(totalPrice) => this.setState({totalPrice})}
+                 onFocus={() => {this.refs.textInput.focus()}}
+                 defaultValue={this.state.totalPrice+''}
+                 value={this.state.totalPrice}
+               />
+              <Image style={{height:25,width:25,marginRight:10}} source={require("image!ic_goods_add")}/>
+            </View>
             <ActionSheet.Button>
               <Text style={{color: '#5f646e',fontSize:12}}>
                 需
@@ -359,13 +372,26 @@ var css = StyleSheet.create({
     borderColor: '#FFFFFF',
     backgroundColor: '#0894ec',
   },
-  priceLabel: {
+  priceRow: {
     flexDirection : 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor:'#FFFFFF',
+    backgroundColor:'#e8e8e8',
     borderBottomWidth: 0.2,
     borderColor: 'gray',
     height: 40,
+  },
+  textInput: {
+    height: 34,
+    width:180,
+    marginTop:2,
+    color: '#f6383a',
+    borderColor: '#f6383a',
+    borderRadius:10,
+    borderWidth: 1,
+    paddingHorizontal:10,
+    paddingVertical:6,
+    textAlign: 'center',
+    backgroundColor: '#FFFFFF',
   }
 });
