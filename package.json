@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "react-native": "^0.19.0",
-    "react-native-actionsheet": "^2.0.1",
     "react-native-animatable": "^0.5.2",
     "react-native-button": "^1.4.2",
     "react-native-code-push": "^1.5.3-beta",

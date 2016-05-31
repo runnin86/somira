@@ -388,7 +388,7 @@ var css = StyleSheet.create({
     color: '#f6383a',
     borderColor: '#f6383a',
     borderRadius:10,
-    borderWidth: 1,
+    borderWidth: 0.4,
     paddingHorizontal:10,
     paddingVertical:6,
     textAlign: 'center',
