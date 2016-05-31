@@ -167,22 +167,34 @@ module.exports = React.createClass({
             buttonStyle={{marginTop:6, borderRadius:6,backgroundColor:'#f6383a'}}
             textStyle={{color:'#FFFFFF'}}>
             <ActionSheet.Button>
-              <Text style={css.btnFont}>
+              <Text style={{color: '#5f646e',fontSize:12}}>
                 请选择参与人次
               </Text>
             </ActionSheet.Button>
-            <ActionSheet.Button>
-              <Text style={css.btnFont}>
-                10 20 50 100 300
+            <View style={css.priceLabel}>
+              <Text style={{marginLeft:16,color: '#5f646e',fontSize:12,}}>
+                10
               </Text>
-            </ActionSheet.Button>
+              <Text style={{color: '#5f646e',fontSize:12}}>
+                20
+              </Text>
+              <Text style={{color: '#5f646e',fontSize:12}}>
+                50
+              </Text>
+              <Text style={{color: '#5f646e',fontSize:12}}>
+                100
+              </Text>
+              <Text style={{marginRight:16,color: '#5f646e',fontSize:12,}}>
+                300
+              </Text>
+            </View>
             <ActionSheet.Button>
-              <Text style={css.btnFont}>
+              <Text style={{color: '#5f646e',fontSize:12}}>
                 input
               </Text>
             </ActionSheet.Button>
             <ActionSheet.Button>
-              <Text style={css.btnFont}>
+              <Text style={{color: '#5f646e',fontSize:12}}>
                 需10元
               </Text>
             </ActionSheet.Button>
@@ -342,8 +354,13 @@ var css = StyleSheet.create({
     borderColor: '#FFFFFF',
     backgroundColor: '#0894ec',
   },
-  btnFont: {
-    fontSize: 12,
-    color: '#5f646e',
+  priceLabel: {
+    flexDirection : 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor:'#FFFFFF',
+    borderBottomWidth: 0.2,
+    borderColor: 'gray',
+    height: 40,
   }
 });
