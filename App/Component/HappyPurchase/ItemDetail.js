@@ -191,7 +191,31 @@ module.exports = React.createClass({
               </Text>
             </View>
             <View style={css.priceRow}>
-              <Image style={{height:25,width:25,marginLeft:10}} source={require("image!ic_goods_reduce")}/>
+              <Image
+                onTouchStart={()=>{
+                  if (this.state.totalPrice > this.props.item.price) {
+                    this.setState({totalPrice:this.state.totalPrice-this.props.item.price})
+                  }
+                  else if (this.state.totalPrice <= this.props.item.price) {
+                    this.setState({totalPrice:this.props.item.price})
+                  }
+                  this.timer = setTimeout(()=>{
+                    this.interval = setInterval(()=>{
+                      if (this.state.totalPrice > this.props.item.price) {
+                        this.setState({totalPrice:this.state.totalPrice-this.props.item.price})
+                      }
+                      else if (this.state.totalPrice <= this.props.item.price) {
+                        this.setState({totalPrice:this.props.item.price})
+                      }                      
+                    },500);
+                  },1000);
+                }}
+                onTouchEnd={()=>{
+                  this.interval && clearInterval(this.interval);
+                  this.timer && clearTimeout(this.timer);
+                }}
+                style={{height:25,width:25,marginLeft:10,tintColor: '#8e8e93',}}
+                source={require("image!ic_goods_reduce")}/>
               <TextInput
                  style={css.textInput}
                  autoCapitalize = 'none'
@@ -203,9 +227,23 @@ module.exports = React.createClass({
                  onChangeText={(totalPrice) => this.setState({totalPrice})}
                  onFocus={() => {this.refs.textInput.focus()}}
                  defaultValue={this.state.totalPrice+''}
-                 value={this.state.totalPrice}
+                 value={this.state.totalPrice+''}
                />
-              <Image style={{height:25,width:25,marginRight:10}} source={require("image!ic_goods_add")}/>
+              <Image
+                onTouchStart={()=>{
+                  this.setState({totalPrice:this.state.totalPrice+this.props.item.price})
+                  this.timer = setTimeout(()=>{
+                    this.interval = setInterval(()=>{
+                      this.setState({totalPrice:this.state.totalPrice+this.props.item.price})
+                    },500);
+                  },1000);
+                }}
+                onTouchEnd={()=>{
+                  this.interval && clearInterval(this.interval);
+                  this.timer && clearTimeout(this.timer);
+                }}
+                style={{height:25,width:25,marginRight:10,tintColor: '#8e8e93',}}
+                source={require("image!ic_goods_add")}/>
             </View>
             <ActionSheet.Button>
               <Text style={{color: '#5f646e',fontSize:12}}>
