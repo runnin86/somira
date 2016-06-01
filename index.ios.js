@@ -64,7 +64,7 @@ var somira = React.createClass({
         </TabBarIOS.Item>
 
         <TabBarIOS.Item
-          title="个人中心" icon={{uri:'个人中心',scale:3,isStatic:true}}
+          title="个人中心" icon={{uri:'个人中心',scale:2,isStatic:true}}
           badge={this.state.notifyUserCount > 0 ? this.state.notifyUserCount : undefined}
           selected={this.state.selectedTab === 'uc'}
           onPress={()=>{this.changeTab('uc')}}>
