@@ -54,6 +54,27 @@ module.exports = React.createClass({
             </Button>
           </View>
         </Image>
+
+        <View style={css.moneyRow}>
+          <View style={css.moneyCellFixed}>
+            <Image style={{width:22,height:24,alignSelf:'center'}} source={require('image!我的本金')} />
+            <Text style={css.money}>
+              本金 1000
+            </Text>
+          </View>
+  				<View style={css.moneyCell}>
+            <Image style={{width:22.5,height:24,alignSelf:'center'}} source={require('image!我的盈利')} />
+            <Text style={css.money}>
+              盈利 132133.33
+            </Text>
+  				</View>
+          <View style={css.moneyCellFixed}>
+            <Image style={{width:60,height:24,alignSelf:'center'}} source={require('image!本月')} />
+            <Text style={css.money}>
+              销量 500003292
+            </Text>
+          </View>
+  			</View>
       </View>
     );
   },
@@ -128,5 +149,27 @@ var css = StyleSheet.create({
     width:22,
     height:22,
     left: 6
-  }
+  },
+  moneyRow : {
+    flexDirection : 'row',
+    backgroundColor: '#3c3d42',
+  },
+  moneyCell: {
+    flex:1,
+    width:Util.size['width']*.36,
+    height: 46,
+    alignItems:'center',
+    justifyContent : 'center'
+  },
+  moneyCellFixed: {
+    width:Util.size['width']*.24,
+    height: 46,
+    justifyContent : 'center'
+  },
+  money: {
+    textAlign: 'center',
+    fontSize : 8,
+    color: '#FFFFFF',
+    marginTop:4,
+  },
 });
