@@ -43,7 +43,7 @@ module.exports = React.createClass({
           <View style={css.cellfixed}>
             <Text style={css.transparentFont}>我有一只穿山甲</Text>
           </View>
-          <View style={css.centerBtn}>
+          <View style={css.flexRow}>
             <Button containerStyle={css.withdrawBtn}
               onPress={(type)=>this._handlePress({type:'提现'})}>
               <Text style={css.transparentFont}>提现</Text>
@@ -75,6 +75,73 @@ module.exports = React.createClass({
             </Text>
           </View>
   			</View>
+        {/*
+          操作菜单开始
+        */}
+        <View style={[css.container,css.borderTop,css.borderBottom]}>
+          <View style={[css.flexRow,css.userMenu]}>
+            <Image style={[css.l10,{width:14,height:16.5}]}
+              source={require('image!我的账单')} />
+            <Text style={css.menuText}>
+              我的账单
+            </Text>
+          </View>
+          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+            <Image style={[css.l10,{width:14,height:16.5}]}
+              source={require('image!我的订单')} />
+            <Text style={css.menuText}>
+              我的订单
+            </Text>
+          </View>
+          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+            <Image style={[css.l10,{width:14,height:13}]}
+              source={require('image!我的打赏')} />
+            <Text style={css.menuText}>
+              我的返佣
+            </Text>
+          </View>
+          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+            <Image style={[css.l10,{width:14,height:13}]}
+              source={require('image!我的团队')} />
+            <Text style={css.menuText}>
+              我的团队
+            </Text>
+          </View>
+        </View>
+        <View style={{height:10}}>
+          {/*
+            分解符
+          */}
+        </View>
+        <View style={[css.container,css.borderTop,css.borderBottom]}>
+          <View style={[css.flexRow,css.userMenu]}>
+            <Image style={[css.l10,{width:14,height:14}]}
+              source={require('image!二维码')} />
+            <Text style={css.menuText}>
+              我的二维码
+            </Text>
+          </View>
+          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+            <Image style={[css.l10,{width:12.5,height:18}]}
+              source={require('image!修改密码')} />
+            <Text style={css.menuText}>
+              修改密码
+            </Text>
+          </View>
+          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+          <Image style={[css.l10,{width:12,height:12}]}
+            source={require('image!帮助')} />
+            <Text style={css.menuText}>
+              关于
+            </Text>
+          </View>
+        </View>
+        <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
+          <Image style={css.resizeMode} source={require('image!温馨提示')}/>
+          <Text style={{marginTop:-5,height:10,fontSize: 8, color: 'red'}}>
+            所有商品抽奖活动与苹果公司(Apple Inc.)无关
+          </Text>
+        </View>
       </View>
     );
   },
@@ -123,7 +190,7 @@ var css = StyleSheet.create({
     width: Util.size['width'],
     justifyContent: 'center',
   },
-  centerBtn: {
+  flexRow: {
     flexDirection: 'row',
     alignSelf:'center',
   },
@@ -172,4 +239,45 @@ var css = StyleSheet.create({
     color: '#FFFFFF',
     marginTop:4,
   },
+  container: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  borderTop: {
+    borderTopColor : '#eeeeee',
+    borderTopWidth : 1,
+    backgroundColor: '#ffffff',
+  },
+  borderBottom: {
+    borderBottomColor : '#eeeeee',
+    borderBottomWidth : 1,
+    backgroundColor: '#ffffff',
+  },
+  l10: {
+    // width:Util.size['width']*0.33,
+    marginLeft:10,
+  },
+  rightArrow: {
+    width:10,
+    height:16.5
+  },
+  menuText: {
+    width:Util.size['width']*0.83,
+    marginLeft:8,
+    fontSize:10,
+  },
+  userMenu: {
+    width:Util.size['width'],
+    height: 28,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  resizeMode: {
+    width: 86,
+    paddingBottom:10,
+    backgroundColor: 'transparent',
+    resizeMode:Image.resizeMode.contain,
+  }
 });
