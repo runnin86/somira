@@ -206,7 +206,7 @@ module.exports = React.createClass({
                       }
                       else if (this.state.totalPrice <= this.props.item.price) {
                         this.setState({totalPrice:this.props.item.price})
-                      }                      
+                      }
                     },500);
                   },1000);
                 }}
@@ -259,6 +259,7 @@ module.exports = React.createClass({
     );
   },
   onCancel() {
+    console.log('进行支付:' + this.state.totalPrice);
     this.setState({show:false});
   },
   onOpen() {
