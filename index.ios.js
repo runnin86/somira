@@ -78,21 +78,6 @@ var somira = React.createClass({
               wrapperStyle: css.wrapperStyle
             }}/>
         </TabBarIOS.Item>
-
-        <TabBarIOS.Item
-          title="测试部件" icon={{uri:'icon',isStatic:true}}
-          selected={this.state.selectedTab === 'test'}
-          onPress={()=>{this.changeTab('test')}}>
-          <NavigatorIOS style={css.container}
-            barTintColor={Util.headerColor}
-            tintColor={'#333344'}
-            navigationBarHidden={true}
-            initialRoute={{
-              title: '测试部件',
-              component: Test,
-              wrapperStyle: css.wrapperStyle
-            }}/>
-        </TabBarIOS.Item>
       </TabBarIOS>
     );
   }
