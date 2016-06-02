@@ -22,6 +22,24 @@ module.exports = {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
   },
+  //post请求
+  post: function (url, data, callback) {
+    var fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    };
+
+    fetch(url, fetchOptions)
+    .then((response) => response.text())
+    .then((responseText) => {
+      callback(JSON.parse(responseText));
+      // callback(responseText);
+    }).done();
+  },
   /**
    * 基于fetch的get方法
    * @method post
@@ -39,6 +57,14 @@ module.exports = {
          failCallback(err);
        });
    },
+   log:function (obj){
+     var description = "";
+      for(var i in obj){
+         var property=obj[i];
+         description+=i+" = "+property+"\n";
+      }
+      alert(description);
+   },   
    /*loading效果*/
    loading: <ActivityIndicatorIOS color="#3E00FF"
      style={{

@@ -1,7 +1,9 @@
 import React from 'react-native';
 
 import Util from '../../Common/Util';
+import Login from './Login';
 import Button from 'react-native-button';
+var Store = require('react-native-simple-store');
 
 var {
   AppRegistry,
@@ -17,12 +19,33 @@ var {
 module.exports = React.createClass({
   getInitialState: function() {
     return {
+      user: this.props.user
     };
   },
-  _handlePress(event) {
-    alert(event.type);
+  componentDidMount: function() {
+    Store.get('user').then((userdata)=>{
+      if (userdata) {
+        this.setState({
+          user:userdata,
+        })
+      }
+    });
   },
-  render: function() {
+  _handlePress(event) {
+    if (!this.state.user) {
+      this.props.navigator.push({
+        component:Login,
+        navigationBarHidden:false,
+        // tintColor:'#FFFFFF',
+        // barTintColor: '#FFFFFF',
+        title:'登录'
+      });
+    }
+    else {
+      alert(event.type);
+    }
+  },
+  render() {
     return (
       <View style={css.flex}>
         <Image style={[css.headerImg]} source={{uri: '个人中心背景'}}>
@@ -40,41 +63,62 @@ module.exports = React.createClass({
             <Image style={css.userPhoto}
               source={require('image!默认头像')}/>
           </View>
-          <View style={css.cellfixed}>
-            <Text style={css.transparentFont}>我有一只穿山甲</Text>
-          </View>
-          <View style={css.flexRow}>
-            <Button containerStyle={css.withdrawBtn}
-              onPress={(type)=>this._handlePress({type:'提现'})}>
-              <Text style={css.transparentFont}>提现</Text>
-            </Button>
-            <Button containerStyle={css.rechargeBtn}
-              onPress={(type)=>this._handlePress({type:'充值'})}>
-              <Text style={css.rechargeBtnFont}>充值</Text>
-            </Button>
-          </View>
+          {
+            this.state.user
+            ?
+            <View>
+              <View style={css.cellfixed}>
+                <Text style={css.transparentFont}>
+                  {this.state.user.user_name}
+                </Text>
+              </View>
+              <View style={css.flexRow}>
+                <Button containerStyle={css.withdrawBtn}
+                  onPress={(type)=>this._handlePress({type:'提现'})}>
+                  <Text style={css.transparentFont}>提现</Text>
+                </Button>
+                <Button containerStyle={css.rechargeBtn}
+                  onPress={(type)=>this._handlePress({type:'充值'})}>
+                  <Text style={css.rechargeBtnFont}>充值</Text>
+                </Button>
+              </View>
+            </View>
+            :
+            <View style={css.flexRow}>
+              <Button containerStyle={css.withdrawBtn}
+                onPress={(type)=>this._handlePress({type:'登录'})}>
+                <Text style={css.transparentFont}>登录</Text>
+              </Button>
+            </View>
+          }
         </Image>
 
-        <View style={css.moneyRow}>
-          <View style={css.moneyCellFixed}>
-            <Image style={{width:22,height:24,alignSelf:'center'}} source={require('image!我的本金')} />
-            <Text style={css.money}>
-              本金 1000
-            </Text>
+        {
+          this.state.user
+          ?
+          <View style={css.moneyRow}>
+            <View style={css.moneyCellFixed}>
+              <Image style={{width:22,height:24,alignSelf:'center'}} source={require('image!我的本金')} />
+              <Text style={css.money}>
+                本金 1000
+              </Text>
+            </View>
+            <View style={css.moneyCell}>
+              <Image style={{width:22.5,height:24,alignSelf:'center'}} source={require('image!我的盈利')} />
+              <Text style={css.money}>
+                盈利 132133.33
+              </Text>
+            </View>
+            <View style={css.moneyCellFixed}>
+              <Image style={{width:60,height:24,alignSelf:'center'}} source={require('image!本月')} />
+              <Text style={css.money}>
+                销量 500003292
+              </Text>
+            </View>
           </View>
-  				<View style={css.moneyCell}>
-            <Image style={{width:22.5,height:24,alignSelf:'center'}} source={require('image!我的盈利')} />
-            <Text style={css.money}>
-              盈利 132133.33
-            </Text>
-  				</View>
-          <View style={css.moneyCellFixed}>
-            <Image style={{width:60,height:24,alignSelf:'center'}} source={require('image!本月')} />
-            <Text style={css.money}>
-              销量 500003292
-            </Text>
-          </View>
-  			</View>
+          :
+          <View></View>
+        }
         {/*
           操作菜单开始
         */}
@@ -93,20 +137,28 @@ module.exports = React.createClass({
               我的订单
             </Text>
           </View>
-          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l_8,{width:14,height:13}]}
-              source={require('image!我的打赏')} />
-            <Text style={css.menuText}>
-              我的返佣
-            </Text>
-          </View>
-          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l_8,{width:14,height:13}]}
-              source={require('image!我的团队')} />
-            <Text style={css.menuText}>
-              我的团队
-            </Text>
-          </View>
+          {
+            this.state.user
+            ?
+            <View>
+              <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+                <Image style={[css.l_8,{width:14,height:13}]}
+                  source={require('image!我的打赏')} />
+                <Text style={css.menuText}>
+                  我的返佣
+                </Text>
+              </View>
+              <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+                <Image style={[css.l_8,{width:14,height:13}]}
+                  source={require('image!我的团队')} />
+                <Text style={css.menuText}>
+                  我的团队
+                </Text>
+              </View>
+            </View>
+            :
+            <View></View>
+          }
         </View>
         <View style={{height:10}}>
           {/*
@@ -114,14 +166,20 @@ module.exports = React.createClass({
           */}
         </View>
         <View style={[css.container,css.borderTop,css.borderBottom]}>
-          <View style={[css.flexRow,css.userMenu]}>
-            <Image style={[css.l_8,{width:14,height:14}]}
-              source={require('image!二维码')} />
-            <Text style={css.menuText}>
-              我的二维码
-            </Text>
-          </View>
-          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
+          {
+            this.state.user
+            ?
+            <View style={[css.flexRow,css.userMenu]}>
+              <Image style={[css.l_8,{width:14,height:14}]}
+                source={require('image!二维码')} />
+              <Text style={css.menuText}>
+                我的二维码
+              </Text>
+            </View>
+            :
+            <View></View>
+          }
+          <View style={[css.userMenu,css.flexRow,this.state.user?css.borderTop:'']}>
             <Image style={[css.l_8,{width:12.5,height:18}]}
               source={require('image!修改密码')} />
             <Text style={css.menuText}>
@@ -143,7 +201,7 @@ module.exports = React.createClass({
           </Text>
         </View>
       </View>
-    );
+    )
   },
 });
 
