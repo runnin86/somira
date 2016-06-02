@@ -23,7 +23,7 @@ var Setting = React.createClass({
   render: function() {
     return (
       <View style={{backgroundColor:'#eef0f3',marginTop:68,height:Util.size['height'],}}>
-        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:36,paddingLeft:20,paddingRight:16}}>
+        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
           <Text style={{flex:1,color:'#333333',fontSize:12}}>
             铃声提醒
           </Text>
@@ -33,17 +33,21 @@ var Setting = React.createClass({
             value={this.state.falseSwitchIsOn} />
         </View>
 
-        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:36,paddingLeft:20,paddingRight:16}}>
+				<View style={[styles.line]} />
+
+        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
           <Text style={{flex:1,color:'#333333',fontSize:12}}>
             WIFI环境下自动更新
           </Text>
           <SwitchIOS
             onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-            style={{marginBottom: 4}}
+            style={{marginTop: 4,marginBottom: 4}}
             value={true} />
         </View>
 
-        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:36,paddingLeft:20,paddingRight:16}}>
+				<View style={[styles.line]} />
+
+        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
           <Text style={{flex:1,color:'#333333',fontSize:12}}>
             版本更新1.10
           </Text>
@@ -77,7 +81,11 @@ var styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth:1,
     borderColor:'#ffffff',
-  }
+  },
+	line:{
+    height:1,
+    backgroundColor: '#f4f4f4',
+  },
 });
 
 module.exports = Setting;

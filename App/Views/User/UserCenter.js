@@ -44,10 +44,12 @@ module.exports = React.createClass({
       });
     }
     else {
-      alert(event.type);
+      // alert(event.type);
       if (event.type === 'Setting') {
         this.props.navigator.push({
           component:Setting,
+          leftButtonTitle: '',
+          // leftButtonIcon: {uri: '返回箭头'},
           navigationBarHidden:false,
           // tintColor:'#FFFFFF',
           // barTintColor: '#FFFFFF',
@@ -173,7 +175,7 @@ module.exports = React.createClass({
           fontSize='12'
           icon='我的团队'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
-                    
+
         <View style={{height:10}}>
           {/*
             分解符
