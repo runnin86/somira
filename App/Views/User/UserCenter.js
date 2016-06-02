@@ -1,7 +1,7 @@
-var React = require('react-native');
+import React from 'react-native';
 
-var Util = require('../../Common/Util');
-var Button = require('react-native-button');
+import Util from '../../Common/Util';
+import Button from 'react-native-button';
 
 var {
   AppRegistry,
