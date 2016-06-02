@@ -80,28 +80,28 @@ module.exports = React.createClass({
         */}
         <View style={[css.container,css.borderTop,css.borderBottom]}>
           <View style={[css.flexRow,css.userMenu]}>
-            <Image style={[css.l10,{width:14,height:16.5}]}
+            <Image style={[css.l_8,{width:13,height:14.5}]}
               source={require('image!我的账单')} />
             <Text style={css.menuText}>
               我的账单
             </Text>
           </View>
           <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l10,{width:14,height:16.5}]}
+            <Image style={[css.l_8,{width:14,height:16.5}]}
               source={require('image!我的订单')} />
             <Text style={css.menuText}>
               我的订单
             </Text>
           </View>
           <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l10,{width:14,height:13}]}
+            <Image style={[css.l_8,{width:14,height:13}]}
               source={require('image!我的打赏')} />
             <Text style={css.menuText}>
               我的返佣
             </Text>
           </View>
           <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l10,{width:14,height:13}]}
+            <Image style={[css.l_8,{width:14,height:13}]}
               source={require('image!我的团队')} />
             <Text style={css.menuText}>
               我的团队
@@ -115,21 +115,21 @@ module.exports = React.createClass({
         </View>
         <View style={[css.container,css.borderTop,css.borderBottom]}>
           <View style={[css.flexRow,css.userMenu]}>
-            <Image style={[css.l10,{width:14,height:14}]}
+            <Image style={[css.l_8,{width:14,height:14}]}
               source={require('image!二维码')} />
             <Text style={css.menuText}>
               我的二维码
             </Text>
           </View>
           <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l10,{width:12.5,height:18}]}
+            <Image style={[css.l_8,{width:12.5,height:18}]}
               source={require('image!修改密码')} />
             <Text style={css.menuText}>
               修改密码
             </Text>
           </View>
           <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-          <Image style={[css.l10,{width:12,height:12}]}
+          <Image style={[css.l_8,{width:12,height:12}]}
             source={require('image!帮助')} />
             <Text style={css.menuText}>
               关于
@@ -255,9 +255,9 @@ var css = StyleSheet.create({
     borderBottomWidth : 1,
     backgroundColor: '#ffffff',
   },
-  l10: {
+  l_8: {
     // width:Util.size['width']*0.33,
-    marginLeft:10,
+    marginLeft:-8,
   },
   rightArrow: {
     width:10,
