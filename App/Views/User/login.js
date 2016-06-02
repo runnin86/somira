@@ -1,21 +1,20 @@
-'use strict';
-import React, {
+import React, { Component } from 'react';
+import {
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   Image,
   View,
-  TextInput,
-} from'react-native';
+  TextInput
+} from 'react-native';
 
-class TestInputextends Component {
+module.exports = React.createClass({
   render() {
     return (
-      <Viewstyle={{backgroundColor:'#f4f4f4',flex:1}}>
+      <View style={{backgroundColor:'#f4f4f4',flex:1}}>
           <Image
-              style={styles.style_image}
-             source={require('./img/app_icon.png')}/>
+             style={styles.style_image}
+             source={{uri: '个人中心背景'}}/>
           <TextInput
               style={styles.style_user_input}
               placeholder='QQ号/手机号/邮箱'
@@ -44,18 +43,19 @@ class TestInputextends Component {
 
           </View>
 
-          <Viewstyle={{flex:1,flexDirection:'row',alignItems: 'flex-end',bottom:10}}>
-             <Textstyle={styles.style_view_unlogin}>
+          <View style={{flex:1,flexDirection:'row',alignItems: 'flex-end',bottom:10}}>
+             <Text style={styles.style_view_unlogin}>
                  无法登录?
             </Text>
-            <Textstyle={styles.style_view_register}>
+            <Text style={styles.style_view_register}>
                  新用户
             </Text>
           </View>
       </View>
     );
   }
-}
+});
+
 const styles =StyleSheet.create({
   style_image:{
     borderRadius:35,
