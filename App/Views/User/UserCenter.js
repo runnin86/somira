@@ -2,6 +2,8 @@ import React from 'react-native';
 
 import Util from '../../Common/Util';
 import Login from './Login';
+import Setting from './Setting';
+import MenuItem from '../../Common/MenuItem';
 import Button from 'react-native-button';
 var Store = require('react-native-simple-store');
 
@@ -43,7 +45,26 @@ module.exports = React.createClass({
     }
     else {
       alert(event.type);
+      if (event.type === 'Setting') {
+        this.props.navigator.push({
+          component:Setting,
+          navigationBarHidden:false,
+          // tintColor:'#FFFFFF',
+          // barTintColor: '#FFFFFF',
+          title:'设置'
+        });
+      }
     }
+  },
+  _addNavigator: function(component, title){
+    var data = null;
+    this.props.navigator.push({
+      title: title,
+      component: component,
+      passProps:{
+        data: data
+      }
+    });
   },
   render() {
     return (
@@ -54,7 +75,7 @@ module.exports = React.createClass({
               <Image style={css.btnPhotoMsg}
                 source={require('image!消息按钮')}/>
             </Button>
-            <Button onPress={(type)=>this._handlePress({type:'设置'})}>
+            <Button onPress={(type)=>this._handlePress({type:'Setting'})}>
               <Image style={css.btnPhotoSet}
                 source={require('image!设置按钮')}/>
             </Button>
@@ -122,78 +143,64 @@ module.exports = React.createClass({
         {/*
           操作菜单开始
         */}
-        <View style={[css.container,css.borderTop,css.borderBottom]}>
-          <View style={[css.flexRow,css.userMenu]}>
-            <Image style={[css.l_8,{width:13,height:14.5}]}
-              source={require('image!我的账单')} />
-            <Text style={css.menuText}>
-              我的账单
-            </Text>
-          </View>
-          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-            <Image style={[css.l_8,{width:14,height:16.5}]}
-              source={require('image!我的订单')} />
-            <Text style={css.menuText}>
-              我的订单
-            </Text>
-          </View>
-          {
-            this.state.user
-            ?
-            <View>
-              <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-                <Image style={[css.l_8,{width:14,height:13}]}
-                  source={require('image!我的打赏')} />
-                <Text style={css.menuText}>
-                  我的返佣
-                </Text>
-              </View>
-              <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-                <Image style={[css.l_8,{width:14,height:13}]}
-                  source={require('image!我的团队')} />
-                <Text style={css.menuText}>
-                  我的团队
-                </Text>
-              </View>
-            </View>
-            :
-            <View></View>
-          }
-        </View>
+        <MenuItem
+          title='我的账单'
+          height='32'
+          fontSize='12'
+          icon='我的账单'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+        <View style={[css.line]} />
+
+        <MenuItem
+          title='我的订单'
+          height='32'
+          fontSize='12'
+          icon='我的订单'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+        <View style={[css.line]} />
+
+        <MenuItem
+          title='我的返佣'
+          height='32'
+          fontSize='12'
+          icon='我的打赏'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+        <View style={[css.line]} />
+
+        <MenuItem
+          title='我的团队'
+          height='32'
+          fontSize='12'
+          icon='我的团队'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+                    
         <View style={{height:10}}>
           {/*
             分解符
           */}
         </View>
-        <View style={[css.container,css.borderTop,css.borderBottom]}>
-          {
-            this.state.user
-            ?
-            <View style={[css.flexRow,css.userMenu]}>
-              <Image style={[css.l_8,{width:14,height:14}]}
-                source={require('image!二维码')} />
-              <Text style={css.menuText}>
-                我的二维码
-              </Text>
-            </View>
-            :
-            <View></View>
-          }
-          <View style={[css.userMenu,css.flexRow,this.state.user?css.borderTop:'']}>
-            <Image style={[css.l_8,{width:12.5,height:18}]}
-              source={require('image!修改密码')} />
-            <Text style={css.menuText}>
-              修改密码
-            </Text>
-          </View>
-          <View style={[css.userMenu,css.borderTop,css.flexRow]}>
-          <Image style={[css.l_8,{width:12,height:12}]}
-            source={require('image!帮助')} />
-            <Text style={css.menuText}>
-              关于
-            </Text>
-          </View>
-        </View>
+
+        <MenuItem
+          title='我的二维码'
+          height='32'
+          fontSize='12'
+          icon='二维码'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+        <View style={[css.line]} />
+        <MenuItem
+          title='修改密码'
+          height='32'
+          fontSize='12'
+          icon='修改密码'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+        <View style={[css.line]} />
+        <MenuItem
+          title='关于'
+          height='32'
+          fontSize='12'
+          icon='帮助'
+          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
           <Image style={css.resizeMode} source={require('image!温馨提示')}/>
           <Text style={{marginTop:-5,height:10,fontSize: 8, color: 'red'}}>
@@ -337,5 +344,9 @@ var css = StyleSheet.create({
     paddingBottom:10,
     backgroundColor: 'transparent',
     resizeMode:Image.resizeMode.contain,
-  }
+  },
+  line:{
+    height:1,
+    backgroundColor: '#f4f4f4',
+  },
 });
