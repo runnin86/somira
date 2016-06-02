@@ -1,7 +1,7 @@
 var React = require('react-native');
 import Util from '../../Common/Util';
 import * as net from '../../Network/Interface';
-var Store = require('react-native-simple-store');
+import Store from 'react-native-simple-store';
 
 var {
   AppRegistry,

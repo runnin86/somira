@@ -1,5 +1,6 @@
 import React from 'react-native';
 import Util from '../../Common/Util';
+import Store from 'react-native-simple-store';
 
 var {
 	StyleSheet,
@@ -19,6 +20,10 @@ var Setting = React.createClass({
   },
   _call:function(){
     LinkingIOS.openURL('tel://4007008780');
+  },
+	logout:function(){
+		Store.delete('user');
+    this.props.navigator.pop();
   },
   render: function() {
     return (
@@ -56,7 +61,7 @@ var Setting = React.createClass({
           </Text>
         </View>
 
-        <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.login}>
+        <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
           <Text style={{color:'#fff'}}>退出登录</Text>
         </TouchableHighlight>
 
