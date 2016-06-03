@@ -34,10 +34,11 @@ var login = React.createClass({
     var userId = this.state.userId;
     var pwd = this.state.pwd;
     // post登录请求
-    Util.post(net.userApi.login, {
+    Util.post(net.userApi.login,'', {
       'userName': userId,
       'password': pwd,
-    }, ({code, msg, info})=>{
+    },
+    ({code, msg, info})=>{
       if (code === 1) {
         this._loginSucc(info);
       }
@@ -49,6 +50,7 @@ var login = React.createClass({
   _loginSucc:function(info){
     Store.save('user', info.user);
     Store.save('userPhone', info.user.user_phone);
+    Store.save('token', info.token);
     this.props.navigator.pop();
   },
   render() {

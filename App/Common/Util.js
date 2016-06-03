@@ -23,12 +23,13 @@ module.exports = {
     height: Dimensions.get('window').height
   },
   //post请求
-  post: function (url, data, callback) {
+  post: function (url, token, data, callback) {
     var fetchOptions = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-token': token,
       },
       body: JSON.stringify(data)
     };
@@ -41,35 +42,41 @@ module.exports = {
     }).done();
   },
   /**
-   * 基于fetch的get方法
-   * @method post
-   * @param {string} url
-   * @param {function} callback 请求成功回调
+   * 基于fetch的请求方法
    */
-   get: function (url, successCallback, failCallback) {
-     fetch(url)
-       .then((response) => response.text())
-       .then((responseText) => {
-         successCallback(JSON.parse(responseText));
-       })
-       .catch(function(err){
-         console.log("错误信息:" + err);
-         failCallback(err);
-       });
-   },
-   log:function (obj){
-     var description = "";
-      for(var i in obj){
-         var property=obj[i];
-         description+=i+" = "+property+"\n";
+  get: function (url, token, successCallback, failCallback) {
+    var fetchOptions = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-token': token,
       }
-      alert(description);
-   },   
-   /*loading效果*/
-   loading: <ActivityIndicatorIOS color="#3E00FF"
-     style={{
-       flex:1,
-       justifyContent:'center',
-       alignItems:'center',
-       marginTop:Dimensions.get('window').height/2-150}}/>
+    };
+    fetch(url, fetchOptions)
+      .then((response) => response.text())
+      .then((responseText) => {
+        successCallback(JSON.parse(responseText));
+      })
+      .catch(function(err){
+        console.log("错误信息:" + err);
+        failCallback(err);
+      });
+  },
+  log:function (obj){
+    var description = "";
+    for(var i in obj){
+      var property=obj[i];
+      description+=i+" = "+property+"\n";
+    }
+    alert(description);
+  },
+  /*loading效果*/
+  loading: <ActivityIndicatorIOS color="#3E00FF"
+    style={{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      marginTop:Dimensions.get('window').height/2-150
+    }}/>
 };

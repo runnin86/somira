@@ -1,9 +1,11 @@
 //商品列表
 'use strict';
 
-var React = require('react-native');
-var ItemCell = require('./ItemCell');
-var Util = require('./../../Common/Util');
+import React from 'react-native';
+import Store from 'react-native-simple-store';
+import ItemCell from './ItemCell';
+import Util from './../../Common/Util';
+import * as net from './../../Network/Interface';
 
 var {
   StyleSheet,
@@ -26,7 +28,7 @@ module.exports = React.createClass({
     },
     //只调用一次，在render之后调用
     componentDidMount() {
-      this.fetchData();
+      this.fetchData(this.props.cateId);
     },
     //render 之前调用
     //之所以取nextProps的值而不直接取this.props.cateId 是因为componentWillReceiveProps的更新早于props的更新
@@ -40,22 +42,43 @@ module.exports = React.createClass({
     },
     //拉取数据
     fetchData: function(cateId) {
-      var apiUrl = cateId ? API + '&cateId=' + cateId : API;
-      if(cateId>0){
-        apiUrl += cateId>1 ? '&page=' + cateId : '&page=1';
-      }
-      console.log(apiUrl);
-      // console.log(cateId,apiUrl,'api')
-      fetch(apiUrl)
-          .then((response) => response.json())
-          .then((responseData) => {
-              // console.log('responseData',responseData);
+      if (cateId === 0) {
+        // 获取方案的购物车,需要token数据
+        Store.get('token').then((token)=>{
+          if (token) {
+            Util.post(net.planApi.queryCart, token, {},
+            ({code, msg, result})=>{
+              // console.log(code);
+              // console.log(msg);
+              // console.log(result);
               this.setState({
-                  dataSource: this.state.dataSource.cloneWithRows(responseData.data),
-                  loaded: true
+                dataSource: this.state.dataSource.cloneWithRows(code === 1?result:''),
+                loaded: true
               });
-        })
-        .done();
+            });
+          }
+        });
+      }
+      else if (cateId === 1){
+        // 获取乐夺宝的购物车,需要token数据
+        Store.get('token').then((token)=>{
+          if (token) {
+            Util.get(net.hpApi.redisCart, token,
+            ({code, msg, info})=>{
+              // console.log(code);
+              // console.log(msg);
+              // console.log(info);
+              this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(code === 1?info:''),
+                loaded: true
+              });
+            },
+            (e)=>{
+              console.error(e);
+            });
+          }
+        });
+      }
     },
     //渲染列表
     renderListView : function(){

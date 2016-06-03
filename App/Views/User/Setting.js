@@ -23,6 +23,7 @@ var Setting = React.createClass({
   },
 	logout:function(){
 		Store.delete('user');
+		Store.delete('token');
     this.props.navigator.pop();
   },
   render: function() {

@@ -45,7 +45,7 @@ module.exports = React.createClass({
           <View></View>
         }
 
-        {/*产品列表*/}
+        {/*购物车列表*/}
         <ItemList cateId={cateId} onSelect={(item)=>this.selectItem(item)}/>
 
       </View>
