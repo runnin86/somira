@@ -19,18 +19,20 @@ var {
 } = React;
 
 module.exports = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
+    this._getUser();
     return {
-      user: this.props.user
+      // user: this.props.user
     };
   },
-  componentDidMount: function() {
+  componentWillReceiveProps() {
+    this._getUser();
+  },
+  _getUser() {
     Store.get('user').then((userdata)=>{
-      if (userdata) {
-        this.setState({
-          user:userdata,
-        })
-      }
+      this.setState({
+        user:userdata,
+      })
     });
   },
   _handlePress(event) {

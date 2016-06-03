@@ -22,10 +22,10 @@ var login = React.createClass({
     };
   },
   componentDidMount: function() {
-    Store.get('user').then((userdata)=>{
-      if (userdata) {
+    Store.get('userPhone').then((userPhone)=>{
+      if (userPhone) {
         this.setState({
-          userId:userdata.user_phone,
+          userId: userPhone,
         })
       }
     });
@@ -48,6 +48,7 @@ var login = React.createClass({
   },
   _loginSucc:function(info){
     Store.save('user', info.user);
+    Store.save('userPhone', info.user.user_phone);
     this.props.navigator.pop();
   },
   render() {
