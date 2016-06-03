@@ -1,9 +1,9 @@
 //商品列表
 'use strict';
 
-var React = require('react-native');
-var ItemCell = require('./ItemCell');
-var Util = require('./../../Common/Util');
+import React from 'react-native';
+import ItemCell from './ItemCell';
+import Util from './../../Common/Util';
 import * as net from './../../Network/Interface';
 
 var {

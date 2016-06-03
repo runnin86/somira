@@ -1,7 +1,9 @@
-var React = require('react-native');
-var Swiper = require('react-native-swiper');
-var Progress = require('../../Common/Progress');
-var Util = require('../../Common/Util');
+'use strict';
+
+import React from 'react-native';
+import Swiper from 'react-native-swiper';
+import Progress from '../../Common/Progress';
+import Util from '../../Common/Util';
 
 var {
   AppRegistry,

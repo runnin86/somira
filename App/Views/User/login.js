@@ -1,4 +1,4 @@
-var React = require('react-native');
+import React from 'react-native';
 import Util from '../../Common/Util';
 import * as net from '../../Network/Interface';
 import Store from 'react-native-simple-store';

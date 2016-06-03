@@ -1,5 +1,7 @@
-var React = require('react-native');
-var Util = require('./../../Common/Util');
+'use strict';
+
+import React from 'react-native';
+import Util from './../../Common/Util';
 
 var {
   AppRegistry,

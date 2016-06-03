@@ -3,10 +3,10 @@
 
 'use strict';
 
-var React = require('react-native');
-var Util = require('../../Common/Util');
-var Progress = require('../../Common/Progress');
-var Button = require('react-native-button');
+import React from 'react-native';
+import Util from '../../Common/Util';
+import Progress from '../../Common/Progress';
+import Button from 'react-native-button';
 
 var {
   StyleSheet,

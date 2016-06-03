@@ -5,7 +5,7 @@ import Login from './Login';
 import Setting from './Setting';
 import MenuItem from '../../Common/MenuItem';
 import Button from 'react-native-button';
-var Store = require('react-native-simple-store');
+import Store from 'react-native-simple-store';
 
 var {
   AppRegistry,
