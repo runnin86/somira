@@ -55,7 +55,7 @@ var somira = React.createClass({
           <NavigatorIOS style={css.container}
             barTintColor={Util.headerColor}
             tintColor={'#333344'}
-            navigationBarHidden={true}
+            navigationBarHidden={false}
             initialRoute={{
               title: '购物车',
               component: ShoppingCart,
