@@ -25,7 +25,7 @@ module.exports = React.createClass({
       return {
         dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
         loaded: false,
-        cateId: 0,
+        cateId: 1,
       };
     },
     //只调用一次，在render之后调用
@@ -53,7 +53,7 @@ module.exports = React.createClass({
             ({code, msg, result})=>{
               // console.log(code);
               // console.log(msg);
-              console.log(result);
+              // console.log(result);
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(code === 1?result:''),
                 loaded: true
@@ -70,7 +70,7 @@ module.exports = React.createClass({
             ({code, msg, info})=>{
               // console.log(code);
               // console.log(msg);
-              // console.log(info);
+              console.log(info);
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(code === 1?info:''),
                 loaded: true
@@ -144,7 +144,7 @@ module.exports = React.createClass({
                     <View style={{flexDirection: 'row',right:-40,}}>
                       <Image style={{width: 9,height: 13,marginRight:4,}}
                         source={require('image!单价')} />
-                      <Text style={css.whitePrice,{fontWeight:'100',fontSize:10,flex:1,textAlign:'right',}}>
+                      <Text style={{fontWeight:'100',fontSize:10,flex:1,textAlign:'right',}}>
                         {item.planAmount}元
                       </Text>
                     </View>
@@ -153,8 +153,21 @@ module.exports = React.createClass({
                 <Image style={css.delBtn} source={require('image!删除')} />
       				</View>
               :
-              <Image style={[css.cartImg,{width: 60,height: 60,}]}
-                source={{uri: item.images.split(',')[0]}} />
+              <View style={css.container}>
+                <Image style={[css.cartImg,{width: 60,height: 60,}]}
+                  source={{uri: item.images?item.images.split(',')[0]:''}} />
+                <View style={css.flex1}>
+                  <Text style={{fontWeight : '100',fontSize : 11}} numberOfLines={1}>
+                    {item.name}
+                  </Text>
+                  <Text style={{fontWeight : '100',fontSize : 8}} numberOfLines={1}>
+                    {item.content}
+                  </Text>
+
+
+                </View>
+                <Image style={css.delBtn} source={require('image!删除')} />
+              </View>
             }
   			</TouchableOpacity>
       );
