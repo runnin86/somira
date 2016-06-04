@@ -103,7 +103,7 @@ module.exports = React.createClass({
   componentDidMount: function() {
     this.setState({
       scrollMsgList: [
-        { title: '恭喜156****3355夺得 iPhone6s Plus 128G' },
+        { title: '温馨提示: 理性投注,长跟长红' },
         { title: '恭喜138****8888夺得 BMW X6' },
         { title: '恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换' }
       ]
@@ -181,18 +181,17 @@ module.exports = React.createClass({
   },
   //拉取数据
   fetchBannerData: function() {
-    let bannerUrl = net.hpApi.banner;
-    fetch(bannerUrl)
-        .then((response) => response.json())
-        .then(({code, msg, info}) => {
-          if (code === 1) {
-            this.setState({
-              bannerList: info
-            });
-          }
-      }).catch((e) => {
-        console.log('获取乐夺宝banner失败:' + e)
-      });
+    Util.get(net.planApi.banner, '',
+    ({code, msg, info})=>{
+      if (code === 1) {
+        this.setState({
+          bannerList: info
+        });
+      }
+    },
+    (e)=>{
+      console.error(e);
+    });
   }
 });
 
@@ -238,17 +237,17 @@ var css = StyleSheet.create({
   scrollMsg: {
     flexDirection: 'row',
     height: 30,
-    backgroundColor: '#F5FCFF',
-    borderTopColor : '#eeeeee',
+    backgroundColor: '#cb4a4a',
+    borderTopColor : '#cb4a4a',
     borderTopWidth : 1,
   },
   scrollText: {
     height: 30,
     marginLeft: 4,
-    marginTop: 10,
+    marginTop: 8,
     fontSize: 12,
-    color: 'red',
-    backgroundColor: '#F5FCFF'
+    color: '#FFFFFF',
+    backgroundColor: '#cb4a4a'
   },
   resizeMode: {
     width: 26,

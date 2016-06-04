@@ -104,7 +104,7 @@ module.exports = React.createClass({
     this.setState({
       scrollMsgList: [
         { title: '恭喜156****3355夺得 iPhone6s Plus 128G' },
-        { title: '恭喜138****8888夺得 BMW X6' },
+        { title: '一元夺宝, 精彩无限!' },
         { title: '恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换' }
       ]
     });
@@ -238,17 +238,17 @@ var css = StyleSheet.create({
   scrollMsg: {
     flexDirection: 'row',
     height: 30,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#66CC66',
     borderTopColor : '#eeeeee',
     borderTopWidth : 1,
   },
   scrollText: {
     height: 30,
     marginLeft: 4,
-    marginTop: 10,
+    marginTop: 8,
     fontSize: 12,
-    color: 'red',
-    backgroundColor: '#F5FCFF'
+    color: '#FFFFFF',
+    backgroundColor: '#66CC66'
   },
   resizeMode: {
     width: 26,
