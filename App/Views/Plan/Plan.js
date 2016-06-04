@@ -111,7 +111,7 @@ module.exports = React.createClass({
 
     return(
       <View style={[css.tipItem,css.row]}>
-          {tipsList}
+        {tipsList}
       </View>
     );
   },

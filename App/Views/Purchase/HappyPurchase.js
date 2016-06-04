@@ -121,7 +121,7 @@ module.exports = React.createClass({
             <Image style={css.tipsImg} source={{uri: row[i].img}}/>
           </View>
           <View style={[css.tipsCenter]}>
-              <Text style={css.tipsText}>{row[i].title}</Text>
+            <Text style={css.tipsText}>{row[i].title}</Text>
           </View>
         </TouchableOpacity>
       );
@@ -130,7 +130,7 @@ module.exports = React.createClass({
 
     return(
       <View style={[css.tipItem,css.row]}>
-          {tipsList}
+        {tipsList}
       </View>
     );
   },
