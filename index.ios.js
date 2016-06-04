@@ -8,7 +8,9 @@ import {
   TabBarIOS,
   NavigatorIOS
 } from 'react-native';
+
 import HappyPurchase from './App/Views/Purchase/HappyPurchase';
+import Plan from './App/Views/Plan/Plan';
 import UserCenter from './App/Views/User/UserCenter';
 import ShoppingCart from './App/Views/Cart/ShoppingCart';
 import Test from './App/Test/test';
@@ -42,7 +44,7 @@ var somira = React.createClass({
             navigationBarHidden={false}
             initialRoute={{
               title: '购买方案',
-              component: HappyPurchase,
+              component: Plan,
               wrapperStyle: css.wrapperStyle
             }}/>
         </TabBarIOS.Item>
