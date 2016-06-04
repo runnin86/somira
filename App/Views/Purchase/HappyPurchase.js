@@ -1,13 +1,13 @@
-var React = require('react-native');
-var Swiper = require('react-native-swiper');
-var Util = require('../../Common/Util');
-var ItemList = require('../../Component/HappyPurchase/ItemList');
-var ItemDetail = require('../../Component/HappyPurchase/ItemDetail');
-var Tabs = require('../../Common/Tabs');
+import React from 'react-native';
+import Swiper from 'react-native-swiper';
 
-var LatestAnnounced = require('../../Component/HappyPurchase/LatestAnnounced');
-var Recharge = require('../../Component/HappyPurchase/Recharge');
-var Help = require('../../Component/HappyPurchase/Help');
+import Util from '../../Common/Util';
+import ItemList from '../../Component/HappyPurchase/ItemList';
+import ItemDetail from '../../Component/HappyPurchase/ItemDetail';
+import Tabs from '../../Common/Tabs';
+import LatestAnnounced from '../../Component/HappyPurchase/LatestAnnounced';
+import Recharge from '../../Component/HappyPurchase/Recharge';
+import Help from '../../Component/HappyPurchase/Help';
 import * as net from './../../Network/Interface';
 
 var {
@@ -187,7 +187,7 @@ module.exports = React.createClass({
         .then(({code, msg, info}) => {
           if (code === 1) {
             this.setState({
-                bannerList: info
+              bannerList: info
             });
           }
       }).catch((e) => {

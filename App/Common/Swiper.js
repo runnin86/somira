@@ -1,6 +1,6 @@
-var React = require('react-native')
-var Swiper = require('react-native-swiper')
-var Util = require('./Util')
+import React from 'react-native';
+import Swiper from 'react-native-swiper';
+import Util from './Util';
 
 var {
   StyleSheet,

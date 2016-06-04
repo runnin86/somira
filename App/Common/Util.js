@@ -4,8 +4,8 @@
  * 主要提供工具方法
  *
  */
-var React = require('react-native');
-var Dimensions = require('Dimensions');
+import React from 'react-native';
+import Dimensions from 'Dimensions';
 
 var {
   PixelRatio,

@@ -2,7 +2,8 @@
 /*
  * color=purple,red,orange,yellow
  */
-var React = require('react-native');
+import React from 'react-native';
+
 var {
   ProgressViewIOS,
   StyleSheet,

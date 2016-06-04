@@ -1,8 +1,7 @@
 //通用tab标签页
 'use strict';
-
-var React = require('react-native');
-var Util = require('./Util');
+import React from 'react-native';
+import Util from './Util';
 var maxTabLength = 4;
 
 var {

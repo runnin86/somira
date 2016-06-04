@@ -5,7 +5,8 @@
  * 这里需要注意的是使用{...route.passProps}模仿NavigatorIOS的passProps
  *
  */
-var React = require('react-native');
+import React from 'react-native';
+
 var {
   StyleSheet,
   Text,

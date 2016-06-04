@@ -1,9 +1,9 @@
-var React = require('react-native');
+import React from 'react-native';
 
-var ItemList = require('../../Component/ShoppingCart/ItemList');
-var ItemDetail = require('../../Component/HappyPurchase/ItemDetail');
-var Util = require('../../Common/Util');
-var Tabs = require('../../Common/Tabs');
+import ItemList from '../../Component/ShoppingCart/ItemList';
+import ItemDetail from '../../Component/HappyPurchase/ItemDetail';
+import Util from '../../Common/Util';
+import Tabs from '../../Common/Tabs';
 
 var {
   AppRegistry,
