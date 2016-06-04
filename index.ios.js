@@ -33,6 +33,20 @@ var somira = React.createClass({
     return (
       <TabBarIOS>
         <TabBarIOS.Item
+          title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
+          selected={this.state.selectedTab === 'hp'}
+          onPress={()=>{this.changeTab('hp')}}>
+          <NavigatorIOS style={css.container}
+            barTintColor={Util.headerColor}
+            tintColor={'#333344'}
+            navigationBarHidden={false}
+            initialRoute={{
+              title: '购买方案',
+              component: HappyPurchase,
+              wrapperStyle: css.wrapperStyle
+            }}/>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
           title="乐夺宝" icon={{uri:'乐夺宝',scale:3,isStatic:true}}
           selected={this.state.selectedTab === 'hp'}
           onPress={()=>{this.changeTab('hp')}}>

@@ -219,7 +219,7 @@ module.exports = React.createClass({
           title='关于'
           height='32'
           fontSize='12'
-          icon='帮助'
+          icon='关于'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
 
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
