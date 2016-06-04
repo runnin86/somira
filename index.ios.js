@@ -34,8 +34,8 @@ var somira = React.createClass({
       <TabBarIOS>
         <TabBarIOS.Item
           title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
-          selected={this.state.selectedTab === 'hp'}
-          onPress={()=>{this.changeTab('hp')}}>
+          selected={this.state.selectedTab === 'plan'}
+          onPress={()=>{this.changeTab('plan')}}>
           <NavigatorIOS style={css.container}
             barTintColor={Util.headerColor}
             tintColor={'#333344'}

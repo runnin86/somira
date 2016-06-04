@@ -22,8 +22,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		58AFB0401B5837F100EB7D18 /* reactnative_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AFB0341B5837F100EB7D18 /* reactnative_logo.png */; };
-		58AFB0411B5837F100EB7D18 /* reactnative_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AFB0351B5837F100EB7D18 /* reactnative_logo@2x.png */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -135,8 +133,6 @@
 		58AFB0311B5837F100EB7D18 /* nodes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nodes@2x.png"; path = "App/Resources/icons/nodes@2x.png"; sourceTree = "<group>"; };
 		58AFB0321B5837F100EB7D18 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = App/Resources/icons/icon.png; sourceTree = "<group>"; };
 		58AFB0331B5837F100EB7D18 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "App/Resources/icons/icon@2x.png"; sourceTree = "<group>"; };
-		58AFB0341B5837F100EB7D18 /* reactnative_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reactnative_logo.png; path = App/Resources/icons/reactnative_logo.png; sourceTree = "<group>"; };
-		58AFB0351B5837F100EB7D18 /* reactnative_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reactnative_logo@2x.png"; path = "App/Resources/icons/reactnative_logo@2x.png"; sourceTree = "<group>"; };
 		58AFB0361B5837F100EB7D18 /* icon_flat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_flat.png; path = App/Resources/icons/icon_flat.png; sourceTree = "<group>"; };
 		58AFB0371B5837F100EB7D18 /* ruby_china_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ruby_china_logo.png; path = App/Resources/icons/ruby_china_logo.png; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -294,8 +290,6 @@
 				58AFB0311B5837F100EB7D18 /* nodes@2x.png */,
 				58AFB0321B5837F100EB7D18 /* icon.png */,
 				58AFB0331B5837F100EB7D18 /* icon@2x.png */,
-				58AFB0341B5837F100EB7D18 /* reactnative_logo.png */,
-				58AFB0351B5837F100EB7D18 /* reactnative_logo@2x.png */,
 				58AFB0361B5837F100EB7D18 /* icon_flat.png */,
 				58AFB0371B5837F100EB7D18 /* ruby_china_logo.png */,
 			);
@@ -559,8 +553,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
-				58AFB0401B5837F100EB7D18 /* reactnative_logo.png in Resources */,
-				58AFB0411B5837F100EB7D18 /* reactnative_logo@2x.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
