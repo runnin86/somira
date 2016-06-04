@@ -5,6 +5,7 @@ import Util from '../../Common/Util';
 import ItemList from '../../Component/Plan/ItemList';
 import ItemDetail from '../../Component/Plan/ItemDetail';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
+import RangeList from '../../Component/Plan/RangeList';
 import Recharge from '../../Component/Plan/Recharge';
 import Help from '../../Component/Plan/Help';
 import * as net from './../../Network/Interface';
@@ -69,6 +70,7 @@ module.exports = React.createClass({
     );
   },
   getInitialState: function() {
+    console.log(RangeList);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows([[
