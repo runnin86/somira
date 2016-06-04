@@ -14,7 +14,6 @@ var {
   View,
   Platform,
   TouchableOpacity,
-  TextInput
 } = React;
 
 var API = 'http://ald.taobao.com/recommend.htm?appId=03507&areaId=330100&size=15&type=1';
@@ -124,12 +123,12 @@ module.exports = React.createClass({
                     </Text>
                   </View>
                   <View style={[css.row,css.left10,css.right15,css.bottom4]}>
-                    <TextInput
-                      keyboardType ='numeric'
-                      style={css.input}
-                      value={item.amount+''}
-                      onChangeText={(text) => this.setState({userId: text})}/>
-                    <Text style={[css.fontWeight,css.fontSize10,css.left10,css.top4]}>
+                    <View style={[css.row,css.center2]}>
+                      <Image style={css.priceBtn} source={require('image!ic_goods_reduce')}/>
+                      <Text style={css.priceText}>{item.amount}</Text>
+                      <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
+                    </View>
+                    <Text style={[css.fontWeight,css.fontSize10,css.left10,css.center]}>
                       {item.planAmount}元
                     </Text>
       						</View>
@@ -163,11 +162,11 @@ module.exports = React.createClass({
                   <Text style={[css.fontWeight,{fontSize: 8}]} numberOfLines={1}>
                     {item.content}
                   </Text>
-                  <TextInput
-                    keyboardType ='numeric'
-                    style={[css.input,css.row,css.top4]}
-                    value={item.amount+''}
-                    onChangeText={(text) => this.setState({userId: text})}/>
+                  <View style={[css.row,css.top4]}>
+                    <Image style={css.priceBtn} source={require('image!ic_goods_reduce')}/>
+                    <Text style={[css.center,css.priceText]}>{item.amount}</Text>
+                    <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
+                  </View>
                   <View style={[css.row,css.top4]}>
                     <Text style={[css.fontWeight,css.fontSize10]}>
                       需:
@@ -195,6 +194,7 @@ module.exports = React.createClass({
 });
 
 // 组件样式
+// borderColor:'#3164ce',//#b0b0b0,#c40001
 var css = StyleSheet.create({
   loading :{
     marginTop : 10,
@@ -217,6 +217,14 @@ var css = StyleSheet.create({
     borderBottomWidth : 1,
     backgroundColor: '#ffffff',
   },
+  center: {
+    alignSelf:'center',
+    justifyContent:'center',
+  },
+  center2: {
+    alignItems:'center',
+    justifyContent:'center',
+  },
   delBtn: {
     right: 10,
     marginTop: 14,
@@ -225,14 +233,6 @@ var css = StyleSheet.create({
     borderWidth: 0.5,
     borderColor : '#778899',
     borderRadius : 15,
-  },
-  input:{
-    height:25,
-    width:100,
-    // borderColor:'#3164ce',//#b0b0b0,#c40001
-    borderColor:'b0b0b0',
-    borderWidth:1,
-    fontSize:14,
   },
   fontWeight: {
     fontWeight: '100'
@@ -272,5 +272,14 @@ var css = StyleSheet.create({
   },
   top4: {
     marginTop:4
+  },
+  priceText: {
+    color:'#f28006',
+    paddingLeft:10,
+    paddingRight:10,
+  },
+  priceBtn: {
+    height:25,
+    width:25,
   }
 });
