@@ -1,7 +1,7 @@
 var React = require('react-native');
 
 var ItemList = require('../../Component/ShoppingCart/ItemList');
-var ItemDetail = require('../../Component/ShoppingCart/ItemDetail');
+var ItemDetail = require('../../Component/HappyPurchase/ItemDetail');
 var Util = require('../../Common/Util');
 var Tabs = require('../../Common/Tabs');
 
@@ -55,13 +55,16 @@ module.exports = React.createClass({
 	selectItem:function(item){
     //console.log(item);
 		if (Platform.OS === 'ios') {
-			this.props.navigator.push({
-				title:item.txt,
-				component:ItemDetail,
+      this.props.navigator.push({
+        title: '商品详情',
+        component: ItemDetail,
+        leftButtonTitle: '返回',
         navigationBarHidden:false,
-        index:3,
-				passProps:{item:item},
-			});
+        onLeftButtonPress: () => this.props.navigator.pop(),
+        passProps: {
+          item: item
+        }
+      });
 		}else{
 			//android对应的处理
 		}
