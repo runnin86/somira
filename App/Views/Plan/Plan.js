@@ -4,7 +4,6 @@ import Swiper from 'react-native-swiper';
 import Util from '../../Common/Util';
 import ItemList from '../../Component/Plan/ItemList';
 import ItemDetail from '../../Component/Plan/ItemDetail';
-import Tabs from '../../Common/Tabs';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
 import Recharge from '../../Component/Plan/Recharge';
 import Help from '../../Component/Plan/Help';
@@ -23,8 +22,6 @@ var {
 
 module.exports = React.createClass({
   render: function() {
-    var cateId = this.state.cateId;
-    var tabDataSource = this.state.tabData;
     return (
       <View style={css.flex}>
         <ScrollView stickyHeaderIndices={[3]}>
@@ -65,12 +62,8 @@ module.exports = React.createClass({
             })}
           </Swiper>
 
-          {/*产品分类tab*/}
-          <Tabs updateCateItem={(cateId)=>this.setState({cateId : cateId})}
-              initData={{tabDataSource}}/>
-
           {/*产品列表*/}
-          <ItemList cateId={cateId} onSelect={(item)=>this.selectItem(item)}/>
+          <ItemList cateId={0} onSelect={(item)=>this.selectItem(item)}/>
         </ScrollView>
       </View>
     );
@@ -83,18 +76,6 @@ module.exports = React.createClass({
         {title:'充值', id: 'recharge', img: '充值'},
         {title:'帮助', id: 'help', img: '帮助-1'}
       ]]),
-      tabData: [
-        {
-          code: 0,
-          name: '全部商品'
-        },{
-          code: '10',
-          name: '十元专场',
-          link: 'http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1',
-          icon: ''
-        }
-      ],
-      cateId : 0,
       scrollMsgList: [],
       bannerList: []
     };
@@ -121,7 +102,7 @@ module.exports = React.createClass({
             <Image style={css.tipsImg} source={{uri: row[i].img}}/>
           </View>
           <View style={[css.tipsCenter]}>
-              <Text style={css.tipsText}>{row[i].title}</Text>
+            <Text style={css.tipsText}>{row[i].title}</Text>
           </View>
         </TouchableOpacity>
       );
