@@ -17,7 +17,8 @@ var {
   ListView,
   TouchableOpacity,
   ScrollView,
-  Platform
+  Platform,
+  AlertIOS,
 } = React;
 
 module.exports = React.createClass({
@@ -103,7 +104,10 @@ module.exports = React.createClass({
         { title: '恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换' }
       ]
     });
+    // banner数据
     this.fetchBannerData();
+    // 方案数据
+    this.fetchRangeData();
   },
   _renderTipsRow: function(row) {
     var tipsList = [];
@@ -174,8 +178,8 @@ module.exports = React.createClass({
       //android对应的处理
     }
   },
-  //拉取banner数据
-  fetchBannerData: function() {
+  // 拉取banner数据
+  fetchBannerData() {
     Util.get(net.planApi.banner, '',
     ({code, msg, info})=>{
       if (code === 1) {
@@ -187,7 +191,35 @@ module.exports = React.createClass({
     (e)=>{
       console.error(e);
     });
-  }
+  },
+  // 拉取方案区间数据
+  fetchRangeData() {
+    Util.get(net.planApi.plan, '',
+    ({code, msg, result})=>{
+      if (code === 1) {
+        // console.log(result.rangeList)
+        state.rangeList = result.rangeList
+      }
+      else if (code === 0) {
+        AlertIOS.alert('提示消息', null,[
+          {text: msg, onPress: () => console.log('Foo Pressed!')},
+        ])
+      }
+      else if (code === 3) {
+        AlertIOS.alert('提示消息', null,[
+          {text: msg, onPress: () => console.log('Foo Pressed!')},
+        ])
+        // $.alert(msg, ()=>{
+        //   window.localStorage.clear()
+        //   window.localStorage.setItem('imageSwitch', true)
+        //   this.$route.router.go({path: '/login?from=user', replace: true})
+        // })
+      }
+    },
+    (e)=>{
+      console.error(e);
+    });
+  },
 });
 
 var css = StyleSheet.create({

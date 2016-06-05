@@ -90,15 +90,12 @@ var createExamplePage = function(title: ?string, exampleModule: ExampleModule)
       null;
       var spacer = this.props.noSpacer ? null : <View style={styles.spacer} />;
       return (
-        <View style={styles.page}>
-          {title}
-          <ContentWrapper
-            style={styles.wrapper}
-            {...wrapperProps}>
-              {exampleModule.examples.map(this.getBlock)}
-              {spacer}
-          </ContentWrapper>
-        </View>
+        <ContentWrapper
+          style={styles.wrapper}
+          {...wrapperProps}>
+            {exampleModule.examples.map(this.getBlock)}
+            {spacer}
+        </ContentWrapper>
       );
     }
   });
@@ -113,7 +110,7 @@ var styles = StyleSheet.create({
     borderColor: '#d6d7da',
     backgroundColor: '#ffffff',
     margin: 2,
-    marginVertical: 5,
+    marginVertical: 1,
     overflow: 'hidden',
   },
   titleContainer: {
@@ -144,7 +141,7 @@ var styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: 2,
   },
   title: {
     borderRadius: 4,
