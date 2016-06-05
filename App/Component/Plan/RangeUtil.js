@@ -19,7 +19,6 @@ var createExamplePage = function(title: ?string, exampleModule: ExampleModule)
     },
 
     getBlock: function(example: Example, i) {
-      // Filter platform-specific examples
       var {title, description, platform} = example;
       if (platform) {
         if (Platform.OS !== platform) {
@@ -113,7 +112,7 @@ var styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#d6d7da',
     backgroundColor: '#ffffff',
-    margin: 10,
+    margin: 2,
     marginVertical: 5,
     overflow: 'hidden',
   },
@@ -132,16 +131,6 @@ var styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 14,
-  },
-  disclosure: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    padding: 10,
-  },
-  disclosureIcon: {
-    width: 12,
-    height: 8,
   },
   children: {
     margin: 10,

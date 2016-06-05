@@ -3,11 +3,10 @@ import Swiper from 'react-native-swiper';
 
 import Util from '../../Common/Util';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
-import RangeList from '../../Component/Plan/RangeList';
+import RangeUtil from '../../Component/Plan/RangeUtil';
 import Recharge from '../../Component/Common/Recharge';
 import Help from '../../Component/Common/Help';
 import * as net from './../../Network/Interface';
-import createExamplePage from './createExamplePage';
 
 
 var {
@@ -22,11 +21,6 @@ var {
 } = React;
 
 module.exports = React.createClass({
-  makeRenderable(example: any): ReactClass<any> {
-    return example.examples ?
-      createExamplePage(null, example) :
-      example;
-  },
   render: function() {
     const tjson = {
       examples: [{
@@ -41,7 +35,7 @@ module.exports = React.createClass({
         },
       },]
     };
-    const Component = this.makeRenderable(tjson);
+    const RangeList = RangeUtil(null, tjson);
     return (
       <View style={css.flex}>
         <ScrollView stickyHeaderIndices={[3]}>
@@ -83,13 +77,12 @@ module.exports = React.createClass({
           </Swiper>
 
           {/*方案区间列表*/}
-          <Component/>
+          <RangeList />
         </ScrollView>
       </View>
     );
   },
   getInitialState: function() {
-    console.log(RangeList);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows([[
