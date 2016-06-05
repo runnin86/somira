@@ -6,8 +6,8 @@ import ItemList from '../../Component/HappyPurchase/ItemList';
 import ItemDetail from '../../Component/HappyPurchase/ItemDetail';
 import Tabs from '../../Common/Tabs';
 import LatestAnnounced from '../../Component/HappyPurchase/LatestAnnounced';
-import Recharge from '../../Component/HappyPurchase/Recharge';
-import Help from '../../Component/HappyPurchase/Help';
+import Recharge from '../../Component/Common/Recharge';
+import Help from '../../Component/Common/Help';
 import * as net from './../../Network/Interface';
 
 var {

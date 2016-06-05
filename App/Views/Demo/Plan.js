@@ -2,12 +2,10 @@ import React from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import Util from '../../Common/Util';
-import ItemList from '../../Component/Plan/ItemList';
-import ItemDetail from '../../Component/Plan/ItemDetail';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
 import RangeList from '../../Component/Plan/RangeList';
-import Recharge from '../../Component/Plan/Recharge';
-import Help from '../../Component/Plan/Help';
+import Recharge from '../../Component/Common/Recharge';
+import Help from '../../Component/Common/Help';
 import * as net from './../../Network/Interface';
 
 var {

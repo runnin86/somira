@@ -2,12 +2,10 @@ import React from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import Util from '../../Common/Util';
-import ItemList from '../../Component/Plan/ItemList';
-import ItemDetail from '../../Component/Plan/ItemDetail';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
 import RangeList from '../../Component/Plan/RangeList';
-import Recharge from '../../Component/Plan/Recharge';
-import Help from '../../Component/Plan/Help';
+import Recharge from '../../Component/Common/Recharge';
+import Help from '../../Component/Common/Help';
 import * as net from './../../Network/Interface';
 
 var {
@@ -21,8 +19,29 @@ var {
   Platform
 } = React;
 
+const createExamplePage = require('./createExamplePage');
+
 module.exports = React.createClass({
+  makeRenderable(example: any): ReactClass<any> {
+    return example.examples ?
+      createExamplePage(null, example) :
+      example;
+  },
   render: function() {
+    const tjson = {
+      examples: [{
+        title: 'Wrap',
+        render: function() {
+          return (
+            <Text>
+              The text should wrap if it goes on multiple lines. See, this is going to
+              the next line.
+            </Text>
+          );
+        },
+      },]
+    };
+    const Component = this.makeRenderable(tjson);
     return (
       <View style={css.flex}>
         <ScrollView stickyHeaderIndices={[3]}>
@@ -63,8 +82,8 @@ module.exports = React.createClass({
             })}
           </Swiper>
 
-          {/*产品列表*/}
-          <ItemList cateId={0} onSelect={(item)=>this.selectItem(item)}/>
+          {/*方案区间列表*/}
+          <Component/>
         </ScrollView>
       </View>
     );
@@ -162,7 +181,7 @@ module.exports = React.createClass({
       //android对应的处理
     }
   },
-  //拉取数据
+  //拉取banner数据
   fetchBannerData: function() {
     Util.get(net.planApi.banner, '',
     ({code, msg, info})=>{
