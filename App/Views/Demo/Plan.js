@@ -32,7 +32,7 @@ module.exports = React.createClass({
     // console.log(RangeList);
     const Example = UIExplorerList.Modules['TextExample'];
     const Component = UIExplorerExampleList.makeRenderable(Example);
-    console.log(Component);
+    // console.log(Example);
     return (
       <ScrollView>
         <Component/>

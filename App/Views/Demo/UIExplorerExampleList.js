@@ -34,6 +34,7 @@ class UIExplorerExampleList extends React.Component {
   }
 
   static makeRenderable(example: any): ReactClass<any> {
+    // console.log(example);
     return example.examples ?
       createExamplePage(null, example) :
       example;
