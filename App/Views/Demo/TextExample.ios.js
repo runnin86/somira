@@ -1,25 +1,3 @@
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * The examples provided by Facebook are for non-commercial testing and
- * evaluation purposes only.
- *
- * Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- * @flow
- */
 'use strict';
 
 var React = require('react');
@@ -93,7 +71,8 @@ exports.examples = [
       </Text>
     );
   },
-}, {
+},
+{
   title: 'Padding',
   render: function() {
     return (
@@ -102,7 +81,8 @@ exports.examples = [
       </Text>
     );
   },
-}, {
+},
+{
   title: 'Font Family',
   render: function() {
     return (
@@ -128,21 +108,23 @@ exports.examples = [
       </View>
     );
   },
-}, {
-  title: 'Font Size',
-  render: function() {
-    return (
-      <View>
-        <Text style={{fontSize: 23}}>
-          Size 23
-        </Text>
-        <Text style={{fontSize: 8}}>
-          Size 8
-        </Text>
-      </View>
-    );
-  },
-}, {
+},
+// {
+//   title: 'Font Size',
+//   render: function() {
+//     return (
+//       <View>
+//         <Text style={{fontSize: 23}}>
+//           Size 23
+//         </Text>
+//         <Text style={{fontSize: 8}}>
+//           Size 8
+//         </Text>
+//       </View>
+//     );
+//   },
+// },
+{
   title: 'Color',
   render: function() {
     return (
@@ -156,7 +138,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Font Weight',
   render: function() {
     return (
@@ -179,7 +162,8 @@ exports.examples = [
       </View>
     );
   },
-},  {
+},
+{
   title: 'Font Style',
   render: function() {
     return (
@@ -193,7 +177,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Text Decoration',
   render: function() {
     return (
@@ -231,7 +216,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Nested',
   description: 'Nested text components will inherit the styles of their ' +
     'parents (only backgroundColor is inherited from non-Text parents).  ' +
@@ -271,7 +257,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Text Align',
   render: function() {
     return (
@@ -299,7 +286,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Letter Spacing',
   render: function() {
     return (
@@ -319,7 +307,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Spaces',
   render: function() {
     return (
@@ -328,7 +317,8 @@ exports.examples = [
       </Text>
     );
   },
-}, {
+},
+{
   title: 'Line Height',
   render: function() {
     return (
@@ -340,7 +330,8 @@ exports.examples = [
       </Text>
     );
   },
-}, {
+},
+{
   title: 'Empty Text',
   description: 'It\'s ok to have Text with zero or null children.',
   render: function() {
@@ -348,12 +339,14 @@ exports.examples = [
       <Text />
     );
   },
-}, {
+},
+{
   title: 'Toggling Attributes',
   render: function(): ReactElement<any> {
     return <AttributeToggler />;
   },
-}, {
+},
+{
   title: 'backgroundColor attribute',
   description: 'backgroundColor is inherited from all types of views.',
   render: function() {
@@ -375,7 +368,8 @@ exports.examples = [
       </Text>
     );
   },
-}, {
+},
+{
   title: 'numberOfLines attribute',
   render: function() {
     return (
@@ -392,7 +386,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Text highlighting (tap the link to see highlight)',
   render: function() {
     return (
@@ -401,7 +396,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'allowFontScaling attribute',
   render: function() {
     return (
@@ -420,7 +416,8 @@ exports.examples = [
       </View>
     );
   },
-}, {
+},
+{
   title: 'Text shadow',
   render: function() {
     return (
@@ -431,7 +428,8 @@ exports.examples = [
       </View>
     );
   },
-}];
+}
+];
 
 var styles = StyleSheet.create({
   backgroundColorText: {

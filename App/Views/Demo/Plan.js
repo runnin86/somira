@@ -34,9 +34,9 @@ module.exports = React.createClass({
     const Component = UIExplorerExampleList.makeRenderable(Example);
     console.log(Component);
     return (
-      <View>
+      <ScrollView>
         <Component/>
-      </View>
+      </ScrollView>
     );
   },
   getInitialState: function() {
