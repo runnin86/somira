@@ -1,5 +1,6 @@
 import React from 'react-native';
 import Swiper from 'react-native-swiper';
+import Store from 'react-native-simple-store';
 
 import Util from '../../Common/Util';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
@@ -92,7 +93,7 @@ module.exports = React.createClass({
         {title:'帮助', id: 'help', img: '帮助-1'}
       ]]),
       scrollMsgList: [],
-      bannerList: []
+      bannerList: [],
     };
   },
   //只调用一次，在render之后调用
@@ -194,30 +195,32 @@ module.exports = React.createClass({
   },
   // 拉取方案区间数据
   fetchRangeData() {
-    Util.get(net.planApi.plan, '',
-    ({code, msg, result})=>{
-      if (code === 1) {
-        // console.log(result.rangeList)
-        state.rangeList = result.rangeList
+    // 需要token数据
+    Store.get('token').then((token)=>{
+      if (token) {
+        Util.get(net.planApi.plan, token,
+        ({code, msg, result})=>{
+          if (code === 1) {
+            // console.log(result.rangeList)
+            result.rangeList.map(function (r, key) {
+              console.log(r.range_name + '->' + (r.rangeSaleLimit-r.rangeSaled));
+            })
+          }
+          else if (code === 0) {
+            AlertIOS.alert('提示消息', null,[
+              {text: msg, onPress: () => console.log('Foo Pressed!')},
+            ])
+          }
+          else if (code === 3) {
+            AlertIOS.alert('提示消息', null,[
+              {text: msg, onPress: () => console.log('Foo Pressed!')},
+            ])
+          }
+        },
+        (e)=>{
+          console.error(e);
+        });
       }
-      else if (code === 0) {
-        AlertIOS.alert('提示消息', null,[
-          {text: msg, onPress: () => console.log('Foo Pressed!')},
-        ])
-      }
-      else if (code === 3) {
-        AlertIOS.alert('提示消息', null,[
-          {text: msg, onPress: () => console.log('Foo Pressed!')},
-        ])
-        // $.alert(msg, ()=>{
-        //   window.localStorage.clear()
-        //   window.localStorage.setItem('imageSwitch', true)
-        //   this.$route.router.go({path: '/login?from=user', replace: true})
-        // })
-      }
-    },
-    (e)=>{
-      console.error(e);
     });
   },
 });
