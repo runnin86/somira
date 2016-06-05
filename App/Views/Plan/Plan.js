@@ -7,6 +7,8 @@ import RangeList from '../../Component/Plan/RangeList';
 import Recharge from '../../Component/Common/Recharge';
 import Help from '../../Component/Common/Help';
 import * as net from './../../Network/Interface';
+import createExamplePage from './createExamplePage';
+
 
 var {
   StyleSheet,
@@ -18,8 +20,6 @@ var {
   ScrollView,
   Platform
 } = React;
-
-const createExamplePage = require('./createExamplePage');
 
 module.exports = React.createClass({
   makeRenderable(example: any): ReactClass<any> {

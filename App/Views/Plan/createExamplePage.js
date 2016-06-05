@@ -3,10 +3,12 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  View,
+  StyleSheet,
+  Text,
   Platform,
+  ScrollView,
 } = ReactNative;
-var UIExplorerBlock = require('./UIExplorerBlock');
-var UIExplorerPage = require('./UIExplorerPage');
 
 var createExamplePage = function(title: ?string, exampleModule: ExampleModule)
   : ReactClass<any> {
@@ -45,26 +47,130 @@ var createExamplePage = function(title: ?string, exampleModule: ExampleModule)
       }
       (React: Object).render = originalRender;
       (ReactNative: Object).render = originalIOSRender;
+      var description;
+      if (description) {
+        description =
+          <Text style={styles.descriptionText}>
+            {description}
+          </Text>;
+      }
       return (
-        <UIExplorerBlock
-          key={i}
-          title={title}
-          description={description}>
-          {renderedComponent}
-        </UIExplorerBlock>
+        <View style={styles.container} key={i}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>
+              {title}
+            </Text>
+            {description}
+          </View>
+          <View style={styles.children}>
+            {renderedComponent}
+          </View>
+        </View>
       );
     },
 
     render: function() {
+      var ContentWrapper;
+      var wrapperProps = {};
+      if (this.props.noScroll) {
+        ContentWrapper = (View: ReactClass<any>);
+      } else {
+        ContentWrapper = (ScrollView: ReactClass<any>);
+        wrapperProps.automaticallyAdjustContentInsets = !this.props.title;
+        wrapperProps.keyboardShouldPersistTaps = true;
+        wrapperProps.keyboardDismissMode = 'interactive';
+      }
+      var title = this.props.title
+      ?
+      <View style={styles.title}>
+        <Text style={styles.text}>
+          {this.props.title}
+        </Text>
+      </View>
+      :
+      null;
+      var spacer = this.props.noSpacer ? null : <View style={styles.spacer} />;
       return (
-        <UIExplorerPage title={title}>
-          {exampleModule.examples.map(this.getBlock)}
-        </UIExplorerPage>
+        <View style={styles.page}>
+          {title}
+          <ContentWrapper
+            style={styles.wrapper}
+            {...wrapperProps}>
+              {exampleModule.examples.map(this.getBlock)}
+              {spacer}
+          </ContentWrapper>
+        </View>
       );
     }
   });
 
   return ExamplePage;
 };
+
+var styles = StyleSheet.create({
+  container: {
+    borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    backgroundColor: '#ffffff',
+    margin: 10,
+    marginVertical: 5,
+    overflow: 'hidden',
+  },
+  titleContainer: {
+    borderBottomWidth: 0.5,
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 2.5,
+    borderBottomColor: '#d6d7da',
+    backgroundColor: '#f6f7f8',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  titleText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  descriptionText: {
+    fontSize: 14,
+  },
+  disclosure: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 10,
+  },
+  disclosureIcon: {
+    width: 12,
+    height: 8,
+  },
+  children: {
+    margin: 10,
+  },
+  page: {
+    backgroundColor: '#e9eaed',
+    flex: 1,
+  },
+  spacer: {
+    height: 270,
+  },
+  wrapper: {
+    flex: 1,
+    paddingTop: 10,
+  },
+  title: {
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    margin: 10,
+    marginBottom: 0,
+    height: 45,
+    padding: 10,
+    backgroundColor: 'white',
+  },
+  text: {
+    fontSize: 19,
+    fontWeight: '500',
+  },
+});
 
 module.exports = createExamplePage;
