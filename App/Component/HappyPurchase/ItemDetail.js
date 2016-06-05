@@ -43,16 +43,16 @@ module.exports = React.createClass({
     let recordUrl = net.hpApi.all_partake +
       '?projectId=' + id + '&number=' + number + '&pagenum=' + pagenum;
     fetch(recordUrl)
-        .then((response) => response.json())
-        .then(({code, msg, results}) => {
-          if (code === 1) {
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(results.list)
-            });
-          }
-      }).catch((e) => {
-        console.log('获取乐夺宝参与记录失败:' + e)
-      });
+    .then((response) => response.json())
+    .then(({code, msg, results}) => {
+      if (code === 1) {
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(results.list)
+        });
+      }
+    }).catch((e) => {
+      console.log('获取乐夺宝参与记录失败:' + e)
+    });
   },
   render: function() {
     var item = this.props.item;
