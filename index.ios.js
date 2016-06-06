@@ -33,7 +33,7 @@ var somira = React.createClass({
   },
   render: function() {
     return (
-      <TabBarIOS>
+      <TabBarIOS tintColor="lightgreen" barTintColor="#ffffff">
         <TabBarIOS.Item
           title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
           selected={this.state.selectedTab === 'plan'}
@@ -44,6 +44,7 @@ var somira = React.createClass({
             navigationBarHidden={false}
             initialRoute={{
               title: '购买方案',
+              titleTextColor: Util.headerTitleColor,
               component: Plan,
               wrapperStyle: css.wrapperStyle
             }}/>
@@ -58,6 +59,7 @@ var somira = React.createClass({
             navigationBarHidden={false}
             initialRoute={{
               title: '乐夺宝',
+              titleTextColor: Util.headerTitleColor,
               component: HappyPurchase,
               wrapperStyle: css.wrapperStyle
             }}/>
@@ -74,6 +76,7 @@ var somira = React.createClass({
             navigationBarHidden={false}
             initialRoute={{
               title: '购物车',
+              titleTextColor: Util.headerTitleColor,
               component: ShoppingCart,
               wrapperStyle: css.wrapperStyle
             }}/>
@@ -90,6 +93,7 @@ var somira = React.createClass({
             navigationBarHidden={true}
             initialRoute={{
               title: '个人中心',
+              titleTextColor: Util.headerTitleColor,
               component: UserCenter,
               wrapperStyle: css.wrapperStyle
             }}/>

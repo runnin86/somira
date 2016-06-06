@@ -16,7 +16,9 @@ module.exports = {
   /*最小线宽*/
   pixel: 1 / PixelRatio.get(),
   /*头部背景色*/
-  headerColor: 'OrangeRed',
+  headerColor: 'DarkOrange',
+  /*头部title颜色*/
+  headerTitleColor: '#000000',
   /*屏幕尺寸*/
   size: {
     width: Dimensions.get('window').width,
