@@ -2,8 +2,11 @@
 'use strict';
 
 import React from 'react-native';
-import ItemCell from './ItemCell';
+import * as Animatable from 'react-native-animatable';
+
+import Button from 'react-native-button';
 import Util from './../../Common/Util';
+import PlanDetail from './PlanDetail';
 import * as net from './../../Network/Interface';
 
 var {
@@ -12,65 +15,83 @@ var {
   Text,
   Image,
   View,
+  TouchableOpacity,
 } = React;
 
 module.exports = React.createClass({
-  //object在组件被挂载之前调用。状态化的组件应该实现这个方法，返回初始的state数据。
   getInitialState() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      dataSource: ds.cloneWithRows(this.props.plans),
+      serviceTime: this.props.serviceTime,
       loaded: false
     };
-  },
-  //只调用一次，在render之后调用
-  componentDidMount() {
-    this.fetchData();
-  },
-  //render 之前调用
-  //之所以取nextProps的值而不直接取this.props.cateId 是因为componentWillReceiveProps的更新早于props的更新
-  componentWillReceiveProps(nextProps) {
-    //猫头先转
-    this.setState({
-      loaded : false
-    })
-    //拉取数据
-    this.fetchData(nextProps.cateId);
-  },
-  //拉取数据
-  fetchData: function(cateId) {
-    let API = net.hpApi.home + (cateId> 0 ? '?price=' + cateId : '');
-    fetch(API)
-    .then((response) => response.json())
-    .then(({code, msg, results}) => {
-      if (code === 1) {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(results.list),
-          loaded: true
-        });
-      }
-    }).catch((e) => {
-      console.log('获取乐夺宝商品列表失败:' + e)
-    });
   },
   //渲染列表
   renderListView : function(){
     //先展示加载中的菊花
-    if(!this.state.loaded){
-      return(
-        <Image style={css.loading} source={require('image!loading')} />
-      );
-    };
+    // if(!this.state.loaded){
+    //   return(
+    //     <Image style={css.loading} source={require('image!loading')} />
+    //   );
+    // };
     return(
-      <ListView contentInset={{top: 0}}
+      <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         style={css.listView}/>
     );
   },
+  _animatables: {},
+  _pushCart: function(event,id){
+    this._animatables[id]['slideInLeft'](1000);
+  },
+  //选中一行
+  selectPlan:function(plan) {
+    this.props.navigator.push({
+      title: '方案详情',
+      component: PlanDetail,
+      leftButtonTitle: '返回',
+      navigationBarHidden:false,
+      onLeftButtonPress: () => this.props.navigator.pop(),
+      passProps: {
+        plan: plan
+      }
+    });
+  },
   //渲染每一行
-  renderRow(item) {
+  renderRow(plan) {
+    let filterTime = Util.getDateDiff(this.state.serviceTime, plan.deadline_time, 'minute');
     return (
-      <ItemCell item={item} onSelect={this.props.onSelect.bind(this,item)} />
+      <TouchableOpacity onPress={this.selectPlan.bind(this, plan)}>
+        <View style={css.planView}>
+          <Animatable.Image ref={component => this._animatables[plan.plan_id] = component} style={css.expertPhoto} source={{uri : plan.expert_photo}} />
+          <View style={css.planInfo}>
+            <Text style={{fontSize : 12}}>
+              {plan.expert_name}
+            </Text>
+            <Text style={{fontWeight : '100',fontSize : 10,marginTop : 4}}>
+              {plan.planConfident}
+            </Text>
+          </View>
+          <View style={[css.row,{marginRight:-8,}]}>
+            <Text style={[css.redPrice,{fontWeight : '100',fontSize : 20,marginLeft : 4}]}>
+              &yen; {plan.plan_amount}
+            </Text>
+          </View>
+          <View style={[css.row,{marginRight:20,}]}>
+            <Image style={{width:24,height:26}}
+              source={require('image!时间')} />
+            <Text style={{fontWeight : '100',fontSize : 10,marginLeft : 4}}>
+              {filterTime > 0 ? filterTime + '分钟' : '已截止'}
+            </Text>
+          </View>
+          <View style={[css.row],{alignItems:'flex-end',marginRight:10,}}>
+            <Image style={{width:36,height:33}}
+              source={{uri: filterTime > 0 ? '购物车-选中' : '购物车'}} />
+          </View>
+        </View>
+      </TouchableOpacity>
     );
   },
 	render() {
@@ -91,6 +112,32 @@ var css = StyleSheet.create({
     width: Util.size['width']
   },
   listView : {
-    // backgroundColor : '#ffffff'
+    backgroundColor : '#ffffff',
+    // backgroundColor: 'lightgreen',
+  },
+  planView: {
+    flex : 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopColor: '#eeeeee',
+    borderTopWidth: 1,
+  },
+  expertPhoto : {
+    width : 42,
+    height : 50,
+    margin: 10,
+  },
+  planInfo : {
+    flex : 1,
+    flexDirection : 'column'
+  },
+  row : {
+    flex: 1,
+    flexDirection : 'row',
+    alignItems: 'center',
+  },
+  redPrice : {
+    color : '#c40001',
   }
 });

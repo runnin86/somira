@@ -25,7 +25,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <View style={css.flex}>
-        <ScrollView stickyHeaderIndices={[3]}>
+        <ScrollView stickyHeaderIndices={[2]}>
           {/*轮播图*/}
           <Swiper style={css.wrapper} height={Util.size['height']/4.5}
             onMomentumScrollEnd={function(e, state, context){}}
@@ -64,7 +64,7 @@ module.exports = React.createClass({
           </Swiper>
 
           {/*方案区间列表*/}
-          <RangeList />
+          <RangeList navigator={this.props.navigator}/>
         </ScrollView>
       </View>
     );
