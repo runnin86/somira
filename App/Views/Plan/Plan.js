@@ -1,10 +1,9 @@
 import React from 'react-native';
 import Swiper from 'react-native-swiper';
-import Store from 'react-native-simple-store';
 
 import Util from '../../Common/Util';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
-import RangeUtil from '../../Component/Plan/RangeUtil';
+import RangeList from '../../Component/Plan/RangeList';
 import Recharge from '../../Component/Common/Recharge';
 import Help from '../../Component/Common/Help';
 import * as net from './../../Network/Interface';
@@ -24,20 +23,6 @@ var {
 
 module.exports = React.createClass({
   render: function() {
-    const tjson = {
-      examples: [{
-        title: 'Wrap',
-        render: function() {
-          return (
-            <Text>
-              The text should wrap if it goes on multiple lines. See, this is going to
-              the next line.
-            </Text>
-          );
-        },
-      },]
-    };
-    const RangeList = RangeUtil(null, tjson);
     return (
       <View style={css.flex}>
         <ScrollView stickyHeaderIndices={[3]}>
@@ -107,8 +92,6 @@ module.exports = React.createClass({
     });
     // banner数据
     this.fetchBannerData();
-    // 方案数据
-    this.fetchRangeData();
   },
   _renderTipsRow: function(row) {
     var tipsList = [];
@@ -191,36 +174,6 @@ module.exports = React.createClass({
     },
     (e)=>{
       console.error(e);
-    });
-  },
-  // 拉取方案区间数据
-  fetchRangeData() {
-    // 需要token数据
-    Store.get('token').then((token)=>{
-      if (token) {
-        Util.get(net.planApi.plan, token,
-        ({code, msg, result})=>{
-          if (code === 1) {
-            // console.log(result.rangeList)
-            result.rangeList.map(function (r, key) {
-              console.log(r.range_name + '->' + (r.rangeSaleLimit-r.rangeSaled));
-            })
-          }
-          else if (code === 0) {
-            AlertIOS.alert('提示消息', null,[
-              {text: msg, onPress: () => console.log('Foo Pressed!')},
-            ])
-          }
-          else if (code === 3) {
-            AlertIOS.alert('提示消息', null,[
-              {text: msg, onPress: () => console.log('Foo Pressed!')},
-            ])
-          }
-        },
-        (e)=>{
-          console.error(e);
-        });
-      }
     });
   },
 });
