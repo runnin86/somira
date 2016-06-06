@@ -8,6 +8,7 @@ var {
   View,
   StyleSheet,
   Text,
+  Image,
   Platform,
   ScrollView,
 } = ReactNative;
@@ -39,7 +40,8 @@ module.exports = React.createClass({
             let ranges = [];
             result.rangeList.map(function (r, key) {
               ranges.push({
-                title: r.range_name,
+                rangeName: r.range_name,
+                surplus: r.rangeSaleLimit-r.rangeSaled,
                 render: function() {
                   return (
                     <Text>
@@ -72,7 +74,7 @@ module.exports = React.createClass({
     });
   },
   getBlock: function(example: Example, i) {
-    var {title, platform} = example;
+    var {rangeName, surplus, platform} = example;
     if (platform) {
       if (Platform.OS !== platform) {
         return null;
@@ -96,10 +98,21 @@ module.exports = React.createClass({
     (ReactNative: Object).render = originalIOSRender;
     return (
       <View style={styles.container} key={i}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>
-            {title}
-          </Text>
+        <View style={[styles.rangeNameContainer,styles.row]}>
+          <View style={[styles.flex1,styles.row]}>
+            <Image style={styles.rangeNameImg}
+              source={require('image!方案详情-收益区')} />
+            <Text style={styles.rangeNameText}>
+              {rangeName}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Image style={styles.rangeNameImg}
+              source={require('image!方案详情-限购')} />
+            <Text style={styles.rangeNameText}>
+              {surplus>=0 ? '限购剩余 ' + surplus + '元': '不限购'}
+            </Text>
+          </View>
         </View>
         <View style={styles.children}>
           {renderedComponent}
@@ -140,7 +153,7 @@ var styles = StyleSheet.create({
     marginVertical: 1,
     overflow: 'hidden',
   },
-  titleContainer: {
+  rangeNameContainer: {
     borderBottomWidth: 0.5,
     borderTopLeftRadius: 3,
     borderTopRightRadius: 2.5,
@@ -149,9 +162,14 @@ var styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
-  titleText: {
-    fontSize: 14,
-    fontWeight: '500',
+  rangeNameText: {
+    fontSize: 10,
+    fontWeight: '100',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 1,
+    textShadowColor: '#FFE4B5',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   children: {
     margin: 10,
@@ -167,7 +185,7 @@ var styles = StyleSheet.create({
     flex: 1,
     paddingTop: 2,
   },
-  title: {
+  rangeName: {
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
@@ -181,4 +199,15 @@ var styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: '500',
   },
+  row: {
+    flexDirection: 'row',
+  },
+  rangeNameImg: {
+    width: 13,
+    height: 15,
+    marginRight:4,
+  },
+  flex1: {
+    flex: 1,
+  }
 });
