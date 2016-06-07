@@ -29,7 +29,7 @@ module.exports = React.createClass({
    */
   getInitialState: function () {
     return {
-      show: false,
+      showCartBtn: false,
       totalPrice: this.props.item.price,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
@@ -47,7 +47,7 @@ module.exports = React.createClass({
     .then(({code, msg, results}) => {
       if (code === 1) {
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(results.list)
+          dataSource: this.state.dataSource.cloneWithRows(results.list)
         });
       }
     }).catch((e) => {
@@ -81,8 +81,8 @@ module.exports = React.createClass({
           </Swiper>
           <View style={[css.container,css.borderTop,css.borderBottom]}>
             <View>
-              <Text style={{fontSize : 12}} numberOfLines={2}>{item.name}</Text>
-              <Text style={{fontWeight : '100',fontSize : 8,marginTop : 4}} numberOfLines={2}>
+              <Text style={{fontSize : 16}} numberOfLines={2}>{item.name}</Text>
+              <Text style={{fontWeight : '100',fontSize : 12,marginTop : 4}} numberOfLines={2}>
                 {item.content}
               </Text>
               <View style={css.progress}>
@@ -93,13 +93,13 @@ module.exports = React.createClass({
                   <Text style={css.redPrice}>
                     {item.totalCount}
                   </Text>
-                  <Text style={{fontWeight:'100',fontSize:10}}>总需</Text>
+                  <Text style={{fontWeight:'100',fontSize:14}}>总需</Text>
                 </View>
                 <View>
                   <Text style={css.whitePrice}>
                     {item.codeCount}
                   </Text>
-                  <Text style={{fontWeight:'100',fontSize:10}}>剩余</Text>
+                  <Text style={{fontWeight:'100',fontSize:14}}>剩余</Text>
                 </View>
               </View>
             </View>
@@ -137,7 +137,7 @@ module.exports = React.createClass({
             </Text>
           </View>
           <View style={[css.container,css.borderTop]}>
-            <Text style={{fontWeight:'100',fontSize:10}}>
+            <Text style={{fontWeight:'100',fontSize:16}}>
               参与记录
             </Text>
             {
@@ -149,7 +149,7 @@ module.exports = React.createClass({
               :
               <View style={{bottom:-10,marginTop:16,alignItems:'center',justifyContent: 'center'}}>
                 <Image style={css.resizeMode} source={require('image!温馨提示')}/>
-                <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+                <Text style={{height:20,fontSize: 14, color: 'gray'}}>
                   还没有人参与,赶快试试吧,万一中了呢?
                 </Text>
               </View>
@@ -160,35 +160,35 @@ module.exports = React.createClass({
           立即夺宝
         </Button>
         <ActionSheet
-            visible={this.state.show}
+            visible={this.state.showCartBtn}
             onCancel={this.onCancel}
             cancelText={'确认'}
-            buttonStyle={{marginTop:6, borderRadius:6,backgroundColor:'#f6383a'}}
+            buttonStyle={{marginTop:6, borderRadius:6,height:Util.size['height']*0.068,backgroundColor:'#f6383a'}}
             textStyle={{color:'#FFFFFF'}}>
             <ActionSheet.Button>
-              <Text style={{color: '#5f646e',fontSize:12}}>
+              <Text style={{color: '#5f646e',fontSize:14}}>
                 请选择参与人次
               </Text>
             </ActionSheet.Button>
             <View style={css.priceRow}>
               <Text onPress={()=>this.setState({totalPrice:10})}
-                style={{color: this.state.totalPrice===10?'#f6383a':'#0894ec',fontSize:12,marginLeft:16,}}>
+                style={{color: this.state.totalPrice===10?'#f6383a':'#0894ec',fontSize:14,marginLeft:16,}}>
                 10
               </Text>
               <Text onPress={()=>this.setState({totalPrice:20})}
-                style={{color: this.state.totalPrice===20?'#f6383a':'#0894ec',fontSize:12}}>
+                style={{color: this.state.totalPrice===20?'#f6383a':'#0894ec',fontSize:14}}>
                 20
               </Text>
               <Text onPress={()=>this.setState({totalPrice:50})}
-                style={{color: this.state.totalPrice===50?'#f6383a':'#0894ec',fontSize:12}}>
+                style={{color: this.state.totalPrice===50?'#f6383a':'#0894ec',fontSize:14}}>
                 50
               </Text>
               <Text onPress={()=>this.setState({totalPrice:100})}
-                style={{color: this.state.totalPrice===100?'#f6383a':'#0894ec',fontSize:12}}>
+                style={{color: this.state.totalPrice===100?'#f6383a':'#0894ec',fontSize:14}}>
                 100
               </Text>
               <Text onPress={()=>this.setState({totalPrice:300})}
-                style={{color: this.state.totalPrice===300?'#f6383a':'#0894ec',fontSize:12,marginRight:16,}}>
+                style={{color: this.state.totalPrice===300?'#f6383a':'#0894ec',fontSize:14,marginRight:16,}}>
                 300
               </Text>
             </View>
@@ -216,7 +216,7 @@ module.exports = React.createClass({
                   this.interval && clearInterval(this.interval);
                   this.timer && clearTimeout(this.timer);
                 }}
-                style={{height:25,width:25,marginLeft:10,tintColor: '#8e8e93',}}
+                style={{height:36,width:36,marginLeft:24,tintColor: '#000000',}}
                 source={require("image!ic_goods_reduce")}/>
               <TextInput
                  style={css.textInput}
@@ -244,11 +244,11 @@ module.exports = React.createClass({
                   this.interval && clearInterval(this.interval);
                   this.timer && clearTimeout(this.timer);
                 }}
-                style={{height:25,width:25,marginRight:10,tintColor: '#8e8e93',}}
+                style={{height:36,width:36,marginRight:24,tintColor: '#000000',}}
                 source={require("image!ic_goods_add")}/>
             </View>
             <ActionSheet.Button>
-              <Text style={{color: '#5f646e',fontSize:12}}>
+              <Text style={{color: '#5f646e',fontSize:14}}>
                 需
                 <Text style={{color: '#f6383a'}}>
                   {' ' + this.state.totalPrice + ' '}
@@ -262,22 +262,22 @@ module.exports = React.createClass({
   },
   onCancel() {
     console.log('进行支付:' + this.state.totalPrice);
-    this.setState({show:false});
+    this.setState({showCartBtn:false});
   },
   onOpen() {
-    this.setState({show:true});
+    this.setState({showCartBtn:true});
   },
   _renderRecordRow: function(row) {
     return(
       <View style={css.recordRow}>
-        <View style={css.recordCellFixed,{width:54}}>
+        <View style={[css.recordCellFixed,{marginBottom:10,alignItems: 'center',marginLeft:10,}]}>
           <Image style={css.userImg} source={require('image!默认头像')} />
-          <Text style={{textAlign: 'center',fontWeight : '100',fontSize : 10}}>{row.user_name}</Text>
+          <Text style={{fontWeight : '100',fontSize : 12}}>{row.user_name}</Text>
         </View>
 				<View style={css.recordCell}>
 					<Text style={css.recordText}>{row.addTime}</Text>
 				</View>
-        <View style={{width:80},css.recordCellFixed}>
+        <View style={css.recordCellFixed}>
           <Text style={css.recordText}>{row.payCount}人次</Text>
         </View>
 			</View>
@@ -285,17 +285,19 @@ module.exports = React.createClass({
   },
   _renderHeader(section, i, isActive) {
     return (
-      <Animatable.View duration={400} style={[css.container,css.borderBottom, isActive ? css.active : css.inactive]} transition="backgroundColor">
+      <Animatable.View duration={400}
+        style={[css.container,css.borderBottom, isActive ? css.active : css.inactive]} transition="backgroundColor">
         <Text style={css.headerText}>{section.title}</Text>
       </Animatable.View>
     );
   },
   _renderContent(section, i, isActive) {
     return (
-      <Animatable.View duration={400} style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
+      <Animatable.View duration={400}
+        style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
         {section.content.map(function(v,i){
           return (
-            <Animatable.Text key={i} style={css.headerText}
+            <Animatable.Text key={i} style={css.contentText}
               animation={isActive ? 'bounceIn' : undefined}>
               {v}
             </Animatable.Text>
@@ -342,7 +344,7 @@ var css = StyleSheet.create({
   	color : '#c40001'
   },
   whitePrice : {
-  	fontSize : 12,
+  	fontSize : 14,
   	color : '#b0b0b0'
   },
   progress: {
@@ -353,13 +355,18 @@ var css = StyleSheet.create({
     resizeMode: 'contain'
   },
   headerText: {
-    // textAlign: 'center',
-    fontSize: 10,
+    fontSize: 16,
+    fontWeight: '100',
+    marginTop:6,
+    marginBottom:6,
+  },
+  contentText: {
+    fontSize: 13,
     fontWeight: '100',
   },
   content: {
     flex: 1,
-    padding: 16,
+    padding: 12,
   },
   active: {
     backgroundColor: 'rgba(245,252,255,1)',
@@ -368,9 +375,9 @@ var css = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,1)',
   },
   recordRow : {
-    flexDirection : 'row',
-    borderBottomColor : '#eeeeee',
-    borderBottomWidth : 1,
+    flexDirection: 'row',
+    borderBottomColor: '#eeeeee',
+    borderBottomWidth: 1,
     backgroundColor: '#ffffff',
   },
   recordCell: {
@@ -384,6 +391,7 @@ var css = StyleSheet.create({
   },
   recordText: {
     fontSize: 12,
+    fontWeight: '100',
     textAlign: 'center',
     margin: 10
   },
@@ -391,7 +399,7 @@ var css = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    marginLeft:10
+    // marginLeft:10
   },
   resizeMode: {
     width: 120,
@@ -401,33 +409,34 @@ var css = StyleSheet.create({
   },
   cartBtn : {
     color: '#FFFFFF',
-    lineHeight: 30,
+    lineHeight: Util.size['height']*0.05,
     marginTop:-16,
-    marginBottom:8,
+    marginBottom:4,
     marginLeft:10,
     marginRight:10,
-    height:36,
+    height:Util.size['height']*0.068,
     overflow:'hidden',
     borderWidth : 1,
     borderRadius:10,
     borderColor: '#FFFFFF',
-    backgroundColor: '#0894ec',
+    backgroundColor: 'lightgreen',
   },
   priceRow: {
+    height:Util.size['height']*0.068,
     flexDirection : 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor:'#e8e8e8',
-    borderBottomWidth: 0.2,
-    borderColor: 'gray',
-    height: 40,
+    backgroundColor:'white',
+    borderBottomWidth: 1,
+    borderColor: '#D3D3D3',
   },
   textInput: {
-    height: 34,
+    height:Util.size['height']*0.052,
     width:180,
-    marginTop:2,
+    alignSelf:'center',
+    justifyContent:'center',
     color: '#f6383a',
-    borderColor: '#f6383a',
+    borderColor: '#FF6347',
     borderRadius:10,
     borderWidth: 0.4,
     paddingHorizontal:10,

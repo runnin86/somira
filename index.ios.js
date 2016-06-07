@@ -21,7 +21,7 @@ StatusBarIOS.setHidden(false);
 var somira = React.createClass({
   getInitialState(){
     return {
-      selectedTab: 'plan',
+      selectedTab: 'hp',
       notifyCartCount: 18,
       notifyUserCount: 1
     };
