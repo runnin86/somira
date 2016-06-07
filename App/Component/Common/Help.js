@@ -9,10 +9,15 @@ var {
   Text,
   View,
   ScrollView,
-  Image
+  Image,
+  TouchableHighlight,
+  LinkingIOS,
 } = React;
 
 module.exports = React.createClass({
+  _call:function(){
+    LinkingIOS.openURL('tel://4008710088');
+  },
   render: function() {
     return (
       <ScrollView contentContainerStyle={css.stage}>
@@ -79,12 +84,16 @@ module.exports = React.createClass({
 
         <View style={{bottom:-10,marginTop:16,alignItems:'center',justifyContent: 'center'}}>
           <Image style={css.resizeMode} source={require('image!温馨提示')}/>
-          <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+          <Text style={{height:20,fontSize: 12, color: 'gray'}}>
             如果您的问题未能解决，请联系客服人员。
           </Text>
-          <Text style={{flex: 1, fontSize: 10, color: 'gray',top:-6}}>
-            客服电话400-000-0000
-          </Text>
+          <TouchableHighlight
+            style={{justifyContent:'center',alignItems:'center'}}
+            underlayColor="#dad9d7" onPress={()=>this._call()}>
+            <Text style={{flex: 1, fontSize: 12, color: '#000000'}}>
+              客服电话400-8710-088
+            </Text>
+          </TouchableHighlight>
         </View>
       </ScrollView>
     );

@@ -6,7 +6,6 @@ var {
 	StyleSheet,
 	View,
 	Text,
-  LinkingIOS,
   TouchableHighlight,
   SwitchIOS,
 } = React;
@@ -17,9 +16,6 @@ var Setting = React.createClass({
       user:null,
       falseSwitchIsOn: false,
     };
-  },
-  _call:function(){
-    LinkingIOS.openURL('tel://4007008780');
   },
 	logout:function(){
 		Store.delete('user');
@@ -63,15 +59,8 @@ var Setting = React.createClass({
         </View>
 
         <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
-          <Text style={{color:'#fff'}}>退出登录</Text>
+          <Text style={{color:'#ffffff',fontSize:18}}>退出登录</Text>
         </TouchableHighlight>
-
-        <TouchableHighlight
-          style={{justifyContent:'center',alignItems:'center',backgroundColor:'#ffffff',height:45,marginTop:30}}
-          underlayColor="#dad9d7" onPress={()=>this._call()}>
-         <Text>拨打客服400-700-8780</Text>
-        </TouchableHighlight>
-
       </View>
     );
   },
