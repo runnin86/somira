@@ -62,6 +62,7 @@ module.exports = React.createClass({
   //渲染每一行
   renderRow(plan) {
     let filterTime = Util.getDateDiff(this.state.serviceTime, plan.deadline_time, 'minute');
+    let redHeart = plan.planConfident;
     return (
       <TouchableOpacity onPress={this.selectPlan.bind(this, plan)}>
         <View style={css.planView}>
@@ -73,6 +74,18 @@ module.exports = React.createClass({
             <Text style={{fontWeight : '100',fontSize : 10,marginTop : 4}}>
               {plan.planConfident}
             </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Image style={{width:15,height:12}}
+                source={{uri: '720信心'}} />
+              <Image style={{width:15,height:12}}
+                source={{uri: '720信心'}} />
+              <Image style={{width:15,height:12}}
+                source={{uri: '720信心'}} />
+              <Image style={{width:15,height:12}}
+                source={{uri: redHeart>=4?'720信心':''}} />
+              <Image style={{width:15,height:12}}
+                source={{uri: redHeart>=5?'720信心':''}} />
+            </View>
           </View>
           <View style={[css.row,{marginRight:-8,}]}>
             <Text style={[css.redPrice,{fontWeight : '100',fontSize : 20,marginLeft : 4}]}>
