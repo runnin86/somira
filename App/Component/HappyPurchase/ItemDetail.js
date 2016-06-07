@@ -136,10 +136,12 @@ module.exports = React.createClass({
             <Text>
             </Text>
           </View>
-          <View style={[css.container,css.borderTop]}>
-            <Text style={{fontWeight:'100',fontSize:16}}>
+          
+          <View style={[{paddingTop:10,},css.borderTop]}>
+            <Text style={{fontWeight:'100',fontSize:16,paddingLeft:10}}>
               参与记录
             </Text>
+            <View style={[{paddingTop:6,paddingBottom:6,width:Util.size['width']},css.borderBottom]}></View>
             {
               this.state.dataSource.getRowCount() > 0
               ?
