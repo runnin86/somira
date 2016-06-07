@@ -315,9 +315,7 @@ module.exports = React.createClass({
           </Text>
 				</View>
         <View style={css.recordCellFixed}>
-          <Text style={css.recordText}>
-            {row.planResult}
-          </Text>
+          <Image style={{width:16,height:16,marginRight:10}} source={{uri: row.planResult}} />
         </View>
 			</View>
     );
