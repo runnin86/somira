@@ -169,7 +169,7 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的返佣'
-              height='36'
+              height='38'
               fontSize='14'
               icon='我的打赏'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
@@ -177,7 +177,7 @@ module.exports = React.createClass({
 
             <MenuItem
               title='我的团队'
-              height='36'
+              height='38'
               fontSize='14'
               icon='我的团队'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
@@ -198,7 +198,7 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的二维码'
-              height='36'
+              height='38'
               fontSize='14'
               icon='二维码'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
@@ -210,14 +210,14 @@ module.exports = React.createClass({
 
         <MenuItem
           title='修改密码'
-          height='36'
+          height='38'
           fontSize='14'
           icon='修改密码'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
         <MenuItem
           title='关于'
-          height='36'
+          height='38'
           fontSize='14'
           icon='关于'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
