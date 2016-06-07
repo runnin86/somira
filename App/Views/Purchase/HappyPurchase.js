@@ -51,12 +51,12 @@ module.exports = React.createClass({
             renderRow={this._renderTipsRow}/>
 
           {/*滚动消息*/}
-          <Swiper showsButtons={false} height={30} showsPagination={false}
+          <Swiper showsButtons={false} height={40} showsPagination={false}
             autoplay={true} autoplayTimeout={5} horizontal={false}>
             {this.state.scrollMsgList.map(function(item,i){
               return (
                 <View style={css.scrollMsg} key={i}>
-                  <Image style={{marginTop:4},css.resizeMode} source={require('image!喇叭')}/>
+                  <Image style={css.resizeMode} source={require('image!喇叭')}/>
                   <Text style={css.scrollText}>
                     {item.title}
                   </Text>
@@ -238,25 +238,26 @@ var css = StyleSheet.create({
   },
   scrollMsg: {
     flexDirection: 'row',
-    height: 30,
+    height: 40,
     backgroundColor: '#66CC66',
-    borderTopColor : '#eeeeee',
-    borderTopWidth : 1,
+    borderTopColor: '#eeeeee',
+    borderTopWidth: 1,
   },
   scrollText: {
-    height: 30,
     marginLeft: 4,
-    marginTop: 8,
-    fontSize: 12,
+    fontSize: 14,
     color: '#FFFFFF',
-    backgroundColor: '#66CC66'
+    backgroundColor: '#66CC66',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   resizeMode: {
     width: 26,
     height: 20,
     marginLeft: 8,
-    marginTop: 6,
     backgroundColor: 'transparent',
     resizeMode:Image.resizeMode.contain,
+    alignSelf: 'center',
+    justifyContent: 'center',
   }
 });
