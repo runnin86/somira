@@ -108,17 +108,17 @@ module.exports = React.createClass({
                 <View style={css.column}>
                   <Image style={[css.left10,css.bottom10,css.right4,{width: 42,height: 48,}]}
                     source={{uri: item.expertHead}} />
-                  <Text style={[css.fontWeight,css.fontSize10,{alignSelf:'center',marginTop:-6,}]}
+                  <Text style={[css.fontWeight,css.fontSize14,{alignSelf:'center',marginTop:-6,}]}
                     numberOfLines={1}>
                     {item.expertName}
                   </Text>
                 </View>
                 <View style={css.flex1}>
                   <View style={[css.row,css.left10,css.right15,css.bottom4]}>
-                    <Text style={[css.fontWeight,css.fontSize10]}>
+                    <Text style={[css.fontWeight,css.fontSize14]}>
                       {item.planName}
                     </Text>
-                    <Text style={[css.fontWeight,css.fontSize10,css.flex1,css.textRight]}>
+                    <Text style={[css.fontWeight,css.fontSize14,css.flex1,css.textRight]}>
                       {item.addTime}
                     </Text>
                   </View>
@@ -128,22 +128,22 @@ module.exports = React.createClass({
                       <Text style={css.priceText}>{item.amount}</Text>
                       <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
                     </View>
-                    <Text style={[css.fontWeight,css.fontSize10,css.left10,css.center]}>
+                    <Text style={[css.fontWeight,css.fontSize14,css.left10,css.center]}>
                       {item.planAmount}元
                     </Text>
       						</View>
                   <View style={[css.row,css.left10,css.right15,css.bottom4,css.top4]}>
                     <View style={css.row}>
-                      <Image style={[css.right4,{width: 12,height: 12}]}
+                      <Image style={[css.right4,{width: 14,height: 14}]}
                         source={require('image!方案详情-收益区')} />
-                      <Text style={[css.fontWeight,css.fontSize10]}>
+                      <Text style={[css.fontWeight,css.fontSize14]}>
                         {item.rangeName}
                       </Text>
                     </View>
                     <View style={[css.row,{right:-40,}]}>
-                      <Image style={[css.right4,{width: 9,height: 13,}]}
+                      <Image style={[css.right4,{width: 12,height: 16,}]}
                         source={require('image!单价')} />
-                      <Text style={[css.fontWeight,css.fontSize10,css.flex1]}>
+                      <Text style={[css.fontWeight,css.fontSize14,css.flex1]}>
                         {item.planAmount}元
                       </Text>
                     </View>
@@ -156,10 +156,10 @@ module.exports = React.createClass({
                 <Image style={[css.bottom10,css.right4,{width: 60,height: 60,}]}
                   source={{uri: item.images?item.images.split(',')[0]:''}} />
                 <View style={css.flex1}>
-                  <Text style={[css.fontWeight,{fontSize: 11}]} numberOfLines={1}>
+                  <Text style={[css.fontWeight,{fontSize: 14}]} numberOfLines={1}>
                     {item.name}
                   </Text>
-                  <Text style={[css.fontWeight,{fontSize: 8}]} numberOfLines={1}>
+                  <Text style={[css.fontWeight,{fontSize: 10,marginTop:2,marginBottom:2,}]} numberOfLines={1}>
                     {item.content}
                   </Text>
                   <View style={[css.row,css.top4]}>
@@ -168,14 +168,14 @@ module.exports = React.createClass({
                     <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
                   </View>
                   <View style={[css.row,css.top4]}>
-                    <Text style={[css.fontWeight,css.fontSize10]}>
+                    <Text style={[css.fontWeight,css.fontSize14]}>
                       需:
                       <Text style={css.red}>
                         {item.amount}
                       </Text>
                       元
                     </Text>
-                    <Text style={[css.fontWeight,css.fontSize10,css.flex1,css.textCenter]}>
+                    <Text style={[css.fontWeight,css.fontSize14,css.flex1,css.textCenter]}>
                       总价:{item.totalCount}元
                     </Text>
                   </View>
@@ -228,17 +228,17 @@ var css = StyleSheet.create({
   delBtn: {
     right: 10,
     marginTop: 14,
-    height: 30,
-    width: 30,
+    height: 40,
+    width: 40,
     borderWidth: 0.5,
     borderColor : '#778899',
-    borderRadius : 15,
+    borderRadius : 20,
   },
   fontWeight: {
     fontWeight: '100'
   },
-  fontSize10: {
-    fontSize: 10
+  fontSize14: {
+    fontSize: 14
   },
   textRight: {
     textAlign:'right'
