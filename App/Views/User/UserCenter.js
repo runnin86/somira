@@ -93,18 +93,18 @@ module.exports = React.createClass({
             ?
             <View>
               <View style={css.cellfixed}>
-                <Text style={css.transparentFont}>
+                <Text style={[css.transparentFont,{fontSize:20}]}>
                   {this.state.user.user_name}
                 </Text>
               </View>
               <View style={css.flexRow}>
                 <Button containerStyle={css.withdrawBtn}
                   onPress={(type)=>this._handlePress({type:'提现'})}>
-                  <Text style={css.transparentFont}>提现</Text>
+                  <Text style={[css.transparentFont,{fontSize:18}]}>提现</Text>
                 </Button>
                 <Button containerStyle={css.rechargeBtn}
                   onPress={(type)=>this._handlePress({type:'充值'})}>
-                  <Text style={css.rechargeBtnFont}>充值</Text>
+                  <Text style={[css.rechargeBtnFont,{fontSize:18}]}>充值</Text>
                 </Button>
               </View>
             </View>
@@ -112,7 +112,7 @@ module.exports = React.createClass({
             <View style={css.flexRow}>
               <Button containerStyle={css.withdrawBtn}
                 onPress={(type)=>this._handlePress({type:'登录'})}>
-                <Text style={css.transparentFont}>登录</Text>
+                <Text style={[css.transparentFont,{fontSize:18}]}>登录</Text>
               </Button>
             </View>
           }
@@ -122,22 +122,22 @@ module.exports = React.createClass({
           this.state.user
           ?
           <View style={css.moneyRow}>
-            <View style={css.moneyCellFixed}>
+            <View style={{justifyContent:'center',marginLeft:10}}>
               <Image style={{width:22,height:24,alignSelf:'center'}} source={require('image!我的本金')} />
               <Text style={css.money}>
-                本金 1000
+                本金 0
               </Text>
             </View>
             <View style={css.moneyCell}>
               <Image style={{width:22.5,height:24,alignSelf:'center'}} source={require('image!我的盈利')} />
               <Text style={css.money}>
-                盈利 132133.33
+                盈利 0
               </Text>
             </View>
-            <View style={css.moneyCellFixed}>
+            <View style={{justifyContent:'center',marginRight:10}}>
               <Image style={{width:60,height:24,alignSelf:'center'}} source={require('image!本月')} />
               <Text style={css.money}>
-                销量 500003292
+                销量 0
               </Text>
             </View>
           </View>
@@ -149,16 +149,16 @@ module.exports = React.createClass({
         */}
         <MenuItem
           title='我的账单'
-          height='32'
-          fontSize='12'
+          height='36'
+          fontSize='14'
           icon='我的账单'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
 
         <MenuItem
           title='我的订单'
-          height='32'
-          fontSize='12'
+          height='36'
+          fontSize='14'
           icon='我的订单'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
@@ -169,16 +169,16 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的返佣'
-              height='32'
-              fontSize='12'
+              height='36'
+              fontSize='14'
               icon='我的打赏'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
             <View style={[css.line]} />
 
             <MenuItem
               title='我的团队'
-              height='32'
-              fontSize='12'
+              height='36'
+              fontSize='14'
               icon='我的团队'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
           </View>
@@ -198,8 +198,8 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的二维码'
-              height='32'
-              fontSize='12'
+              height='36'
+              fontSize='14'
               icon='二维码'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
             <View style={[css.line]} />
@@ -210,21 +210,21 @@ module.exports = React.createClass({
 
         <MenuItem
           title='修改密码'
-          height='32'
-          fontSize='12'
+          height='36'
+          fontSize='14'
           icon='修改密码'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
         <MenuItem
           title='关于'
-          height='32'
-          fontSize='12'
+          height='36'
+          fontSize='14'
           icon='关于'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
 
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
           <Image style={css.resizeMode} source={require('image!温馨提示')}/>
-          <Text style={{marginTop:-5,height:10,fontSize: 8, color: 'red'}}>
+          <Text style={{height:20,fontSize: 12,fontWeight:'100', color: 'red'}}>
             所有商品抽奖活动与苹果公司(Apple Inc.)无关
           </Text>
         </View>
@@ -238,7 +238,7 @@ var css = StyleSheet.create({
     flex: 1,
   },
   headerImg: {
-    height: Util.size['height']*0.3,
+    height: Util.size['height']*0.32,
     paddingTop: Util.size['height']*0.06,
     resizeMode: Image.resizeMode.cover,
   },
@@ -246,15 +246,14 @@ var css = StyleSheet.create({
     marginTop: 10,
     marginRight:5,
     width:Util.size['width']*0.46,
-    height:25,
-    overflow:'hidden',
+    height:Util.size['height']*0.054,
     borderWidth:1,
     borderColor:'#ffffff',
     borderRadius:4,
+    justifyContent:'center',
   },
   transparentFont: {
     textAlign: 'center',
-    marginTop: 4,
     color:'#ffffff',
     backgroundColor:'rgba(0,152,50,0)',
   },
@@ -262,14 +261,13 @@ var css = StyleSheet.create({
     marginTop: 10,
     marginLeft:5,
     width:Util.size['width']*0.46,
-    height:25,
-    overflow:'hidden',
+    height:Util.size['height']*0.054,
     borderRadius:4,
     backgroundColor: 'white',
+    justifyContent:'center',
   },
   rechargeBtnFont: {
     textAlign: 'center',
-    marginTop: 4,
     color:'red'
   },
   cellfixed: {
@@ -284,46 +282,43 @@ var css = StyleSheet.create({
     flexDirection: 'row',
     alignSelf:'flex-end',
     marginRight:20,
+    marginBottom:4,
   },
   userPhoto: {
-    width:50,
-    height:50,
+    width:60,
+    height:60,
     alignSelf:'center',
     marginBottom:6,
   },
   btnPhotoMsg: {
-    width:24,
-    height:17,
+    width:30,
+    height:21,
     right: 6,
     borderRadius:4,
     top: 2
   },
   btnPhotoSet: {
-    width:22,
-    height:22,
+    width:26,
+    height:26,
     left: 6
   },
   moneyRow : {
     flexDirection : 'row',
+    height: 60,
     backgroundColor: '#3c3d42',
   },
   moneyCell: {
     flex:1,
     width:Util.size['width']*.36,
-    height: 46,
     alignItems:'center',
-    justifyContent : 'center'
-  },
-  moneyCellFixed: {
-    width:Util.size['width']*.24,
-    height: 46,
     justifyContent : 'center'
   },
   money: {
     textAlign: 'center',
-    fontSize : 8,
+    fontSize: 14,
+    fontWeight: '100',
     color: '#FFFFFF',
-    marginTop:4,
+    marginTop:6,
   },
   container: {
     paddingTop: 6,
@@ -361,8 +356,8 @@ var css = StyleSheet.create({
     justifyContent:'center',
   },
   resizeMode: {
-    width: 86,
-    paddingBottom:10,
+    width: 120,
+    paddingBottom:20,
     backgroundColor: 'transparent',
     resizeMode:Image.resizeMode.contain,
   },

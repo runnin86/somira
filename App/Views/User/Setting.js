@@ -30,7 +30,7 @@ var Setting = React.createClass({
     return (
       <View style={{backgroundColor:'#eef0f3',marginTop:68,height:Util.size['height'],}}>
         <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
-          <Text style={{flex:1,color:'#333333',fontSize:12}}>
+          <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
             铃声提醒
           </Text>
           <SwitchIOS
@@ -42,7 +42,7 @@ var Setting = React.createClass({
 				<View style={[styles.line]} />
 
         <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
-          <Text style={{flex:1,color:'#333333',fontSize:12}}>
+          <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
             WIFI环境下自动更新
           </Text>
           <SwitchIOS
@@ -54,10 +54,10 @@ var Setting = React.createClass({
 				<View style={[styles.line]} />
 
         <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
-          <Text style={{flex:1,color:'#333333',fontSize:12}}>
+          <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
             版本更新1.10
           </Text>
-          <Text style={{flex:1,color:'gray',fontSize:10,textAlign:'right',}}>
+          <Text style={{flex:1,color:'gray',fontSize:12,fontWeight:'100',textAlign:'right',}}>
             已是最新版本
           </Text>
         </View>
@@ -79,7 +79,7 @@ var Setting = React.createClass({
 
 var styles = StyleSheet.create({
   btn:{
-    height:35,
+		height:Util.size['height']*0.068,
     margin:10,
     backgroundColor:'#FF4500',
     justifyContent:'center',

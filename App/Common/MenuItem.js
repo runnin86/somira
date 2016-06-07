@@ -23,7 +23,7 @@ module.exports = React.createClass({
         <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:height,paddingLeft:20,paddingRight:16}}>
           <Image style={[styles.iconSize]}
             source={{uri: this.props.icon}}/>
-          <Text style={{flex:1,color:'#333333',marginLeft:10,fontSize:fontSize}}>{this.props.title}</Text>
+          <Text style={{flex:1,color:'#333333',marginLeft:10,fontSize:fontSize,fontWeight:'100',}}>{this.props.title}</Text>
           <Image style={[styles.iconSize]}
             source={require('image!arrow_right_grey')} />
         </View>

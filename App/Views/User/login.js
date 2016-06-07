@@ -79,7 +79,7 @@ var login = React.createClass({
         </View>
         <View style={[styles.line,{marginTop:2}]} />
         <TouchableHighlight style={[styles.btn,styles.marginTop30]} underlayColor='#0057a84a' onPress={this.login}>
-          <Text style={{color:'#fff'}}>登录</Text>
+          <Text style={{fontSize:20,fontWeight:'100'}}>登录</Text>
         </TouchableHighlight>
         <View style={{flex:1,flexDirection:'row',alignItems: 'flex-end'}}>
           <Text style={styles.style_view_register}>
@@ -117,16 +117,17 @@ var styles = StyleSheet.create({
   input:{
     height:35,
     borderColor:'#ccc',
-    // color:'#fff',
     flex:1,
-    fontSize:14,
+    fontSize:16,
+    fontWeight:'100',
   },
   label: {
     width:60,
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight:'100',
   },
   btn:{
-    height:35,
+    height:Util.size['height']*0.068,
     backgroundColor:'#45c9a2',
     justifyContent:'center',
     alignItems:'center',
@@ -135,7 +136,8 @@ var styles = StyleSheet.create({
     borderColor:'#ffffff',
   },
   style_view_register:{
-    fontSize:12,
+    fontSize:14,
+    fontWeight:'100',
     color:'#63B8FF',
     marginTop:4,
     alignItems:'flex-end',
