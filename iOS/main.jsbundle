@@ -62203,10 +62203,12 @@ _reactNative2.default.createElement(View,{style:{height:4,backgroundColor:'#eee'
 _reactNative2.default.createElement(Text,null)),
 
 
-_reactNative2.default.createElement(View,{style:[css.container,css.borderTop]},
-_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:16}},'参与记录'),
+
+_reactNative2.default.createElement(View,{style:[{paddingTop:10},css.borderTop]},
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:16,paddingLeft:10}},'参与记录'),
 
 
+_reactNative2.default.createElement(View,{style:[{paddingTop:6,paddingBottom:6,width:_Util2.default.size['width']},css.borderBottom]}),
 
 this.state.dataSource.getRowCount()>0?
 
@@ -62232,7 +62234,8 @@ onCancel:this.onCancel,
 cancelText:'确认',
 buttonStyle:{marginTop:6,borderRadius:6,height:_Util2.default.size['height']*0.068,backgroundColor:'#f6383a'},
 textStyle:{color:'#FFFFFF'}},
-_reactNative2.default.createElement(_reactNativeActionSheet2.default.Button,null,
+_reactNative2.default.createElement(_reactNativeActionSheet2.default.Button,{
+buttonStyle:{borderBottomWidth:1,borderColor:'#D3D3D3'}},
 _reactNative2.default.createElement(Text,{style:{color:'#5f646e',fontSize:14}},'请选择参与人次')),
 
 
@@ -62820,8 +62823,8 @@ button:{
 height:40,
 backgroundColor:'white',
 
-borderColor:'#D3D3D3',
-borderBottomWidth:1,
+
+
 alignSelf:'stretch',
 justifyContent:'center'}});
 });
@@ -63950,11 +63953,8 @@ _reactNative2.default.createElement(TouchableOpacity,{onPress:this.selectPlan.bi
 _reactNative2.default.createElement(View,{style:css.planView},
 _reactNative2.default.createElement(Animatable.Image,{ref:function(component){return _this2._animatables[plan.plan_id]=component;},style:css.expertPhoto,source:{uri:plan.expert_photo}}),
 _reactNative2.default.createElement(View,{style:css.planInfo},
-_reactNative2.default.createElement(Text,{style:{fontSize:12}},
+_reactNative2.default.createElement(Text,{style:{fontSize:13,fontWeight:'100',marginBottom:4}},
 plan.expert_name),
-
-_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10,marginTop:4}},
-plan.planConfident),
 
 _reactNative2.default.createElement(View,{style:{flexDirection:'row'}},
 _reactNative2.default.createElement(Image,{style:{width:15,height:12},
@@ -64232,7 +64232,8 @@ onCancel:this.onCancel,
 cancelText:'确认',
 buttonStyle:{marginTop:6,borderRadius:6,height:_Util2.default.size['height']*0.068,backgroundColor:'#f6383a'},
 textStyle:{color:'#FFFFFF'}},
-_reactNative2.default.createElement(_reactNativeActionSheet2.default.Button,null,
+_reactNative2.default.createElement(_reactNativeActionSheet2.default.Button,{
+buttonStyle:{borderBottomWidth:1,borderColor:'#D3D3D3'}},
 _reactNative2.default.createElement(Text,{style:{color:'#5f646e',fontSize:14}},'请选择参与人次')),
 
 

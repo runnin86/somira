@@ -69,11 +69,8 @@ module.exports = React.createClass({
         <View style={css.planView}>
           <Animatable.Image ref={component => this._animatables[plan.plan_id] = component} style={css.expertPhoto} source={{uri : plan.expert_photo}} />
           <View style={css.planInfo}>
-            <Text style={{fontSize : 12}}>
+            <Text style={{fontSize : 13,fontWeight:'100',marginBottom:4,}}>
               {plan.expert_name}
-            </Text>
-            <Text style={{fontWeight : '100',fontSize : 10,marginTop : 4}}>
-              {plan.planConfident}
             </Text>
             <View style={{flexDirection: 'row'}}>
               <Image style={{width:15,height:12}}
