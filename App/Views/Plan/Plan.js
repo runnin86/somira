@@ -209,13 +209,14 @@ var css = StyleSheet.create({
     paddingBottom: 6
   },
   tipsText: {
-    marginTop: 4,
-    fontSize: 10
+    marginTop: 8,
+    fontSize: 12,
+    fontWeight: '100',
   },
   tipsImg: {
-    width: 36,
-    height: 36,
-    borderRadius: 18
+    width: 48,
+    height: 48,
+    borderRadius: 24
   },
   scrollMsg: {
     flexDirection: 'row',

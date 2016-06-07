@@ -32,8 +32,9 @@ var somira = React.createClass({
     });
   },
   render: function() {
+    // #26292E;#292C33;
     return (
-      <TabBarIOS tintColor="lightgreen" barTintColor="#ffffff">
+      <TabBarIOS tintColor="#B22222" barTintColor="#FFF5EE">
         <TabBarIOS.Item
           title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
           selected={this.state.selectedTab === 'plan'}
