@@ -165,7 +165,8 @@ module.exports = React.createClass({
             cancelText={'确认'}
             buttonStyle={{marginTop:6, borderRadius:6,height:Util.size['height']*0.068,backgroundColor:'#f6383a'}}
             textStyle={{color:'#FFFFFF'}}>
-            <ActionSheet.Button>
+            <ActionSheet.Button
+              buttonStyle={{borderBottomWidth:1,borderColor: '#D3D3D3',}}>
               <Text style={{color: '#5f646e',fontSize:14}}>
                 请选择参与人次
               </Text>
