@@ -52,10 +52,11 @@ module.exports = React.createClass({
       title: '方案详情',
       component: PlanDetail,
       leftButtonTitle: '返回',
-      navigationBarHidden:false,
+      navigationBarHidden: false,
       onLeftButtonPress: () => this.props.navigator.pop(),
       passProps: {
-        plan: plan
+        planId: plan.plan_id,
+        serviceTime: this.props.serviceTime
       }
     });
   },
