@@ -93,7 +93,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <View style={css.flex}>
-        <ScrollView style={{marginBottom:-26}}>
+        <ScrollView style={{marginBottom:0}}>
           <Image style={css.container} source={{uri: '头像背景'}}>
             <View style={css.goodRow}>
               <View style={{flexDirection:'row'}}>
@@ -173,10 +173,11 @@ module.exports = React.createClass({
             <Text>
             </Text>
           </View>
-          <View style={[css.container,css.borderTop]}>
-            <Text style={{fontWeight:'100',fontSize:16}}>
+          <View style={[{paddingTop:10,},css.borderTop]}>
+            <Text style={{fontWeight:'100',fontSize:16,paddingLeft:10}}>
               专家战绩
             </Text>
+            <View style={[{paddingTop:6,paddingBottom:6,width:Util.size['width']},css.borderBottom]}></View>
             {/*
               专家战绩
             */}
@@ -299,7 +300,7 @@ module.exports = React.createClass({
   _renderRecordRow: function(row) {
     return(
       <View style={css.recordRow}>
-        <View style={[css.recordCellFixed,{marginBottom:10,alignItems: 'center',marginLeft:10,}]}>
+        <View style={[css.recordCellFixed,{alignItems: 'center',marginLeft:10,}]}>
           <Text style={{fontWeight : '100',fontSize : 12}}>
             {row.effective_time.substr(5, 5)}
           </Text>
