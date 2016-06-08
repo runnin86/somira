@@ -16,8 +16,6 @@ var {
   TouchableOpacity,
 } = React;
 
-var API = 'http://ald.taobao.com/recommend.htm?appId=03507&areaId=330100&size=15&type=1';
-
 module.exports = React.createClass({
     //object在组件被挂载之前调用。状态化的组件应该实现这个方法，返回初始的state数据。
     getInitialState() {

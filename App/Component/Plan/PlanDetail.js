@@ -37,7 +37,7 @@ module.exports = React.createClass({
       serviceTime: '',
       residualTime: '',
       disabledPayBtn: false,
-      totalPrice: 0,
+      totalMultiple: 1,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
@@ -68,6 +68,7 @@ module.exports = React.createClass({
               summary: result.summaryList[0],
               residualTime: filterTime > 0 ? filterTime + '分钟' : '已截止',
               disabledPayBtn: filterTime < 0 ? true : false,
+              price: result.plan.plan_amount,
             });
           }
         });
@@ -181,47 +182,47 @@ module.exports = React.createClass({
             <ActionSheet.Button
               buttonStyle={{borderBottomWidth:1,borderColor: '#D3D3D3',}}>
               <Text style={{color: '#5f646e',fontSize:14}}>
-                请选择参与人次
+                请选择倍数
               </Text>
             </ActionSheet.Button>
             <View style={css.priceRow}>
-              <Text onPress={()=>this.setState({totalPrice:10})}
-                style={{color: this.state.totalPrice===10?'#f6383a':'#0894ec',fontSize:14,marginLeft:16,}}>
+              <Text onPress={()=>this.setState({totalMultiple:5})}
+                style={{color: this.state.totalMultiple===5?'#f6383a':'#0894ec',fontSize:14,marginLeft:16,}}>
+                5
+              </Text>
+              <Text onPress={()=>this.setState({totalMultiple:10})}
+                style={{color: this.state.totalMultiple===10?'#f6383a':'#0894ec',fontSize:14}}>
                 10
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:20})}
-                style={{color: this.state.totalPrice===20?'#f6383a':'#0894ec',fontSize:14}}>
+              <Text onPress={()=>this.setState({totalMultiple:20})}
+                style={{color: this.state.totalMultiple===20?'#f6383a':'#0894ec',fontSize:14}}>
                 20
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:50})}
-                style={{color: this.state.totalPrice===50?'#f6383a':'#0894ec',fontSize:14}}>
+              <Text onPress={()=>this.setState({totalMultiple:50})}
+                style={{color: this.state.totalMultiple===50?'#f6383a':'#0894ec',fontSize:14}}>
                 50
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:100})}
-                style={{color: this.state.totalPrice===100?'#f6383a':'#0894ec',fontSize:14}}>
+              <Text onPress={()=>this.setState({totalMultiple:100})}
+                style={{color: this.state.totalMultiple===100?'#f6383a':'#0894ec',fontSize:14,marginRight:16,}}>
                 100
-              </Text>
-              <Text onPress={()=>this.setState({totalPrice:300})}
-                style={{color: this.state.totalPrice===300?'#f6383a':'#0894ec',fontSize:14,marginRight:16,}}>
-                300
               </Text>
             </View>
             <View style={css.priceRow}>
               <Image
                 onTouchStart={()=>{
-                  if (this.state.totalPrice > this.props.plan.plan_amount) {
-                    this.setState({totalPrice:this.state.totalPrice-this.props.plan.plan_amount})
+                  if (this.state.totalMultiple > 1) {
+                    this.setState({totalMultiple:this.state.totalMultiple-1})
                   }
-                  else if (this.state.totalPrice <= this.props.plan.plan_amount) {
-                    this.setState({totalPrice:this.props.plan.plan_amount})
+                  else {
+                    this.setState({totalMultiple:1})
                   }
                   this.timer = setTimeout(()=>{
                     this.interval = setInterval(()=>{
-                      if (this.state.totalPrice > this.props.plan.plan_amount) {
-                        this.setState({totalPrice:this.state.totalPrice-this.props.plan.plan_amount})
+                      if (this.state.totalMultiple > 1) {
+                        this.setState({totalMultiple:this.state.totalMultiple-1})
                       }
-                      else if (this.state.totalPrice <= this.props.plan.plan_amount) {
-                        this.setState({totalPrice:this.props.plan.plan_amount})
+                      else {
+                        this.setState({totalMultiple:1})
                       }
                     },500);
                   },1000);
@@ -240,17 +241,17 @@ module.exports = React.createClass({
                  selectionColor={'red'}
                  ref='textInput'
                  maxLength={4}
-                 onChangeText={(totalPrice) => this.setState({totalPrice})}
+                 onChangeText={(totalMultiple) => this.setState({totalMultiple})}
                  onFocus={() => {this.refs.textInput.focus()}}
-                 defaultValue={this.state.totalPrice+''}
-                 value={this.state.totalPrice+''}
+                 defaultValue={this.state.totalMultiple+''}
+                 value={this.state.totalMultiple+''}
                />
               <Image
                 onTouchStart={()=>{
-                  this.setState({totalPrice:this.state.totalPrice+this.props.plan.plan_amount})
+                  this.setState({totalMultiple:this.state.totalMultiple+1})
                   this.timer = setTimeout(()=>{
                     this.interval = setInterval(()=>{
-                      this.setState({totalPrice:this.state.totalPrice+this.props.plan.plan_amount})
+                      this.setState({totalMultiple:this.state.totalMultiple+1})
                     },500);
                   },1000);
                 }}
@@ -265,7 +266,7 @@ module.exports = React.createClass({
               <Text style={{color: '#5f646e',fontSize:14}}>
                 需
                 <Text style={{color: '#f6383a'}}>
-                  {' ' + this.state.totalPrice + ' '}
+                  {' ' + this.state.totalMultiple*this.state.plan.plan_amount + ' '}
                 </Text>
                 元
               </Text>
@@ -275,7 +276,7 @@ module.exports = React.createClass({
     );
   },
   onCancel() {
-    console.log('进行支付:' + this.state.totalPrice);
+    console.log('进行支付(倍数):' + this.state.totalMultiple);
     this.setState({showCartBtn:false});
   },
   onOpen() {
