@@ -19,13 +19,25 @@ import Util from './App/Common/Util';
 
 StatusBarIOS.setHidden(false);
 
+let showPlan = false;
+
 var somira = React.createClass({
+  getDefaultProps () {
+    // 根据用户类型判断是否展示方案
+    Store.get('user').then((user)=>{
+      if (user && user.user_type === 1) {
+        showPlan = true;
+      }
+      else {
+        showPlan = false;
+      }
+    });
+  },
   getInitialState(){
     return {
-      selectedTab: 'hp',
+      selectedTab: showPlan?'plan':'hp',
       notifyCartCount: 18,
       notifyUserCount: 1,
-      showPlan: false,
     };
   },
   changeTab(tabName){
@@ -33,25 +45,12 @@ var somira = React.createClass({
       selectedTab : tabName
     });
   },
-  isShowPlan() {
-    // 根据用户类型判断是否展示方案
-    Store.get('user').then((user)=>{
-      if (user && user.user_type === 1) {
-        console.log('展示方案');
-        this.state.showPlan = true;
-      }
-      else {
-        console.log('不展示方案。。。。');
-        this.state.showPlan = false;
-      }
-    });
-  },
   render: function() {
     // #26292E;#292C33;
     return (
       <TabBarIOS tintColor="#B22222" barTintColor="#FFF5EE">
         {
-          this.state.showPlan
+          showPlan
           ?
           <TabBarIOS.Item
             title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
