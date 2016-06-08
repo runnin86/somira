@@ -162,7 +162,14 @@ module.exports = React.createClass({
               renderRow={this._renderRecordRow}/>
           </View>
         </ScrollView>
-        <Button onPress={this.onOpen} style={css.cartBtn}>
+        <Button onPress={this.onOpen}
+          style={[css.cartBtn,
+            this.state.disabledPayBtn
+            ?
+            {backgroundColor: '#c8c9cb',}
+            :
+            {backgroundColor: 'lightgreen',}
+          ]}>
           购买方案
         </Button>
         <ActionSheet
@@ -272,7 +279,12 @@ module.exports = React.createClass({
     this.setState({showCartBtn:false});
   },
   onOpen() {
-    this.setState({showCartBtn:true});
+    if (this.state.disabledPayBtn) {
+      console.log('方案已截止,不可购买!');
+    }
+    else {
+      this.setState({showCartBtn:true});
+    }
   },
   _renderRecordRow: function(row) {
     return(
@@ -440,7 +452,6 @@ var css = StyleSheet.create({
     borderWidth : 1,
     borderRadius:10,
     borderColor: '#FFFFFF',
-    backgroundColor: 'lightgreen',
   },
   priceRow: {
     height:Util.size['height']*0.068,

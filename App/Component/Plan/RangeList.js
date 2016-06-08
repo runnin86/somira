@@ -73,7 +73,6 @@ module.exports = React.createClass({
                 Store.delete('user');
             		Store.delete('token');
                 this.props.navigator.push({
-                  // title: '方案详情',
                   component: UserCenter,
                   navigationBarHidden: true,
                 });
