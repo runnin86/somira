@@ -24,14 +24,25 @@ module.exports = React.createClass({
     return {
       rangeList: [],
       serviceTime: '',
+      loaded: false,
     };
   },
-  //只调用一次，在render之后调用
-  componentDidMount() {
+  /*
+   * 首次渲染之前
+   */
+  componentWillReceiveProps () {
+    //猫头先转
+    this.setState({
+      loaded : false
+    })
     // 方案数据
     this.fetchRangeData();
     // 获取服务器时间
     this.fetchServiceTime();
+  },
+  //只调用一次，在render之后调用
+  componentDidMount() {
+
   },
   // 拉取方案区间数据
   fetchRangeData() {
@@ -58,7 +69,8 @@ module.exports = React.createClass({
               });
             });
             this.setState({
-              rangeList: ranges
+              rangeList: ranges,
+              loaded: true,
             });
           }
           else if (code === 0) {
@@ -163,6 +175,12 @@ module.exports = React.createClass({
       wrapperProps.keyboardShouldPersistTaps = true;
       wrapperProps.keyboardDismissMode = 'interactive';
     }
+    //先展示加载中的菊花
+    if(!this.state.loaded){
+      return(
+        <Image style={styles.loading} source={require('image!loading')} />
+      );
+    };
     return (
       <ContentWrapper
         style={styles.wrapper}
@@ -233,5 +251,13 @@ var styles = StyleSheet.create({
   },
   flex1: {
     flex: 1,
-  }
+  },
+  loading :{
+    marginTop : 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height : 21,
+    resizeMode: Image.resizeMode.contain,
+    width: Util.size['width']
+  },
 });
