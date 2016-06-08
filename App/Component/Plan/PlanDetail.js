@@ -48,7 +48,7 @@ module.exports = React.createClass({
     // this.fetchParticipation(this.props.plan.id, this.props.plan.number, 0);
   },
   fetchPlan(pid) {
-    // 获取方案的购物车,需要token数据
+    // 获取方案的明细,需要token数据
     Store.get('token').then((token)=>{
       if (token) {
         Util.post(net.planApi.detail, token, {
@@ -74,22 +74,6 @@ module.exports = React.createClass({
       }
     });
   },
-  //拉取参与记录数据
-  fetchParticipation: function(id, number, pagenum) {
-    let recordUrl = net.hpApi.all_partake +
-      '?projectId=' + id + '&number=' + number + '&pagenum=' + pagenum;
-    fetch(recordUrl)
-    .then((response) => response.json())
-    .then(({code, msg, results}) => {
-      if (code === 1) {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(results.list)
-        });
-      }
-    }).catch((e) => {
-      console.log('获取乐夺宝参与记录失败:' + e)
-    });
-  },
   render: function() {
     return (
       <View style={css.flex}>
@@ -100,16 +84,18 @@ module.exports = React.createClass({
                 <Text style={{fontWeight:'100',fontSize:14,backgroundColor:'rgba(0,152,50,0)'}}>
                   信心指数
                 </Text>
-                <Image style={{width:15,height:12}}
-                  source={{uri: '720信心'}} />
-                <Image style={{width:15,height:12}}
-                  source={{uri: '720信心'}} />
-                <Image style={{width:15,height:12}}
-                  source={{uri: '720信心'}} />
-                <Image style={{width:15,height:12}}
-                  source={{uri: this.state.plan.planConfident>=4?'720信心':''}} />
-                <Image style={{width:15,height:12}}
-                  source={{uri: this.state.plan.planConfident>=5?'720信心':''}} />
+                <View style={{flexDirection:'row',marginLeft:2,marginTop:1,}}>
+                  <Image style={{width:16,height:12,}}
+                    source={{uri: '720信心'}} />
+                  <Image style={{width:15,height:12}}
+                    source={{uri: '720信心'}} />
+                  <Image style={{width:15,height:12}}
+                    source={{uri: '720信心'}} />
+                  <Image style={{width:15,height:12}}
+                    source={{uri: this.state.plan.planConfident>=4?'720信心':''}} />
+                  <Image style={{width:15,height:12}}
+                    source={{uri: this.state.plan.planConfident>=5?'720信心':''}} />
+                </View>
               </View>
               <View>
                 <Text style={{fontWeight:'100',fontSize:14,backgroundColor:'rgba(0,152,50,0)'}}>
@@ -144,12 +130,7 @@ module.exports = React.createClass({
           <Accordion
             sections={[{
               title: '方案内容',
-              content: [
-                '一、取该商品号码购买完时所有商品的最后100条购买时间；',
-                '二、按时、分、秒、毫秒排列相加在除以该商品总人次后取余数；',
-                '三、余数在加上10000001 即为中奖的幸运号码；',
-                '四、余数是指在整数的除法中，只有能整除与不能整除两种情况。当不能整除时，就产生余数，如10/4=2 ... 2,2就是余数。'
-              ]
+              content: this.state.plan.plan_content
             }]}
             renderHeader={this._renderHeader}
             renderContent={this._renderContent}
@@ -158,12 +139,7 @@ module.exports = React.createClass({
           <Accordion
             sections={[{
               title: '专家简介',
-              content: [
-                '您已参与10人次',
-                '参与号码:',
-                '1000482  1000878  1000261  1000110  1000987 1000172',
-                '1000582  1000578  1000561  1000510  1000587 1000572'
-              ]
+              content: this.state.attachInfo.expertIntro
             }]}
             renderHeader={this._renderHeader}
             renderContent={this._renderContent}
@@ -326,7 +302,18 @@ module.exports = React.createClass({
     return (
       <Animatable.View duration={400}
         style={[css.container,css.borderBottom, isActive ? css.active : css.inactive]} transition="backgroundColor">
-        <Text style={css.headerText}>{section.title}</Text>
+        <Text style={css.headerText}>
+          {section.title}
+          {
+            section.title === '方案内容'
+            ?
+            <Text style={{fontSize:12,fontWeight:'100',}}>
+              (夜里12点以后看到专家的方案)
+            </Text>
+            :
+            null
+          }
+        </Text>
       </Animatable.View>
     );
   },
@@ -334,14 +321,10 @@ module.exports = React.createClass({
     return (
       <Animatable.View duration={400}
         style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
-        {section.content.map(function(v,i){
-          return (
-            <Animatable.Text key={i} style={css.contentText}
-              animation={isActive ? 'bounceIn' : undefined}>
-              {v}
-            </Animatable.Text>
-          );
-        })}
+        <Animatable.Text key={i} style={css.contentText}
+          animation={isActive ? 'bounceIn' : undefined}>
+          {section.content}
+        </Animatable.Text>
       </Animatable.View>
     );
   },
@@ -396,8 +379,11 @@ var css = StyleSheet.create({
     marginBottom:6,
   },
   contentText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '100',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 1,
+    textShadowColor: '#FFE4B5',
   },
   content: {
     flex: 1,

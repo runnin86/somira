@@ -11,10 +11,12 @@ var {
   Image,
   Platform,
   ScrollView,
+  AlertIOS,
 } = ReactNative;
 
 import PlanList from './PlanList';
 import Util from '../../Common/Util';
+import UserCenter from './../../Views/User/UserCenter';
 import * as net from './../../Network/Interface';
 
 module.exports = React.createClass({
@@ -61,12 +63,21 @@ module.exports = React.createClass({
           }
           else if (code === 0) {
             AlertIOS.alert('提示消息', null,[
-              {text: msg, onPress: () => console.log('Foo Pressed!')},
+              {text: msg, onPress: () => console.log('Foo Pressed0!')},
             ])
           }
           else if (code === 3) {
             AlertIOS.alert('提示消息', null,[
-              {text: msg, onPress: () => console.log('Foo Pressed!')},
+              {text: msg, onPress: () => {
+                // 清空用户登录信息
+                Store.delete('user');
+            		Store.delete('token');
+                this.props.navigator.push({
+                  // title: '方案详情',
+                  component: UserCenter,
+                  navigationBarHidden: true,
+                });
+              }},
             ])
           }
         },
