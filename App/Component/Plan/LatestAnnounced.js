@@ -1,51 +1,50 @@
-import React from 'react-native';
-
+var React = require('react-native');
 var {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  PropTypes
+    StyleSheet,
+    View,
+    Image
 } = React;
 
+var Toast = require('react-native-toast');
+import Button from 'react-native-button';
+
 module.exports = React.createClass({
-  /*
-  /*
-   * 渲染(JSX,通过state控制DOM结构变化)
-   */
-  render: function() {
-    return (
-      <View style={css.container}>
-        <Text style={css.welcome}>
-          Welcome to 最新揭晓!
-        </Text>
-        <Text style={css.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={css.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu2
-        </Text>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Button onPress={Toast.show.bind(null, "this is a message")}>
+                    show
+                </Button>
+                <Button onPress={Toast.showShortTop.bind(null, "this is a message")}>
+                    showShortTop
+                </Button>
+                <Button onPress={Toast.showShortCenter.bind(null, "this is a message")}>
+                    showShortCenter
+                </Button>
+                <Button onPress={Toast.showShortBottom.bind(null, "this is a message")}>
+                    showShortBottom
+                </Button>
+                <Button onPress={Toast.showLongTop.bind(null, "this is a message")}>
+                    showLongTop
+                </Button>
+                <Button onPress={Toast.showLongCenter.bind(null, "this is a message")}>
+                    showLongCenter
+                </Button>
+                <Button onPress={Toast.showLongBottom.bind(null, "this is a message")}>
+                    showLongBottom
+                </Button>
+            </View>
+        );
+    },
 });
 
-var css = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+
+var styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+        paddingVertical:150,
+    }
 });

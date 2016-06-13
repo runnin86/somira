@@ -12,6 +12,7 @@
     "react-native-code-push": "^1.5.3-beta",
     "react-native-collapsible": "^0.5.6",
     "react-native-simple-store": "^1.0.1",
-    "react-native-swiper": "^1.4.3"
+    "react-native-swiper": "^1.4.3",
+    "react-native-toast": "^1.0.4"
   }
 }
