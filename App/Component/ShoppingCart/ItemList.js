@@ -42,10 +42,11 @@ module.exports = React.createClass({
     },
     //拉取数据
     fetchData: function(cateId) {
-      if (cateId === 0) {
-        // 获取方案的购物车,需要token数据
-        Store.get('token').then((token)=>{
-          if (token) {
+      // 获取购物车,需要token数据
+      Store.get('token').then((token)=>{
+        if (token) {
+          // 方案
+          if (cateId === 0) {
             Util.post(net.planApi.queryCart, token, {},
             ({code, msg, result})=>{
               // console.log(code);
@@ -57,12 +58,8 @@ module.exports = React.createClass({
               });
             });
           }
-        });
-      }
-      else if (cateId === 1){
-        // 获取乐夺宝的购物车,需要token数据
-        Store.get('token').then((token)=>{
-          if (token) {
+          else if (cateId === 1) {
+            // 乐夺宝
             Util.get(net.hpApi.redisCart, token,
             ({code, msg, info})=>{
               // console.log(code);
@@ -77,8 +74,11 @@ module.exports = React.createClass({
               console.error(e);
             });
           }
-        });
-      }
+        }
+        else {
+          console.log('未登录。。。');
+        }
+      });
     },
     //渲染列表
     renderListView : function(){
