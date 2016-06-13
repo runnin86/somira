@@ -12,6 +12,7 @@ var {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Image,
   TouchableOpacity,
   Alert,
@@ -72,7 +73,7 @@ module.exports = React.createClass({
   },
   render() {
     return (
-      <View style={css.flex}>
+      <ScrollView style={css.flex}>
         <Image style={[css.headerImg]} source={{uri: '个人中心背景'}}>
           <View style={css.cellfixed,css.rightBtn}>
             <Button onPress={(type)=>this._handlePress({type:'消息'})}>
@@ -93,18 +94,18 @@ module.exports = React.createClass({
             ?
             <View>
               <View style={css.cellfixed}>
-                <Text style={[css.transparentFont,{fontSize:20}]}>
+                <Text style={[css.transparentFont,{fontSize:18}]}>
                   {this.state.user.user_name}
                 </Text>
               </View>
               <View style={css.flexRow}>
                 <Button containerStyle={css.withdrawBtn}
                   onPress={(type)=>this._handlePress({type:'提现'})}>
-                  <Text style={[css.transparentFont,{fontSize:18}]}>提现</Text>
+                  <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
                 </Button>
                 <Button containerStyle={css.rechargeBtn}
                   onPress={(type)=>this._handlePress({type:'充值'})}>
-                  <Text style={[css.rechargeBtnFont,{fontSize:18}]}>充值</Text>
+                  <Text style={[css.rechargeBtnFont,{fontSize:16}]}>充值</Text>
                 </Button>
               </View>
             </View>
@@ -128,7 +129,7 @@ module.exports = React.createClass({
                 本金 0
               </Text>
             </View>
-            <View style={css.moneyCell}>
+            <View style={[css.moneyCell,{marginLeft:20}]}>
               <Image style={{width:22.5,height:24,alignSelf:'center'}} source={require('image!我的盈利')} />
               <Text style={css.money}>
                 盈利 0
@@ -149,16 +150,16 @@ module.exports = React.createClass({
         */}
         <MenuItem
           title='我的账单'
-          height='36'
-          fontSize='14'
+          height='30'
+          fontSize='12'
           icon='我的账单'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
 
         <MenuItem
           title='我的订单'
-          height='36'
-          fontSize='14'
+          height='30'
+          fontSize='12'
           icon='我的订单'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
@@ -169,16 +170,16 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的返佣'
-              height='38'
-              fontSize='14'
+              height='30'
+              fontSize='12'
               icon='我的打赏'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
             <View style={[css.line]} />
 
             <MenuItem
               title='我的团队'
-              height='38'
-              fontSize='14'
+              height='30'
+              fontSize='12'
               icon='我的团队'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
           </View>
@@ -186,7 +187,7 @@ module.exports = React.createClass({
           <View></View>
         }
 
-        <View style={{height:10}}>
+        <View style={{height:6}}>
           {/*
             分解符
           */}
@@ -198,8 +199,8 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的二维码'
-              height='38'
-              fontSize='14'
+              height='30'
+              fontSize='12'
               icon='二维码'
               onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
             <View style={[css.line]} />
@@ -210,25 +211,25 @@ module.exports = React.createClass({
 
         <MenuItem
           title='修改密码'
-          height='38'
-          fontSize='14'
+          height='30'
+          fontSize='12'
           icon='修改密码'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
         <View style={[css.line]} />
         <MenuItem
           title='关于'
-          height='38'
-          fontSize='14'
+          height='30'
+          fontSize='12'
           icon='关于'
           onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
 
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
-          <Image style={css.resizeMode} source={require('image!温馨提示')}/>
-          <Text style={{height:20,fontSize: 12,fontWeight:'100', color: 'red'}}>
+          <Image style={css.warnning} source={require('image!温馨提示')}/>
+          <Text style={{height:20,fontSize: 10,fontWeight:'100', color: 'red'}}>
             所有商品抽奖活动与苹果公司(Apple Inc.)无关
           </Text>
         </View>
-      </View>
+      </ScrollView>
     )
   },
 });
@@ -236,17 +237,18 @@ module.exports = React.createClass({
 var css = StyleSheet.create({
   flex: {
     flex: 1,
+    marginTop: -20,
   },
   headerImg: {
-    height: Util.size['height']*0.32,
-    paddingTop: Util.size['height']*0.06,
+    height: 174,
+    paddingTop: 16,
     resizeMode: Image.resizeMode.cover,
   },
   withdrawBtn: {
-    marginTop: 10,
+    marginTop: 7,
     marginRight:5,
     width:Util.size['width']*0.46,
-    height:Util.size['height']*0.054,
+    height:30,
     borderWidth:1,
     borderColor:'#ffffff',
     borderRadius:4,
@@ -258,10 +260,10 @@ var css = StyleSheet.create({
     backgroundColor:'rgba(0,152,50,0)',
   },
   rechargeBtn:{
-    marginTop: 10,
+    marginTop: 7,
     marginLeft:5,
     width:Util.size['width']*0.46,
-    height:Util.size['height']*0.054,
+    height:30,
     borderRadius:4,
     backgroundColor: 'white',
     justifyContent:'center',
@@ -283,12 +285,13 @@ var css = StyleSheet.create({
     alignSelf:'flex-end',
     marginRight:20,
     marginBottom:4,
+    marginTop:6,
   },
   userPhoto: {
-    width:60,
-    height:60,
+    width:56,
+    height:56,
     alignSelf:'center',
-    marginBottom:6,
+    marginBottom:4,
   },
   btnPhotoMsg: {
     width:30,
@@ -304,7 +307,7 @@ var css = StyleSheet.create({
   },
   moneyRow : {
     flexDirection : 'row',
-    height: 60,
+    height: 44,
     backgroundColor: '#3c3d42',
   },
   moneyCell: {
@@ -315,10 +318,10 @@ var css = StyleSheet.create({
   },
   money: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: '100',
     color: '#FFFFFF',
-    marginTop:6,
+    marginTop:2,
   },
   container: {
     paddingTop: 6,
@@ -355,8 +358,8 @@ var css = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
   },
-  resizeMode: {
-    width: 120,
+  warnning: {
+    width: 100,
     paddingBottom:20,
     backgroundColor: 'transparent',
     resizeMode:Image.resizeMode.contain,
