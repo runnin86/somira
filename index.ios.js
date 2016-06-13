@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import HappyPurchase from './App/Views/Purchase/HappyPurchase';
 import Plan from './App/Views/Plan/Plan';
 import UserCenter from './App/Views/User/UserCenter';
@@ -19,26 +20,44 @@ import Util from './App/Common/Util';
 
 StatusBarIOS.setHidden(false);
 
-let showPlan = false;
+let show = false;
 
 var somira = React.createClass({
   getDefaultProps () {
     // 根据用户类型判断是否展示方案
     Store.get('user').then((user)=>{
       if (user && user.user_type === 1) {
-        showPlan = true;
+        show = true;
       }
       else {
-        showPlan = false;
+        show = false;
       }
     });
   },
   getInitialState(){
     return {
-      selectedTab: showPlan?'plan':'hp',
+      selectedTab: show?'plan':'hp',
       notifyCartCount: 18,
+      showPlan: show,
       notifyUserCount: 1,
     };
+  },
+  componentDidMount(){
+    /*
+     *非父子组件间的通信
+     *使用全局事件 Pub/Sub 模式，
+     *在componentDidMount里面订阅事件，在componentWillUnmount里面取消订阅，
+     *当收到事件触发的时候调用 setState 更新 UI。
+
+     *这种模式在复杂的系统里面可能会变得难以维护，
+     *所以看个人权衡是否将组件封装到大的组件，
+     *甚至整个页面或者应用就封装到一个组件。
+     */
+    RCTDeviceEventEmitter.addListener('showPlanSwitch', (v)=>{
+      this.setState({
+        showPlan: v
+      });
+    })
   },
   changeTab(tabName){
     this.setState({
@@ -50,7 +69,7 @@ var somira = React.createClass({
     return (
       <TabBarIOS tintColor="#B22222" barTintColor="#FFF5EE">
         {
-          showPlan
+          this.state.showPlan
           ?
           <TabBarIOS.Item
             title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
@@ -116,7 +135,7 @@ var somira = React.createClass({
               title: '个人中心',
               titleTextColor: Util.headerTitleColor,
               component: UserCenter,
-              wrapperStyle: css.wrapperStyle
+              wrapperStyle: css.wrapperStyle,
             }}/>
         </TabBarIOS.Item>
       </TabBarIOS>

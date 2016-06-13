@@ -1,6 +1,7 @@
 import React from 'react-native';
 import Util from '../../Common/Util';
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 var {
 	StyleSheet,
@@ -13,13 +14,16 @@ var {
 var Setting = React.createClass({
   getInitialState: function() {
     return {
-      user:null,
+      // user:null,
       falseSwitchIsOn: false,
     };
   },
 	logout:function(){
 		Store.delete('user');
 		Store.delete('token');
+		// 退出后隐藏方案
+		RCTDeviceEventEmitter.emit('showPlanSwitch', false);
+		// 跳转回用户
     this.props.navigator.pop();
   },
   render: function() {

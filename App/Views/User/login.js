@@ -2,6 +2,7 @@ import React from 'react-native';
 import Util from '../../Common/Util';
 import * as net from '../../Network/Interface';
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 var {
   AppRegistry,
@@ -51,6 +52,13 @@ var login = React.createClass({
     Store.save('user', info.user);
     Store.save('userPhone', info.user.user_phone);
     Store.save('token', info.token);
+    // 判断是否有方案的权限
+    let showPlan = false;
+    if (info.user && info.user.user_type === 1) {
+      showPlan = true;
+    }
+    RCTDeviceEventEmitter.emit('showPlanSwitch', showPlan);
+    // 跳转回用户
     this.props.navigator.pop();
   },
   render() {
