@@ -136,7 +136,7 @@ module.exports = React.createClass({
             <Text>
             </Text>
           </View>
-          
+
           <View style={[{paddingTop:10,},css.borderTop]}>
             <Text style={{fontWeight:'100',fontSize:16,paddingLeft:10}}>
               参与记录
@@ -364,8 +364,11 @@ var css = StyleSheet.create({
     marginBottom:6,
   },
   contentText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '100',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 1,
+    textShadowColor: '#FFE4B5',
   },
   content: {
     flex: 1,
