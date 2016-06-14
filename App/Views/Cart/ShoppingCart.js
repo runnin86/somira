@@ -17,7 +17,7 @@ var {
 } = React;
 
 module.exports = React.createClass({
-  componentWillReceiveProps () {
+  componentWillReceiveProps() {
     console.log(4);
   },
   getInitialState: function() {
