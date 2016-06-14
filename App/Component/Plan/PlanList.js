@@ -3,6 +3,7 @@
 
 import React from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import Store from 'react-native-simple-store';
 
 import Button from 'react-native-button';
 import Util from './../../Common/Util';
@@ -45,8 +46,31 @@ module.exports = React.createClass({
   _animatables: {},
   _pushCart: function(event, id, remainingTime){
     if (remainingTime > 0) {
-      // 动画效果
-      this._animatables[id]['slideInLeft'](1000);
+      // 乐夺宝添加至购物车,需要token数据
+      Store.get('token').then((token)=>{
+        if (token) {
+          Util.post(net.planApi.addCart, token, {
+            'pid': id
+          },
+          ({code, msg})=>{
+            if (code === 1) {
+              Util.toast('已加入购物车');
+              // 动画效果
+              this._animatables[id]['slideInLeft'](1000);
+              // 设置购物车图标
+              // this.$root.setCardBadge()
+            }
+            else {
+              Util.toast(msg);
+            }
+          });
+        }
+        else {
+          Util.toast('您尚未登录');
+          // 跳转登录
+          // this.$route.router.go({path: '/login?from=plan', replace: true})
+        }
+      });
     }
     else {
       Util.toast('方案已截止,不可购买');
