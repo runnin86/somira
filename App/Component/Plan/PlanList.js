@@ -85,8 +85,7 @@ module.exports = React.createClass({
       navigationBarHidden: false,
       onLeftButtonPress: () => this.props.navigator.pop(),
       passProps: {
-        planId: plan.plan_id,
-        serviceTime: this.props.serviceTime
+        planId: plan.plan_id
       }
     });
   },

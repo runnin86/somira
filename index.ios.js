@@ -60,6 +60,12 @@ var somira = React.createClass({
     })
   },
   changeTab(tabName){
+    // 根据用户类型判断是否展示方案
+    Store.get('user').then((user)=>{
+      this.setState({
+        showPlan: (user && user.user_type === 1) ? true : false
+      });
+    });
     this.setState({
       selectedTab : tabName
     });

@@ -2,6 +2,7 @@ import React from 'react-native';
 
 import ItemList from '../../Component/ShoppingCart/ItemList';
 import ItemDetail from '../../Component/HappyPurchase/ItemDetail';
+import PlanDetail from '../../Component/Plan/PlanDetail';
 import Util from '../../Common/Util';
 import Tabs from '../../Common/Tabs';
 
@@ -56,16 +57,16 @@ module.exports = React.createClass({
   },
   //选中一行
 	selectItem:function(item){
-    //console.log(item);
 		if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: '商品详情',
-        component: ItemDetail,
+        title: item.pid ? '方案详情' : '商品详情',
+        component: item.pid ? PlanDetail : ItemDetail,
         leftButtonTitle: '返回',
         navigationBarHidden:false,
         onLeftButtonPress: () => this.props.navigator.pop(),
         passProps: {
-          item: item
+          item: item,
+          planId: item.pid,
         }
       });
 		}else{

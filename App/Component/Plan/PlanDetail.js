@@ -43,7 +43,9 @@ module.exports = React.createClass({
   },
   componentDidMount(){
     // 获取方案
-    this.fetchPlan(this.props.planId)
+    this.fetchPlan(this.props.planId);
+    // 获取服务器时间
+    this.fetchServiceTime();
     //拉取参与记录
     // this.fetchParticipation(this.props.plan.id, this.props.plan.number, 0);
   },
@@ -59,7 +61,7 @@ module.exports = React.createClass({
           // console.log(msg);
           // console.log(result);
           if (code === 1) {
-            let filterTime = Util.getDateDiff(this.props.serviceTime, result.plan.deallineTime, 'minute');
+            let filterTime = Util.getDateDiff(this.state.serviceTime, result.plan.deallineTime, 'minute');
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(result.expertHistory),
               attachInfo: result.attachInfo,
@@ -71,6 +73,25 @@ module.exports = React.createClass({
               price: result.plan.plan_amount,
             });
           }
+        });
+      }
+    });
+  },
+  // 获取服务器时间
+  fetchServiceTime() {
+    // 需要token数据
+    Store.get('token').then((token)=>{
+      if (token) {
+        Util.get(net.planApi.time, token,
+        ({code, msg, result})=>{
+          if (code === 1) {
+            this.setState({
+              serviceTime: result
+            });
+          }
+        },
+        (e)=>{
+          console.error(e);
         });
       }
     });
