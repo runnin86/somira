@@ -3,6 +3,8 @@
 
 import React from 'react-native';
 import Button from 'react-native-button';
+import Store from 'react-native-simple-store';
+
 import Util from './../../Common/Util';
 import Progress from '../../Common/Progress';
 import * as net from './../../Network/Interface';
@@ -16,6 +18,7 @@ var {
   Image,
   View,
   TouchableOpacity,
+  NativeModules,
 } = React;
 
 module.exports = React.createClass({
@@ -72,8 +75,47 @@ module.exports = React.createClass({
     );
   },
   _animatables: {},
-  _pushCart: function(event,id){
-    this._animatables[id]['slideInLeft'](1000);
+  _pushCart: function(event, item){
+    // 乐夺宝添加至购物车,需要token数据
+    Store.get('token').then((token)=>{
+      if (token) {
+        Util.post(net.hpApi.redisCart, token, {
+          'projectId': item.id,
+          'number': item.number,
+          'amount': item.price < 10 ? 10 : item.price
+        },
+        ({code, msg})=>{
+          if (code === 1) {
+            NativeModules.Toast.show({
+              message: '已加入购物车',
+              duration: 'short',//[short,long]
+              position: 'bottom',//[top,center,bottom]
+              addPixelsY: -36,
+            });
+            this._animatables[item.id]['slideInLeft'](1000);
+            // 设置购物车图标
+            // this.$root.setCardBadge()
+          }
+          else {
+            NativeModules.Toast.show({
+              message: msg,
+              duration: 'short',//[short,long]
+              position: 'bottom',//[top,center,bottom]
+              addPixelsY: -36,
+            });
+            console.error('加入购物车失败:' + msg);
+          }
+        });
+      }
+      else {
+        NativeModules.Toast.show({
+          message: '您尚未登录',
+          duration: 'short',//[short,long]
+          position: 'bottom',//[top,center,bottom]
+          addPixelsY: -36,
+        });
+      }
+    });
   },
   //渲染每一行
   renderRow(item) {
@@ -109,7 +151,7 @@ module.exports = React.createClass({
                 <Text style={css.goodTit,{fontWeight:'100',fontSize:10}}>剩余</Text>
               </View>
               <View style={css.goodBtnWarp}>
-                <Button onPress={(name)=>this._pushCart(this,item.id)}>
+                <Button onPress={()=>this._pushCart(this,item)}>
                   <Image style={css.goodBtnImg} source={{uri: 'icon_addcar_big_black'}}/>
                 </Button>
               </View>
