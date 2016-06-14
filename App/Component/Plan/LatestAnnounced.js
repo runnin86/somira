@@ -5,7 +5,7 @@ var {
     Image
 } = React;
 
-var Toast = require('react-native-toast');
+import Toast from 'react-native-toast';
 import Button from 'react-native-button';
 
 module.exports = React.createClass({
