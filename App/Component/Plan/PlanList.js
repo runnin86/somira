@@ -16,7 +16,6 @@ var {
   Image,
   View,
   TouchableOpacity,
-  NativeModules,
 } = React;
 
 module.exports = React.createClass({
@@ -50,12 +49,7 @@ module.exports = React.createClass({
       this._animatables[id]['slideInLeft'](1000);
     }
     else {
-      NativeModules.Toast.show({
-        message: '方案已截止,不可购买',
-        duration: 'short',//[short,long]
-        position: 'bottom',//[top,center,bottom]
-        addPixelsY: -36,
-      });
+      Util.toast('方案已截止,不可购买');
     }
   },
   //选中一行

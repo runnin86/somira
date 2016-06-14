@@ -18,7 +18,6 @@ var {
   Image,
   View,
   TouchableOpacity,
-  NativeModules,
 } = React;
 
 module.exports = React.createClass({
@@ -86,34 +85,19 @@ module.exports = React.createClass({
         },
         ({code, msg})=>{
           if (code === 1) {
-            NativeModules.Toast.show({
-              message: '已加入购物车',
-              duration: 'short',//[short,long]
-              position: 'bottom',//[top,center,bottom]
-              addPixelsY: -36,
-            });
+            Util.toast('已加入购物车');
             this._animatables[item.id]['slideInLeft'](1000);
             // 设置购物车图标
             // this.$root.setCardBadge()
           }
           else {
-            NativeModules.Toast.show({
-              message: msg,
-              duration: 'short',//[short,long]
-              position: 'bottom',//[top,center,bottom]
-              addPixelsY: -36,
-            });
+            Util.toast(msg);
             console.error('加入购物车失败:' + msg);
           }
         });
       }
       else {
-        NativeModules.Toast.show({
-          message: '您尚未登录',
-          duration: 'short',//[short,long]
-          position: 'bottom',//[top,center,bottom]
-          addPixelsY: -36,
-        });
+        Util.toast('您尚未登录');
       }
     });
   },

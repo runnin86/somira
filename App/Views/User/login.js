@@ -41,10 +41,11 @@ var login = React.createClass({
     },
     ({code, msg, info})=>{
       if (code === 1) {
+        Util.toast('登录成功!');
         this._loginSucc(info);
       }
       else {
-        alert(msg);
+        Util.toast(msg);
       }
     });
   },

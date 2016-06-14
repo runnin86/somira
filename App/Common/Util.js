@@ -9,7 +9,8 @@ import Dimensions from 'Dimensions';
 
 var {
   PixelRatio,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  NativeModules,
 } = React;
 
 module.exports = {
@@ -109,5 +110,19 @@ module.exports = {
         break
     }
     return parseInt((eTime.getTime() - sTime.getTime()) / parseFloat(divNum, 0), 0)
+  },
+  /*
+   * m:消息
+   * d:显示时间长短
+   * p:显示位置
+   * y:竖轴位移
+   */
+  toast: (m, d, p, y) => {
+    NativeModules.Toast.show({
+      message: m,
+      duration: d ? d : 'short',//[short,long]
+      position: p ? p : 'bottom',//[top,center,bottom]
+      addPixelsY: y ? y : -36,
+    });
   }
 };
