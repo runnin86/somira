@@ -14,6 +14,7 @@ var {
   View,
   Platform,
   TouchableOpacity,
+  NativeModules,
 } = React;
 
 module.exports = React.createClass({
@@ -76,7 +77,12 @@ module.exports = React.createClass({
           }
         }
         else {
-          console.log('未登录。。。');
+          NativeModules.Toast.show({
+            message: '您尚未登录',
+            duration: 'short',//[short,long]
+            position: 'bottom',//[top,center,bottom]
+            addPixelsY: -36,
+          });
         }
       });
     },

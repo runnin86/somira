@@ -16,6 +16,7 @@ var {
   Image,
   View,
   TouchableOpacity,
+  NativeModules,
 } = React;
 
 module.exports = React.createClass({
@@ -43,8 +44,19 @@ module.exports = React.createClass({
     );
   },
   _animatables: {},
-  _pushCart: function(event,id){
-    this._animatables[id]['slideInLeft'](1000);
+  _pushCart: function(event, id, remainingTime){
+    if (remainingTime > 0) {
+      // 动画效果
+      this._animatables[id]['slideInLeft'](1000);
+    }
+    else {
+      NativeModules.Toast.show({
+        message: '方案已截止,不可购买',
+        duration: 'short',//[short,long]
+        position: 'bottom',//[top,center,bottom]
+        addPixelsY: -36,
+      });
+    }
   },
   //选中一行
   selectPlan:function(plan) {
@@ -98,8 +110,10 @@ module.exports = React.createClass({
             </Text>
           </View>
           <View style={[css.row],{alignItems:'flex-end',marginRight:10,}}>
-            <Image style={{width:36,height:33}}
-              source={{uri: filterTime > 0 ? '购物车-选中' : '购物车'}} />
+            <Button onPress={()=>this._pushCart(this, plan.plan_id, filterTime)}>
+              <Image style={{width:36,height:33}}
+                source={{uri: filterTime > 0 ? '购物车-选中' : '购物车'}} />
+            </Button>
           </View>
         </View>
       </TouchableOpacity>
