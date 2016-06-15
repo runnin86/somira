@@ -95,17 +95,12 @@ module.exports = React.createClass({
         }
       ],
       cateId : 0,
-      scrollMsgList: [],
+      scrollMsgList: [{ title: '一元夺宝, 精彩无限!' }],
       bannerList: []
     };
   },
   //只调用一次，在render之后调用
   componentDidMount: function() {
-    this.setState({
-      scrollMsgList: [
-        { title: '一元夺宝, 精彩无限!' }
-      ]
-    });
     // 获取banner图
     this.fetchBannerData();
     // 获取滚动消息
@@ -199,7 +194,6 @@ module.exports = React.createClass({
   scrollMsgForHP() {
     Util.get(net.hpApi.oneBuyNewPublic + '?pagenum=' + 0, '',
     ({code, msg, results})=>{
-      console.log(results);
       if (code === 1) {
         if (results.list.length > 0) {
           this.state.scrollMsgList = []

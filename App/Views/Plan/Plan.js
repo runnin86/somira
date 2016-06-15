@@ -1,5 +1,6 @@
 import React from 'react-native';
 import Swiper from 'react-native-swiper';
+import Store from 'react-native-simple-store';
 
 import Util from '../../Common/Util';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
@@ -77,21 +78,16 @@ module.exports = React.createClass({
         {title:'充值', id: 'recharge', img: '充值'},
         {title:'帮助', id: 'help', img: '帮助-1'}
       ]]),
-      scrollMsgList: [],
+      scrollMsgList: [{ title: '温馨提示: 理性投注,长跟长红!' }],
       bannerList: [],
     };
   },
   //只调用一次，在render之后调用
   componentDidMount: function() {
-    this.setState({
-      scrollMsgList: [
-        { title: '温馨提示: 理性投注,长跟长红' },
-        { title: '恭喜138****8888夺得 BMW X6' },
-        { title: '恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换' }
-      ]
-    });
     // banner数据
     this.fetchBannerData();
+    // 获取滚动消息
+    this.scrollMsgForPlan();
   },
   _renderTipsRow: function(row) {
     var tipsList = [];
@@ -176,6 +172,31 @@ module.exports = React.createClass({
       console.error(e);
     });
   },
+  // 获取滚动消息
+  scrollMsgForPlan() {
+    Store.get('token').then((token)=>{
+      if (token) {
+        Util.get(net.planApi.rank, token,
+        ({code, msg, result})=>{
+          if (code === 1 && result.length > 0) {
+            this.state.scrollMsgList = []
+            for (var i = 0; i < result.length; i++) {
+              let obj = result[i]
+              // 隐藏手机号码中间四位
+              // let phone = obj.bs_userId.substr(3, 4)
+              // let lphone = obj.bs_userId.replace(phone, '****')
+              let scrollText = {title: '用户 ' +
+                obj.nickName + '，上期盈利 ' + (obj.winbonus>0 ? obj.winbonus : 0.0) + ' 元'}
+              this.state.scrollMsgList.push(scrollText)
+            }
+          }
+        },
+        (e)=>{
+          console.error(e);
+        });
+      }
+    });
+  }
 });
 
 var css = StyleSheet.create({
