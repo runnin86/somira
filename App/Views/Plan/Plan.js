@@ -185,9 +185,16 @@ module.exports = React.createClass({
               // 隐藏手机号码中间四位
               // let phone = obj.bs_userId.substr(3, 4)
               // let lphone = obj.bs_userId.replace(phone, '****')
-              let scrollText = {title: '用户 ' +
-                obj.nickName + '，上期盈利 ' + (obj.winbonus>0 ? obj.winbonus : 0.0) + ' 元'}
-              this.state.scrollMsgList.push(scrollText)
+              if (obj.winbonus > 0) {
+                let scrollText = {title: '用户 ' +
+                  obj.nickName + '，上期盈利 ' + obj.winbonus + ' 元'}
+                this.state.scrollMsgList.push(scrollText);
+              }
+            }
+            if (this.state.planScrollMsg.length === 0) {
+              this.state.planScrollMsg.push({
+                title: '温馨提示：理性投注，长跟长红'
+              });
             }
           }
         },
