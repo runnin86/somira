@@ -84,52 +84,43 @@ module.exports = React.createClass({
   /*
    * 删除购物车
    */
-  delCartPlan (id) {
+  delCartPlan(id) {
     // Body :{"dellist":[{"pid":"1ee6d76ff3094c8a82b948def322da58"}]}
     // 组装请求消息体
-    // let dellist = {
-    //   'dellist': [{'pid': id}]
-    // }
-    // let deleteBody = JSON.stringify(dellist)
-    // this.$http.delete(planApi.delCart, deleteBody,
-    // {
-    //   headers: {
-    //     'x-token': window.localStorage.getItem('token')
-    //   },
-    //   emulateJSON: true
-    // })
-    // .then(({data: {code, msg}})=>{
-    //   if (code === 1) {
-    //     // 删除成功
-    //     this.refreshCart()
-    //   }
-    //   else {
-    //     $.toast(msg)
-    //   }
-    // }).catch((e)=>{
-    //   console.log('删除购物车异常:')
-    //   console.error(e)
-    // })
+    let deleteBody = {
+      'dellist': [{'pid': id}]
+    };
+    Store.get('token').then((token)=>{
+      if (token) {
+        Util.delete(net.planApi.delCart, token, deleteBody,
+        ({code, msg})=>{
+          if (code === 1) {
+            //拉取数据
+            this.fetchData(0);
+          }
+          else {
+            Util.toast(msg);
+          }
+        });
+      }
+    });
   },
   delCartHP(id, number) {
-    // this.$http.delete(hpApi.redisCart + '/' + id + '_' + number, {},
-    //   {
-    //     headers: {
-    //       'x-token': window.localStorage.getItem('token')
-    //     },
-    //     emulateJSON: true
-    //   })
-    // .then(({data: {code, msg}})=>{
-    //   if (code === 1) {
-    //     // 删除成功
-    //     this.refreshCart()
-    //   }
-    //   else {
-    //     $.toast(msg)
-    //   }
-    // }).catch((e)=>{
-    //   console.error('删除购物车异常:' + e)
-    // })
+    Store.get('token').then((token)=>{
+      if (token) {
+        let url = net.hpApi.redisCart + '/' + id + '_' + number;
+        Util.delete(url, token, {},
+        ({code, msg})=>{
+          if (code === 1) {
+            //拉取数据
+            this.fetchData(1);
+          }
+          else {
+            Util.toast(msg);
+          }
+        });
+      }
+    });
   },
   //渲染列表
   renderListView : function(){
