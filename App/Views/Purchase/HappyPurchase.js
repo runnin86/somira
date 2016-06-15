@@ -103,12 +103,13 @@ module.exports = React.createClass({
   componentDidMount: function() {
     this.setState({
       scrollMsgList: [
-        { title: '恭喜156****3355夺得 iPhone6s Plus 128G' },
-        { title: '一元夺宝, 精彩无限!' },
-        { title: '恭喜170****1122夺得 Surface Pro I7 平板笔记本随心切换' }
+        { title: '一元夺宝, 精彩无限!' }
       ]
     });
+    // 获取banner图
     this.fetchBannerData();
+    // 获取滚动消息
+    this.scrollMsgForHP();
   },
   _renderTipsRow: function(row) {
     var tipsList = [];
@@ -193,6 +194,37 @@ module.exports = React.createClass({
       }).catch((e) => {
         console.log('获取乐夺宝banner失败:' + e)
       });
+  },
+  // 获取滚动消息
+  scrollMsgForHP() {
+    Util.get(net.hpApi.oneBuyNewPublic + '?pagenum=' + 0, '',
+    ({code, msg, results})=>{
+      console.log(results);
+      if (code === 1) {
+        if (results.list.length > 0) {
+          this.state.scrollMsgList = []
+          for (var i = 0; i < results.list.length; i++) {
+            let info = results.list[i]
+            if (info.user_name) {
+              let name = info.user_name
+              let unFirst = name.substr(name.length > 2 ? 2 : 1, name.length)
+              let rv = ''
+              for (let i = 0; i < name.length - 1; i++) {
+                rv += '*'
+              }
+              let finalName = name.replace(unFirst, rv)
+              let msg = '恭喜 ' + finalName + ' ' + info.price + '元夺得' + info.name
+              this.state.scrollMsgList.push({
+                title: msg
+              })
+            }
+          }
+        }
+      }
+    },
+    (e)=>{
+      console.error(e);
+    });
   }
 });
 
