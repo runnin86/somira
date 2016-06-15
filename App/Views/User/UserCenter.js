@@ -6,6 +6,7 @@ import Setting from './Setting';
 import MenuItem from '../../Common/MenuItem';
 import Button from 'react-native-button';
 import Store from 'react-native-simple-store';
+import * as net from './../../Network/Interface';
 
 var {
   AppRegistry,
@@ -23,17 +24,86 @@ module.exports = React.createClass({
   getInitialState() {
     this._getUser();
     return {
-      // user: this.props.user
+      // user: this.props.user,
+      salesImg: '本月',
     };
   },
   componentWillReceiveProps() {
     this._getUser();
+    Store.get('token').then((token)=>{
+      if (token) {
+        // 获取用户本金
+        this._getCoinmeter(token);
+        // 获取用户利润
+        this._getUserate(token);
+        // 获取用户本月销量
+        this._getUsersales(token);
+      }
+    });
   },
   _getUser() {
     Store.get('user').then((userdata)=>{
       this.setState({
         user:userdata,
       })
+    });
+  },
+  _getCoinmeter(token) {
+    Util.post(net.userApi.coinmeter, token, {},
+    ({code, msg, result})=>{
+      if (code === 1) {
+        this.setState({
+          coinmeter: result.coinmeter
+        });
+      }
+    });
+  },
+  _getUserate(token) {
+    Util.post(net.userApi.useRate, token, {},
+    ({code, msg, result})=>{
+      if (code === 1) {
+        this.setState({
+          userate: result.rateAccount
+        });
+      }
+    });
+  },
+  _getUsersales(token) {
+    Util.post(net.userApi.userSales, token, {},
+    ({code, msg, result})=>{
+      if (code === 1) {
+        this.setState({
+          usersales: result.userFlow
+        });
+      }
+    });
+  },
+  _getLastsales(token) {
+    Util.post(net.userApi.lastSales, token, {},
+    ({code, msg, result})=>{
+      if (code === 1) {
+        this.setState({
+          usersales: result.userFlow
+        });
+      }
+    });
+  },
+  _switchSales() {
+    Store.get('token').then((token)=>{
+      if (token) {
+        if (this.state.salesImg === '本月') {
+          this.setState({
+            salesImg: '上月'
+          });
+          this._getLastsales(token);
+        }
+        else {
+          this.setState({
+            salesImg: '本月'
+          });
+          this._getUsersales(token);
+        }
+      }
     });
   },
   _handlePress(event) {
@@ -126,21 +196,23 @@ module.exports = React.createClass({
             <View style={{justifyContent:'center',marginLeft:10}}>
               <Image style={{width:22,height:24,alignSelf:'center'}} source={require('image!我的本金')} />
               <Text style={css.money}>
-                本金 0
+                本金 {this.state.coinmeter ? this.state.coinmeter : 0}
               </Text>
             </View>
-            <View style={[css.moneyCell,{marginLeft:20}]}>
+            <View style={[css.moneyCell,{marginLeft:10}]}>
               <Image style={{width:22.5,height:24,alignSelf:'center'}} source={require('image!我的盈利')} />
               <Text style={css.money}>
-                盈利 0
+                盈利 {this.state.userate ? this.state.userate : 0}
               </Text>
             </View>
-            <View style={{justifyContent:'center',marginRight:10}}>
-              <Image style={{width:60,height:24,alignSelf:'center'}} source={require('image!本月')} />
-              <Text style={css.money}>
-                销量 0
-              </Text>
-            </View>
+            <TouchableOpacity onPress={this._switchSales}>
+              <View style={{justifyContent:'center',marginRight:10}}>
+                <Image style={{width:60,height:24,alignSelf:'center'}} source={{uri: this.state.salesImg}} />
+                <Text style={css.money}>
+                  销量 {this.state.usersales ? this.state.usersales : 0}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
           :
           <View></View>
