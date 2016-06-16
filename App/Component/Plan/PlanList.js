@@ -4,8 +4,9 @@
 import React from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Store from 'react-native-simple-store';
-
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import Button from 'react-native-button';
+
 import Util from './../../Common/Util';
 import PlanDetail from './PlanDetail';
 import * as net from './../../Network/Interface';
@@ -58,7 +59,7 @@ module.exports = React.createClass({
               // 动画效果
               this._animatables[id]['slideInLeft'](1000);
               // 设置购物车图标
-              // this.$root.setCardBadge()
+              RCTDeviceEventEmitter.emit('loadCartCount');
             }
             else {
               Util.toast(msg);
