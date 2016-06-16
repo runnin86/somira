@@ -39,7 +39,8 @@ var somira = React.createClass({
     this.getCartCount();
     return {
       selectedTab: show?'plan':'hp',
-      notifyCartCount: 0,
+      notifyHpCartCount: 0,
+      notifyPlanCartCount: 0,
       showPlan: show,
       notifyUserCount: 0,
     };
@@ -86,7 +87,7 @@ var somira = React.createClass({
         ({code, msg, info})=>{
           if (info) {
             this.setState({
-              notifyCartCount: info.length
+              notifyHpCartCount: info.length
             });
           }
         },
@@ -99,9 +100,8 @@ var somira = React.createClass({
         Util.post(net.planApi.queryCart, token, {},
         ({code, msg, result})=>{
           if (code === 1 && result) {
-            let c = this.state.notifyCartCount;
             this.setState({
-              notifyCartCount: c + result.length
+              notifyPlanCartCount: result.length
             });
           }
         });
@@ -151,7 +151,13 @@ var somira = React.createClass({
 
         <TabBarIOS.Item
           title="购物车" icon={{uri:'购物车',scale:3,isStatic:true}}
-          badge={this.state.notifyCartCount > 0 ? this.state.notifyCartCount : undefined}
+          badge={
+            this.state.notifyHpCartCount+this.state.notifyPlanCartCount > 0
+            ?
+            this.state.notifyHpCartCount+this.state.notifyPlanCartCount
+            :
+            undefined
+          }
           selected={this.state.selectedTab === 'sc'}
           onPress={()=>{this.changeTab('sc')}}>
           <NavigatorIOS style={css.container}
