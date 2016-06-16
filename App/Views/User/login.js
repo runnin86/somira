@@ -54,11 +54,7 @@ var login = React.createClass({
     Store.save('userPhone', info.user.user_phone);
     Store.save('token', info.token);
     // 判断是否有方案的权限
-    let showPlan = false;
-    if (info.user && info.user.user_type === 1) {
-      showPlan = true;
-    }
-    RCTDeviceEventEmitter.emit('showPlanSwitch', showPlan);
+    RCTDeviceEventEmitter.emit('showPlanSwitch');
     // 跳转回用户
     this.props.navigator.pop();
   },

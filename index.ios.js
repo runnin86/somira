@@ -21,27 +21,17 @@ import * as net from './App/Network/Interface';
 
 StatusBarIOS.setHidden(false);
 
-let show = false;
-
 var somira = React.createClass({
   getDefaultProps () {
-    // 根据用户类型判断是否展示方案
-    Store.get('user').then((user)=>{
-      if (user && user.user_type === 1) {
-        show = true;
-      }
-      else {
-        show = false;
-      }
-    });
   },
   getInitialState(){
+    this.isShowPlan();
     this.getCartCount();
     return {
-      selectedTab: show?'plan':'hp',
+      selectedTab: '',
       notifyHpCartCount: 0,
       notifyPlanCartCount: 0,
-      showPlan: show,
+      showPlan: false,
       notifyUserCount: 0,
     };
   },
@@ -56,24 +46,33 @@ var somira = React.createClass({
      *所以看个人权衡是否将组件封装到大的组件，
      *甚至整个页面或者应用就封装到一个组件。
      */
-    RCTDeviceEventEmitter.addListener('showPlanSwitch', (v)=>{
-      this.setState({
-        showPlan: v
-      });
+    RCTDeviceEventEmitter.addListener('showPlanSwitch', ()=>{
+      this.isShowPlan();
     });
     RCTDeviceEventEmitter.addListener('loadCartCount', ()=>{
       this.getCartCount();
     });
   },
   changeTab(tabName){
-    // 根据用户类型判断是否展示方案
-    Store.get('user').then((user)=>{
-      this.setState({
-        showPlan: (user && user.user_type === 1) ? true : false
-      });
-    });
     this.setState({
       selectedTab : tabName
+    });
+  },
+  isShowPlan() {
+    // 根据用户类型判断是否展示方案
+    Store.get('user').then((user)=>{
+      if (user && user.user_type === 1) {
+        this.setState({
+          showPlan: true,
+          selectedTab: 'plan'
+        });
+      }
+      else {
+        this.setState({
+          showPlan: false,
+          selectedTab: 'hp'
+        });
+      }
     });
   },
   // 获取购物车数量

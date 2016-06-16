@@ -22,7 +22,7 @@ var Setting = React.createClass({
 		Store.delete('user');
 		Store.delete('token');
 		// 退出后隐藏方案
-		RCTDeviceEventEmitter.emit('showPlanSwitch', false);
+		RCTDeviceEventEmitter.emit('showPlanSwitch');
 		// 跳转回用户
     this.props.navigator.pop();
   },
