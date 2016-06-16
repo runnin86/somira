@@ -17,6 +17,7 @@ import UserCenter from './App/Views/User/UserCenter';
 import ShoppingCart from './App/Views/Cart/ShoppingCart';
 import Test from './App/Test/test';
 import Util from './App/Common/Util';
+import * as net from './App/Network/Interface';
 
 StatusBarIOS.setHidden(false);
 
@@ -37,12 +38,12 @@ var somira = React.createClass({
   getInitialState(){
     return {
       selectedTab: show?'plan':'hp',
-      notifyCartCount: 18,
+      notifyCartCount: 0,
       showPlan: show,
-      notifyUserCount: 1,
+      notifyUserCount: 0,
     };
   },
-  componentDidMount(){
+  componentDidMount() {
     /*
      *非父子组件间的通信
      *使用全局事件 Pub/Sub 模式，
@@ -57,7 +58,10 @@ var somira = React.createClass({
       this.setState({
         showPlan: v
       });
-    })
+    });
+    RCTDeviceEventEmitter.addListener('loadCartCount', ()=>{
+      this.getCartCount();
+    });
   },
   changeTab(tabName){
     // 根据用户类型判断是否展示方案
@@ -68,6 +72,39 @@ var somira = React.createClass({
     });
     this.setState({
       selectedTab : tabName
+    });
+  },
+  // 获取购物车数量
+  getCartCount() {
+    Store.get('token').then((token)=>{
+      if (token) {
+        /*
+         * 获取服务器中的乐夺宝购物车数量
+         */
+        Util.get(net.hpApi.redisCart, token,
+        ({code, msg, info})=>{
+          if (info) {
+            this.setState({
+              notifyCartCount: info.length
+            });
+          }
+        },
+        (e)=>{
+          console.error(e);
+        });
+        /*
+         * 获取服务器中的方案购物车数量
+         */
+        Util.post(net.planApi.queryCart, token, {},
+        ({code, msg, result})=>{
+          if (code === 1 && result) {
+            let c = this.state.notifyCartCount;
+            this.setState({
+              notifyCartCount: c + result.length
+            });
+          }
+        });
+      }
     });
   },
   render: function() {

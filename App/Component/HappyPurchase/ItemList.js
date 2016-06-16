@@ -4,12 +4,12 @@
 import React from 'react-native';
 import Button from 'react-native-button';
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import * as Animatable from 'react-native-animatable';
 
 import Util from './../../Common/Util';
 import Progress from '../../Common/Progress';
 import * as net from './../../Network/Interface';
-
-import * as Animatable from 'react-native-animatable';
 
 var {
   StyleSheet,
@@ -88,7 +88,7 @@ module.exports = React.createClass({
             Util.toast('已加入购物车');
             this._animatables[item.id]['slideInLeft'](1000);
             // 设置购物车图标
-            // this.$root.setCardBadge()
+            RCTDeviceEventEmitter.emit('loadCartCount');
           }
           else {
             Util.toast(msg);

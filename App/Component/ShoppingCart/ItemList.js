@@ -4,6 +4,8 @@
 import React from 'react-native';
 import Store from 'react-native-simple-store';
 import Button from 'react-native-button';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+
 import Util from './../../Common/Util';
 import * as net from './../../Network/Interface';
 
@@ -97,6 +99,8 @@ module.exports = React.createClass({
           if (code === 1) {
             //拉取数据
             this.fetchData(0);
+            // 设置购物车图标
+            RCTDeviceEventEmitter.emit('loadCartCount');
           }
           else {
             Util.toast(msg);
@@ -114,6 +118,8 @@ module.exports = React.createClass({
           if (code === 1) {
             //拉取数据
             this.fetchData(1);
+            // 设置购物车图标
+            RCTDeviceEventEmitter.emit('loadCartCount');
           }
           else {
             Util.toast(msg);
