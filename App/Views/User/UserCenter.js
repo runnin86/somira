@@ -28,8 +28,14 @@ module.exports = React.createClass({
       salesImg: '本月',
     };
   },
-  componentWillReceiveProps() {
-    this._getUser();
+  _getUser() {
+    // 用户基本信息
+    Store.get('user').then((userdata)=>{
+      this.setState({
+        user:userdata,
+      })
+    });
+    // 用户账户信息
     Store.get('token').then((token)=>{
       if (token) {
         // 获取用户本金
@@ -39,13 +45,6 @@ module.exports = React.createClass({
         // 获取用户本月销量
         this._getUsersales(token);
       }
-    });
-  },
-  _getUser() {
-    Store.get('user').then((userdata)=>{
-      this.setState({
-        user:userdata,
-      })
     });
   },
   _getCoinmeter(token) {
