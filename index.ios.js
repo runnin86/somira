@@ -36,6 +36,7 @@ var somira = React.createClass({
     });
   },
   getInitialState(){
+    this.getCartCount();
     return {
       selectedTab: show?'plan':'hp',
       notifyCartCount: 0,
