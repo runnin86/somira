@@ -252,7 +252,7 @@ module.exports = React.createClass({
                   this.interval && clearInterval(this.interval);
                   this.timer && clearTimeout(this.timer);
                 }}
-                style={{height:36,width:36,marginLeft:24,tintColor: '#000000',}}
+                style={[css.mathBtn,{marginLeft:Util.size['width']*0.048}]}
                 source={require("image!ic_goods_reduce")}/>
               <TextInput
                  style={css.textInput}
@@ -280,7 +280,7 @@ module.exports = React.createClass({
                   this.interval && clearInterval(this.interval);
                   this.timer && clearTimeout(this.timer);
                 }}
-                style={{height:36,width:36,marginRight:24,tintColor: '#000000',}}
+                style={[css.mathBtn,{marginRight:Util.size['width']*0.048}]}
                 source={require("image!ic_goods_add")}/>
             </View>
             <ActionSheet.Button>
@@ -497,5 +497,10 @@ var css = StyleSheet.create({
     paddingVertical:6,
     textAlign: 'center',
     backgroundColor: '#FFFFFF',
-  }
+  },
+  mathBtn: {
+    height:Util.size['width']*0.088,
+    width:Util.size['width']*0.088,
+    tintColor: '#000000',
+  },
 });
