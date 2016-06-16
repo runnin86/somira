@@ -110,7 +110,7 @@ var somira = React.createClass({
   render: function() {
     // #26292E;#292C33;
     return (
-      <TabBarIOS tintColor="#B22222" barTintColor="#FFF5EE">
+      <TabBarIOS tintColor="#ed8e07" barTintColor="#000000">
         {
           this.state.showPlan
           ?

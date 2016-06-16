@@ -18,6 +18,13 @@
   NSURL *jsCodeLocation;
 
   /**
+   在plist里增加一行 UIStatusBarStyle(或者是“Status bar style”也可以)，这里可以设置两个值，就是上面提到那两个
+   UIStatusBarStyleDefault 和 UIStatusBarStyleLightContent
+   
+   这样在app启动的launch页显示的时候，statusBar的样式就是上面plist设置的风格。
+   */
+  
+  /**
    * Loading JavaScript code - uncomment the one you want.
    *
    * OPTION 1
@@ -31,7 +38,7 @@
    * on the same Wi-Fi network.
    */
   
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.3:8081/index.ios.bundle"];
   
   /**
    * OPTION 2
