@@ -120,7 +120,8 @@ var somira = React.createClass({
             onPress={()=>{this.changeTab('plan')}}>
             <NavigatorIOS style={css.container}
               barTintColor={Util.headerColor}
-              tintColor={'#333344'}
+              tintColor={Util.headerTitleColor}
+              titleTextColor={Util.headerTitleColor}
               navigationBarHidden={false}
               initialRoute={{
                 title: '购买方案',
@@ -138,7 +139,8 @@ var somira = React.createClass({
           onPress={()=>{this.changeTab('hp')}}>
           <NavigatorIOS style={css.container}
             barTintColor={Util.headerColor}
-            tintColor={'#333344'}
+            tintColor={Util.headerTitleColor}
+            titleTextColor={Util.headerTitleColor}
             navigationBarHidden={false}
             initialRoute={{
               title: '乐夺宝',
@@ -161,7 +163,8 @@ var somira = React.createClass({
           onPress={()=>{this.changeTab('sc')}}>
           <NavigatorIOS style={css.container}
             barTintColor={Util.headerColor}
-            tintColor={'#333344'}
+            tintColor={Util.headerTitleColor}
+            titleTextColor={Util.headerTitleColor}
             navigationBarHidden={false}
             initialRoute={{
               title: '购物车',
@@ -178,7 +181,8 @@ var somira = React.createClass({
           onPress={()=>{this.changeTab('uc')}}>
           <NavigatorIOS style={css.container}
             barTintColor={Util.headerColor}
-            tintColor={'#333344'}
+            tintColor={Util.headerTitleColor}
+            titleTextColor={Util.headerTitleColor}
             navigationBarHidden={true}
             initialRoute={{
               title: '个人中心',
