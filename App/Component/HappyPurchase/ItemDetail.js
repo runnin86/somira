@@ -219,7 +219,7 @@ module.exports = React.createClass({
                   this.interval && clearInterval(this.interval);
                   this.timer && clearTimeout(this.timer);
                 }}
-                style={[css.mathBtn,{marginLeft:Util.size['width']*0.048}]}
+                style={[css.mathBtn,{marginLeft:Util.size['width']*0.05}]}
                 source={require("image!ic_goods_reduce")}/>
               <TextInput
                  style={css.textInput}
@@ -247,7 +247,7 @@ module.exports = React.createClass({
                   this.interval && clearInterval(this.interval);
                   this.timer && clearTimeout(this.timer);
                 }}
-                style={[css.mathBtn,{marginRight:Util.size['width']*0.048}]}
+                style={[css.mathBtn,{marginRight:Util.size['width']*0.05}]}
                 source={require("image!ic_goods_add")}/>
             </View>
             <ActionSheet.Button>
