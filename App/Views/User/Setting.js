@@ -21,10 +21,10 @@ var Setting = React.createClass({
 	logout:function(){
 		Store.delete('user');
 		Store.delete('token');
-		// 退出后隐藏方案
-		RCTDeviceEventEmitter.emit('showPlanSwitch');
 		// 跳转回用户
     this.props.navigator.pop();
+		// 退出后隐藏方案
+		RCTDeviceEventEmitter.emit('showPlanSwitch');		
   },
   render: function() {
     return (

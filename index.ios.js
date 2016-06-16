@@ -64,13 +64,13 @@ var somira = React.createClass({
       if (user && user.user_type === 1) {
         this.setState({
           showPlan: true,
-          selectedTab: 'plan'
+          selectedTab: this.state.selectedTab ? this.state.selectedTab : 'plan'
         });
       }
       else {
         this.setState({
           showPlan: false,
-          selectedTab: 'hp'
+          selectedTab: this.state.selectedTab ? this.state.selectedTab : 'hp'
         });
       }
     });

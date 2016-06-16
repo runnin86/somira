@@ -28,6 +28,9 @@ module.exports = React.createClass({
       salesImg: '本月',
     };
   },
+  componentWillReceiveProps() {
+    this._getUser();
+  },
   _getUser() {
     // 用户基本信息
     Store.get('user').then((userdata)=>{

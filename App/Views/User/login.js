@@ -53,10 +53,10 @@ var login = React.createClass({
     Store.save('user', info.user);
     Store.save('userPhone', info.user.user_phone);
     Store.save('token', info.token);
-    // 判断是否有方案的权限
-    RCTDeviceEventEmitter.emit('showPlanSwitch');
     // 跳转回用户
     this.props.navigator.pop();
+    // 判断是否有方案的权限
+    RCTDeviceEventEmitter.emit('showPlanSwitch');    
   },
   render() {
     return (
