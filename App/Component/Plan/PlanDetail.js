@@ -196,6 +196,7 @@ module.exports = React.createClass({
         </Button>
         <ActionSheet
             visible={this.state.showCartBtn}
+            onSubmit={this.onPay}
             onCancel={this.onCancel}
             cancelText={'确认'}
             buttonStyle={{marginTop:6, borderRadius:6,height:Util.size['height']*0.068,backgroundColor:'#f6383a'}}
@@ -257,7 +258,7 @@ module.exports = React.createClass({
               <TextInput
                  style={css.textInput}
                  autoCapitalize = 'none'
-                 autoCorrect={false}
+                 editable={false}
                  keyboardType='numeric'
                  selectionColor={'red'}
                  ref='textInput'
@@ -296,13 +297,51 @@ module.exports = React.createClass({
       </View>
     );
   },
+  onPay() {
+    let plan = this.state.plan;
+    if (this.state.totalMultiple <= 0) {
+      Util.toast('请输入有效倍数');
+      return
+    }
+    // 支付请求
+    Store.get('token').then((token)=>{
+      if (token) {
+        // 组装请求消息体
+        let postBody = {
+          'pmp': this.state.totalMultiple,
+          'pid': plan.plan_id
+        };
+        Util.post(net.planApi.buyPlan, token, postBody,
+        ({code, msg, result})=>{
+          if (code === 1) {
+            Util.toast('购买成功!');
+            this.setState({showCartBtn:false});
+          }
+          else if (code === 2) {
+            // 结算异常
+            Util.toast(msg);
+          }
+          else if (code === 0) {
+            let errorTips = '';
+            if (result) {
+              let errObj = result[0];
+              errorTips = (errObj.expert_name ? '专家[' + errObj.expert_name + '],' : '') + errObj.msg;
+            }
+            else {
+              errorTips = msg;
+            }
+            Util.toast(errorTips);
+          }
+        });
+      }
+    });
+  },
   onCancel() {
-    console.log('进行支付(倍数):' + this.state.totalMultiple);
     this.setState({showCartBtn:false});
   },
   onOpen() {
     if (this.state.disabledPayBtn) {
-      console.log('方案已截止,不可购买!');
+      Util.toast('方案已截止,不可购买!');
     }
     else {
       this.setState({showCartBtn:true});
