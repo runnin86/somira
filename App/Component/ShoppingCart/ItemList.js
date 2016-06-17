@@ -83,6 +83,10 @@ module.exports = React.createClass({
       }
     });
   },
+  // 购物车提交
+  payCart() {
+    console.log(this.state.cateId);
+  },
   /*
    * ------------------------方案相关---------------------------
    */
@@ -213,10 +217,37 @@ module.exports = React.createClass({
       );
     };
     return(
-      <ListView contentInset={{top: 0}}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={css.listView}/>
+      <View style={css.flex1}>
+        <ListView contentInset={{top: 0,bottom:20}}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={css.listView}/>
+        <View style={[css.payArea]}>
+          <View style={css.flex1}>
+            <Text style={[css.payText,
+              this.state.cateId === 0
+              ?
+              {color: 'red'}
+              :
+              {color: '#000000'}
+            ]}>
+              共 1 件{this.state.cateId === 0?'方案':'商品'}, 总计 20 元
+            </Text>
+          </View>
+          <View style={[css.flex1],{width:68}}>
+            <Button onPress={this.payCart}
+              style={[css.payBtn,
+                this.state.cateId === 0
+                ?
+                {backgroundColor: 'red'}
+                :
+                {backgroundColor: '#0894ec'}
+              ]}>
+              付款
+            </Button>
+          </View>
+        </View>
+      </View>
     );
   },
   //渲染每一行
@@ -422,7 +453,34 @@ var css = StyleSheet.create({
     paddingRight:20,
   },
   priceBtn: {
-    height:25,
-    width:25,
-  }
+    height:38,
+    width:38,
+  },
+  payArea: {
+    flexDirection: 'row',
+    marginTop:-16,
+    marginBottom:50,
+    height:40,
+    overflow:'hidden',
+    backgroundColor: '#FFFFF0',
+  },
+  payText: {
+    alignSelf:'flex-start',
+    height:36,
+    lineHeight: 30,
+    marginLeft: 10,
+  },
+  payBtn: {
+    color: '#FFFFFF',
+    alignSelf:'flex-end',
+    margin:2,
+    marginRight:10,
+    width: 68,
+    height:36,
+    lineHeight: 30,
+    overflow:'hidden',
+    borderWidth : 1,
+    borderRadius:10,
+    borderColor: '#FFFFFF',
+  },
 });
