@@ -213,6 +213,11 @@ module.exports = React.createClass({
               })
             }
           }
+          if (this.state.scrollMsgList.length === 0) {
+            this.state.scrollMsgList.push({
+              title: '一元夺宝, 精彩无限!'
+            });
+          }
         }
       }
     },

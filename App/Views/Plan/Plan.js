@@ -191,8 +191,8 @@ module.exports = React.createClass({
                 this.state.scrollMsgList.push(scrollText);
               }
             }
-            if (this.state.planScrollMsg.length === 0) {
-              this.state.planScrollMsg.push({
+            if (this.state.scrollMsgList.length === 0) {
+              this.state.scrollMsgList.push({
                 title: '温馨提示：理性投注，长跟长红'
               });
             }
