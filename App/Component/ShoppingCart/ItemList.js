@@ -26,6 +26,7 @@ module.exports = React.createClass({
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
       cateId: 0,
+      totalPrice: 0,
     };
   },
   //只调用一次，在render之后调用
@@ -52,11 +53,14 @@ module.exports = React.createClass({
         if (cateId === 0) {
           Util.post(net.planApi.queryCart, token, {},
           ({code, msg, result})=>{
-            // console.log(code);
-            // console.log(msg);
-            // console.log(result);
+            // 计算总价
+            let tempPrice = 0
+            result.map((p, key)=>{
+              tempPrice += p.amount*p.planAmount;
+            });
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(code === 1?result:''),
+              totalPrice: tempPrice,
               loaded: true
             });
           });
@@ -65,11 +69,14 @@ module.exports = React.createClass({
           // 乐夺宝
           Util.get(net.hpApi.redisCart, token,
           ({code, msg, info})=>{
-            // console.log(code);
-            // console.log(msg);
-            // console.log(info);
+            // 计算总价
+            let tempPrice = 0
+            info.map((h, key)=>{
+              tempPrice += h.amount;
+            });
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(code === 1?info:''),
+              totalPrice: tempPrice,
               loaded: true
             });
           },
@@ -130,16 +137,6 @@ module.exports = React.createClass({
           if (code === 1) {
             // 重新拉取数据
             this.fetchData(0);
-
-            // plan.amount = result.amount;
-
-            // 重新计算总和
-            // this.totalPlans = 0
-            // if (this.plans.length > 0) {
-            //   for (let p of this.plans) {
-            //     this.totalPlans += (p.planAmount * p.amount)
-            //   }
-            // }
           }
           else {
             Util.toast(msg);
@@ -196,10 +193,6 @@ module.exports = React.createClass({
           if (code === 1) {
             // 重新拉取数据
             this.fetchData(1);
-
-            // let initAmount = item.amount
-            // item.amount = msg.amount
-            // this.totalItems = this.totalItems - initAmount + amount
           }
           else {
             Util.toast(msg);
@@ -222,6 +215,10 @@ module.exports = React.createClass({
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           style={css.listView}/>
+
+      {
+        this.state.dataSource.getRowCount()>0
+        ?
         <View style={[css.payArea]}>
           <View style={css.flex1}>
             <Text style={[css.payText,
@@ -231,7 +228,8 @@ module.exports = React.createClass({
               :
               {color: '#000000'}
             ]}>
-              共 1 件{this.state.cateId === 0?'方案':'商品'}, 总计 20 元
+              共 {this.state.dataSource.getRowCount()} 件{this.state.cateId === 0?'方案':'商品'},
+              总计 {this.state.totalPrice} 元
             </Text>
           </View>
           <View style={[css.flex1],{width:68}}>
@@ -247,6 +245,9 @@ module.exports = React.createClass({
             </Button>
           </View>
         </View>
+        :
+        null
+      }
       </View>
     );
   },
@@ -286,7 +287,10 @@ module.exports = React.createClass({
                     </Button>
                   </View>
                   <Text style={[css.fontWeightBold,css.fontSize14,css.left20,css.center]}>
-                    {item.amount*item.planAmount}元
+                    <Text style={css.red}>
+                      {item.amount*item.planAmount}
+                    </Text>
+                    元
                   </Text>
     						</View>
                 <View style={[css.row,css.left10,css.right15,css.bottom4,css.top4]}>
