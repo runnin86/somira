@@ -2,6 +2,8 @@
 
 import React from 'react-native';
 import Swiper from 'react-native-swiper';
+import Store from 'react-native-simple-store';
+
 import Progress from '../../Common/Progress';
 import Util from '../../Common/Util';
 
@@ -30,7 +32,7 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       showCartBtn: false,
-      totalPrice: this.props.item.price,
+      payPrice: this.props.item.price,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
@@ -164,6 +166,7 @@ module.exports = React.createClass({
         <ActionSheet
             visible={this.state.showCartBtn}
             onCancel={this.onCancel}
+            onSubmit={this.onPay}
             cancelText={'确认'}
             buttonStyle={{marginTop:6, borderRadius:6,height:Util.size['height']*0.068,backgroundColor:'#f6383a'}}
             textStyle={{color:'#FFFFFF'}}>
@@ -174,43 +177,43 @@ module.exports = React.createClass({
               </Text>
             </ActionSheet.Button>
             <View style={css.priceRow}>
-              <Text onPress={()=>this.setState({totalPrice:10})}
-                style={{color: this.state.totalPrice===10?'#f6383a':'#0894ec',fontSize:14,marginLeft:16,}}>
+              <Text onPress={()=>this.setState({payPrice:10})}
+                style={{color: this.state.payPrice===10?'#f6383a':'#0894ec',fontSize:14,marginLeft:16,}}>
                 10
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:20})}
-                style={{color: this.state.totalPrice===20?'#f6383a':'#0894ec',fontSize:14}}>
+              <Text onPress={()=>this.setState({payPrice:20})}
+                style={{color: this.state.payPrice===20?'#f6383a':'#0894ec',fontSize:14}}>
                 20
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:50})}
-                style={{color: this.state.totalPrice===50?'#f6383a':'#0894ec',fontSize:14}}>
+              <Text onPress={()=>this.setState({payPrice:50})}
+                style={{color: this.state.payPrice===50?'#f6383a':'#0894ec',fontSize:14}}>
                 50
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:100})}
-                style={{color: this.state.totalPrice===100?'#f6383a':'#0894ec',fontSize:14}}>
+              <Text onPress={()=>this.setState({payPrice:100})}
+                style={{color: this.state.payPrice===100?'#f6383a':'#0894ec',fontSize:14}}>
                 100
               </Text>
-              <Text onPress={()=>this.setState({totalPrice:300})}
-                style={{color: this.state.totalPrice===300?'#f6383a':'#0894ec',fontSize:14,marginRight:16,}}>
+              <Text onPress={()=>this.setState({payPrice:300})}
+                style={{color: this.state.payPrice===300?'#f6383a':'#0894ec',fontSize:14,marginRight:16,}}>
                 300
               </Text>
             </View>
             <View style={css.priceRow}>
               <Image
                 onTouchStart={()=>{
-                  if (this.state.totalPrice > this.props.item.price) {
-                    this.setState({totalPrice:this.state.totalPrice-this.props.item.price})
+                  if (this.state.payPrice > this.props.item.price) {
+                    this.setState({payPrice:this.state.payPrice-this.props.item.price})
                   }
-                  else if (this.state.totalPrice <= this.props.item.price) {
-                    this.setState({totalPrice:this.props.item.price})
+                  else if (this.state.payPrice <= this.props.item.price) {
+                    this.setState({payPrice:this.props.item.price})
                   }
                   this.timer = setTimeout(()=>{
                     this.interval = setInterval(()=>{
-                      if (this.state.totalPrice > this.props.item.price) {
-                        this.setState({totalPrice:this.state.totalPrice-this.props.item.price})
+                      if (this.state.payPrice > this.props.item.price) {
+                        this.setState({payPrice:this.state.payPrice-this.props.item.price})
                       }
-                      else if (this.state.totalPrice <= this.props.item.price) {
-                        this.setState({totalPrice:this.props.item.price})
+                      else if (this.state.payPrice <= this.props.item.price) {
+                        this.setState({payPrice:this.props.item.price})
                       }
                     },500);
                   },1000);
@@ -224,22 +227,22 @@ module.exports = React.createClass({
               <TextInput
                  style={css.textInput}
                  autoCapitalize = 'none'
-                 autoCorrect={false}
+                 editable={false}
                  keyboardType='numeric'
                  selectionColor={'red'}
                  ref='textInput'
                  maxLength={4}
-                 onChangeText={(totalPrice) => this.setState({totalPrice})}
+                 onChangeText={(payPrice) => this.setState({payPrice})}
                  onFocus={() => {this.refs.textInput.focus()}}
-                 defaultValue={this.state.totalPrice+''}
-                 value={this.state.totalPrice+''}
+                 defaultValue={this.state.payPrice+''}
+                 value={this.state.payPrice+''}
                />
               <Image
                 onTouchStart={()=>{
-                  this.setState({totalPrice:this.state.totalPrice+this.props.item.price})
+                  this.setState({payPrice:this.state.payPrice+this.props.item.price})
                   this.timer = setTimeout(()=>{
                     this.interval = setInterval(()=>{
-                      this.setState({totalPrice:this.state.totalPrice+this.props.item.price})
+                      this.setState({payPrice:this.state.payPrice+this.props.item.price})
                     },500);
                   },1000);
                 }}
@@ -254,7 +257,7 @@ module.exports = React.createClass({
               <Text style={{color: '#5f646e',fontSize:14}}>
                 需
                 <Text style={{color: '#f6383a'}}>
-                  {' ' + this.state.totalPrice + ' '}
+                  {' ' + this.state.payPrice + ' '}
                 </Text>
                 元
               </Text>
@@ -263,8 +266,47 @@ module.exports = React.createClass({
       </View>
     );
   },
+  onPay() {
+    let item = this.props.item;
+    if (parseFloat(this.state.payPrice) % parseFloat(item.price) > 0) {
+      Util.toast('参与人次必须是' + item.price + '的倍数');
+      return
+    }
+    else if (parseFloat(this.state.payPrice) > parseFloat(item.codeCount)) {
+      Util.toast('最多可参与人次' + item.codeCount);
+      return
+    }
+    else if (parseFloat(this.state.payPrice) <= 0) {
+      Util.toast('请输入有效金额');
+      return
+    }
+
+    // 支付请求
+    Store.get('token').then((token)=>{
+      if (token) {
+        // 购物车商品数组
+        let postBody = {
+          'recharge_money': this.state.payPrice,
+          'projectId': item.id,
+          'payCount': this.state.payPrice,
+          'phone': '',
+          'userId': '',
+          'number': item.number
+        };
+        Util.post(net.hpApi.ptpay, token, postBody,
+        ({code, msg})=>{
+          if (code === 1) {
+            Util.toast(msg);
+            this.setState({showCartBtn:false});
+          }
+          else {
+            Util.toast(msg);
+          }
+        });
+      }
+    });
+  },
   onCancel() {
-    console.log('进行支付:' + this.state.totalPrice);
     this.setState({showCartBtn:false});
   },
   onOpen() {
