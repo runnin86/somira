@@ -25,7 +25,7 @@ module.exports = {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
   },
-  //delete请求
+  // delete请求
   delete: function (url, token, data, callback) {
     var fetchOptions = {
       method: 'delete',
@@ -44,7 +44,7 @@ module.exports = {
       // callback(responseText);
     }).done();
   },
-  //post请求
+  // post请求
   post: function (url, token, data, callback) {
     var fetchOptions = {
       method: 'POST',
@@ -63,9 +63,7 @@ module.exports = {
       // callback(responseText);
     }).done();
   },
-  /**
-   * 基于fetch的请求方法
-   */
+  // get请求
   get: function (url, token, successCallback, failCallback) {
     var fetchOptions = {
       method: 'GET',
@@ -84,6 +82,24 @@ module.exports = {
         console.log("错误信息:" + err);
         failCallback(err);
       });
+  },
+  // put请求
+  put: function (url, token, data, callback) {
+    var fetchOptions = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-token': token,
+      },
+      body: JSON.stringify(data)
+    };
+
+    fetch(url, fetchOptions)
+    .then((response) => response.text())
+    .then((responseText) => {
+      callback(JSON.parse(responseText));
+    }).done();
   },
   log:function (obj){
     var description = "";

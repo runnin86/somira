@@ -84,7 +84,68 @@ module.exports = React.createClass({
     });
   },
   /*
-   * 删除购物车
+   * ------------------------方案相关---------------------------
+   */
+  delCartHP(id, number) {
+    Store.get('token').then((token)=>{
+      if (token) {
+        let url = net.hpApi.redisCart + '/' + id + '_' + number;
+        Util.delete(url, token, {},
+        ({code, msg})=>{
+          if (code === 1) {
+            //拉取数据
+            this.fetchData(1);
+            // 设置购物车图标
+            RCTDeviceEventEmitter.emit('loadCartCount');
+          }
+          else {
+            Util.toast(msg);
+          }
+        });
+      }
+    });
+  },
+  augmentPlan(plan) {
+    // 数量相加
+    this.changeAmountPlan(plan, parseFloat(plan.amount) + 1);
+  },
+  reducePlan(plan) {
+    // 数量加减
+    if (parseFloat(plan.amount) - 1 >= 1) {
+      this.changeAmountPlan(plan, parseFloat(plan.amount) - 1);
+    }
+  },
+  changeAmountPlan (plan, amount) {
+    Store.get('token').then((token)=>{
+      if (token) {
+        Util.post(net.planApi.upCart, token, {
+          'pid': plan.pid,
+          'amt': amount
+        },
+        ({code, msg, result})=>{
+          if (code === 1) {
+            // 重新拉取数据
+            this.fetchData(0);
+
+            // plan.amount = result.amount;
+
+            // 重新计算总和
+            // this.totalPlans = 0
+            // if (this.plans.length > 0) {
+            //   for (let p of this.plans) {
+            //     this.totalPlans += (p.planAmount * p.amount)
+            //   }
+            // }
+          }
+          else {
+            Util.toast(msg);
+          }
+        });
+      }
+    });
+  },
+  /*
+   * ------------------------乐夺宝相关---------------------------
    */
   delCartPlan(id) {
     // Body :{"dellist":[{"pid":"1ee6d76ff3094c8a82b948def322da58"}]}
@@ -109,17 +170,32 @@ module.exports = React.createClass({
       }
     });
   },
-  delCartHP(id, number) {
+  augmentHP(item) {
+    // 数量相加
+    let augmentAmount = item.amount + item.price
+    this.changeAmountHP(item, augmentAmount)
+  },
+  reduceHP(item) {
+    // 数量加减
+    if ((item.amount - item.price) >= item.price) {
+      this.changeAmountHP(item, item.amount - item.price)
+    }
+  },
+  changeAmountHP(item, amount) {
     Store.get('token').then((token)=>{
       if (token) {
-        let url = net.hpApi.redisCart + '/' + id + '_' + number;
-        Util.delete(url, token, {},
+        Util.put(net.hpApi.redisCart + '/' + item.id, token, {
+          'number': item.number,
+          'amount': amount
+        },
         ({code, msg})=>{
           if (code === 1) {
-            //拉取数据
+            // 重新拉取数据
             this.fetchData(1);
-            // 设置购物车图标
-            RCTDeviceEventEmitter.emit('loadCartCount');
+
+            // let initAmount = item.amount
+            // item.amount = msg.amount
+            // this.totalItems = this.totalItems - initAmount + amount
           }
           else {
             Util.toast(msg);
@@ -154,7 +230,7 @@ module.exports = React.createClass({
               <View style={css.column}>
                 <Image style={[css.left10,css.bottom10,css.right4,{width: 42,height: 48,}]}
                   source={{uri: item.expertHead}} />
-                <Text style={[css.fontWeight,css.fontSize14,{alignSelf:'center',marginTop:-6,}]}
+                <Text style={[css.fontWeightBold,css.fontSize14,{alignSelf:'center',marginTop:-6,}]}
                   numberOfLines={1}>
                   {item.expertName}
                 </Text>
@@ -164,32 +240,36 @@ module.exports = React.createClass({
                   <Text style={[css.fontWeight,css.fontSize14]}>
                     {item.planName}
                   </Text>
-                  <Text style={[css.fontWeight,css.fontSize14,css.flex1,css.textRight]}>
+                  <Text style={[css.fontWeight2,css.fontSize12,css.flex1,css.textRight]}>
                     {item.addTime}
                   </Text>
                 </View>
                 <View style={[css.row,css.left10,css.right15,css.bottom4]}>
                   <View style={[css.row,css.center2]}>
-                    <Image style={css.priceBtn} source={require('image!ic_goods_reduce')}/>
+                    <Button onPress={()=>this.reducePlan(item)}>
+                      <Image style={css.priceBtn} source={require('image!ic_goods_reduce')}/>
+                    </Button>
                     <Text style={css.priceText}>{item.amount}</Text>
-                    <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
+                    <Button onPress={()=>this.augmentPlan(item)}>
+                      <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
+                    </Button>
                   </View>
-                  <Text style={[css.fontWeight,css.fontSize14,css.left10,css.center]}>
-                    {item.planAmount}元
+                  <Text style={[css.fontWeightBold,css.fontSize14,css.left20,css.center]}>
+                    {item.amount*item.planAmount}元
                   </Text>
     						</View>
                 <View style={[css.row,css.left10,css.right15,css.bottom4,css.top4]}>
                   <View style={css.row}>
-                    <Image style={[css.right4,{width: 14,height: 14}]}
+                    <Image style={[css.right4,{width: 12,height: 12}]}
                       source={require('image!方案详情-收益区')} />
-                    <Text style={[css.fontWeight,css.fontSize14]}>
+                    <Text style={[css.fontWeight,css.fontSize12]}>
                       {item.rangeName}
                     </Text>
                   </View>
                   <View style={[css.row,{right:-40,}]}>
-                    <Image style={[css.right4,{width: 12,height: 16,}]}
+                    <Image style={[css.right4,{width: 10,height: 14,}]}
                       source={require('image!单价')} />
-                    <Text style={[css.fontWeight,css.fontSize14,css.flex1]}>
+                    <Text style={[css.fontWeight,css.fontSize12,css.flex1]}>
                       {item.planAmount}元
                     </Text>
                   </View>
@@ -204,26 +284,30 @@ module.exports = React.createClass({
               <Image style={[css.bottom10,css.right4,{width: 60,height: 60,}]}
                 source={{uri: item.images?item.images.split(',')[0]:''}} />
               <View style={css.flex1}>
-                <Text style={[css.fontWeight,{fontSize: 14}]} numberOfLines={1}>
+                <Text style={[css.fontWeightBold,{fontSize: 14}]} numberOfLines={1}>
                   {item.name}
                 </Text>
-                <Text style={[css.fontWeight,{fontSize: 10,marginTop:2,marginBottom:2,}]} numberOfLines={1}>
+                <Text style={[css.fontWeight,{fontSize: 9,marginTop:2,marginBottom:2,}]} numberOfLines={1}>
                   {item.content}
                 </Text>
                 <View style={[css.row,css.top4]}>
-                  <Image style={css.priceBtn} source={require('image!ic_goods_reduce')}/>
+                  <Button onPress={()=>this.reduceHP(item)}>
+                    <Image style={css.priceBtn} source={require('image!ic_goods_reduce')}/>
+                  </Button>
                   <Text style={[css.center,css.priceText]}>{item.amount}</Text>
-                  <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
+                  <Button onPress={()=>this.augmentHP(item)}>
+                    <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
+                  </Button>
                 </View>
                 <View style={[css.row,css.top4]}>
-                  <Text style={[css.fontWeight,css.fontSize14]}>
+                  <Text style={[css.fontWeightBold,css.fontSize12]}>
                     需:
                     <Text style={css.red}>
                       {item.amount}
                     </Text>
                     元
                   </Text>
-                  <Text style={[css.fontWeight,css.fontSize14,css.flex1,css.textCenter]}>
+                  <Text style={[css.fontWeight,css.fontSize12,css.flex1,css.textCenter]}>
                     总价:{item.totalCount}元
                   </Text>
                 </View>
@@ -287,8 +371,14 @@ var css = StyleSheet.create({
   fontWeight: {
     fontWeight: '100'
   },
+  fontWeightBold: {
+    fontWeight: '400',
+  },
   fontSize14: {
     fontSize: 14
+  },
+  fontSize12: {
+    fontSize: 12
   },
   textRight: {
     textAlign:'right'
@@ -308,6 +398,9 @@ var css = StyleSheet.create({
   left10: {
     marginLeft: 10
   },
+  left20: {
+    marginLeft: 20
+  },
   right15: {
     marginRight: 15
   },
@@ -325,8 +418,8 @@ var css = StyleSheet.create({
   },
   priceText: {
     color:'#f28006',
-    paddingLeft:10,
-    paddingRight:10,
+    paddingLeft:20,
+    paddingRight:20,
   },
   priceBtn: {
     height:25,
