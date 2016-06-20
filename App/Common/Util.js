@@ -157,7 +157,7 @@ module.exports = {
       message: m,
       duration: d ? d : 'short',//[short,long]
       position: p ? p : 'bottom',//[top,center,bottom]
-      addPixelsY: y ? y : -56,
+      addPixelsY: y ? y : -76,
     });
   }
 };

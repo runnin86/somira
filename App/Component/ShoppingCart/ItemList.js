@@ -92,7 +92,88 @@ module.exports = React.createClass({
   },
   // 购物车提交
   payCart() {
-    console.log(this.state.cateId);
+    Store.get('token').then((token)=>{
+      if (token) {
+        /*
+         * cateId=0为方案支付;cateId=1为乐夺宝支付;
+         */
+        if (this.state.cateId === 0) {
+          // {"planbinfo":{"totalmoney":2.0,
+          //  "spcarlist":[{"multipy":1,"name":"飞鹰计划","pid":"31","sum":2.0}]}}
+          // 刷新购物车
+          this.fetchData(0);
+          // 购物车方案数组
+          let spcarlist = [];
+          this.state.dataSource._dataBlob.s1.map((p, key)=>{
+            spcarlist.push({
+              'multipy': p.amount,
+              'name': p.expertName,
+              'pid': p.pid,
+              'sum': p.amount * p.planAmount
+            });
+          });
+          // 组装请求消息体
+          let postBody = {
+            'planbinfo': {
+              'totalmoney': this.state.totalPrice,
+              'spcarlist': spcarlist
+            }
+          };
+          // 发起支付请求
+          Util.post(net.planApi.cartPay, token, postBody,
+          ({code, msg, result})=>{
+            if (code === 1) {
+              Util.toast('购买成功!');
+              // 重新拉取数据
+              this.fetchData(0);
+            }
+            else if (code === 2) {
+              // 结算异常
+              Util.toast(msg);
+            }
+            else if (code === 0) {
+              let errObj = result[0];
+              let errorTips = errObj.expert_name ? '专家[' + errObj.expert_name + '],' : '' + errObj.msg;
+              Util.toast(errorTips);
+            }
+          });
+        }
+        else if(this.state.cateId === 1) {
+          // 刷新购物车
+          this.fetchData(1);
+          // 购物车商品数组
+          let spcarlist = [];
+          this.state.dataSource._dataBlob.s1.map((h, key)=>{
+            spcarlist.push({
+              'name': h.name,
+              'number': h.number,
+              'payCount': h.amount,
+              'projectId': h.id,
+              'recharge_money': h.amount
+            });
+          });
+          // 组装请求消息体
+          let postBody = {
+            'spcarInfos': {
+              'totalmoney': this.state.totalPrice,
+              'spcarlist': spcarlist
+            }
+          }
+          // 发起支付请求
+          Util.post(net.hpApi.cartPay, token, postBody,
+          ({code, msg})=>{
+            if (code === 1) {
+              Util.toast('购买成功!');
+              // 重新拉取数据
+              this.fetchData(1);
+            }
+            else {
+              Util.toast(msg);
+            }
+          });
+        }
+      }
+    });
   },
   /*
    * ------------------------方案相关---------------------------
