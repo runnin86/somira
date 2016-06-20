@@ -7,6 +7,7 @@ import MenuItem from '../../Common/MenuItem';
 import Button from 'react-native-button';
 import Store from 'react-native-simple-store';
 import * as net from './../../Network/Interface';
+import UserBill from '../../Component/User/UserBill';
 
 var {
   AppRegistry,
@@ -138,6 +139,7 @@ module.exports = React.createClass({
     this.props.navigator.push({
       title: title,
       component: component,
+      navigationBarHidden:false,
       passProps:{
         data: data
       }
@@ -227,7 +229,7 @@ module.exports = React.createClass({
           height='30'
           fontSize='12'
           icon='我的账单'
-          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+          onClick={()=>{this._addNavigator(UserBill,"我的账单")}}/>
         <View style={[css.line]} />
 
         <MenuItem

@@ -21,8 +21,14 @@ module.exports = React.createClass({
     return (
       <TouchableHighlight underlayColor="#dad9d7" onPress={this._performClick}>
         <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:height,paddingLeft:20,paddingRight:16}}>
-          <Image style={[styles.iconSize]}
-            source={{uri: this.props.icon}}/>
+          {
+            this.props.icon
+            ?
+            <Image style={[styles.iconSize]}
+              source={{uri: this.props.icon}}/>
+            :
+            null
+          }
           <Text style={{flex:1,color:'#333333',marginLeft:10,fontSize:fontSize,fontWeight:'100',}}>{this.props.title}</Text>
           <Image style={[styles.iconSize]}
             source={require('image!arrow_right_grey')} />
