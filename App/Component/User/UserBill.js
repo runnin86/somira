@@ -64,5 +64,3 @@ const styles = StyleSheet.create({
     height:2,
   },
 });
-
-AppRegistry.registerComponent('demo', () => demo);
