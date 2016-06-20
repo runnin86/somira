@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4',
+    marginBottom: -20,
   },
   loading :{
     marginTop : 10,
@@ -116,7 +117,6 @@ const styles = StyleSheet.create({
   },
   warnning: {
     width: 100,
-    // paddingBottom:20,
     backgroundColor: 'transparent',
     resizeMode:Image.resizeMode.contain,
   },
@@ -128,12 +128,12 @@ const styles = StyleSheet.create({
   },
   recordCell: {
     flex:1,
-    height: 40,
+    height: 46,
     justifyContent : 'center'
   },
   recordCellFixed: {
     flex: 1,
-    height: 40,
+    height: 46,
     justifyContent : 'center'
   },
   recordText: {
