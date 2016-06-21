@@ -25,7 +25,7 @@ module.exports = React.createClass({
     return (
       <View style={css.container}>
         <Text style={css.welcome}>
-          Welcome to 关于!
+          Welcome to 最新揭晓!
         </Text>
         <Text style={css.instructions}>
           To get started, edit index.ios.js
