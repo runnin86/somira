@@ -48,6 +48,14 @@ var Entity = React.createClass({
             <Text style={[{marginLeft:6},this.props.fontClass]}>
               &yen; {this.props.money}
             </Text>
+            {
+              this.props.rightArrow
+              ?
+              <Image style={[css.iconSize]}
+                source={require('image!arrow_right_grey')} />
+              :
+              null
+            }
           </View>
         </View>
       </View>
@@ -61,43 +69,36 @@ module.exports = React.createClass({
    */
   getInitialState: function () {
     return {
-      attachInfo: '',
-      certList: '',
-      expertHistory: '',
-      plan: '',
-      summary: '',
-      residualTime: '',
-      disabledPayBtn: false,
-      totalMultiple: 1,
-      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      oneLevelNum: 0,
+      twoLevelNum: 0,
+      threeLevelNum: 0,
+      oneLevelUsers: [],
+      oneLevelFlow: 0,
+      twoLevelFlow: 0,
+      threeLevelFlow: 0
     }
   },
   componentDidMount(){
-    // 获取方案
-    // this.fetchPlan(this.props.planId);
+    this.fetchData();
   },
-  fetchPlan(pid) {
-    // 获取方案的明细,需要token数据
+  fetchData() {
     Store.get('token').then((token)=>{
       if (token) {
-        Util.post(net.planApi.detail, token, {
-          pid: pid
-        },
+        Util.post(net.userApi.team, token, {},
         ({code, msg, result})=>{
-          // console.log(code);
-          // console.log(msg);
-          // console.log(result);
           if (code === 1) {
-            // this.setState({
-            //   dataSource: this.state.dataSource.cloneWithRows(result.expertHistory),
-            //   attachInfo: result.attachInfo,
-            //   certList: result.certList,
-            //   plan: result.plan,
-            //   summary: result.summaryList[0],
-            //   residualTime: filterTime > 0 ? filterTime + '分钟' : '已截止',
-            //   disabledPayBtn: filterTime < 0 ? true : false,
-            //   price: result.plan.plan_amount,
-            // });
+            this.setState({
+              oneLevelNum: result.oneLevelNum,
+              twoLevelNum: result.twoLevelNum,
+              threeLevelNum: result.threeLevelNum,
+              oneLevelUsers: result.oneLevelUsers,
+              oneLevelFlow: result.oneLevelFlow,
+              twoLevelFlow: result.twoLevelFlow,
+              threeLevelFlow: result.threeLevelFlow
+            });
+          }
+          else {
+            Util.toast(msg);
           }
         });
       }
@@ -108,8 +109,8 @@ module.exports = React.createClass({
       <View style={css.flex}>
         <Accordion
           sections={[{
-            title: '一级用户',
-            content: this.state.plan.plan_content
+            title: '',
+            content: ''
           }]}
           renderHeader={this._renderHeader}
           renderContent={this._renderContent}
@@ -120,13 +121,19 @@ module.exports = React.createClass({
           fontClass={{fontWeight:'100',fontSize:12}}
           iconClass={{width:27,height:21}}
           name="二级用户" nameIcon="二级用户"
-          people='333' money='194829'/>
+          people={this.state.twoLevelNum > 0 ? this.state.twoLevelNum : 0}
+          money={this.state.twoLevelFlow > 0 ? this.state.twoLevelFlow : 0}/>
 
         <Entity
           fontClass={{fontWeight:'100',fontSize:12}}
           iconClass={{width:27,height:19}}
           name="三级用户" nameIcon="三级用户"
-          people='999' money='4194829'/>
+          people={this.state.threeLevelNum > 0 ? this.state.threeLevelNum : 0}
+          money={this.state.threeLevelFlow > 0 ? this.state.threeLevelFlow : 0}/>
+
+        <View style={{alignItems:'center',justifyContent: 'center'}}>
+          <Image style={css.warnning} source={require('image!团队温馨提示')}/>
+        </View>
       </View>
     );
   },
@@ -135,10 +142,12 @@ module.exports = React.createClass({
       <Animatable.View duration={400}
         style={[isActive ? css.active : css.inactive]} transition="backgroundColor">
         <Entity
+          rightArrow={true}
           fontClass={{fontWeight:'100',fontSize:12}}
           iconClass={{width:27,height:21}}
           name="一级用户" nameIcon="一级用户"
-          people='3' money='322'/>
+          people={this.state.oneLevelNum > 0 ? this.state.oneLevelNum : 0}
+          money={this.state.oneLevelFlow > 0 ? this.state.oneLevelFlow : 0}/>
       </Animatable.View>
     );
   },
@@ -146,16 +155,18 @@ module.exports = React.createClass({
     return (
       <Animatable.View duration={400}
         style={[isActive ? css.active : css.inactive]} transition="backgroundColor">
-        <Entity
-          fontClass={{fontWeight:'100',fontSize:10}}
-          iconClass={{width:21,height:20,marginLeft:10,}}
-          name="18493882918" nameIcon="用户icon"
-          people='3' money='322'/>
-        <Entity
-          fontClass={{fontWeight:'100',fontSize:10}}
-          iconClass={{width:21,height:20,marginLeft:10,}}
-          name="18493882918" nameIcon="用户icon"
-          people='3' money='322'/>
+        {
+          this.state.oneLevelUsers.map((u,k)=>{
+            return(
+              <Entity key={k}
+                fontClass={{fontWeight:'100',fontSize:10}}
+                iconClass={{width:21,height:20,marginLeft:10,}}
+                name={u.user_phone} nameIcon="用户icon"
+                people={u.oneLevelNum > 0 ? u.oneLevelNum : 0}
+                money={u.oneLevelFlow > 0 ? u.oneLevelFlow : 0}/>
+            )
+          })
+        }
       </Animatable.View>
     );
   },
@@ -211,5 +222,16 @@ var css = StyleSheet.create({
     fontWeight: '100',
     textAlign: 'center',
     margin: 10
+  },
+  warnning: {
+    width: Util.size['width']-20,
+    backgroundColor: 'transparent',
+    resizeMode:Image.resizeMode.contain,
+  },
+  iconSize: {
+    marginRight: -10,
+    height:20,
+    width:20,
+    resizeMode: Image.resizeMode.contain,
   },
 });
