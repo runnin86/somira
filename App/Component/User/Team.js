@@ -9,9 +9,6 @@ var {
   Text,
   Image,
   View,
-  ListView,
-  TouchableOpacity,
-  ScrollView
 } = React;
 
 import * as Animatable from 'react-native-animatable';
@@ -34,7 +31,7 @@ var Entity = React.createClass({
         </View>
         <View style={[css.recordCellFixed,{alignItems: 'center',marginLeft:-10,}]}>
           <View style={css.newRow}>
-            <Image style={{width:24,height:12,marginTop:-2,}}
+            <Image style={{width:24,height:12,marginTop:-2}}
               source={{uri: '人数icon'}} />
             <Text style={[{marginLeft:6},this.props.fontClass]}>
               {this.props.people}
@@ -43,7 +40,7 @@ var Entity = React.createClass({
         </View>
         <View style={[css.recordCellFixed,{alignItems:'flex-end',marginRight:10,}]}>
           <View style={css.newRow}>
-            <Image style={{width:18,height:19,marginTop:-2,}}
+            <Image style={{width:18,height:19,marginTop:-2}}
               source={{uri: '销量icon'}} />
             <Text style={[{marginLeft:6},this.props.fontClass]}>
               &yen; {this.props.money}
@@ -160,7 +157,7 @@ module.exports = React.createClass({
             return(
               <Entity key={k}
                 fontClass={{fontWeight:'100',fontSize:10}}
-                iconClass={{width:21,height:20,marginLeft:10,}}
+                iconClass={{width:21,height:20,marginLeft:10}}
                 name={u.user_phone} nameIcon="用户icon"
                 people={u.oneLevelNum > 0 ? u.oneLevelNum : 0}
                 money={u.oneLevelFlow > 0 ? u.oneLevelFlow : 0}/>
