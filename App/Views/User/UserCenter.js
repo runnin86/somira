@@ -7,8 +7,13 @@ import MenuItem from '../../Common/MenuItem';
 import Button from 'react-native-button';
 import Store from 'react-native-simple-store';
 import * as net from './../../Network/Interface';
-import UserBill from '../../Component/User/Bill/UserBill';
-import UserOrder from '../../Component/User/Order/UserOrder';
+import UserBill from '../../Component/User/Bill/Bill';
+import UserOrder from '../../Component/User/Order/Order';
+import UserCommission from '../../Component/User/Commission';
+import UserTeam from '../../Component/User/Team';
+import QRCode from '../../Component/User/QRCode';
+import ChangePwd from '../../Component/User/ChangePwd';
+import About from '../../Component/User/About';
 
 var {
   AppRegistry,
@@ -250,7 +255,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='我的打赏'
-              onClick={()=>{this._addNavigator(CouponManager,"我的返佣")}}/>
+              onClick={()=>{this._addNavigator(UserCommission,"我的返佣")}}/>
             <View style={[css.line]} />
 
             <MenuItem
@@ -258,7 +263,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='我的团队'
-              onClick={()=>{this._addNavigator(CouponManager,"我的团队")}}/>
+              onClick={()=>{this._addNavigator(UserTeam,"我的团队")}}/>
           </View>
           :
           <View></View>
@@ -279,7 +284,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='二维码'
-              onClick={()=>{this._addNavigator(CouponManager,"我的二维码")}}/>
+              onClick={()=>{this._addNavigator(QRCode,"我的二维码")}}/>
             <View style={[css.line]} />
           </View>
           :
@@ -291,14 +296,14 @@ module.exports = React.createClass({
           height='30'
           fontSize='12'
           icon='修改密码'
-          onClick={()=>{this._addNavigator(CouponManager,"修改密码")}}/>
+          onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
         <View style={[css.line]} />
         <MenuItem
           title='关于'
           height='30'
           fontSize='12'
           icon='关于'
-          onClick={()=>{this._addNavigator(CouponManager,"关于")}}/>
+          onClick={()=>{this._addNavigator(About,"关于")}}/>
 
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
           <Image style={css.warnning} source={require('image!温馨提示')}/>

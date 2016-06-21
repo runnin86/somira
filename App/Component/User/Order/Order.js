@@ -1,6 +1,6 @@
 import React from 'react-native';
 
-import OrderList from './OrderList';
+import OrderList from './List';
 import ItemDetail from '../../../Component/HappyPurchase/ItemDetail';
 import PlanDetail from '../../../Component/Plan/PlanDetail';
 import Util from '../../../Common/Util';
