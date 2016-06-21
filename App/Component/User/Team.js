@@ -19,6 +19,42 @@ import Accordion from 'react-native-collapsible/Accordion';
 import Button from 'react-native-button';
 import * as net from './../../Network/Interface';
 
+var Entity = React.createClass({
+  render: function() {
+    return (
+      <View style={css.recordRow}>
+        <View style={[css.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
+          <View style={css.newRow}>
+            <Image style={[{marginTop:-2},this.props.iconClass]}
+              source={{uri: this.props.nameIcon}} />
+            <Text style={[{marginLeft:6},this.props.fontClass]}>
+              {this.props.name}
+            </Text>
+          </View>
+        </View>
+        <View style={[css.recordCellFixed,{alignItems: 'center',marginLeft:-10,}]}>
+          <View style={css.newRow}>
+            <Image style={{width:24,height:12,marginTop:-2,}}
+              source={{uri: '人数icon'}} />
+            <Text style={[{marginLeft:6},this.props.fontClass]}>
+              {this.props.people}
+            </Text>
+          </View>
+        </View>
+        <View style={[css.recordCellFixed,{alignItems:'flex-end',marginRight:10,}]}>
+          <View style={css.newRow}>
+            <Image style={{width:18,height:19,marginTop:-2,}}
+              source={{uri: '销量icon'}} />
+            <Text style={[{marginLeft:6},this.props.fontClass]}>
+              &yen; {this.props.money}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+});
+
 module.exports = React.createClass({
   /*
    * 获取实例初始状态(state，来自props)
@@ -80,74 +116,46 @@ module.exports = React.createClass({
           duration={400}
         />
 
-        <View style={css.recordRow}>
-          <View style={[css.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
-            <Text style={{fontWeight : '100',fontSize : 12}}>
-              二级用户
-            </Text>
-          </View>
-          <View style={[css.recordCellFixed,{alignItems: 'center',marginLeft:10,}]}>
-            <Text style={{fontWeight : '100',fontSize : 12}}>
-              43434
-            </Text>
-          </View>
-          <View style={[css.recordCellFixed,{alignItems:'flex-end'}]}>
-            <Text style={css.recordText}>
-              32323233
-            </Text>
-          </View>
-  			</View>
+        <Entity
+          fontClass={{fontWeight:'100',fontSize:12}}
+          iconClass={{width:27,height:21}}
+          name="二级用户" nameIcon="二级用户"
+          people='333' money='194829'/>
 
-        <View style={css.recordRow}>
-          <View style={[css.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
-            <View style={css.newRow}>
-              <Image style={{width:27,height:19,marginTop:-2,}}
-                source={{uri: '三级用户'}} />
-              <Text style={{fontWeight : '100',fontSize : 12,marginLeft:6,}}>
-                三级用户
-              </Text>
-            </View>
-          </View>
-          <View style={[css.recordCellFixed,{alignItems: 'center',marginLeft:-10,}]}>
-            <View style={css.newRow}>
-              <Image style={{width:24,height:12,marginTop:-2,}}
-                source={{uri: '人数icon'}} />
-              <Text style={{fontWeight : '100',fontSize : 12,marginLeft:6,}}>
-                999
-              </Text>
-            </View>
-          </View>
-          <View style={[css.recordCellFixed,{alignItems:'flex-end',marginRight:10,}]}>
-            <View style={css.newRow}>
-              <Image style={{width:18,height:19,marginTop:-2,}}
-                source={{uri: '销量icon'}} />
-              <Text style={{fontWeight : '100',fontSize : 12,marginLeft:6,}}>
-                &yen; 4332323
-              </Text>
-            </View>
-          </View>
-  			</View>
+        <Entity
+          fontClass={{fontWeight:'100',fontSize:12}}
+          iconClass={{width:27,height:19}}
+          name="三级用户" nameIcon="三级用户"
+          people='999' money='4194829'/>
       </View>
     );
   },
   _renderHeader(section, i, isActive) {
     return (
       <Animatable.View duration={400}
-        style={[css.lv1,css.borderBottom, isActive ? css.active : css.inactive]} transition="backgroundColor">
-        <Text style={{fontWeight:'100',fontSize:12,marginTop:6,marginBottom:10,}}>
-          {section.title}
-        </Text>
+        style={[isActive ? css.active : css.inactive]} transition="backgroundColor">
+        <Entity
+          fontClass={{fontWeight:'100',fontSize:12}}
+          iconClass={{width:27,height:21}}
+          name="一级用户" nameIcon="一级用户"
+          people='3' money='322'/>
       </Animatable.View>
     );
   },
   _renderContent(section, i, isActive) {
     return (
       <Animatable.View duration={400}
-        style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
-        <Animatable.Text key={i} style={css.contentText}
-          animation={isActive ? 'bounceIn' : undefined}>
-          {section.content}
-        </Animatable.Text>
+        style={[isActive ? css.active : css.inactive]} transition="backgroundColor">
+        <Entity
+          fontClass={{fontWeight:'100',fontSize:10}}
+          iconClass={{width:21,height:20,marginLeft:10,}}
+          name="18493882918" nameIcon="用户icon"
+          people='3' money='322'/>
+        <Entity
+          fontClass={{fontWeight:'100',fontSize:10}}
+          iconClass={{width:21,height:20,marginLeft:10,}}
+          name="18493882918" nameIcon="用户icon"
+          people='3' money='322'/>
       </Animatable.View>
     );
   },
@@ -158,12 +166,6 @@ var css = StyleSheet.create({
     flex: 1,
     marginTop: 64,
     backgroundColor: '#e7e7e7',
-  },
-  lv1: {
-    paddingTop: 10,
-    paddingBottom: 6,
-    paddingLeft: 10,
-    paddingRight: 10,
   },
   borderBottom: {
     borderBottomColor : '#eeeeee',
@@ -176,10 +178,6 @@ var css = StyleSheet.create({
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 1,
     textShadowColor: '#FFE4B5',
-  },
-  content: {
-    flex: 1,
-    padding: 12,
   },
   active: {
     backgroundColor: 'rgba(245,252,255,1)',
