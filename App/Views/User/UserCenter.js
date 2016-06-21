@@ -175,7 +175,13 @@ module.exports = React.createClass({
             <View>
               <View style={css.cellfixed}>
                 <Text style={[css.transparentFont,{fontSize:18}]}>
-                  {this.state.user.user_name}
+                  {
+                    this.state.user.user_nickname
+                    ?
+                    this.state.user.user_nickname
+                    :
+                    this.state.user.user_name
+                  }
                 </Text>
               </View>
               <View style={css.flexRow}>
