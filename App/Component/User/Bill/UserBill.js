@@ -1,11 +1,11 @@
 'use strict';
 
 import React, { Component } from 'react';
-import MenuItem from '../../Common/MenuItem';
-import Plan from './Bill/Plan';
-import Withdraw from './Bill/Withdraw';
-import Reward from './Bill/Reward';
-import Recharge from './Bill/Recharge';
+import MenuItem from '../../../Common/MenuItem';
+import Plan from './Plan';
+import Withdraw from './Withdraw';
+import Reward from './Reward';
+import Recharge from './Recharge';
 
 import {
   AppRegistry,

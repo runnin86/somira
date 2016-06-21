@@ -1,10 +1,10 @@
 import React from 'react-native';
 
-import ItemList from '../../Component/ShoppingCart/ItemList';
-import ItemDetail from '../../Component/HappyPurchase/ItemDetail';
-import PlanDetail from '../../Component/Plan/PlanDetail';
-import Util from '../../Common/Util';
-import Tabs from '../../Common/Tabs';
+import ItemList from './OrderList';
+import ItemDetail from '../../../Component/HappyPurchase/ItemDetail';
+import PlanDetail from '../../../Component/Plan/PlanDetail';
+import Util from '../../../Common/Util';
+import Tabs from '../../../Common/Tabs';
 
 var {
   AppRegistry,

@@ -7,8 +7,8 @@ import MenuItem from '../../Common/MenuItem';
 import Button from 'react-native-button';
 import Store from 'react-native-simple-store';
 import * as net from './../../Network/Interface';
-import UserBill from '../../Component/User/UserBill';
-import UserOrder from '../../Component/User/UserOrder';
+import UserBill from '../../Component/User/Bill/UserBill';
+import UserOrder from '../../Component/User/Order/UserOrder';
 
 var {
   AppRegistry,
