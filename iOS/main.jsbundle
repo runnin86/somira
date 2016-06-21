@@ -60696,7 +60696,7 @@ NativeModules.Toast.show({
 message:m,
 duration:d?d:'short',
 position:p?p:'bottom',
-addPixelsY:y?y:-56});}};
+addPixelsY:y?y:-76});}};
 });
 __d('somira/App/Component/HappyPurchase/ItemList.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _reactNativeAnimatable=require('react-native-animatable/index.js');var 
 
@@ -65031,7 +65031,14 @@ __d('somira/App/Views/User/UserCenter.js',function(global, require, module, expo
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var 
+net=babelHelpers.interopRequireWildcard(_Interface);var _Bill=require('somira/App/Component/User/Bill/Bill.js');var _Bill2=babelHelpers.interopRequireDefault(_Bill);var _Order=require('somira/App/Component/User/Order/Order.js');var _Order2=babelHelpers.interopRequireDefault(_Order);var _Commission=require('somira/App/Component/User/Commission.js');var _Commission2=babelHelpers.interopRequireDefault(_Commission);var _Team=require('somira/App/Component/User/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var _QRCode=require('somira/App/Component/User/QRCode.js');var _QRCode2=babelHelpers.interopRequireDefault(_QRCode);var _ChangePwd=require('somira/App/Component/User/ChangePwd.js');var _ChangePwd2=babelHelpers.interopRequireDefault(_ChangePwd);var _About=require('somira/App/Component/User/About.js');var _About2=babelHelpers.interopRequireDefault(_About);var 
+
+
+
+
+
+
+
 
 
 AppRegistry=_reactNative2.default.AppRegistry;var 
@@ -65163,6 +65170,7 @@ var data=null;
 this.props.navigator.push({
 title:title,
 component:component,
+navigationBarHidden:false,
 passProps:{
 data:data}});},
 
@@ -65192,7 +65200,13 @@ this.state.user?
 _reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(View,{style:css.cellfixed},
 _reactNative2.default.createElement(Text,{style:[css.transparentFont,{fontSize:18}]},
+
+this.state.user.user_nickname?
+
+this.state.user.user_nickname:
+
 this.state.user.user_name)),
+
 
 
 _reactNative2.default.createElement(View,{style:css.flexRow},
@@ -65252,7 +65266,7 @@ title:'我的账单',
 height:'30',
 fontSize:'12',
 icon:'我的账单',
-onClick:function(){this._addNavigator(CouponManager,"红包");}}),
+onClick:function(){_this7._addNavigator(_Bill2.default,"我的账单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -65260,7 +65274,7 @@ title:'我的订单',
 height:'30',
 fontSize:'12',
 icon:'我的订单',
-onClick:function(){this._addNavigator(CouponManager,"红包");}}),
+onClick:function(){_this7._addNavigator(_Order2.default,"我的订单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 
@@ -65272,7 +65286,7 @@ title:'我的返佣',
 height:'30',
 fontSize:'12',
 icon:'我的打赏',
-onClick:function(){this._addNavigator(CouponManager,"红包");}}),
+onClick:function(){_this7._addNavigator(_Commission2.default,"我的返佣");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -65280,7 +65294,7 @@ title:'我的团队',
 height:'30',
 fontSize:'12',
 icon:'我的团队',
-onClick:function(){this._addNavigator(CouponManager,"红包");}})):
+onClick:function(){_this7._addNavigator(_Team2.default,"我的团队");}})):
 
 
 _reactNative2.default.createElement(View,null),
@@ -65301,7 +65315,7 @@ title:'我的二维码',
 height:'30',
 fontSize:'12',
 icon:'二维码',
-onClick:function(){this._addNavigator(CouponManager,"红包");}}),
+onClick:function(){_this7._addNavigator(_QRCode2.default,"我的二维码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]})):
 
 
@@ -65313,14 +65327,14 @@ title:'修改密码',
 height:'30',
 fontSize:'12',
 icon:'修改密码',
-onClick:function(){this._addNavigator(CouponManager,"红包");}}),
+onClick:function(){_this7._addNavigator(_ChangePwd2.default,"修改密码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'关于',
 height:'30',
 fontSize:'12',
 icon:'关于',
-onClick:function(){this._addNavigator(CouponManager,"红包");}}),
+onClick:function(){_this7._addNavigator(_About2.default,"关于");}}),
 
 _reactNative2.default.createElement(View,{style:{marginTop:8,alignItems:'center',justifyContent:'center'}},
 _reactNative2.default.createElement(Image,{style:css.warnning,source:require('image!温馨提示')}),
@@ -65737,8 +65751,14 @@ var fontSize=parseInt(this.props.fontSize);
 return (
 _reactNative2.default.createElement(TouchableHighlight,{underlayColor:'#dad9d7',onPress:this._performClick},
 _reactNative2.default.createElement(View,{style:{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:height,paddingLeft:20,paddingRight:16}},
+
+this.props.icon?
+
 _reactNative2.default.createElement(Image,{style:[styles.iconSize],
-source:{uri:this.props.icon}}),
+source:{uri:this.props.icon}}):
+
+null,
+
 _reactNative2.default.createElement(Text,{style:{flex:1,color:'#333333',marginLeft:10,fontSize:fontSize,fontWeight:'100'}},this.props.title),
 _reactNative2.default.createElement(Image,{style:[styles.iconSize],
 source:require('image!arrow_right_grey')}))));}});
@@ -65756,6 +65776,1609 @@ resizeMode:Image.resizeMode.contain}});
 });
 __d('image!arrow_right_grey',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/arrow_right_grey.imageset/arrow_right_grey.png","uri":"arrow_right_grey","width":20,"height":33,"deprecated":true};
 });
+__d('somira/App/Component/User/Bill/Bill.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _MenuItem=require('somira/App/Common/MenuItem.js');var _MenuItem2=babelHelpers.interopRequireDefault(_MenuItem);var _Plan=require('somira/App/Component/User/Bill/Plan.js');var _Plan2=babelHelpers.interopRequireDefault(_Plan);var _Withdraw=require('somira/App/Component/User/Bill/Withdraw.js');var _Withdraw2=babelHelpers.interopRequireDefault(_Withdraw);var _Reward=require('somira/App/Component/User/Bill/Reward.js');var _Reward2=babelHelpers.interopRequireDefault(_Reward);var _Recharge=require('somira/App/Component/User/Bill/Recharge.js');var _Recharge2=babelHelpers.interopRequireDefault(_Recharge);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+_addNavigator:function(component,title){
+var data=null;
+this.props.navigator.push({
+title:title,
+component:component,
+navigationBarHidden:false,
+passProps:{
+data:data}});},
+
+
+
+render:function(){var _this=this;
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+_react2.default.createElement(_MenuItem2.default,{
+title:'方案记录',
+height:'40',
+fontSize:'14',
+onClick:function(){_this._addNavigator(_Plan2.default,"方案记录");}}),
+_react2.default.createElement(_reactNative.View,{style:[styles.line]}),
+_react2.default.createElement(_MenuItem2.default,{
+title:'提现',
+height:'40',
+fontSize:'14',
+onClick:function(){_this._addNavigator(_Withdraw2.default,"提现记录");}}),
+_react2.default.createElement(_reactNative.View,{style:[styles.line]}),
+_react2.default.createElement(_MenuItem2.default,{
+title:'充值',
+height:'40',
+fontSize:'14',
+onClick:function(){_this._addNavigator(_Recharge2.default,"充值记录");}}),
+_react2.default.createElement(_reactNative.View,{style:[styles.line]}),
+_react2.default.createElement(_MenuItem2.default,{
+title:'打赏',
+height:'40',
+fontSize:'14',
+onClick:function(){_this._addNavigator(_Reward2.default,"打赏记录");}})));}});
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+marginTop:66,
+backgroundColor:'#f4f4f4'},
+
+line:{
+height:2}});
+});
+__d('somira/App/Component/User/Bill/Plan.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false,
+showWarning:false};},
+
+
+componentDidMount:function(){
+this._getPlanList();},
+
+_getPlanList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.myplan,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(result.length>0?result:''),
+loaded:true,
+showWarning:result.length>0?false:true});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
+
+
+_renderListItem:function(rowData){
+
+
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.recordRow},
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:12}},
+rowData.planName,
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:10}},'(',
+rowData.exDate,')'))),
+
+
+
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-end'}]},
+_react2.default.createElement(_reactNative.Text,{style:[styles.recordText,rowData.money>0?styles.red:'']},
+
+rowData.money>0?
+
+'+':
+
+'',
+
+rowData.money))));},
+
+
+
+
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_react2.default.createElement(_reactNative.Image,{style:styles.loading,source:require('image!loading')}):
+
+null,
+
+
+this.state.showWarning?
+
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'您还没有方案记录')):
+
+
+
+
+null,
+
+_react2.default.createElement(_reactNative.ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem})));}});
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#f4f4f4',
+marginBottom:-20},
+
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:_reactNative.Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+recordCell:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordText:{
+fontSize:12,
+fontWeight:'100',
+textAlign:'center',
+margin:10},
+
+red:{
+color:'red'}});
+});
+__d('somira/App/Component/User/Bill/Withdraw.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false,
+showWarning:false};},
+
+
+componentDidMount:function(){
+this._getRecordList();},
+
+_getRecordList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.mywithdraw,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(result.length>0?result:''),
+loaded:true,
+showWarning:result.length>0?false:true});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
+
+
+_renderListItem:function(rowData){
+
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.recordRow},
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:12}},
+rowData.withdraw_date,
+_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:10},rowData.withdraw_status===2?styles.red:'']},'(',
+rowData.withdraw_status===0?'审核中':rowData.withdraw_status===1?'成功':'失败',')'))),
+
+
+
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-end'}]},
+_react2.default.createElement(_reactNative.Text,{style:styles.recordText},
+rowData.withdraw_money))));},
+
+
+
+
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_react2.default.createElement(_reactNative.Image,{style:styles.loading,source:require('image!loading')}):
+
+null,
+
+
+this.state.showWarning?
+
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'您还没有提现记录')):
+
+
+
+
+null,
+
+_react2.default.createElement(_reactNative.ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem})));}});
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#f4f4f4',
+marginBottom:-20},
+
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:_reactNative.Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+recordCell:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordText:{
+fontSize:12,
+fontWeight:'100',
+textAlign:'center',
+margin:10},
+
+red:{
+color:'red'}});
+});
+__d('somira/App/Component/User/Bill/Reward.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false,
+showWarning:false};},
+
+
+componentDidMount:function(){
+this._getRecordList();},
+
+_getRecordList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.myreward,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(result.length>0?result:''),
+loaded:true,
+showWarning:result.length>0?false:true});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
+
+
+_renderListItem:function(rowData){
+
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.recordRow},
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:12}},
+rowData.rewarded_date,
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:10}},'[',
+rowData.plan_name,']'))),
+
+
+
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-end'}]},
+_react2.default.createElement(_reactNative.Text,{style:styles.recordText},
+rowData.rewarded_amount))));},
+
+
+
+
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_react2.default.createElement(_reactNative.Image,{style:styles.loading,source:require('image!loading')}):
+
+null,
+
+
+this.state.showWarning?
+
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'您还没有打赏记录,赶快去打赏吧!')):
+
+
+
+
+null,
+
+_react2.default.createElement(_reactNative.ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem})));}});
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#f4f4f4',
+marginBottom:-20},
+
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:_reactNative.Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+recordCell:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordText:{
+fontSize:12,
+fontWeight:'100',
+textAlign:'center',
+margin:10},
+
+red:{
+color:'red'}});
+});
+__d('somira/App/Component/User/Bill/Recharge.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false,
+showWarning:false};},
+
+
+componentDidMount:function(){
+this._getRecordList();},
+
+_getRecordList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.myrecharge,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(result.length>0?result:''),
+loaded:true,
+showWarning:result.length>0?false:true});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
+
+
+_renderListItem:function(rowData){
+
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.recordRow},
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:12}},
+rowData.recharge_date,
+_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:10},rowData.recharge_flag==='0'?styles.red:'']},'(',
+rowData.recharge_flag==='0'?'失败':'成功',')'))),
+
+
+
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-end'}]},
+_react2.default.createElement(_reactNative.Text,{style:styles.recordText},
+rowData.recharge_money))));},
+
+
+
+
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_react2.default.createElement(_reactNative.Image,{style:styles.loading,source:require('image!loading')}):
+
+null,
+
+
+this.state.showWarning?
+
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'您还没有充值记录')):
+
+
+
+
+null,
+
+_react2.default.createElement(_reactNative.ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem})));}});
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#f4f4f4',
+marginBottom:-20},
+
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:_reactNative.Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+recordCell:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordText:{
+fontSize:12,
+fontWeight:'100',
+textAlign:'center',
+margin:10},
+
+red:{
+color:'red'}});
+});
+__d('somira/App/Component/User/Order/Order.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _List=require('somira/App/Component/User/Order/List.js');var _List2=babelHelpers.interopRequireDefault(_List);var _ItemDetail=require('somira/App/Component/HappyPurchase/ItemDetail.js');var _ItemDetail2=babelHelpers.interopRequireDefault(_ItemDetail);var _PlanDetail=require('somira/App/Component/Plan/PlanDetail.js');var _PlanDetail2=babelHelpers.interopRequireDefault(_PlanDetail);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Tabs=require('somira/App/Common/Tabs.js');var _Tabs2=babelHelpers.interopRequireDefault(_Tabs);var 
+
+
+
+
+
+
+
+
+AppRegistry=_reactNative2.default.AppRegistry;var 
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Text=_reactNative2.default.Text;var 
+View=_reactNative2.default.View;var 
+ScrollView=_reactNative2.default.ScrollView;var 
+TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
+Alert=_reactNative2.default.Alert;var 
+Platform=_reactNative2.default.Platform;
+
+
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+componentWillReceiveProps:function(){},
+
+getInitialState:function(){
+return {
+cateId:0};},
+
+
+render:function(){var _this=this;
+var cateId=this.state.cateId;
+var userType=1;
+var tabDataSource=[
+{code:0,name:'方案'},
+{code:1,name:'一元夺宝',link:'',icon:''}];
+
+return (
+_reactNative2.default.createElement(View,{style:[css.flex,{marginTop:62}]},
+
+
+userType===1?
+
+_reactNative2.default.createElement(_Tabs2.default,{
+initData:{tabDataSource:tabDataSource},
+updateCateItem:
+function(cateId){return _this.setState({cateId:cateId});}}):
+
+
+_reactNative2.default.createElement(View,null),
+
+
+
+_reactNative2.default.createElement(_List2.default,{cateId:cateId,onSelect:function(item){return _this.selectItem(item);}})));},
+
+
+
+
+
+selectItem:function(item){var _this2=this;
+this.props.navigator.push({
+title:item.pid?'方案详情':'商品详情',
+component:item.pid?_PlanDetail2.default:_ItemDetail2.default,
+leftButtonTitle:'返回',
+navigationBarHidden:false,
+onLeftButtonPress:function(){return _this2.props.navigator.pop();},
+passProps:{
+item:item,
+planId:item.pid}});}});
+
+
+
+
+
+var css=StyleSheet.create({
+flex:{
+flex:1}});
+});
+__d('somira/App/Component/User/Order/List.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var 
+
+
+StyleSheet=_reactNative2.default.StyleSheet;var 
+ListView=_reactNative2.default.ListView;var 
+Text=_reactNative2.default.Text;var 
+Image=_reactNative2.default.Image;var 
+View=_reactNative2.default.View;var 
+Platform=_reactNative2.default.Platform;var 
+TouchableOpacity=_reactNative2.default.TouchableOpacity;
+
+
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+
+getInitialState:function(){
+return {
+dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false,
+cateId:0,
+totalPrice:0};},
+
+
+
+componentDidMount:function(){
+this.fetchData(this.props.cateId);},
+
+
+
+componentWillReceiveProps:function(nextProps){
+
+this.setState({
+loaded:false,
+cateId:nextProps.cateId});
+
+
+this.fetchData(nextProps.cateId);},
+
+
+fetchData:function(cateId){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+
+if(cateId===0){
+_Util2.default.post(net.planApi.queryCart,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+
+var tempPrice=0;
+result.map(function(p,key){
+tempPrice+=p.amount*p.planAmount;});
+
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(code===1?result:''),
+totalPrice:tempPrice,
+loaded:true});});}else 
+
+
+
+if(cateId===1){
+
+_Util2.default.get(net.hpApi.redisCart,token,
+function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var info=_ref2.info;
+
+var tempPrice=0;
+info.map(function(h,key){
+tempPrice+=h.amount;});
+
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(code===1?info:''),
+totalPrice:tempPrice,
+loaded:true});},
+
+
+function(e){
+console.error(e);});}}else 
+
+
+
+{
+_Util2.default.toast('您尚未登录');}});},
+
+
+
+
+renderListView:function(){
+
+if(!this.state.loaded){
+return (
+_reactNative2.default.createElement(Image,{style:css.loading,source:require('image!loading')}));}
+
+;
+return (
+_reactNative2.default.createElement(View,{style:css.flex1},
+_reactNative2.default.createElement(ListView,{contentInset:{top:0,bottom:20},
+dataSource:this.state.dataSource,
+renderRow:this.renderRow,
+style:css.listView})));},
+
+
+
+
+renderRow:function(item){
+return (
+_reactNative2.default.createElement(TouchableOpacity,{onPress:this.props.onSelect.bind(this,item)},
+
+this.state.cateId===0?
+
+_reactNative2.default.createElement(View,{style:[css.row,css.container]},
+_reactNative2.default.createElement(View,{style:css.column},
+_reactNative2.default.createElement(Image,{style:[css.left10,css.bottom10,css.right4,{width:42,height:48}],
+source:{uri:item.expertHead}}),
+_reactNative2.default.createElement(Text,{style:[css.fontWeightBold,css.fontSize14,{alignSelf:'center',marginTop:-6}],
+numberOfLines:1},
+item.expertName)),
+
+
+_reactNative2.default.createElement(View,{style:css.flex1},
+_reactNative2.default.createElement(View,{style:[css.row,css.left10,css.right15,css.bottom4]},
+_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize14]},
+item.planName),
+
+_reactNative2.default.createElement(Text,{style:[css.fontWeight2,css.fontSize12,css.flex1,css.textRight]},
+item.addTime)),
+
+
+_reactNative2.default.createElement(View,{style:[css.row,css.left10,css.right15,css.bottom4,css.top4]},
+_reactNative2.default.createElement(View,{style:css.row},
+_reactNative2.default.createElement(Image,{style:[css.right4,{width:12,height:12}],
+source:require('image!方案详情-收益区')}),
+_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize12]},
+item.rangeName)),
+
+
+_reactNative2.default.createElement(View,{style:[css.row,{right:-40}]},
+_reactNative2.default.createElement(Image,{style:[css.right4,{width:10,height:14}],
+source:require('image!单价')}),
+_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize12,css.flex1]},
+item.planAmount,'元'))))):
+
+
+
+
+
+
+_reactNative2.default.createElement(View,{style:[css.row,css.container]},
+_reactNative2.default.createElement(Image,{style:[css.bottom10,css.right4,{width:60,height:60}],
+source:{uri:item.images?item.images.split(',')[0]:''}}),
+_reactNative2.default.createElement(View,{style:css.flex1},
+_reactNative2.default.createElement(Text,{style:[css.fontWeightBold,{fontSize:14}],numberOfLines:1},
+item.name),
+
+_reactNative2.default.createElement(Text,{style:[css.fontWeight,{fontSize:9,marginTop:2,marginBottom:2}],numberOfLines:1},
+item.content),
+
+_reactNative2.default.createElement(View,{style:[css.row,css.top4]},
+_reactNative2.default.createElement(Text,{style:[css.fontWeightBold,css.fontSize12]},'需:',
+
+_reactNative2.default.createElement(Text,{style:css.red},
+item.amount),'元'),
+
+
+
+_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize12,css.flex1,css.textCenter]},'总价:',
+item.totalCount,'元'))))));},
+
+
+
+
+
+
+
+
+render:function(){
+return (
+this.renderListView());}});
+
+
+
+
+
+
+var css=StyleSheet.create({
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+flex1:{
+flex:1},
+
+listView:{
+backgroundColor:'#eeeeee'},
+
+container:{
+paddingTop:8,
+paddingBottom:4,
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+center:{
+alignSelf:'center',
+justifyContent:'center'},
+
+fontWeight:{
+fontWeight:'100'},
+
+fontWeightBold:{
+fontWeight:'400'},
+
+fontSize14:{
+fontSize:14},
+
+fontSize12:{
+fontSize:12},
+
+textRight:{
+textAlign:'right'},
+
+textCenter:{
+textAlign:'center'},
+
+red:{
+color:'red'},
+
+column:{
+flexDirection:'column'},
+
+row:{
+flexDirection:'row'},
+
+left10:{
+marginLeft:10},
+
+right15:{
+marginRight:15},
+
+right4:{
+marginRight:4},
+
+bottom4:{
+marginBottom:4},
+
+bottom10:{
+marginBottom:10},
+
+top4:{
+marginTop:4}});
+});
+__d('image!方案详情-收益区',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-收益区.imageset/方案详情-收益区.png","uri":"方案详情-收益区","width":26,"height":30,"deprecated":true};
+});
+__d('image!单价',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/单价.imageset/单价.png","uri":"单价","width":26,"height":36,"deprecated":true};
+});
+__d('somira/App/Component/User/Commission.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+loaded:false,
+showWarning:false,
+withDrawLength:0,
+withDrawMoney:0};},
+
+
+componentDidMount:function(){
+this._getRecordList();},
+
+_getRecordList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.commission,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+var tempLength=0;
+var tempMoney=0;
+result.map(function(v,k){
+if(v.status===0){
+
+tempLength+=1;
+tempMoney+=v.total_fee;}});
+
+
+_this.setState({
+dataSource:_this.state.dataSource.cloneWithRows(result.length>0?result:''),
+loaded:true,
+showWarning:result.length>0?false:true,
+withDrawLength:tempLength,
+withDrawMoney:tempMoney});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
+
+
+_renderListItem:function(rowData){
+
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.recordRow},
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:12},rowData.status===0?styles.red:styles.gray]},
+rowData.from_user_phone,
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:10}},'(',
+rowData.status===0?'可提现':rowData.status===1?'已提现':'',')')),
+
+
+_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:10},rowData.status===0?styles.red:styles.gray]},'用户所属:',
+rowData.oneLevelPhone===''?'':'上级'+rowData.oneLevelPhone,
+rowData.oneLevelPhone===''?'直属上级':'')),
+
+
+_react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-end'}]},
+_react2.default.createElement(_reactNative.Text,{style:[styles.recordText,rowData.status===0?styles.red:styles.gray]},
+rowData.total_fee))));},
+
+
+
+
+
+doWithDraw:function(){
+console.log('进行提现。。。');},
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_react2.default.createElement(_reactNative.Image,{style:styles.loading,source:require('image!loading')}):
+
+null,
+
+
+this.state.showWarning?
+
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'您还没有返佣')):
+
+
+
+
+null,
+
+_react2.default.createElement(_reactNative.ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem}),
+
+this.state.withDrawLength>0?
+
+_react2.default.createElement(_reactNative.View,{style:[styles.bottomArea]},
+_react2.default.createElement(_reactNative.View,{style:styles.flex1},
+_react2.default.createElement(_reactNative.Text,{style:[styles.bottomText,
+this.state.cateId===0?
+
+{color:'red'}:
+
+{color:'#000000'}]},'共 ',
+
+this.state.withDrawLength,' 条可提现, 总额 ',
+this.state.withDrawMoney)),
+
+
+_react2.default.createElement(_reactNative.View,{style:([styles.flex1],{width:68})},
+_react2.default.createElement(_reactNativeButton2.default,{onPress:this.doWithDraw,
+style:[styles.bottomBtn,{backgroundColor:'#4cd964'}]},'提现'))):
+
+
+
+
+
+null));}});
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#f4f4f4',
+marginBottom:-20},
+
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:_reactNative.Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+recordCell:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordText:{
+fontSize:18,
+fontWeight:'500',
+textAlign:'center',
+margin:10},
+
+red:{
+color:'#FF4500'},
+
+gray:{
+color:'#DCDCDC'},
+
+priceBtn:{
+height:38,
+width:38},
+
+bottomArea:{
+flexDirection:'row',
+marginTop:-16,
+marginBottom:20,
+height:48,
+overflow:'hidden',
+backgroundColor:'#FFFFF0'},
+
+bottomText:{
+alignSelf:'flex-start',
+height:36,
+lineHeight:32,
+marginLeft:10},
+
+bottomBtn:{
+color:'#FFFFFF',
+alignSelf:'flex-end',
+margin:4,
+marginRight:10,
+width:68,
+height:42,
+lineHeight:32,
+overflow:'hidden',
+borderWidth:1,
+borderRadius:10,
+borderColor:'#FFFFFF'},
+
+flex1:{
+flex:1}});
+});
+__d('somira/App/Component/User/Team.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeAnimatable=require('react-native-animatable/index.js');var 
+
+
+
+
+
+
+
+
+
+
+
+
+Animatable=babelHelpers.interopRequireWildcard(_reactNativeAnimatable);var _Accordion=require('react-native-collapsible/Accordion.js');var _Accordion2=babelHelpers.interopRequireDefault(_Accordion);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var StyleSheet=_reactNative2.default.StyleSheet;var Text=_reactNative2.default.Text;var Image=_reactNative2.default.Image;var View=_reactNative2.default.View;
+
+var Entity=_reactNative2.default.createClass({displayName:'Entity',
+render:function(){
+return (
+_reactNative2.default.createElement(View,{style:css.recordRow},
+_reactNative2.default.createElement(View,{style:[css.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_reactNative2.default.createElement(View,{style:css.newRow},
+_reactNative2.default.createElement(Image,{style:[{marginTop:-2},this.props.iconClass],
+source:{uri:this.props.nameIcon}}),
+_reactNative2.default.createElement(Text,{style:[{marginLeft:6},this.props.fontClass]},
+this.props.name))),
+
+
+
+_reactNative2.default.createElement(View,{style:[css.recordCellFixed,{alignItems:'center',marginLeft:-10}]},
+_reactNative2.default.createElement(View,{style:css.newRow},
+_reactNative2.default.createElement(Image,{style:{width:24,height:12,marginTop:-2},
+source:{uri:'人数icon'}}),
+_reactNative2.default.createElement(Text,{style:[{marginLeft:6},this.props.fontClass]},
+this.props.people))),
+
+
+
+_reactNative2.default.createElement(View,{style:[css.recordCellFixed,{alignItems:'flex-end',marginRight:10}]},
+_reactNative2.default.createElement(View,{style:css.newRow},
+_reactNative2.default.createElement(Image,{style:{width:18,height:19,marginTop:-2},
+source:{uri:'销量icon'}}),
+_reactNative2.default.createElement(Text,{style:[{marginLeft:6},this.props.fontClass]},'¥ ',
+this.props.money),
+
+
+this.props.rightArrow?
+
+_reactNative2.default.createElement(Image,{style:[css.iconSize],
+source:require('image!arrow_right_grey')}):
+
+null))));}});
+
+
+
+
+
+
+
+
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+
+
+
+getInitialState:function(){
+return {
+oneLevelNum:0,
+twoLevelNum:0,
+threeLevelNum:0,
+oneLevelUsers:[],
+oneLevelFlow:0,
+twoLevelFlow:0,
+threeLevelFlow:0};},
+
+
+componentDidMount:function(){
+this.fetchData();},
+
+fetchData:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.team,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+oneLevelNum:result.oneLevelNum,
+twoLevelNum:result.twoLevelNum,
+threeLevelNum:result.threeLevelNum,
+oneLevelUsers:result.oneLevelUsers,
+oneLevelFlow:result.oneLevelFlow,
+twoLevelFlow:result.twoLevelFlow,
+threeLevelFlow:result.threeLevelFlow});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
+
+
+render:function(){
+return (
+_reactNative2.default.createElement(View,{style:css.flex},
+_reactNative2.default.createElement(_Accordion2.default,{
+sections:[{
+title:'',
+content:''}],
+
+renderHeader:this._renderHeader,
+renderContent:this._renderContent,
+duration:400}),
+
+
+_reactNative2.default.createElement(Entity,{
+fontClass:{fontWeight:'100',fontSize:12},
+iconClass:{width:27,height:21},
+name:'二级用户',nameIcon:'二级用户',
+people:this.state.twoLevelNum>0?this.state.twoLevelNum:0,
+money:this.state.twoLevelFlow>0?this.state.twoLevelFlow:0}),
+
+_reactNative2.default.createElement(Entity,{
+fontClass:{fontWeight:'100',fontSize:12},
+iconClass:{width:27,height:19},
+name:'三级用户',nameIcon:'三级用户',
+people:this.state.threeLevelNum>0?this.state.threeLevelNum:0,
+money:this.state.threeLevelFlow>0?this.state.threeLevelFlow:0}),
+
+_reactNative2.default.createElement(View,{style:{alignItems:'center',justifyContent:'center'}},
+_reactNative2.default.createElement(Image,{style:css.warnning,source:require('image!团队温馨提示')}))));},
+
+
+
+
+_renderHeader:function(section,i,isActive){
+return (
+_reactNative2.default.createElement(Animatable.View,{duration:400,
+style:[isActive?css.active:css.inactive],transition:'backgroundColor'},
+_reactNative2.default.createElement(Entity,{
+rightArrow:true,
+fontClass:{fontWeight:'100',fontSize:12},
+iconClass:{width:27,height:21},
+name:'一级用户',nameIcon:'一级用户',
+people:this.state.oneLevelNum>0?this.state.oneLevelNum:0,
+money:this.state.oneLevelFlow>0?this.state.oneLevelFlow:0})));},
+
+
+
+_renderContent:function(section,i,isActive){
+return (
+_reactNative2.default.createElement(Animatable.View,{duration:400,
+style:[isActive?css.active:css.inactive],transition:'backgroundColor'},
+
+this.state.oneLevelUsers.map(function(u,k){
+return (
+_reactNative2.default.createElement(Entity,{key:k,
+fontClass:{fontWeight:'100',fontSize:10},
+iconClass:{width:21,height:20,marginLeft:10},
+name:u.user_phone,nameIcon:'用户icon',
+people:u.oneLevelNum>0?u.oneLevelNum:0,
+money:u.oneLevelFlow>0?u.oneLevelFlow:0}));})));}});
+
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+flex:{
+flex:1,
+marginTop:64,
+backgroundColor:'#e7e7e7'},
+
+borderBottom:{
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+contentText:{
+fontSize:12,
+fontWeight:'100',
+textShadowOffset:{width:2,height:2},
+textShadowRadius:1,
+textShadowColor:'#FFE4B5'},
+
+active:{
+backgroundColor:'rgba(245,252,255,1)'},
+
+inactive:{
+backgroundColor:'rgba(255,255,255,1)'},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+newRow:{
+flexDirection:'row',
+alignItems:'center',
+justifyContent:'center'},
+
+recordCell:{
+flex:1,
+height:48,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:48,
+justifyContent:'center'},
+
+recordText:{
+fontSize:12,
+fontWeight:'100',
+textAlign:'center',
+margin:10},
+
+warnning:{
+width:_Util2.default.size['width']-20,
+backgroundColor:'transparent',
+resizeMode:Image.resizeMode.contain},
+
+iconSize:{
+marginRight:-10,
+height:20,
+width:20,
+resizeMode:Image.resizeMode.contain}});
+});
+__d('image!团队温馨提示',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/团队温馨提示.imageset/团队温馨提示.png","uri":"团队温馨提示","width":929,"height":110,"deprecated":true};
+});
+__d('somira/App/Component/User/QRCode.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+
+
+AppRegistry=_reactNative2.default.AppRegistry;var 
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Text=_reactNative2.default.Text;var 
+View=_reactNative2.default.View;var 
+PropTypes=_reactNative2.default.PropTypes;
+
+
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+
+
+
+getInitialState:function(){
+return {
+on:this.props.on,
+name:this.props.name};},
+
+
+
+
+
+render:function(){
+return (
+_reactNative2.default.createElement(View,{style:css.container},
+_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 二维码!'),
+
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
+__d('somira/App/Component/User/ChangePwd.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+
+
+AppRegistry=_reactNative2.default.AppRegistry;var 
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Text=_reactNative2.default.Text;var 
+View=_reactNative2.default.View;var 
+PropTypes=_reactNative2.default.PropTypes;
+
+
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+
+
+
+getInitialState:function(){
+return {
+on:this.props.on,
+name:this.props.name};},
+
+
+
+
+
+render:function(){
+return (
+_reactNative2.default.createElement(View,{style:css.container},
+_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 修改密码!'),
+
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
+__d('somira/App/Component/User/About.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+
+
+AppRegistry=_reactNative2.default.AppRegistry;var 
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Text=_reactNative2.default.Text;var 
+View=_reactNative2.default.View;var 
+PropTypes=_reactNative2.default.PropTypes;
+
+
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+
+
+
+getInitialState:function(){
+return {
+on:this.props.on,
+name:this.props.name};},
+
+
+
+
+
+render:function(){
+return (
+_reactNative2.default.createElement(View,{style:css.container},
+_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 最新揭晓!'),
+
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
+'\n','Cmd+D or shake for dev menu2')));}});
+
+
+
+
+
+
+
+var css=StyleSheet.create({
+container:{
+flex:1,
+justifyContent:'center',
+alignItems:'center',
+backgroundColor:'#F5FCFF'},
+
+welcome:{
+fontSize:20,
+textAlign:'center',
+margin:10},
+
+instructions:{
+textAlign:'center',
+color:'#333333',
+marginBottom:5}});
+});
 __d('image!消息按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/消息按钮.imageset/消息按钮.png","uri":"消息按钮","width":48,"height":36,"deprecated":true};
 });
 __d('image!设置按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/设置按钮.imageset/设置按钮.png","uri":"设置按钮","width":48,"height":48,"deprecated":true};
@@ -65763,8 +67386,6 @@ __d('image!设置按钮',function(global, require, module, exports) {  module.ex
 __d('image!我的本金',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/我的本金.imageset/我的本金.png","uri":"我的本金","width":44,"height":48,"deprecated":true};
 });
 __d('image!我的盈利',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/我的盈利.imageset/我的盈利.png","uri":"我的盈利","width":45,"height":48,"deprecated":true};
-});
-__d('image!方案详情-收益区',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-收益区.imageset/方案详情-收益区.png","uri":"方案详情-收益区","width":26,"height":30,"deprecated":true};
 });
 __d('image!方案详情-限购',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-限购.imageset/方案详情-限购.png","uri":"方案详情-限购","width":32,"height":33,"deprecated":true};
 });
@@ -65788,8 +67409,7 @@ Platform=_reactNative2.default.Platform;
 
 
 module.exports=_reactNative2.default.createClass({displayName:'exports',
-componentWillReceiveProps:function(){
-console.log(4);},
+componentWillReceiveProps:function(){},
 
 getInitialState:function(){
 return {
@@ -65942,21 +67562,102 @@ _Util2.default.toast('您尚未登录');}});},
 
 
 
-payCart:function(){
-console.log(this.state.cateId);},
+payCart:function(){var _this2=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+
+
+
+if(_this2.state.cateId===0){(function(){
+
+
+
+_this2.fetchData(0);
+
+var spcarlist=[];
+_this2.state.dataSource._dataBlob.s1.map(function(p,key){
+spcarlist.push({
+'multipy':p.amount,
+'name':p.expertName,
+'pid':p.pid,
+'sum':p.amount*p.planAmount});});
+
+
+
+var postBody={
+'planbinfo':{
+'totalmoney':_this2.state.totalPrice,
+'spcarlist':spcarlist}};
+
+
+
+_Util2.default.post(net.planApi.cartPay,token,postBody,
+function(_ref3){var code=_ref3.code;var msg=_ref3.msg;var result=_ref3.result;
+if(code===1){
+_Util2.default.toast('购买成功!');
+
+_this2.fetchData(0);}else 
+
+if(code===2){
+
+_Util2.default.toast(msg);}else 
+
+if(code===0){
+var errObj=result[0];
+var errorTips=errObj.expert_name?'专家['+errObj.expert_name+'],':''+errObj.msg;
+_Util2.default.toast(errorTips);}});})();}else 
+
+
+
+if(_this2.state.cateId===1){(function(){
+
+_this2.fetchData(1);
+
+var spcarlist=[];
+_this2.state.dataSource._dataBlob.s1.map(function(h,key){
+spcarlist.push({
+'name':h.name,
+'number':h.number,
+'payCount':h.amount,
+'projectId':h.id,
+'recharge_money':h.amount});});
+
+
+
+var postBody={
+'spcarInfos':{
+'totalmoney':_this2.state.totalPrice,
+'spcarlist':spcarlist}};
+
+
+
+_Util2.default.post(net.hpApi.cartPay,token,postBody,
+function(_ref4){var code=_ref4.code;var msg=_ref4.msg;
+if(code===1){
+_Util2.default.toast('购买成功!');
+
+_this2.fetchData(1);}else 
+
+{
+_Util2.default.toast(msg);}});})();}}});},
 
 
 
 
-delCartHP:function(id,number){var _this2=this;
+
+
+
+
+
+delCartHP:function(id,number){var _this3=this;
 _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 var url=net.hpApi.redisCart+'/'+id+'_'+number;
 _Util2.default.delete(url,token,{},
-function(_ref3){var code=_ref3.code;var msg=_ref3.msg;
+function(_ref5){var code=_ref5.code;var msg=_ref5.msg;
 if(code===1){
 
-_this2.fetchData(1);
+_this3.fetchData(1);
 
 _RCTDeviceEventEmitter2.default.emit('loadCartCount');}else 
 
@@ -65977,17 +67678,17 @@ if(parseFloat(plan.amount)-1>=1){
 this.changeAmountPlan(plan,parseFloat(plan.amount)-1);}},
 
 
-changeAmountPlan:function(plan,amount){var _this3=this;
+changeAmountPlan:function(plan,amount){var _this4=this;
 _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 _Util2.default.post(net.planApi.upCart,token,{
 'pid':plan.pid,
 'amt':amount},
 
-function(_ref4){var code=_ref4.code;var msg=_ref4.msg;var result=_ref4.result;
+function(_ref6){var code=_ref6.code;var msg=_ref6.msg;var result=_ref6.result;
 if(code===1){
 
-_this3.fetchData(0);}else 
+_this4.fetchData(0);}else 
 
 {
 _Util2.default.toast(msg);}});}});},
@@ -65999,7 +67700,7 @@ _Util2.default.toast(msg);}});}});},
 
 
 
-delCartPlan:function(id){var _this4=this;
+delCartPlan:function(id){var _this5=this;
 
 
 var deleteBody={
@@ -66008,10 +67709,10 @@ var deleteBody={
 _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 _Util2.default.delete(net.planApi.delCart,token,deleteBody,
-function(_ref5){var code=_ref5.code;var msg=_ref5.msg;
+function(_ref7){var code=_ref7.code;var msg=_ref7.msg;
 if(code===1){
 
-_this4.fetchData(0);
+_this5.fetchData(0);
 
 _RCTDeviceEventEmitter2.default.emit('loadCartCount');}else 
 
@@ -66033,17 +67734,17 @@ if(item.amount-item.price>=item.price){
 this.changeAmountHP(item,item.amount-item.price);}},
 
 
-changeAmountHP:function(item,amount){var _this5=this;
+changeAmountHP:function(item,amount){var _this6=this;
 _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 _Util2.default.put(net.hpApi.redisCart+'/'+item.id,token,{
 'number':item.number,
 'amount':amount},
 
-function(_ref6){var code=_ref6.code;var msg=_ref6.msg;
+function(_ref8){var code=_ref8.code;var msg=_ref8.msg;
 if(code===1){
 
-_this5.fetchData(1);}else 
+_this6.fetchData(1);}else 
 
 {
 _Util2.default.toast(msg);}});}});},
@@ -66103,7 +67804,7 @@ null));},
 
 
 
-renderRow:function(item){var _this6=this;
+renderRow:function(item){var _this7=this;
 return (
 _reactNative2.default.createElement(TouchableOpacity,{onPress:this.props.onSelect.bind(this,item)},
 
@@ -66129,11 +67830,11 @@ item.addTime)),
 
 _reactNative2.default.createElement(View,{style:[css.row,css.left10,css.right15,css.bottom4]},
 _reactNative2.default.createElement(View,{style:[css.row,css.center2]},
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this6.reducePlan(item);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this7.reducePlan(item);}},
 _reactNative2.default.createElement(Image,{style:css.priceBtn,source:require('image!ic_goods_reduce')})),
 
 _reactNative2.default.createElement(Text,{style:css.priceText},item.amount),
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this6.augmentPlan(item);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this7.augmentPlan(item);}},
 _reactNative2.default.createElement(Image,{style:css.priceBtn,source:require('image!ic_goods_add')}))),
 
 
@@ -66161,7 +67862,7 @@ item.planAmount,'元')))),
 
 
 
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this6.delCartPlan(item.pid);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this7.delCartPlan(item.pid);}},
 _reactNative2.default.createElement(Image,{style:css.delBtn,source:require('image!删除')}))):
 
 
@@ -66177,11 +67878,11 @@ _reactNative2.default.createElement(Text,{style:[css.fontWeight,{fontSize:9,marg
 item.content),
 
 _reactNative2.default.createElement(View,{style:[css.row,css.top4]},
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this6.reduceHP(item);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this7.reduceHP(item);}},
 _reactNative2.default.createElement(Image,{style:css.priceBtn,source:require('image!ic_goods_reduce')})),
 
 _reactNative2.default.createElement(Text,{style:[css.center,css.priceText]},item.amount),
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this6.augmentHP(item);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this7.augmentHP(item);}},
 _reactNative2.default.createElement(Image,{style:css.priceBtn,source:require('image!ic_goods_add')}))),
 
 
@@ -66198,7 +67899,7 @@ item.totalCount,'元'))),
 
 
 
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this6.delCartHP(item.id,item.number);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this7.delCartHP(item.id,item.number);}},
 _reactNative2.default.createElement(Image,{style:css.delBtn,source:require('image!删除')})))));},
 
 
@@ -66315,30 +68016,28 @@ payArea:{
 flexDirection:'row',
 marginTop:-16,
 marginBottom:50,
-height:40,
+height:48,
 overflow:'hidden',
 backgroundColor:'#FFFFF0'},
 
 payText:{
 alignSelf:'flex-start',
 height:36,
-lineHeight:30,
+lineHeight:32,
 marginLeft:10},
 
 payBtn:{
 color:'#FFFFFF',
 alignSelf:'flex-end',
-margin:2,
+margin:4,
 marginRight:10,
 width:68,
-height:36,
-lineHeight:30,
+height:42,
+lineHeight:32,
 overflow:'hidden',
 borderWidth:1,
 borderRadius:10,
 borderColor:'#FFFFFF'}});
-});
-__d('image!单价',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/单价.imageset/单价.png","uri":"单价","width":26,"height":36,"deprecated":true};
 });
 __d('image!删除',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/删除.imageset/删除.png","uri":"删除","width":48,"height":48,"deprecated":true};
 });
