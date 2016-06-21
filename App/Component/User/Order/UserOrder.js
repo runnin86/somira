@@ -1,6 +1,6 @@
 import React from 'react-native';
 
-import ItemList from './OrderList';
+import OrderList from './OrderList';
 import ItemDetail from '../../../Component/HappyPurchase/ItemDetail';
 import PlanDetail from '../../../Component/Plan/PlanDetail';
 import Util from '../../../Common/Util';
@@ -48,7 +48,7 @@ module.exports = React.createClass({
         }
 
         {/*列表*/}
-        <ItemList cateId={cateId} onSelect={(item)=>this.selectItem(item)}/>
+        <OrderList cateId={cateId} onSelect={(item)=>this.selectItem(item)}/>
 
       </View>
     );
