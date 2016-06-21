@@ -28,7 +28,6 @@ module.exports = React.createClass({
   render: function() {
     var cateId = this.state.cateId;
     var userType = 1;
-    // var tabLink = 'http://list.tmall.com/search_product.htm?abbucket=&acm=lb-tms-1261802-40482.1003.8.316504&aldid=316504&q=%CA%D6%BB%FA&spm=a220m.1000858.a2227oh.d100&from=.list.pc_1_searchbutton&abtest=&type=p&scm=1003.8.lb-tms-1261802-40482.ITEM_1436707130731_316504&pos=1';
     var tabDataSource = [
       {code: 0, name: '方案'},
       {code: 1, name: '一元夺宝', link: '', icon: ''}
@@ -48,7 +47,7 @@ module.exports = React.createClass({
           <View></View>
         }
 
-        {/*购物车列表*/}
+        {/*列表*/}
         <ItemList cateId={cateId} onSelect={(item)=>this.selectItem(item)}/>
 
       </View>
@@ -56,21 +55,17 @@ module.exports = React.createClass({
   },
   //选中一行
 	selectItem:function(item){
-		if (Platform.OS === 'ios') {
-      this.props.navigator.push({
-        title: item.pid ? '方案详情' : '商品详情',
-        component: item.pid ? PlanDetail : ItemDetail,
-        leftButtonTitle: '返回',
-        navigationBarHidden:false,
-        onLeftButtonPress: () => this.props.navigator.pop(),
-        passProps: {
-          item: item,
-          planId: item.pid,
-        }
-      });
-		}else{
-			//android对应的处理
-		}
+    this.props.navigator.push({
+      title: item.pid ? '方案详情' : '商品详情',
+      component: item.pid ? PlanDetail : ItemDetail,
+      leftButtonTitle: '返回',
+      navigationBarHidden:false,
+      onLeftButtonPress: () => this.props.navigator.pop(),
+      passProps: {
+        item: item,
+        planId: item.pid,
+      }
+    });
 	},
 });
 

@@ -8,6 +8,7 @@ import Button from 'react-native-button';
 import Store from 'react-native-simple-store';
 import * as net from './../../Network/Interface';
 import UserBill from '../../Component/User/UserBill';
+import UserOrder from '../../Component/User/UserOrder';
 
 var {
   AppRegistry,
@@ -237,7 +238,7 @@ module.exports = React.createClass({
           height='30'
           fontSize='12'
           icon='我的订单'
-          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+          onClick={()=>{this._addNavigator(UserOrder,"我的订单")}}/>
         <View style={[css.line]} />
 
         {
@@ -249,7 +250,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='我的打赏'
-              onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+              onClick={()=>{this._addNavigator(CouponManager,"我的返佣")}}/>
             <View style={[css.line]} />
 
             <MenuItem
@@ -257,7 +258,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='我的团队'
-              onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+              onClick={()=>{this._addNavigator(CouponManager,"我的团队")}}/>
           </View>
           :
           <View></View>
@@ -278,7 +279,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='二维码'
-              onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+              onClick={()=>{this._addNavigator(CouponManager,"我的二维码")}}/>
             <View style={[css.line]} />
           </View>
           :
@@ -290,14 +291,14 @@ module.exports = React.createClass({
           height='30'
           fontSize='12'
           icon='修改密码'
-          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+          onClick={()=>{this._addNavigator(CouponManager,"修改密码")}}/>
         <View style={[css.line]} />
         <MenuItem
           title='关于'
           height='30'
           fontSize='12'
           icon='关于'
-          onClick={function(){this._addNavigator(CouponManager,"红包")}}/>
+          onClick={()=>{this._addNavigator(CouponManager,"关于")}}/>
 
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
           <Image style={css.warnning} source={require('image!温馨提示')}/>
