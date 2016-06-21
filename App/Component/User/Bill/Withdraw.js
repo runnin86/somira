@@ -22,12 +22,12 @@ module.exports = React.createClass({
     };
   },
   componentDidMount: function() {
-    this._getPlanList();
+    this._getRecordList();
   },
-  _getPlanList:function(){
+  _getRecordList:function(){
     Store.get('token').then((token)=>{
       if (token) {
-        Util.post(net.userApi.myplan, token, {},
+        Util.post(net.userApi.mywithdraw, token, {},
         ({code, msg, result})=>{
           if (code === 1) {
             this.setState({
@@ -45,27 +45,19 @@ module.exports = React.createClass({
   },
   _renderListItem:function(rowData){
     // console.log(rowData);
-    // exType:2已开奖,3未开奖
     return (
       <View style={styles.recordRow}>
         <View style={[styles.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
           <Text style={{fontWeight : '100',fontSize : 12}}>
-            {rowData.planName}
-            <Text style={{fontWeight : '100',fontSize : 10}}>
-              ({rowData.exDate})
+            {rowData.withdraw_date}
+            <Text style={[{fontWeight : '100',fontSize : 10},rowData.withdraw_status===2?styles.red:'']}>
+              ({rowData.withdraw_status===0?'审核中':(rowData.withdraw_status===1?'成功':'失败')})
             </Text>
           </Text>
         </View>
         <View style={[styles.recordCellFixed,{alignItems:'flex-end'}]}>
-          <Text style={[styles.recordText,rowData.money > 0?styles.red:'']}>
-            {
-              rowData.money > 0
-              ?
-              '+'
-              :
-              ''
-            }
-            {rowData.money}
+          <Text style={styles.recordText}>
+            {rowData.withdraw_money}
           </Text>
         </View>
 			</View>
@@ -87,7 +79,7 @@ module.exports = React.createClass({
          <View style={{marginTop:80,alignItems:'center',justifyContent: 'center'}}>
            <Image style={styles.warnning} source={require('image!温馨提示')}/>
            <Text style={{height:20,fontSize: 10,fontWeight:'100', color: '#A9A9A9'}}>
-             您还没有方案记录可供查看
+             您还没有提现记录
            </Text>
          </View>
          :

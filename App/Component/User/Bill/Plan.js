@@ -87,7 +87,7 @@ module.exports = React.createClass({
          <View style={{marginTop:80,alignItems:'center',justifyContent: 'center'}}>
            <Image style={styles.warnning} source={require('image!温馨提示')}/>
            <Text style={{height:20,fontSize: 10,fontWeight:'100', color: '#A9A9A9'}}>
-             您还没有方案记录可供查看
+             您还没有方案记录
            </Text>
          </View>
          :
