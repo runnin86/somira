@@ -11,7 +11,7 @@ import UserBill from '../../Component/User/Bill/Bill';
 import UserOrder from '../../Component/User/Order/Order';
 import UserCommission from '../../Component/User/Commission';
 import UserTeam from '../../Component/User/Team';
-import QRCode from '../../Component/User/QRCode';
+import QR from '../../Component/User/QR';
 import ChangePwd from '../../Component/User/ChangePwd';
 import About from '../../Component/User/About';
 
@@ -290,7 +290,7 @@ module.exports = React.createClass({
               height='30'
               fontSize='12'
               icon='二维码'
-              onClick={()=>{this._addNavigator(QRCode,"我的二维码")}}/>
+              onClick={()=>{this._addNavigator(QR,"我的二维码")}}/>
             <View style={[css.line]} />
           </View>
           :
