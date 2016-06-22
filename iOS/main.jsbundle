@@ -59884,18 +59884,18 @@ paddingTop:6,
 paddingBottom:6},
 
 tipsText:{
-marginTop:8,
+marginTop:6,
 fontSize:12,
 fontWeight:'100'},
 
 tipsImg:{
-width:48,
-height:48,
-borderRadius:24},
+width:40,
+height:40,
+borderRadius:20},
 
 scrollMsg:{
 flexDirection:'row',
-height:40,
+height:36,
 backgroundColor:'#66CC66',
 borderTopColor:'#eeeeee',
 borderTopWidth:1},
@@ -60797,7 +60797,7 @@ console.error('加入购物车失败:'+msg);}});}else
 
 
 {
-_Util2.default.toast('您尚未登录');}});},
+_Util2.default.toast('您尚未登录!');}});},
 
 
 
@@ -62591,9 +62591,12 @@ _Util2.default.toast(msg);
 _this3.setState({showCartBtn:false});}else 
 
 {
-_Util2.default.toast(msg);}});}});},
+_Util2.default.toast(msg);}});}else 
 
 
+
+{
+_Util2.default.toast('您尚未登录!');}});},
 
 
 
@@ -63630,8 +63633,7 @@ Image=_reactNative2.default.Image;var
 ListView=_reactNative2.default.ListView;var 
 TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
 ScrollView=_reactNative2.default.ScrollView;var 
-Platform=_reactNative2.default.Platform;var 
-AlertIOS=_reactNative2.default.AlertIOS;
+Platform=_reactNative2.default.Platform;
 
 
 module.exports=_reactNative2.default.createClass({displayName:'exports',
@@ -63849,17 +63851,17 @@ paddingTop:6,
 paddingBottom:6},
 
 tipsText:{
-marginTop:8,
+marginTop:6,
 fontSize:12,
 fontWeight:'100'},
 
 tipsImg:{
-width:48,
-height:48,
-borderRadius:24},
+width:40,
+height:40,
+borderRadius:20},
 
 scrollMsg:{
-height:40,
+height:36,
 flexDirection:'row',
 backgroundColor:'#cb4a4a',
 borderTopColor:'#cb4a4a',
@@ -64030,7 +64032,7 @@ RCTToast.hide();};
 
 module.exports=Toast;
 });
-__d('somira/App/Component/Plan/RangeList.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _PlanList=require('somira/App/Component/Plan/PlanList.js');var _PlanList2=babelHelpers.interopRequireDefault(_PlanList);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _UserCenter=require('somira/App/Views/User/UserCenter.js');var _UserCenter2=babelHelpers.interopRequireDefault(_UserCenter);var _Interface=require('somira/App/Network/Interface.js');var 
+__d('somira/App/Component/Plan/RangeList.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _PlanList=require('somira/App/Component/Plan/PlanList.js');var _PlanList2=babelHelpers.interopRequireDefault(_PlanList);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _UserCenter=require('somira/App/Views/User/UserCenter.js');var _UserCenter2=babelHelpers.interopRequireDefault(_UserCenter);var _Interface=require('somira/App/Network/Interface.js');var 
 
 
 
@@ -64049,7 +64051,7 @@ __d('somira/App/Component/Plan/RangeList.js',function(global, require, module, e
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var View=_reactNative2.default.View;var StyleSheet=_reactNative2.default.StyleSheet;var Text=_reactNative2.default.Text;var Image=_reactNative2.default.Image;var Platform=_reactNative2.default.Platform;var ScrollView=_reactNative2.default.ScrollView;var AlertIOS=_reactNative2.default.AlertIOS;
+net=babelHelpers.interopRequireWildcard(_Interface);var View=_reactNative2.default.View;var StyleSheet=_reactNative2.default.StyleSheet;var Text=_reactNative2.default.Text;var Image=_reactNative2.default.Image;var Platform=_reactNative2.default.Platform;var ScrollView=_reactNative2.default.ScrollView;
 
 module.exports=_react2.default.createClass({displayName:'exports',
 getInitialState:function(){
@@ -64106,22 +64108,19 @@ loaded:true});})();}else
 
 
 if(code===0){
-AlertIOS.alert('提示消息',null,[
-{text:msg,onPress:function(){return console.log('Foo Pressed0!');}}]);}else 
-
+_Util2.default.toast(msg);}else 
 
 if(code===3){
-AlertIOS.alert('提示消息',null,[
-{text:msg,onPress:function(){
+_Util2.default.toast(msg);
 
 _reactNativeSimpleStore2.default.delete('user');
 _reactNativeSimpleStore2.default.delete('token');
 _this.props.navigator.push({
 component:_UserCenter2.default,
-navigationBarHidden:true});}}]);}},
+navigationBarHidden:true});
 
 
-
+_RCTDeviceEventEmitter2.default.emit('showPlanSwitch');}},
 
 
 function(e){
@@ -64240,7 +64239,7 @@ borderTopRightRadius:2.5,
 borderBottomColor:'#d6d7da',
 backgroundColor:'#f6f7f8',
 paddingHorizontal:10,
-paddingVertical:14},
+paddingVertical:10},
 
 rangeNameText:{
 fontSize:14,
@@ -64257,7 +64256,7 @@ flex:1},
 
 wrapper:{
 flex:1,
-paddingTop:2},
+paddingTop:-2},
 
 rangeName:{
 borderRadius:4,
@@ -64361,7 +64360,7 @@ _Util2.default.toast(msg);}});}else
 
 
 {
-_Util2.default.toast('您尚未登录');}});}else 
+_Util2.default.toast('您尚未登录!');}});}else 
 
 
 
@@ -65023,7 +65022,7 @@ tintColor:'#000000'}});
 });
 __d('image!时间',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/时间.imageset/时间.png","uri":"时间","width":24,"height":26,"deprecated":true};
 });
-__d('somira/App/Views/User/UserCenter.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Login=require('somira/App/Views/User/Login.js');var _Login2=babelHelpers.interopRequireDefault(_Login);var _Setting=require('somira/App/Views/User/Setting.js');var _Setting2=babelHelpers.interopRequireDefault(_Setting);var _MenuItem=require('somira/App/Common/MenuItem.js');var _MenuItem2=babelHelpers.interopRequireDefault(_MenuItem);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Interface=require('somira/App/Network/Interface.js');var 
+__d('somira/App/Views/User/UserCenter.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Login=require('somira/App/Views/User/Login.js');var _Login2=babelHelpers.interopRequireDefault(_Login);var _Setting=require('somira/App/Views/User/Setting.js');var _Setting2=babelHelpers.interopRequireDefault(_Setting);var _MenuItem=require('somira/App/Common/MenuItem.js');var _MenuItem2=babelHelpers.interopRequireDefault(_MenuItem);var _Interface=require('somira/App/Network/Interface.js');var 
 
 
 
@@ -65031,7 +65030,9 @@ __d('somira/App/Views/User/UserCenter.js',function(global, require, module, expo
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var _Bill=require('somira/App/Component/User/Bill/Bill.js');var _Bill2=babelHelpers.interopRequireDefault(_Bill);var _Order=require('somira/App/Component/User/Order/Order.js');var _Order2=babelHelpers.interopRequireDefault(_Order);var _Commission=require('somira/App/Component/User/Commission.js');var _Commission2=babelHelpers.interopRequireDefault(_Commission);var _Team=require('somira/App/Component/User/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var _QRCode=require('somira/App/Component/User/QRCode.js');var _QRCode2=babelHelpers.interopRequireDefault(_QRCode);var _ChangePwd=require('somira/App/Component/User/ChangePwd.js');var _ChangePwd2=babelHelpers.interopRequireDefault(_ChangePwd);var _About=require('somira/App/Component/User/About.js');var _About2=babelHelpers.interopRequireDefault(_About);var 
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _Bill=require('somira/App/Component/User/Bill/Bill.js');var _Bill2=babelHelpers.interopRequireDefault(_Bill);var _Order=require('somira/App/Component/User/Order/Order.js');var _Order2=babelHelpers.interopRequireDefault(_Order);var _Commission=require('somira/App/Component/User/Commission.js');var _Commission2=babelHelpers.interopRequireDefault(_Commission);var _Team=require('somira/App/Component/User/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var _QR=require('somira/App/Component/User/QR.js');var _QR2=babelHelpers.interopRequireDefault(_QR);var _ChangePwd=require('somira/App/Component/User/ChangePwd.js');var _ChangePwd2=babelHelpers.interopRequireDefault(_ChangePwd);var _About=require('somira/App/Component/User/About.js');var _About2=babelHelpers.interopRequireDefault(_About);var 
 
 
 
@@ -65048,7 +65049,6 @@ View=_reactNative2.default.View;var
 ScrollView=_reactNative2.default.ScrollView;var 
 Image=_reactNative2.default.Image;var 
 TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
-Alert=_reactNative2.default.Alert;var 
 Platform=_reactNative2.default.Platform;
 
 
@@ -65140,7 +65140,7 @@ _this6._getUsersales(token);}}});},
 
 
 
-_handlePress:function(event){
+_addNavigator:function(component,title){var _this7=this;
 if(!this.state.user){
 this.props.navigator.push({
 component:_Login2.default,
@@ -65151,41 +65151,65 @@ title:'登录'});}else
 
 
 {
-
-if(event.type==='Setting'){
-this.props.navigator.push({
-component:_Setting2.default,
-leftButtonTitle:'',
-
-navigationBarHidden:false,
-
-
-title:'设置'});}}},
-
-
-
-
-_addNavigator:function(component,title){
-var data=null;
+var data={};
 this.props.navigator.push({
 title:title,
 component:component,
 navigationBarHidden:false,
+rightButtonTitle:title==='修改密码'?'完成':'',
+onRightButtonPress:function(){return _this7.changePwd(data);},
 passProps:{
-data:data}});},
+data:data}});}},
 
 
 
-render:function(){var _this7=this;
+
+changePwd:function(d){var _this8=this;
+if(!d.oldPwd){
+_Util2.default.toast('旧密码不能为空!');
+return;}
+
+if(!d.newPwd){
+_Util2.default.toast('新密码不能为空!');
+return;}
+
+if(d.oldPwd&&d.newPwd){
+
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.changePwd,token,{
+'npwd':d.newPwd,
+'opwd':d.oldPwd},
+
+function(_ref5){var code=_ref5.code;var msg=_ref5.msg;var result=_ref5.result;
+if(code===1){
+_Util2.default.toast('密码修改成功!');
+d={};
+_reactNativeSimpleStore2.default.delete('user');
+_reactNativeSimpleStore2.default.delete('token');
+
+_this8.props.navigator.pop();
+
+_RCTDeviceEventEmitter2.default.emit('showPlanSwitch');}else 
+
+{
+_Util2.default.toast(msg);}});}});}},
+
+
+
+
+
+
+render:function(){var _this9=this;
 return (
 _reactNative2.default.createElement(ScrollView,{style:css.flex},
 _reactNative2.default.createElement(Image,{style:[css.headerImg],source:{uri:'个人中心背景'}},
 _reactNative2.default.createElement(View,{style:(css.cellfixed,css.rightBtn)},
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(type){return _this7._handlePress({type:'消息'});}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){console.log('message');}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoMsg,
 source:require('image!消息按钮')})),
 
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(type){return _this7._handlePress({type:'Setting'});}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this9._addNavigator(_Setting2.default,"设置");}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoSet,
 source:require('image!设置按钮')}))),
 
@@ -65211,11 +65235,11 @@ this.state.user.user_name)),
 
 _reactNative2.default.createElement(View,{style:css.flexRow},
 _reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:css.withdrawBtn,
-onPress:function(type){return _this7._handlePress({type:'提现'});}},
+onPress:function(){console.log('提现');}},
 _reactNative2.default.createElement(Text,{style:[css.transparentFont,{fontSize:16}]},'提现')),
 
 _reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:css.rechargeBtn,
-onPress:function(type){return _this7._handlePress({type:'充值'});}},
+onPress:function(){_Util2.default.toast('充值功能暂未开放,敬请期待!');}},
 _reactNative2.default.createElement(Text,{style:[css.rechargeBtnFont,{fontSize:16}]},'充值')))):
 
 
@@ -65223,7 +65247,7 @@ _reactNative2.default.createElement(Text,{style:[css.rechargeBtnFont,{fontSize:1
 
 _reactNative2.default.createElement(View,{style:css.flexRow},
 _reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:css.withdrawBtn,
-onPress:function(type){return _this7._handlePress({type:'登录'});}},
+onPress:function(){_this9._addNavigator(_Login2.default,"登录");}},
 _reactNative2.default.createElement(Text,{style:[css.transparentFont,{fontSize:18}]},'登录')))),
 
 
@@ -65261,20 +65285,28 @@ _reactNative2.default.createElement(View,null),
 
 
 
+
+this.state.user?
+
+_reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的账单',
 height:'30',
 fontSize:'12',
 icon:'我的账单',
-onClick:function(){_this7._addNavigator(_Bill2.default,"我的账单");}}),
-_reactNative2.default.createElement(View,{style:[css.line]}),
+onClick:function(){_this9._addNavigator(_Bill2.default,"我的账单");}}),
+_reactNative2.default.createElement(View,{style:[css.line]})):
+
+
+_reactNative2.default.createElement(View,null),
+
 
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的订单',
 height:'30',
 fontSize:'12',
 icon:'我的订单',
-onClick:function(){_this7._addNavigator(_Order2.default,"我的订单");}}),
+onClick:function(){_this9._addNavigator(_Order2.default,"我的订单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 
@@ -65286,7 +65318,7 @@ title:'我的返佣',
 height:'30',
 fontSize:'12',
 icon:'我的打赏',
-onClick:function(){_this7._addNavigator(_Commission2.default,"我的返佣");}}),
+onClick:function(){_this9._addNavigator(_Commission2.default,"我的返佣");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -65294,7 +65326,7 @@ title:'我的团队',
 height:'30',
 fontSize:'12',
 icon:'我的团队',
-onClick:function(){_this7._addNavigator(_Team2.default,"我的团队");}})):
+onClick:function(){_this9._addNavigator(_Team2.default,"我的团队");}})):
 
 
 _reactNative2.default.createElement(View,null),
@@ -65315,7 +65347,7 @@ title:'我的二维码',
 height:'30',
 fontSize:'12',
 icon:'二维码',
-onClick:function(){_this7._addNavigator(_QRCode2.default,"我的二维码");}}),
+onClick:function(){_this9._addNavigator(_QR2.default,"我的二维码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]})):
 
 
@@ -65327,14 +65359,15 @@ title:'修改密码',
 height:'30',
 fontSize:'12',
 icon:'修改密码',
-onClick:function(){_this7._addNavigator(_ChangePwd2.default,"修改密码");}}),
+onClick:function(){_this9._addNavigator(_ChangePwd2.default,"修改密码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
+
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'关于',
 height:'30',
 fontSize:'12',
 icon:'关于',
-onClick:function(){_this7._addNavigator(_About2.default,"关于");}}),
+onClick:function(){_this9._addNavigator(_About2.default,"关于");}}),
 
 _reactNative2.default.createElement(View,{style:{marginTop:8,alignItems:'center',justifyContent:'center'}},
 _reactNative2.default.createElement(Image,{style:css.warnning,source:require('image!温馨提示')}),
@@ -66423,7 +66456,6 @@ Text=_reactNative2.default.Text;var
 View=_reactNative2.default.View;var 
 ScrollView=_reactNative2.default.ScrollView;var 
 TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
-Alert=_reactNative2.default.Alert;var 
 Platform=_reactNative2.default.Platform;
 
 
@@ -66570,7 +66602,7 @@ console.error(e);});}}else
 
 
 {
-_Util2.default.toast('您尚未登录');}});},
+_Util2.default.toast('您尚未登录!');}});},
 
 
 
@@ -67205,14 +67237,18 @@ resizeMode:Image.resizeMode.contain}});
 });
 __d('image!团队温馨提示',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/团队温馨提示.imageset/团队温馨提示.png","uri":"团队温馨提示","width":929,"height":110,"deprecated":true};
 });
-__d('somira/App/Component/User/QRCode.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+__d('somira/App/Component/User/QR.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _QRCode=require('somira/App/Common/QRCode.js');var _QRCode2=babelHelpers.interopRequireDefault(_QRCode);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var 
 
 
 AppRegistry=_reactNative2.default.AppRegistry;var 
 StyleSheet=_reactNative2.default.StyleSheet;var 
 Text=_reactNative2.default.Text;var 
-View=_reactNative2.default.View;var 
-PropTypes=_reactNative2.default.PropTypes;
+View=_reactNative2.default.View;
 
 
 module.exports=_reactNative2.default.createClass({displayName:'exports',
@@ -67221,8 +67257,24 @@ module.exports=_reactNative2.default.createClass({displayName:'exports',
 
 getInitialState:function(){
 return {
-on:this.props.on,
-name:this.props.name};},
+text:''};},
+
+
+componentDidMount:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.post(net.userApi.qrcode,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+text:result});}else 
+
+
+{
+_Util2.default.toast(msg);}});}});},
+
+
+
 
 
 
@@ -67231,16 +67283,11 @@ name:this.props.name};},
 render:function(){
 return (
 _reactNative2.default.createElement(View,{style:css.container},
-_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 二维码!'),
-
-
-_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
-
-
-_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
-'\n','Cmd+D or shake for dev menu2')));}});
-
-
+_reactNative2.default.createElement(_QRCode2.default,{
+value:this.state.text,
+size:_Util2.default.size['width']-100,
+bgColor:'#FFFFFF',
+fgColor:'#000000'})));}});
 
 
 
@@ -67251,84 +67298,1488 @@ container:{
 flex:1,
 justifyContent:'center',
 alignItems:'center',
-backgroundColor:'#F5FCFF'},
-
-welcome:{
-fontSize:20,
-textAlign:'center',
-margin:10},
-
-instructions:{
-textAlign:'center',
-color:'#333333',
-marginBottom:5}});
+backgroundColor:'#f4f4f4'}});
 });
-__d('somira/App/Component/User/ChangePwd.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+__d('somira/App/Common/QRCode.js',function(global, require, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native.js');
+var Canvas=require('somira/App/Common/Canvas.js');
+var qr=require('qr.js/index.js');var _require=
 
 
-AppRegistry=_reactNative2.default.AppRegistry;var 
-StyleSheet=_reactNative2.default.StyleSheet;var 
-Text=_reactNative2.default.Text;var 
-View=_reactNative2.default.View;var 
-PropTypes=_reactNative2.default.PropTypes;
+require('react-native/Libraries/react-native/react-native.js');var View=_require.View;
+
+function renderCanvas(canvas){
+var ctx=canvas.getContext('2d');
+var size=this.size;
+var fgColor=this.fgColor;
+var bgColor=this.bgColor;
+canvas.width=size;
+canvas.height=size;
+canvas.style.left=(window.innerWidth-size)/2+'px';
+if(window.innerHeight>size)canvas.style.top=(window.innerHeight-size)/2+'px';
+ctx.fillRect(0,0,size,size);
+var cells=this.cells;
+var cellWidth=this.size/cells.length;
+var cellHeight=this.size/cells.length;
+var nRoundedWidth=Math.round(cellWidth);
+var nRoundedHeight=Math.round(cellHeight);
+cells.forEach(function(row,rowIndex){
+row.forEach(function(column,columnIndex){
+var nLeft=columnIndex*cellWidth;
+var nTop=rowIndex*cellHeight;
+ctx.fillStyle=ctx.strokeStyle=column?bgColor:fgColor;
+ctx.lineWidth=1;
+ctx.fillRect(nLeft,nTop,cellWidth,cellHeight);
+ctx.strokeRect(
+Math.floor(nLeft)+0.5,
+Math.floor(nTop)+0.5,
+nRoundedWidth,
+nRoundedHeight);
+
+ctx.strokeRect(
+Math.ceil(nLeft)-0.5,
+Math.ceil(nTop)-0.5,
+nRoundedWidth,
+nRoundedHeight);});});}
 
 
-module.exports=_reactNative2.default.createClass({displayName:'exports',
 
 
 
-getInitialState:function(){
+var QRCode=React.createClass({displayName:'QRCode',
+PropTypes:{
+value:React.PropTypes.string,
+size:React.PropTypes.number,
+bgColor:React.PropTypes.string,
+fgColor:React.PropTypes.string},
+
+getDefaultProps:function(){
 return {
-on:this.props.on,
-name:this.props.name};},
+value:'https://github.com/cssivision',
+fgColor:'white',
+bgColor:'black',
+size:128};},
 
 
+utf16to8:function(str){
+var out,i,len,c;
+out="";
+len=str.length;
+for(i=0;i<len;i++){
+c=str.charCodeAt(i);
+if(c>=0x0001&&c<=0x007F){
+out+=str.charAt(i);}else 
+if(c>0x07FF){
+out+=String.fromCharCode(0xE0|c>>12&0x0F);
+out+=String.fromCharCode(0x80|c>>6&0x3F);
+out+=String.fromCharCode(0x80|c>>0&0x3F);}else 
+{
+out+=String.fromCharCode(0xC0|c>>6&0x1F);
+out+=String.fromCharCode(0x80|c>>0&0x3F);}}
 
+
+return out;},
 
 
 render:function(){
+var size=this.props.size;
+var value=this.utf16to8(this.props.value);
 return (
-_reactNative2.default.createElement(View,{style:css.container},
-_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 修改密码!'),
+React.createElement(View,null,
+React.createElement(Canvas,{
+context:{
+size:size,
+value:this.props.value,
+bgColor:this.props.bgColor,
+fgColor:this.props.fgColor,
+cells:qr(value).modules},
+
+render:renderCanvas,
+style:{height:size,width:size}})));}});
 
 
-_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
-
-
-_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
-'\n','Cmd+D or shake for dev menu2')));}});
 
 
 
 
-
-
-
-var css=StyleSheet.create({
-container:{
-flex:1,
-justifyContent:'center',
-alignItems:'center',
-backgroundColor:'#F5FCFF'},
-
-welcome:{
-fontSize:20,
-textAlign:'center',
-margin:10},
-
-instructions:{
-textAlign:'center',
-color:'#333333',
-marginBottom:5}});
+module.exports=QRCode;
 });
-__d('somira/App/Component/User/About.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
+__d('somira/App/Common/Canvas.js',function(global, require, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+View=
+
+React.View;var WebView=React.WebView;
+
+var Canvas=React.createClass({displayName:'Canvas',
+propTypes:{
+context:React.PropTypes.object,
+render:React.PropTypes.func.isRequired},
+
+render:function(){
+var contextString=JSON.stringify(this.props.context);
+var renderString=this.props.render.toString();
+return (
+React.createElement(View,null,
+React.createElement(WebView,{
+automaticallyAdjustContentInsets:false,
+contentInset:{top:0,right:0,bottom:0,left:0},
+html:"<style>*{margin:0;padding:0;}canvas{position:absolute;transform:translateZ(0);}</style><canvas></canvas><script>var canvas = document.querySelector('canvas');("+renderString+").call("+contextString+", canvas);</script>",
+opaque:false,
+underlayColor:'transparent',
+style:this.props.style})));}});
+
+
+
+
+
+
+module.exports=Canvas;
+});
+__d('qr.js/index.js',function(global, require, module, exports) {  var QRCode=require('qr.js/lib/QRCode.js');
+var ErrorCorrectLevel=require('qr.js/lib/ErrorCorrectLevel.js');
+
+var qrcode=function(data,opt){
+opt=opt||{};
+var qr=new QRCode(opt.typeNumber||-1,
+opt.errorCorrectLevel||ErrorCorrectLevel.H);
+qr.addData(data);
+qr.make();
+
+return qr;};
+
+
+qrcode.ErrorCorrectLevel=ErrorCorrectLevel;
+
+module.exports=qrcode;
+});
+__d('qr.js/lib/QRCode.js',function(global, require, module, exports) {  var BitByte=require('qr.js/lib/8BitByte.js');
+var RSBlock=require('qr.js/lib/RSBlock.js');
+var BitBuffer=require('qr.js/lib/BitBuffer.js');
+var util=require('qr.js/lib/util.js');
+var Polynomial=require('qr.js/lib/Polynomial.js');
+
+function QRCode(typeNumber,errorCorrectLevel){
+this.typeNumber=typeNumber;
+this.errorCorrectLevel=errorCorrectLevel;
+this.modules=null;
+this.moduleCount=0;
+this.dataCache=null;
+this.dataList=[];}
+
+
+
+var proto=QRCode.prototype;
+
+proto.addData=function(data){
+var newData=new BitByte(data);
+this.dataList.push(newData);
+this.dataCache=null;};
+
+
+proto.isDark=function(row,col){
+if(row<0||this.moduleCount<=row||col<0||this.moduleCount<=col){
+throw new Error(row+","+col);}
+
+return this.modules[row][col];};
+
+
+proto.getModuleCount=function(){
+return this.moduleCount;};
+
+
+proto.make=function(){
+
+if(this.typeNumber<1){
+var typeNumber=1;
+for(typeNumber=1;typeNumber<40;typeNumber++){
+var rsBlocks=RSBlock.getRSBlocks(typeNumber,this.errorCorrectLevel);
+
+var buffer=new BitBuffer();
+var totalDataCount=0;
+for(var i=0;i<rsBlocks.length;i++){
+totalDataCount+=rsBlocks[i].dataCount;}
+
+
+for(var i=0;i<this.dataList.length;i++){
+var data=this.dataList[i];
+buffer.put(data.mode,4);
+buffer.put(data.getLength(),util.getLengthInBits(data.mode,typeNumber));
+data.write(buffer);}
+
+if(buffer.getLengthInBits()<=totalDataCount*8)
+break;}
+
+this.typeNumber=typeNumber;}
+
+this.makeImpl(false,this.getBestMaskPattern());};
+
+
+proto.makeImpl=function(test,maskPattern){
+
+this.moduleCount=this.typeNumber*4+17;
+this.modules=new Array(this.moduleCount);
+
+for(var row=0;row<this.moduleCount;row++){
+
+this.modules[row]=new Array(this.moduleCount);
+
+for(var col=0;col<this.moduleCount;col++){
+this.modules[row][col]=null;}}
+
+
+
+this.setupPositionProbePattern(0,0);
+this.setupPositionProbePattern(this.moduleCount-7,0);
+this.setupPositionProbePattern(0,this.moduleCount-7);
+this.setupPositionAdjustPattern();
+this.setupTimingPattern();
+this.setupTypeInfo(test,maskPattern);
+
+if(this.typeNumber>=7){
+this.setupTypeNumber(test);}
+
+
+if(this.dataCache==null){
+this.dataCache=QRCode.createData(this.typeNumber,this.errorCorrectLevel,this.dataList);}
+
+
+this.mapData(this.dataCache,maskPattern);};
+
+
+proto.setupPositionProbePattern=function(row,col){
+
+for(var r=-1;r<=7;r++){
+
+if(row+r<=-1||this.moduleCount<=row+r)continue;
+
+for(var c=-1;c<=7;c++){
+
+if(col+c<=-1||this.moduleCount<=col+c)continue;
+
+if(0<=r&&r<=6&&(c==0||c==6)||
+0<=c&&c<=6&&(r==0||r==6)||
+2<=r&&r<=4&&2<=c&&c<=4){
+this.modules[row+r][col+c]=true;}else 
+{
+this.modules[row+r][col+c]=false;}}}};
+
+
+
+
+
+proto.getBestMaskPattern=function(){
+
+var minLostPoint=0;
+var pattern=0;
+
+for(var i=0;i<8;i++){
+
+this.makeImpl(true,i);
+
+var lostPoint=util.getLostPoint(this);
+
+if(i==0||minLostPoint>lostPoint){
+minLostPoint=lostPoint;
+pattern=i;}}
+
+
+
+return pattern;};
+
+
+proto.createMovieClip=function(target_mc,instance_name,depth){
+
+var qr_mc=target_mc.createEmptyMovieClip(instance_name,depth);
+var cs=1;
+
+this.make();
+
+for(var row=0;row<this.modules.length;row++){
+
+var y=row*cs;
+
+for(var col=0;col<this.modules[row].length;col++){
+
+var x=col*cs;
+var dark=this.modules[row][col];
+
+if(dark){
+qr_mc.beginFill(0,100);
+qr_mc.moveTo(x,y);
+qr_mc.lineTo(x+cs,y);
+qr_mc.lineTo(x+cs,y+cs);
+qr_mc.lineTo(x,y+cs);
+qr_mc.endFill();}}}
+
+
+
+
+return qr_mc;};
+
+
+proto.setupTimingPattern=function(){
+
+for(var r=8;r<this.moduleCount-8;r++){
+if(this.modules[r][6]!=null){
+continue;}
+
+this.modules[r][6]=r%2==0;}
+
+
+for(var c=8;c<this.moduleCount-8;c++){
+if(this.modules[6][c]!=null){
+continue;}
+
+this.modules[6][c]=c%2==0;}};
+
+
+
+proto.setupPositionAdjustPattern=function(){
+
+var pos=util.getPatternPosition(this.typeNumber);
+
+for(var i=0;i<pos.length;i++){
+
+for(var j=0;j<pos.length;j++){
+
+var row=pos[i];
+var col=pos[j];
+
+if(this.modules[row][col]!=null){
+continue;}
+
+
+for(var r=-2;r<=2;r++){
+
+for(var c=-2;c<=2;c++){
+
+if(r==-2||r==2||c==-2||c==2||
+r==0&&c==0){
+this.modules[row+r][col+c]=true;}else 
+{
+this.modules[row+r][col+c]=false;}}}}}};
+
+
+
+
+
+
+
+proto.setupTypeNumber=function(test){
+
+var bits=util.getBCHTypeNumber(this.typeNumber);
+
+for(var i=0;i<18;i++){
+var mod=!test&&(bits>>i&1)==1;
+this.modules[Math.floor(i/3)][i%3+this.moduleCount-8-3]=mod;}
+
+
+for(var i=0;i<18;i++){
+var mod=!test&&(bits>>i&1)==1;
+this.modules[i%3+this.moduleCount-8-3][Math.floor(i/3)]=mod;}};
+
+
+
+proto.setupTypeInfo=function(test,maskPattern){
+
+var data=this.errorCorrectLevel<<3|maskPattern;
+var bits=util.getBCHTypeInfo(data);
+
+
+for(var i=0;i<15;i++){
+
+var mod=!test&&(bits>>i&1)==1;
+
+if(i<6){
+this.modules[i][8]=mod;}else 
+if(i<8){
+this.modules[i+1][8]=mod;}else 
+{
+this.modules[this.moduleCount-15+i][8]=mod;}}
+
+
+
+
+for(var i=0;i<15;i++){
+
+var mod=!test&&(bits>>i&1)==1;
+
+if(i<8){
+this.modules[8][this.moduleCount-i-1]=mod;}else 
+if(i<9){
+this.modules[8][15-i-1+1]=mod;}else 
+{
+this.modules[8][15-i-1]=mod;}}
+
+
+
+
+this.modules[this.moduleCount-8][8]=!test;};
+
+
+proto.mapData=function(data,maskPattern){
+
+var inc=-1;
+var row=this.moduleCount-1;
+var bitIndex=7;
+var byteIndex=0;
+
+for(var col=this.moduleCount-1;col>0;col-=2){
+
+if(col==6)col--;
+
+while(true){
+
+for(var c=0;c<2;c++){
+
+if(this.modules[row][col-c]==null){
+
+var dark=false;
+
+if(byteIndex<data.length){
+dark=(data[byteIndex]>>>bitIndex&1)==1;}
+
+
+var mask=util.getMask(maskPattern,row,col-c);
+
+if(mask){
+dark=!dark;}
+
+
+this.modules[row][col-c]=dark;
+bitIndex--;
+
+if(bitIndex==-1){
+byteIndex++;
+bitIndex=7;}}}
+
+
+
+
+row+=inc;
+
+if(row<0||this.moduleCount<=row){
+row-=inc;
+inc=-inc;
+break;}}}};
+
+
+
+
+
+QRCode.PAD0=0xEC;
+QRCode.PAD1=0x11;
+
+QRCode.createData=function(typeNumber,errorCorrectLevel,dataList){
+
+var rsBlocks=RSBlock.getRSBlocks(typeNumber,errorCorrectLevel);
+
+var buffer=new BitBuffer();
+
+for(var i=0;i<dataList.length;i++){
+var data=dataList[i];
+buffer.put(data.mode,4);
+buffer.put(data.getLength(),util.getLengthInBits(data.mode,typeNumber));
+data.write(buffer);}
+
+
+
+var totalDataCount=0;
+for(var i=0;i<rsBlocks.length;i++){
+totalDataCount+=rsBlocks[i].dataCount;}
+
+
+if(buffer.getLengthInBits()>totalDataCount*8){
+throw new Error("code length overflow. ("+
+buffer.getLengthInBits()+
+">"+
+totalDataCount*8+
+")");}
+
+
+
+if(buffer.getLengthInBits()+4<=totalDataCount*8){
+buffer.put(0,4);}
+
+
+
+while(buffer.getLengthInBits()%8!=0){
+buffer.putBit(false);}
+
+
+
+while(true){
+
+if(buffer.getLengthInBits()>=totalDataCount*8){
+break;}
+
+buffer.put(QRCode.PAD0,8);
+
+if(buffer.getLengthInBits()>=totalDataCount*8){
+break;}
+
+buffer.put(QRCode.PAD1,8);}
+
+
+return QRCode.createBytes(buffer,rsBlocks);};
+
+
+QRCode.createBytes=function(buffer,rsBlocks){
+
+var offset=0;
+
+var maxDcCount=0;
+var maxEcCount=0;
+
+var dcdata=new Array(rsBlocks.length);
+var ecdata=new Array(rsBlocks.length);
+
+for(var r=0;r<rsBlocks.length;r++){
+
+var dcCount=rsBlocks[r].dataCount;
+var ecCount=rsBlocks[r].totalCount-dcCount;
+
+maxDcCount=Math.max(maxDcCount,dcCount);
+maxEcCount=Math.max(maxEcCount,ecCount);
+
+dcdata[r]=new Array(dcCount);
+
+for(var i=0;i<dcdata[r].length;i++){
+dcdata[r][i]=0xff&buffer.buffer[i+offset];}
+
+offset+=dcCount;
+
+var rsPoly=util.getErrorCorrectPolynomial(ecCount);
+var rawPoly=new Polynomial(dcdata[r],rsPoly.getLength()-1);
+
+var modPoly=rawPoly.mod(rsPoly);
+ecdata[r]=new Array(rsPoly.getLength()-1);
+for(var i=0;i<ecdata[r].length;i++){
+var modIndex=i+modPoly.getLength()-ecdata[r].length;
+ecdata[r][i]=modIndex>=0?modPoly.get(modIndex):0;}}
+
+
+
+
+var totalCodeCount=0;
+for(var i=0;i<rsBlocks.length;i++){
+totalCodeCount+=rsBlocks[i].totalCount;}
+
+
+var data=new Array(totalCodeCount);
+var index=0;
+
+for(var i=0;i<maxDcCount;i++){
+for(var r=0;r<rsBlocks.length;r++){
+if(i<dcdata[r].length){
+data[index++]=dcdata[r][i];}}}
+
+
+
+
+for(var i=0;i<maxEcCount;i++){
+for(var r=0;r<rsBlocks.length;r++){
+if(i<ecdata[r].length){
+data[index++]=ecdata[r][i];}}}
+
+
+
+
+return data;};
+
+
+module.exports=QRCode;
+});
+__d('qr.js/lib/8BitByte.js',function(global, require, module, exports) {  var mode=require('qr.js/lib/mode.js');
+
+function QR8bitByte(data){
+this.mode=mode.MODE_8BIT_BYTE;
+this.data=data;}
+
+
+QR8bitByte.prototype={
+
+getLength:function(buffer){
+return this.data.length;},
+
+
+write:function(buffer){
+for(var i=0;i<this.data.length;i++){
+
+buffer.put(this.data.charCodeAt(i),8);}}};
+
+
+
+
+module.exports=QR8bitByte;
+});
+__d('qr.js/lib/mode.js',function(global, require, module, exports) {  module.exports={
+MODE_NUMBER:1<<0,
+MODE_ALPHA_NUM:1<<1,
+MODE_8BIT_BYTE:1<<2,
+MODE_KANJI:1<<3};
+});
+__d('qr.js/lib/RSBlock.js',function(global, require, module, exports) {  var 
+ECL=require('qr.js/lib/ErrorCorrectLevel.js');
+
+function QRRSBlock(totalCount,dataCount){
+this.totalCount=totalCount;
+this.dataCount=dataCount;}
+
+
+QRRSBlock.RS_BLOCK_TABLE=[
+
+
+
+
+
+
+
+[1,26,19],
+[1,26,16],
+[1,26,13],
+[1,26,9],
+
+
+[1,44,34],
+[1,44,28],
+[1,44,22],
+[1,44,16],
+
+
+[1,70,55],
+[1,70,44],
+[2,35,17],
+[2,35,13],
+
+
+[1,100,80],
+[2,50,32],
+[2,50,24],
+[4,25,9],
+
+
+[1,134,108],
+[2,67,43],
+[2,33,15,2,34,16],
+[2,33,11,2,34,12],
+
+
+[2,86,68],
+[4,43,27],
+[4,43,19],
+[4,43,15],
+
+
+[2,98,78],
+[4,49,31],
+[2,32,14,4,33,15],
+[4,39,13,1,40,14],
+
+
+[2,121,97],
+[2,60,38,2,61,39],
+[4,40,18,2,41,19],
+[4,40,14,2,41,15],
+
+
+[2,146,116],
+[3,58,36,2,59,37],
+[4,36,16,4,37,17],
+[4,36,12,4,37,13],
+
+
+[2,86,68,2,87,69],
+[4,69,43,1,70,44],
+[6,43,19,2,44,20],
+[6,43,15,2,44,16],
+
+
+[4,101,81],
+[1,80,50,4,81,51],
+[4,50,22,4,51,23],
+[3,36,12,8,37,13],
+
+
+[2,116,92,2,117,93],
+[6,58,36,2,59,37],
+[4,46,20,6,47,21],
+[7,42,14,4,43,15],
+
+
+[4,133,107],
+[8,59,37,1,60,38],
+[8,44,20,4,45,21],
+[12,33,11,4,34,12],
+
+
+[3,145,115,1,146,116],
+[4,64,40,5,65,41],
+[11,36,16,5,37,17],
+[11,36,12,5,37,13],
+
+
+[5,109,87,1,110,88],
+[5,65,41,5,66,42],
+[5,54,24,7,55,25],
+[11,36,12],
+
+
+[5,122,98,1,123,99],
+[7,73,45,3,74,46],
+[15,43,19,2,44,20],
+[3,45,15,13,46,16],
+
+
+[1,135,107,5,136,108],
+[10,74,46,1,75,47],
+[1,50,22,15,51,23],
+[2,42,14,17,43,15],
+
+
+[5,150,120,1,151,121],
+[9,69,43,4,70,44],
+[17,50,22,1,51,23],
+[2,42,14,19,43,15],
+
+
+[3,141,113,4,142,114],
+[3,70,44,11,71,45],
+[17,47,21,4,48,22],
+[9,39,13,16,40,14],
+
+
+[3,135,107,5,136,108],
+[3,67,41,13,68,42],
+[15,54,24,5,55,25],
+[15,43,15,10,44,16],
+
+
+[4,144,116,4,145,117],
+[17,68,42],
+[17,50,22,6,51,23],
+[19,46,16,6,47,17],
+
+
+[2,139,111,7,140,112],
+[17,74,46],
+[7,54,24,16,55,25],
+[34,37,13],
+
+
+[4,151,121,5,152,122],
+[4,75,47,14,76,48],
+[11,54,24,14,55,25],
+[16,45,15,14,46,16],
+
+
+[6,147,117,4,148,118],
+[6,73,45,14,74,46],
+[11,54,24,16,55,25],
+[30,46,16,2,47,17],
+
+
+[8,132,106,4,133,107],
+[8,75,47,13,76,48],
+[7,54,24,22,55,25],
+[22,45,15,13,46,16],
+
+
+[10,142,114,2,143,115],
+[19,74,46,4,75,47],
+[28,50,22,6,51,23],
+[33,46,16,4,47,17],
+
+
+[8,152,122,4,153,123],
+[22,73,45,3,74,46],
+[8,53,23,26,54,24],
+[12,45,15,28,46,16],
+
+
+[3,147,117,10,148,118],
+[3,73,45,23,74,46],
+[4,54,24,31,55,25],
+[11,45,15,31,46,16],
+
+
+[7,146,116,7,147,117],
+[21,73,45,7,74,46],
+[1,53,23,37,54,24],
+[19,45,15,26,46,16],
+
+
+[5,145,115,10,146,116],
+[19,75,47,10,76,48],
+[15,54,24,25,55,25],
+[23,45,15,25,46,16],
+
+
+[13,145,115,3,146,116],
+[2,74,46,29,75,47],
+[42,54,24,1,55,25],
+[23,45,15,28,46,16],
+
+
+[17,145,115],
+[10,74,46,23,75,47],
+[10,54,24,35,55,25],
+[19,45,15,35,46,16],
+
+
+[17,145,115,1,146,116],
+[14,74,46,21,75,47],
+[29,54,24,19,55,25],
+[11,45,15,46,46,16],
+
+
+[13,145,115,6,146,116],
+[14,74,46,23,75,47],
+[44,54,24,7,55,25],
+[59,46,16,1,47,17],
+
+
+[12,151,121,7,152,122],
+[12,75,47,26,76,48],
+[39,54,24,14,55,25],
+[22,45,15,41,46,16],
+
+
+[6,151,121,14,152,122],
+[6,75,47,34,76,48],
+[46,54,24,10,55,25],
+[2,45,15,64,46,16],
+
+
+[17,152,122,4,153,123],
+[29,74,46,14,75,47],
+[49,54,24,10,55,25],
+[24,45,15,46,46,16],
+
+
+[4,152,122,18,153,123],
+[13,74,46,32,75,47],
+[48,54,24,14,55,25],
+[42,45,15,32,46,16],
+
+
+[20,147,117,4,148,118],
+[40,75,47,7,76,48],
+[43,54,24,22,55,25],
+[10,45,15,67,46,16],
+
+
+[19,148,118,6,149,119],
+[18,75,47,31,76,48],
+[34,54,24,34,55,25],
+[20,45,15,61,46,16]];
+
+
+QRRSBlock.getRSBlocks=function(typeNumber,errorCorrectLevel){
+
+var rsBlock=QRRSBlock.getRsBlockTable(typeNumber,errorCorrectLevel);
+
+if(rsBlock==undefined){
+throw new Error("bad rs block @ typeNumber:"+typeNumber+"/errorCorrectLevel:"+errorCorrectLevel);}
+
+
+var length=rsBlock.length/3;
+
+var list=new Array();
+
+for(var i=0;i<length;i++){
+
+var count=rsBlock[i*3+0];
+var totalCount=rsBlock[i*3+1];
+var dataCount=rsBlock[i*3+2];
+
+for(var j=0;j<count;j++){
+list.push(new QRRSBlock(totalCount,dataCount));}}
+
+
+
+return list;};
+
+
+QRRSBlock.getRsBlockTable=function(typeNumber,errorCorrectLevel){
+
+switch(errorCorrectLevel){
+case ECL.L:
+return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+0];
+case ECL.M:
+return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+1];
+case ECL.Q:
+return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+2];
+case ECL.H:
+return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+3];
+default:
+return undefined;}};
+
+
+
+module.exports=QRRSBlock;
+});
+__d('qr.js/lib/ErrorCorrectLevel.js',function(global, require, module, exports) {  module.exports={
+L:1,
+M:0,
+Q:3,
+H:2};
+});
+__d('qr.js/lib/BitBuffer.js',function(global, require, module, exports) {  function QRBitBuffer(){
+this.buffer=new Array();
+this.length=0;}
+
+
+QRBitBuffer.prototype={
+
+get:function(index){
+var bufIndex=Math.floor(index/8);
+return (this.buffer[bufIndex]>>>7-index%8&1)==1;},
+
+
+put:function(num,length){
+for(var i=0;i<length;i++){
+this.putBit((num>>>length-i-1&1)==1);}},
+
+
+
+getLengthInBits:function(){
+return this.length;},
+
+
+putBit:function(bit){
+
+var bufIndex=Math.floor(this.length/8);
+if(this.buffer.length<=bufIndex){
+this.buffer.push(0);}
+
+
+if(bit){
+this.buffer[bufIndex]|=0x80>>>this.length%8;}
+
+
+this.length++;}};
+
+
+
+module.exports=QRBitBuffer;
+});
+__d('qr.js/lib/util.js',function(global, require, module, exports) {  var Mode=require('qr.js/lib/mode.js');
+var Polynomial=require('qr.js/lib/Polynomial.js');
+var math=require('qr.js/lib/math.js');
+
+var QRMaskPattern={
+PATTERN000:0,
+PATTERN001:1,
+PATTERN010:2,
+PATTERN011:3,
+PATTERN100:4,
+PATTERN101:5,
+PATTERN110:6,
+PATTERN111:7};
+
+
+var QRUtil={
+
+PATTERN_POSITION_TABLE:[
+[],
+[6,18],
+[6,22],
+[6,26],
+[6,30],
+[6,34],
+[6,22,38],
+[6,24,42],
+[6,26,46],
+[6,28,50],
+[6,30,54],
+[6,32,58],
+[6,34,62],
+[6,26,46,66],
+[6,26,48,70],
+[6,26,50,74],
+[6,30,54,78],
+[6,30,56,82],
+[6,30,58,86],
+[6,34,62,90],
+[6,28,50,72,94],
+[6,26,50,74,98],
+[6,30,54,78,102],
+[6,28,54,80,106],
+[6,32,58,84,110],
+[6,30,58,86,114],
+[6,34,62,90,118],
+[6,26,50,74,98,122],
+[6,30,54,78,102,126],
+[6,26,52,78,104,130],
+[6,30,56,82,108,134],
+[6,34,60,86,112,138],
+[6,30,58,86,114,142],
+[6,34,62,90,118,146],
+[6,30,54,78,102,126,150],
+[6,24,50,76,102,128,154],
+[6,28,54,80,106,132,158],
+[6,32,58,84,110,136,162],
+[6,26,54,82,110,138,166],
+[6,30,58,86,114,142,170]],
+
+
+G15:1<<10|1<<8|1<<5|1<<4|1<<2|1<<1|1<<0,
+G18:1<<12|1<<11|1<<10|1<<9|1<<8|1<<5|1<<2|1<<0,
+G15_MASK:1<<14|1<<12|1<<10|1<<4|1<<1,
+
+getBCHTypeInfo:function(data){
+var d=data<<10;
+while(QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G15)>=0){
+d^=QRUtil.G15<<QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G15);}
+
+return (data<<10|d)^QRUtil.G15_MASK;},
+
+
+getBCHTypeNumber:function(data){
+var d=data<<12;
+while(QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G18)>=0){
+d^=QRUtil.G18<<QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G18);}
+
+return data<<12|d;},
+
+
+getBCHDigit:function(data){
+
+var digit=0;
+
+while(data!=0){
+digit++;
+data>>>=1;}
+
+
+return digit;},
+
+
+getPatternPosition:function(typeNumber){
+return QRUtil.PATTERN_POSITION_TABLE[typeNumber-1];},
+
+
+getMask:function(maskPattern,i,j){
+
+switch(maskPattern){
+
+case QRMaskPattern.PATTERN000:return (i+j)%2==0;
+case QRMaskPattern.PATTERN001:return i%2==0;
+case QRMaskPattern.PATTERN010:return j%3==0;
+case QRMaskPattern.PATTERN011:return (i+j)%3==0;
+case QRMaskPattern.PATTERN100:return (Math.floor(i/2)+Math.floor(j/3))%2==0;
+case QRMaskPattern.PATTERN101:return i*j%2+i*j%3==0;
+case QRMaskPattern.PATTERN110:return (i*j%2+i*j%3)%2==0;
+case QRMaskPattern.PATTERN111:return (i*j%3+(i+j)%2)%2==0;
+
+default:
+throw new Error("bad maskPattern:"+maskPattern);}},
+
+
+
+getErrorCorrectPolynomial:function(errorCorrectLength){
+
+var a=new Polynomial([1],0);
+
+for(var i=0;i<errorCorrectLength;i++){
+a=a.multiply(new Polynomial([1,math.gexp(i)],0));}
+
+
+return a;},
+
+
+getLengthInBits:function(mode,type){
+
+if(1<=type&&type<10){
+
+
+
+switch(mode){
+case Mode.MODE_NUMBER:return 10;
+case Mode.MODE_ALPHA_NUM:return 9;
+case Mode.MODE_8BIT_BYTE:return 8;
+case Mode.MODE_KANJI:return 8;
+default:
+throw new Error("mode:"+mode);}}else 
+
+
+if(type<27){
+
+
+
+switch(mode){
+case Mode.MODE_NUMBER:return 12;
+case Mode.MODE_ALPHA_NUM:return 11;
+case Mode.MODE_8BIT_BYTE:return 16;
+case Mode.MODE_KANJI:return 10;
+default:
+throw new Error("mode:"+mode);}}else 
+
+
+if(type<41){
+
+
+
+switch(mode){
+case Mode.MODE_NUMBER:return 14;
+case Mode.MODE_ALPHA_NUM:return 13;
+case Mode.MODE_8BIT_BYTE:return 16;
+case Mode.MODE_KANJI:return 12;
+default:
+throw new Error("mode:"+mode);}}else 
+
+
+{
+throw new Error("type:"+type);}},
+
+
+
+getLostPoint:function(qrCode){
+
+var moduleCount=qrCode.getModuleCount();
+
+var lostPoint=0;
+
+
+
+for(var row=0;row<moduleCount;row++){
+
+for(var col=0;col<moduleCount;col++){
+
+var sameCount=0;
+var dark=qrCode.isDark(row,col);
+
+for(var r=-1;r<=1;r++){
+
+if(row+r<0||moduleCount<=row+r){
+continue;}
+
+
+for(var c=-1;c<=1;c++){
+
+if(col+c<0||moduleCount<=col+c){
+continue;}
+
+
+if(r==0&&c==0){
+continue;}
+
+
+if(dark==qrCode.isDark(row+r,col+c)){
+sameCount++;}}}
+
+
+
+
+if(sameCount>5){
+lostPoint+=3+sameCount-5;}}}
+
+
+
+
+
+
+for(var row=0;row<moduleCount-1;row++){
+for(var col=0;col<moduleCount-1;col++){
+var count=0;
+if(qrCode.isDark(row,col))count++;
+if(qrCode.isDark(row+1,col))count++;
+if(qrCode.isDark(row,col+1))count++;
+if(qrCode.isDark(row+1,col+1))count++;
+if(count==0||count==4){
+lostPoint+=3;}}}
+
+
+
+
+
+
+for(var row=0;row<moduleCount;row++){
+for(var col=0;col<moduleCount-6;col++){
+if(qrCode.isDark(row,col)&&
+!qrCode.isDark(row,col+1)&&
+qrCode.isDark(row,col+2)&&
+qrCode.isDark(row,col+3)&&
+qrCode.isDark(row,col+4)&&
+!qrCode.isDark(row,col+5)&&
+qrCode.isDark(row,col+6)){
+lostPoint+=40;}}}
+
+
+
+
+for(var col=0;col<moduleCount;col++){
+for(var row=0;row<moduleCount-6;row++){
+if(qrCode.isDark(row,col)&&
+!qrCode.isDark(row+1,col)&&
+qrCode.isDark(row+2,col)&&
+qrCode.isDark(row+3,col)&&
+qrCode.isDark(row+4,col)&&
+!qrCode.isDark(row+5,col)&&
+qrCode.isDark(row+6,col)){
+lostPoint+=40;}}}
+
+
+
+
+
+
+var darkCount=0;
+
+for(var col=0;col<moduleCount;col++){
+for(var row=0;row<moduleCount;row++){
+if(qrCode.isDark(row,col)){
+darkCount++;}}}
+
+
+
+
+var ratio=Math.abs(100*darkCount/moduleCount/moduleCount-50)/5;
+lostPoint+=ratio*10;
+
+return lostPoint;}};
+
+
+
+module.exports=QRUtil;
+});
+__d('qr.js/lib/Polynomial.js',function(global, require, module, exports) {  var math=require('qr.js/lib/math.js');
+
+function QRPolynomial(num,shift){
+
+if(num.length==undefined){
+throw new Error(num.length+"/"+shift);}
+
+
+var offset=0;
+
+while(offset<num.length&&num[offset]==0){
+offset++;}
+
+
+this.num=new Array(num.length-offset+shift);
+for(var i=0;i<num.length-offset;i++){
+this.num[i]=num[i+offset];}}
+
+
+
+QRPolynomial.prototype={
+
+get:function(index){
+return this.num[index];},
+
+
+getLength:function(){
+return this.num.length;},
+
+
+multiply:function(e){
+
+var num=new Array(this.getLength()+e.getLength()-1);
+
+for(var i=0;i<this.getLength();i++){
+for(var j=0;j<e.getLength();j++){
+num[i+j]^=math.gexp(math.glog(this.get(i))+math.glog(e.get(j)));}}
+
+
+
+return new QRPolynomial(num,0);},
+
+
+mod:function(e){
+
+if(this.getLength()-e.getLength()<0){
+return this;}
+
+
+var ratio=math.glog(this.get(0))-math.glog(e.get(0));
+
+var num=new Array(this.getLength());
+
+for(var i=0;i<this.getLength();i++){
+num[i]=this.get(i);}
+
+
+for(var i=0;i<e.getLength();i++){
+num[i]^=math.gexp(math.glog(e.get(i))+ratio);}
+
+
+
+return new QRPolynomial(num,0).mod(e);}};
+
+
+
+module.exports=QRPolynomial;
+});
+__d('qr.js/lib/math.js',function(global, require, module, exports) {  var QRMath={
+
+glog:function(n){
+
+if(n<1){
+throw new Error("glog("+n+")");}
+
+
+return QRMath.LOG_TABLE[n];},
+
+
+gexp:function(n){
+
+while(n<0){
+n+=255;}
+
+
+while(n>=256){
+n-=255;}
+
+
+return QRMath.EXP_TABLE[n];},
+
+
+EXP_TABLE:new Array(256),
+
+LOG_TABLE:new Array(256)};
+
+
+
+for(var i=0;i<8;i++){
+QRMath.EXP_TABLE[i]=1<<i;}
+
+for(var i=8;i<256;i++){
+QRMath.EXP_TABLE[i]=QRMath.EXP_TABLE[i-4]^
+QRMath.EXP_TABLE[i-5]^
+QRMath.EXP_TABLE[i-6]^
+QRMath.EXP_TABLE[i-8];}
+
+for(var i=0;i<255;i++){
+QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]]=i;}
+
+
+module.exports=QRMath;
+});
+__d('somira/App/Component/User/ChangePwd.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var 
+
+
 
 
 AppRegistry=_reactNative2.default.AppRegistry;var 
 StyleSheet=_reactNative2.default.StyleSheet;var 
 Text=_reactNative2.default.Text;var 
+Image=_reactNative2.default.Image;var 
 View=_reactNative2.default.View;var 
-PropTypes=_reactNative2.default.PropTypes;
+TouchableHighlight=_reactNative2.default.TouchableHighlight;var 
+TextInput=_reactNative2.default.TextInput;
+
+
+var changePwd=_reactNative2.default.createClass({displayName:'changePwd',
+getInitialState:function(){
+return {};},
+
+
+render:function(){var _this=this;
+return (
+_reactNative2.default.createElement(View,{style:styles.loginform},
+_reactNative2.default.createElement(View,{style:{marginTop:88,marginBottom:10}},
+_reactNative2.default.createElement(Text,{style:styles.style_view_register},'请设置您的新密码。密码请设置为6位以上的字母、数字、符号，尽量为三者组合，以保障您的账号安全')),
+
+
+
+_reactNative2.default.createElement(View,{style:styles.inputRow},
+_reactNative2.default.createElement(Text,{style:styles.label},'旧密码'),
+_reactNative2.default.createElement(TextInput,{
+keyboardType:'default',
+clearButtonMode:'while-editing',
+style:styles.input,
+placeholder:'请填写旧密码',
+secureTextEntry:true,
+onChangeText:function(text){return _this.props.data.oldPwd=text;}})),
+
+_reactNative2.default.createElement(View,{style:[styles.line]}),
+_reactNative2.default.createElement(View,{style:[styles.inputRow,{marginTop:10}]},
+_reactNative2.default.createElement(Text,{style:styles.label},'新密码'),
+_reactNative2.default.createElement(TextInput,{
+keyboardType:'default',
+clearButtonMode:'while-editing',
+style:styles.input,
+placeholder:'请填写新密码',
+secureTextEntry:true,
+onChangeText:function(text){return _this.props.data.newPwd=text;}})),
+
+_reactNative2.default.createElement(View,{style:[styles.line,{marginTop:2}]})));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1},
+
+loginform:{
+marginTop:-10,
+backgroundColor:'#ffffff',
+paddingLeft:20,
+paddingRight:20},
+
+line:{
+height:1,
+backgroundColor:'#f4f4f4'},
+
+marginTop30:{
+marginTop:30},
+
+inputRow:{
+backgroundColor:'00000000',
+flexDirection:'row',
+alignItems:'center',
+justifyContent:'center'},
+
+input:{
+height:35,
+borderColor:'#ccc',
+flex:1,
+fontSize:16,
+fontWeight:'100'},
+
+label:{
+width:60,
+fontSize:16,
+fontWeight:'100'},
+
+btn:{
+height:_Util2.default.size['height']*0.068,
+backgroundColor:'#45c9a2',
+justifyContent:'center',
+alignItems:'center',
+borderRadius:10,
+borderWidth:1,
+borderColor:'#ffffff'},
+
+style_view_register:{
+fontSize:12,
+fontWeight:'100',
+color:'#c40001',
+textAlign:'left'}});
+
+
+
+module.exports=changePwd;
+});
+__d('somira/App/Component/User/About.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var 
+
+
+
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Text=_reactNative2.default.Text;var 
+Image=_reactNative2.default.Image;var 
+View=_reactNative2.default.View;var 
+TouchableHighlight=_reactNative2.default.TouchableHighlight;var 
+LinkingIOS=_reactNative2.default.LinkingIOS;
 
 
 module.exports=_reactNative2.default.createClass({displayName:'exports',
@@ -67336,9 +68787,7 @@ module.exports=_reactNative2.default.createClass({displayName:'exports',
 
 
 getInitialState:function(){
-return {
-on:this.props.on,
-name:this.props.name};},
+return {};},
 
 
 
@@ -67347,14 +68796,64 @@ name:this.props.name};},
 render:function(){
 return (
 _reactNative2.default.createElement(View,{style:css.container},
-_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 最新揭晓!'),
+_reactNative2.default.createElement(View,{style:css.card},
+_reactNative2.default.createElement(Image,{style:css.logo,source:require('image!64X64')}),
+_reactNative2.default.createElement(Text,{style:css.instructions},'足彩收米拉致力为用户提供最专业的足球分析服务，打造最精准的赛事分析。'),
 
 
-_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+_reactNative2.default.createElement(Text,{style:css.welcome},'强大的分析团队：',
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'团队成员至少拥有十年以上的看球和赛事分析经验，熟悉各大足球联赛体系，广视角、多层级、更深度组合出击，完美诠释直击赛果。')),
 
 
-_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
-'\n','Cmd+D or shake for dev menu2')));}});
+
+_reactNative2.default.createElement(Text,{style:css.welcome},'先进的管理团队：',
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'公司管理层长期浸淫互联网，准确把脉互联网+的发展方向，简洁高效的扁平化管理，缜密多元的发展计划。')),
+
+
+
+_reactNative2.default.createElement(Text,{style:css.welcome},'工作环境：',
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'窗明几净宽敞大气的办公室，配长期无节制的点心饮料，无障碍的员工间沟通，合理化建议的快速实施，融洽多彩的的工作氛围。')),
+
+
+
+_reactNative2.default.createElement(Text,{style:css.welcome},'公司目标：',
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'打造最专业、最精准的互联网足球赛事分析，建立国内最优秀的足球大数据资料库。')),
+
+
+
+_reactNative2.default.createElement(Text,{style:css.welcome},'公司愿景：',
+
+_reactNative2.default.createElement(Text,{style:css.instructions},'携手足球爱好者完成足球资讯大社区的组建。'))),
+
+
+
+
+
+_reactNative2.default.createElement(TouchableHighlight,{underlayColor:'#dad9d7',
+style:{marginTop:10},
+onPress:function(){LinkingIOS.openURL('tel://4008710088');}},
+_reactNative2.default.createElement(View,{style:css.recordRow},
+_reactNative2.default.createElement(View,{style:[css.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
+_reactNative2.default.createElement(View,{style:css.newRow},
+_reactNative2.default.createElement(Text,{style:{marginLeft:6}},'客服电话'))),
+
+
+
+
+
+_reactNative2.default.createElement(View,{style:[css.recordCellFixed,{alignItems:'flex-end',marginRight:10}]},
+_reactNative2.default.createElement(View,{style:css.newRow},
+_reactNative2.default.createElement(Text,{style:[{marginLeft:6},this.props.fontClass]},'400-8710-088'),
+
+
+_reactNative2.default.createElement(Image,{style:[css.iconSize],
+source:require('image!arrow_right_grey')})))))));}});
+
+
 
 
 
@@ -67365,19 +68864,74 @@ _reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R t
 var css=StyleSheet.create({
 container:{
 flex:1,
-justifyContent:'center',
+marginTop:70,
+marginLeft:2,
+marginRight:2,
+
 alignItems:'center',
-backgroundColor:'#F5FCFF'},
+backgroundColor:'#f4f4f4'},
 
 welcome:{
-fontSize:20,
-textAlign:'center',
-margin:10},
+fontSize:12,
+fontWeight:'400',
+textAlign:'left',
+marginTop:6,
+marginBottom:6,
+marginLeft:18,
+marginRight:18},
 
 instructions:{
-textAlign:'center',
+fontSize:11,
+fontWeight:'100',
+textAlign:'left',
 color:'#333333',
-marginBottom:5}});
+marginTop:6,
+marginBottom:6,
+marginLeft:18,
+marginRight:18},
+
+card:{
+borderRadius:8,
+borderWidth:1,
+borderColor:'#b2b2b2',
+backgroundColor:'#F5FCFF'},
+
+logo:{
+marginTop:6,
+justifyContent:'center',
+alignItems:'center',
+resizeMode:Image.resizeMode.contain,
+width:_Util2.default.size['width']-10},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#F5FCFF',
+width:_Util2.default.size['width']},
+
+newRow:{
+flexDirection:'row',
+alignItems:'center',
+justifyContent:'center'},
+
+recordCell:{
+flex:1,
+height:36,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:36,
+justifyContent:'center'},
+
+iconSize:{
+marginRight:-6,
+height:20,
+width:20,
+resizeMode:Image.resizeMode.contain}});
+});
+__d('image!64X64',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/64X64.imageset/64X64.png","uri":"64X64","width":64,"height":64,"deprecated":true};
 });
 __d('image!消息按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/消息按钮.imageset/消息按钮.png","uri":"消息按钮","width":48,"height":36,"deprecated":true};
 });
@@ -67398,13 +68952,11 @@ __d('somira/App/Views/Cart/ShoppingCart.js',function(global, require, module, ex
 
 
 
-AppRegistry=_reactNative2.default.AppRegistry;var 
 StyleSheet=_reactNative2.default.StyleSheet;var 
 Text=_reactNative2.default.Text;var 
 View=_reactNative2.default.View;var 
 ScrollView=_reactNative2.default.ScrollView;var 
 TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
-Alert=_reactNative2.default.Alert;var 
 Platform=_reactNative2.default.Platform;
 
 
@@ -67557,7 +69109,7 @@ console.error(e);});}}else
 
 
 {
-_Util2.default.toast('您尚未登录');}});},
+_Util2.default.toast('您尚未登录!');}});},
 
 
 
