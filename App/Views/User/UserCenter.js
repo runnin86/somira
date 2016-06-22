@@ -116,7 +116,7 @@ module.exports = React.createClass({
       }
     });
   },
-  _handlePress(event) {
+  _addNavigator: function(component, title){
     if (!this.state.user) {
       this.props.navigator.push({
         component:Login,
@@ -127,31 +127,18 @@ module.exports = React.createClass({
       });
     }
     else {
-      if (event.type === 'Setting') {
-        this.props.navigator.push({
-          component:Setting,
-          leftButtonTitle: '',
-          // leftButtonIcon: {uri: '返回箭头'},
-          navigationBarHidden:false,
-          // tintColor:'#FFFFFF',
-          // barTintColor: '#FFFFFF',
-          title:'设置'
-        });
-      }
+      var data = {};
+      this.props.navigator.push({
+        title: title,
+        component: component,
+        navigationBarHidden:false,
+        rightButtonTitle: title==='修改密码'?'完成':'',
+        onRightButtonPress: () => this.changePwd(data),
+        passProps:{
+          data: data,
+        }
+      });
     }
-  },
-  _addNavigator: function(component, title){
-    var data = {};
-    this.props.navigator.push({
-      title: title,
-      component: component,
-      navigationBarHidden:false,
-      rightButtonTitle: title==='修改密码'?'完成':'',
-      onRightButtonPress: () => this.changePwd(data),
-      passProps:{
-        data: data,
-      }
-    });
   },
   changePwd(d) {
     if (!d.oldPwd) {
@@ -194,11 +181,11 @@ module.exports = React.createClass({
       <ScrollView style={css.flex}>
         <Image style={[css.headerImg]} source={{uri: '个人中心背景'}}>
           <View style={css.cellfixed,css.rightBtn}>
-            <Button onPress={(type)=>this._handlePress({type:'消息'})}>
+            <Button onPress={()=>{console.log('message')}}>
               <Image style={css.btnPhotoMsg}
                 source={require('image!消息按钮')}/>
             </Button>
-            <Button onPress={(type)=>this._handlePress({type:'Setting'})}>
+            <Button onPress={()=>{this._addNavigator(Setting,"设置")}}>
               <Image style={css.btnPhotoSet}
                 source={require('image!设置按钮')}/>
             </Button>
@@ -224,11 +211,11 @@ module.exports = React.createClass({
               </View>
               <View style={css.flexRow}>
                 <Button containerStyle={css.withdrawBtn}
-                  onPress={(type)=>this._handlePress({type:'提现'})}>
+                  onPress={()=>{console.log('提现')}}>
                   <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
                 </Button>
                 <Button containerStyle={css.rechargeBtn}
-                  onPress={(type)=>this._handlePress({type:'充值'})}>
+                  onPress={()=>{Util.toast('充值功能暂未开放,敬请期待!')}}>
                   <Text style={[css.rechargeBtnFont,{fontSize:16}]}>充值</Text>
                 </Button>
               </View>
@@ -236,7 +223,7 @@ module.exports = React.createClass({
             :
             <View style={css.flexRow}>
               <Button containerStyle={css.withdrawBtn}
-                onPress={(type)=>this._handlePress({type:'登录'})}>
+                onPress={()=>{this._addNavigator(Login,"登录")}}>
                 <Text style={[css.transparentFont,{fontSize:18}]}>登录</Text>
               </Button>
             </View>
@@ -338,17 +325,18 @@ module.exports = React.createClass({
               icon='二维码'
               onClick={()=>{this._addNavigator(QR,"我的二维码")}}/>
             <View style={[css.line]} />
-            <MenuItem
-              title='修改密码'
-              height='30'
-              fontSize='12'
-              icon='修改密码'
-              onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
-            <View style={[css.line]} />
           </View>
           :
           <View></View>
         }
+
+        <MenuItem
+          title='修改密码'
+          height='30'
+          fontSize='12'
+          icon='修改密码'
+          onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
+        <View style={[css.line]} />
 
         <MenuItem
           title='关于'
