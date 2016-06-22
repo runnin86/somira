@@ -135,7 +135,7 @@ var css = StyleSheet.create({
     flexDirection: 'row',
     borderBottomColor: '#eeeeee',
     borderBottomWidth: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#F5FCFF',
     width: Util.size['width'],
   },
   newRow : {
