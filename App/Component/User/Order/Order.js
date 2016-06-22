@@ -13,7 +13,6 @@ var {
   View,
   ScrollView,
   TouchableOpacity,
-  Alert,
   Platform
 } = React;
 

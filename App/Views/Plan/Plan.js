@@ -19,7 +19,6 @@ var {
   TouchableOpacity,
   ScrollView,
   Platform,
-  AlertIOS,
 } = React;
 
 module.exports = React.createClass({

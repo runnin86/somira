@@ -7,13 +7,11 @@ import Util from '../../Common/Util';
 import Tabs from '../../Common/Tabs';
 
 var {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
   ScrollView,
   TouchableOpacity,
-  Alert,
   Platform
 } = React;
 

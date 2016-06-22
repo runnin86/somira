@@ -25,7 +25,6 @@ var {
   ScrollView,
   Image,
   TouchableOpacity,
-  Alert,
   Platform
 } = React;
 
@@ -128,7 +127,6 @@ module.exports = React.createClass({
       });
     }
     else {
-      // alert(event.type);
       if (event.type === 'Setting') {
         this.props.navigator.push({
           component:Setting,

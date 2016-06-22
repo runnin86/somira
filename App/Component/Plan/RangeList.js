@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 var {
   View,
@@ -11,7 +12,6 @@ var {
   Image,
   Platform,
   ScrollView,
-  AlertIOS,
 } = ReactNative;
 
 import PlanList from './PlanList';
@@ -74,22 +74,19 @@ module.exports = React.createClass({
             });
           }
           else if (code === 0) {
-            AlertIOS.alert('提示消息', null,[
-              {text: msg, onPress: () => console.log('Foo Pressed0!')},
-            ])
+            Util.toast(msg);
           }
           else if (code === 3) {
-            AlertIOS.alert('提示消息', null,[
-              {text: msg, onPress: () => {
-                // 清空用户登录信息
-                Store.delete('user');
-            		Store.delete('token');
-                this.props.navigator.push({
-                  component: UserCenter,
-                  navigationBarHidden: true,
-                });
-              }},
-            ])
+            Util.toast(msg);
+            // 清空用户登录信息
+            Store.delete('user');
+            Store.delete('token');
+            this.props.navigator.push({
+              component: UserCenter,
+              navigationBarHidden: true,
+            });
+            // 退出后隐藏方案
+            RCTDeviceEventEmitter.emit('showPlanSwitch');
           }
         },
         (e)=>{
