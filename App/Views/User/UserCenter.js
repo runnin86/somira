@@ -1,11 +1,13 @@
 import React from 'react-native';
 
+import Button from 'react-native-button';
+import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+
 import Util from '../../Common/Util';
 import Login from './Login';
 import Setting from './Setting';
 import MenuItem from '../../Common/MenuItem';
-import Button from 'react-native-button';
-import Store from 'react-native-simple-store';
 import * as net from './../../Network/Interface';
 import UserBill from '../../Component/User/Bill/Bill';
 import UserOrder from '../../Component/User/Order/Order';
@@ -141,15 +143,53 @@ module.exports = React.createClass({
     }
   },
   _addNavigator: function(component, title){
-    var data = null;
+    var data = {};
     this.props.navigator.push({
       title: title,
       component: component,
       navigationBarHidden:false,
+      rightButtonTitle: title==='修改密码'?'完成':'',
+      onRightButtonPress: () => this.changePwd(data),
       passProps:{
-        data: data
+        data: data,
       }
     });
+  },
+  changePwd(d) {
+    if (!d.oldPwd) {
+      Util.toast('旧密码不能为空!');
+      return;
+    }
+    if (!d.newPwd) {
+      Util.toast('新密码不能为空!');
+      return;
+    }
+    if (d.oldPwd && d.newPwd) {
+      // 去修改密码
+      Store.get('token').then((token)=>{
+        if (token) {
+          Util.post(net.userApi.changePwd, token, {
+            'npwd': d.newPwd,
+            'opwd': d.oldPwd
+          },
+          ({code, msg, result})=>{
+            if (code === 1) {
+              Util.toast('密码修改成功!');
+              d = {};
+              Store.delete('user');
+              Store.delete('token');
+              // 跳转回用户
+              this.props.navigator.pop();
+              // 退出后隐藏方案
+              RCTDeviceEventEmitter.emit('showPlanSwitch');
+            }
+            else {
+              Util.toast(msg);
+            }
+          });
+        }
+      });
+    }
   },
   render() {
     return (
@@ -236,13 +276,21 @@ module.exports = React.createClass({
         {/*
           操作菜单开始
         */}
-        <MenuItem
-          title='我的账单'
-          height='30'
-          fontSize='12'
-          icon='我的账单'
-          onClick={()=>{this._addNavigator(UserBill,"我的账单")}}/>
-        <View style={[css.line]} />
+        {
+          this.state.user
+          ?
+          <View>
+            <MenuItem
+              title='我的账单'
+              height='30'
+              fontSize='12'
+              icon='我的账单'
+              onClick={()=>{this._addNavigator(UserBill,"我的账单")}}/>
+            <View style={[css.line]} />
+          </View>
+          :
+          <View></View>
+        }
 
         <MenuItem
           title='我的订单'
@@ -292,18 +340,18 @@ module.exports = React.createClass({
               icon='二维码'
               onClick={()=>{this._addNavigator(QR,"我的二维码")}}/>
             <View style={[css.line]} />
+            <MenuItem
+              title='修改密码'
+              height='30'
+              fontSize='12'
+              icon='修改密码'
+              onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
+            <View style={[css.line]} />
           </View>
           :
           <View></View>
         }
 
-        <MenuItem
-          title='修改密码'
-          height='30'
-          fontSize='12'
-          icon='修改密码'
-          onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
-        <View style={[css.line]} />
         <MenuItem
           title='关于'
           height='30'

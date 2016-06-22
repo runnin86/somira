@@ -1,59 +1,109 @@
 import React from 'react-native';
+import Util from '../../Common/Util';
+import * as net from '../../Network/Interface';
+import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 var {
   AppRegistry,
   StyleSheet,
   Text,
+  Image,
   View,
-  PropTypes
+  TouchableHighlight,
+  TextInput,
 } = React;
 
-module.exports = React.createClass({
-  /*
-   * 获取实例初始状态(state，来自props)
-   */
-  getInitialState: function () {
+var changePwd = React.createClass({
+  getInitialState: function() {
     return {
-      on: this.props.on,
-      name: this.props.name
-    }
+    };
   },
-  /*
-   * 渲染(JSX,通过state控制DOM结构变化)
-   */
-  render: function() {
+  render() {
     return (
-      <View style={css.container}>
-        <Text style={css.welcome}>
-          Welcome to 修改密码!
-        </Text>
-        <Text style={css.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={css.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu2
-        </Text>
+      <View style={styles.loginform}>
+        <View style={{marginTop:88,marginBottom:10,}}>
+          <Text style={styles.style_view_register}>
+            请设置您的新密码。密码请设置为6位以上的字母、数字、符号，尽量为三者组合，以保障您的账号安全
+          </Text>
+        </View>
+        <View style={styles.inputRow}>
+          <Text style={styles.label} >旧密码</Text>
+          <TextInput
+            keyboardType ='default'
+            clearButtonMode='while-editing'
+            style={styles.input}
+            placeholder="请填写旧密码"
+            secureTextEntry={true}
+            onChangeText={(text) => this.props.data.oldPwd = text}/>
+        </View>
+        <View style={[styles.line]} />
+        <View style={[styles.inputRow,{marginTop:10}]}>
+          <Text style={styles.label}>新密码</Text>
+          <TextInput
+            keyboardType ='default'
+            clearButtonMode='while-editing'
+            style={styles.input}
+            placeholder="请填写新密码"
+            secureTextEntry={true}
+            onChangeText={(text) => this.props.data.newPwd = text}/>
+        </View>
+        <View style={[styles.line,{marginTop:2}]} />
       </View>
     );
+  },
+});
+
+var styles = StyleSheet.create({
+  container: {
+    flex:1,
+  },
+  loginform:{
+    marginTop:-10,
+    backgroundColor:'#ffffff',
+    paddingLeft:20,
+    paddingRight:20,
+  },
+  line:{
+    height:1,
+    backgroundColor: '#f4f4f4',
+  },
+  marginTop30:{
+    marginTop:30,
+  },
+  inputRow:{
+    backgroundColor:'00000000',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  input:{
+    height:35,
+    borderColor:'#ccc',
+    flex:1,
+    fontSize:16,
+    fontWeight:'100',
+  },
+  label: {
+    width:60,
+    fontSize: 16,
+    fontWeight:'100',
+  },
+  btn:{
+    height:Util.size['height']*0.068,
+    backgroundColor:'#45c9a2',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius: 10,
+    borderWidth:1,
+    borderColor:'#ffffff',
+  },
+  style_view_register:{
+    fontSize:12,
+    fontWeight:'100',
+    color:'#c40001',
+    textAlign:'left',
   }
 });
 
-var css = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+module.exports = changePwd;
