@@ -97,7 +97,7 @@ module.exports = React.createClass({
         });
       }
       else {
-        Util.toast('您尚未登录');
+        Util.toast('您尚未登录!');
       }
     });
   },
