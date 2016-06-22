@@ -258,18 +258,18 @@ var css = StyleSheet.create({
     paddingBottom: 6
   },
   tipsText: {
-    marginTop: 8,
+    marginTop: 6,
     fontSize: 12,
     fontWeight: '100',
   },
   tipsImg: {
-    width: 48,
-    height: 48,
-    borderRadius: 24
+    width: 40,
+    height: 40,
+    borderRadius: 20
   },
   scrollMsg: {
     flexDirection: 'row',
-    height: 40,
+    height: 36,
     backgroundColor: '#66CC66',
     borderTopColor: '#eeeeee',
     borderTopWidth: 1,

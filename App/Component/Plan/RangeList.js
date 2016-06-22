@@ -208,7 +208,7 @@ var styles = StyleSheet.create({
     borderBottomColor: '#d6d7da',
     backgroundColor: '#f6f7f8',
     paddingHorizontal: 10,
-    paddingVertical: 14,
+    paddingVertical: 10,
   },
   rangeNameText: {
     fontSize: 14,
@@ -225,7 +225,7 @@ var styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    paddingTop: 2,
+    paddingTop: -2,
   },
   rangeName: {
     borderRadius: 4,
