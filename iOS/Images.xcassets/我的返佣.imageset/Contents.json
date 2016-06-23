@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "我的返佣.png",
+      "filename" : "账单.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "佣金明细.png",
+      "filename" : "账单-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "佣金明细-1.png",
+      "filename" : "账单-2.png",
       "scale" : "3x"
     }
   ],
