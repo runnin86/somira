@@ -63,6 +63,10 @@ export let userApi = {
   login: URL_COMMON + 'login',
   // 修改用户密码
   changePwd: URL_COMMON + 'modifypwd',
+  // 获取验证码
+  getVCode: URL_COMMON + 'getCode',
+  // 忘记用户密码
+  forgetPwd: URL_COMMON + 'updatePwd',  
   // 我的本金
   coinmeter: URL_COMMON + 'coinmeter',
   // 我的盈利

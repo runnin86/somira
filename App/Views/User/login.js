@@ -60,8 +60,35 @@ var login = React.createClass({
     // 判断是否有方案的权限
     RCTDeviceEventEmitter.emit('showPlanSwitch');
   },
-  forgetPwd() {
-
+  forgetPwd(d) {
+    if (!d.phone) {
+      Util.toast('请填写注册手机号!');
+      return;
+    }
+    if (!d.vCode) {
+      Util.toast('请填写验证码!');
+      return;
+    }
+    if (!d.password) {
+      Util.toast('请填写密码!');
+      return;
+    }
+    // 发送忘记密码请求
+    Util.post(net.userApi.forgetPwd, '', {
+      'phone': d.phone,
+      'password': d.password,
+      'code': d.vCode,
+      'submitType': 'forgetpwd'
+    },
+    ({code, msg})=>{
+      if (code === 1) {
+        Util.toast('找回密码成功!');
+        this.props.navigator.pop();
+      }
+      else {
+        Util.toast(msg);
+      }
+    });
   },
   render() {
     return (
@@ -104,7 +131,7 @@ var login = React.createClass({
                 passProps:{
                   data: data,
                 }
-              })
+              });
             }}>
             <Text style={styles.style_view_register}>
               忘记密码?
