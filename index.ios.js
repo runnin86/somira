@@ -105,6 +105,12 @@ var somira = React.createClass({
           }
         });
       }
+      else {
+        this.setState({
+          notifyHpCartCount: 0,
+          notifyPlanCartCount: 0
+        });
+      }
     });
   },
   render: function() {

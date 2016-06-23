@@ -55,10 +55,12 @@ var login = React.createClass({
     Store.save('user', info.user);
     Store.save('userPhone', info.user.user_phone);
     Store.save('token', info.token);
-    // 跳转回用户
-    this.props.navigator.pop();
+    // 设置购物车图标
+		RCTDeviceEventEmitter.emit('loadCartCount');
     // 判断是否有方案的权限
     RCTDeviceEventEmitter.emit('showPlanSwitch');
+    // 跳转回用户
+    this.props.navigator.pop();
   },
   forgetPwd(d) {
     if (!d.phone) {
