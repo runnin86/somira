@@ -1,8 +1,10 @@
 import React from 'react-native';
-import Util from '../../Common/Util';
-import * as net from '../../Network/Interface';
 import Store from 'react-native-simple-store';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+
+import Util from '../../Common/Util';
+import * as net from '../../Network/Interface';
+import ForgetPwd from '../../Component/User/ForgetPwd';
 
 var {
   AppRegistry,
@@ -56,7 +58,10 @@ var login = React.createClass({
     // 跳转回用户
     this.props.navigator.pop();
     // 判断是否有方案的权限
-    RCTDeviceEventEmitter.emit('showPlanSwitch');    
+    RCTDeviceEventEmitter.emit('showPlanSwitch');
+  },
+  forgetPwd() {
+
   },
   render() {
     return (
@@ -86,11 +91,28 @@ var login = React.createClass({
         <TouchableHighlight style={[styles.btn,styles.marginTop30]} underlayColor='#0057a84a' onPress={this.login}>
           <Text style={{fontSize:20,fontWeight:'100'}}>登录</Text>
         </TouchableHighlight>
-        <View style={{flex:1,flexDirection:'row',alignItems: 'flex-end'}}>
-          <Text style={styles.style_view_register}>
-            忘记密码?
-          </Text>
-        </View>
+          <TouchableHighlight
+            style={{flex:1,flexDirection:'row',alignItems: 'flex-end'}}
+            underlayColor='#ffffff' onPress={()=>{
+              var data = {}
+              this.props.navigator.push({
+                title: '找回密码',
+                component: ForgetPwd,
+                navigationBarHidden:false,
+                leftButtonTitle: '返回',
+                leftButtonIcon: require('image!返回'),
+                onLeftButtonPress: () => this.props.navigator.pop(),
+                rightButtonTitle: '完成',
+                onRightButtonPress: () => this.forgetPwd(data),
+                passProps:{
+                  data: data,
+                }
+              })
+            }}>
+            <Text style={styles.style_view_register}>
+              忘记密码?
+            </Text>
+          </TouchableHighlight>
       </View>
     );
   },
