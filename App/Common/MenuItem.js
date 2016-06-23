@@ -24,7 +24,7 @@ module.exports = React.createClass({
           {
             this.props.icon
             ?
-            <Image style={[styles.iconSize]}
+            <Image style={[styles.iconSize,{marginLeft:-4}]}
               source={{uri: this.props.icon}}/>
             :
             null

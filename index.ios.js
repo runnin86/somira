@@ -134,7 +134,7 @@ var somira = React.createClass({
           null
         }
         <TabBarIOS.Item
-          title="乐夺宝" icon={{uri:'乐夺宝',scale:3,isStatic:true}}
+          title="乐夺宝" icon={{uri:'乐夺宝',scale:2,isStatic:true}}
           selected={this.state.selectedTab === 'hp'}
           onPress={()=>{this.changeTab('hp')}}>
           <NavigatorIOS style={css.container}
@@ -151,7 +151,7 @@ var somira = React.createClass({
         </TabBarIOS.Item>
 
         <TabBarIOS.Item
-          title="购物车" icon={{uri:'购物车',scale:3,isStatic:true}}
+          title="购物车" icon={{uri:'购物车menu',scale:2,isStatic:true}}
           badge={
             this.state.notifyHpCartCount+this.state.notifyPlanCartCount > 0
             ?

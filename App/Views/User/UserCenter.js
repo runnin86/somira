@@ -293,7 +293,7 @@ module.exports = React.createClass({
               title='我的返佣'
               height='30'
               fontSize='12'
-              icon='我的打赏'
+              icon='我的返佣'
               onClick={()=>{this._addNavigator(UserCommission,"我的返佣")}}/>
             <View style={[css.line]} />
 
