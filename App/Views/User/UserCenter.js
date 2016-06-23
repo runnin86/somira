@@ -267,7 +267,7 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的账单'
-              height='30'
+              height='36'
               fontSize='12'
               icon='我的账单'
               onClick={()=>{this._addNavigator(UserBill,"我的账单")}}/>
@@ -279,7 +279,7 @@ module.exports = React.createClass({
 
         <MenuItem
           title='我的订单'
-          height='30'
+          height='36'
           fontSize='12'
           icon='我的订单'
           onClick={()=>{this._addNavigator(UserOrder,"我的订单")}}/>
@@ -291,7 +291,7 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的返佣'
-              height='30'
+              height='36'
               fontSize='12'
               icon='我的返佣'
               onClick={()=>{this._addNavigator(UserCommission,"我的返佣")}}/>
@@ -299,7 +299,7 @@ module.exports = React.createClass({
 
             <MenuItem
               title='我的团队'
-              height='30'
+              height='36'
               fontSize='12'
               icon='我的团队'
               onClick={()=>{this._addNavigator(UserTeam,"我的团队")}}/>
@@ -320,7 +320,7 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的二维码'
-              height='30'
+              height='36'
               fontSize='12'
               icon='二维码'
               onClick={()=>{this._addNavigator(QR,"我的二维码")}}/>
@@ -332,7 +332,7 @@ module.exports = React.createClass({
 
         <MenuItem
           title='修改密码'
-          height='30'
+          height='36'
           fontSize='12'
           icon='修改密码'
           onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
@@ -340,7 +340,7 @@ module.exports = React.createClass({
 
         <MenuItem
           title='关于'
-          height='30'
+          height='36'
           fontSize='12'
           icon='关于'
           onClick={()=>{this._addNavigator(About,"关于")}}/>
@@ -419,7 +419,7 @@ var css = StyleSheet.create({
     width:30,
     height:21,
     right: 6,
-    top: 8,
+    top: 9,
   },
   btnPhotoSet: {
     width:26,
