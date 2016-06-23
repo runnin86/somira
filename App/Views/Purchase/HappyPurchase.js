@@ -164,9 +164,7 @@ module.exports = React.createClass({
       this.props.navigator.push({
         title: '商品详情',
         component: ItemDetail,
-        leftButtonTitle: '返回',
         navigationBarHidden:false,
-        onLeftButtonPress: () => this.props.navigator.pop(),
         passProps: {
           item: item
         }

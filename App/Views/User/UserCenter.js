@@ -419,13 +419,13 @@ var css = StyleSheet.create({
     width:30,
     height:21,
     right: 6,
-    borderRadius:4,
-    top: 2
+    top: 8,
   },
   btnPhotoSet: {
     width:26,
     height:26,
-    left: 6
+    left: 6,
+    top: 6,
   },
   moneyRow : {
     flexDirection : 'row',

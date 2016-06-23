@@ -134,7 +134,7 @@ var somira = React.createClass({
           null
         }
         <TabBarIOS.Item
-          title="乐夺宝" icon={{uri:'乐夺宝',scale:2,isStatic:true}}
+          title="一元夺宝" icon={{uri:'乐夺宝',scale:2,isStatic:true}}
           selected={this.state.selectedTab === 'hp'}
           onPress={()=>{this.changeTab('hp')}}>
           <NavigatorIOS style={css.container}
@@ -143,7 +143,7 @@ var somira = React.createClass({
             titleTextColor={Util.headerTitleColor}
             navigationBarHidden={false}
             initialRoute={{
-              title: '乐夺宝',
+              title: '一元夺宝',
               titleTextColor: Util.headerTitleColor,
               component: HappyPurchase,
               wrapperStyle: css.wrapperStyle
