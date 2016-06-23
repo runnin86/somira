@@ -1379,9 +1379,15 @@ _Util2.default.post(net.planApi.queryCart,token,{},
 function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var result=_ref2.result;
 if(code===1&&result){
 _this3.setState({
-notifyPlanCartCount:result.length});}});}});},
+notifyPlanCartCount:result.length});}});}else 
 
 
+
+
+{
+_this3.setState({
+notifyHpCartCount:0,
+notifyPlanCartCount:0});}});},
 
 
 
@@ -1413,7 +1419,7 @@ wrapperStyle:css.wrapperStyle}})):
 null,
 
 _react2.default.createElement(_reactNative.TabBarIOS.Item,{
-title:'乐夺宝',icon:{uri:'乐夺宝',scale:3,isStatic:true},
+title:'一元夺宝',icon:{uri:'乐夺宝',scale:2,isStatic:true},
 selected:this.state.selectedTab==='hp',
 onPress:function(){_this4.changeTab('hp');}},
 _react2.default.createElement(_reactNative.NavigatorIOS,{style:css.container,
@@ -1422,7 +1428,7 @@ tintColor:_Util2.default.headerTitleColor,
 titleTextColor:_Util2.default.headerTitleColor,
 navigationBarHidden:false,
 initialRoute:{
-title:'乐夺宝',
+title:'一元夺宝',
 titleTextColor:_Util2.default.headerTitleColor,
 component:_HappyPurchase2.default,
 wrapperStyle:css.wrapperStyle}})),
@@ -1430,7 +1436,7 @@ wrapperStyle:css.wrapperStyle}})),
 
 
 _react2.default.createElement(_reactNative.TabBarIOS.Item,{
-title:'购物车',icon:{uri:'购物车',scale:3,isStatic:true},
+title:'购物车',icon:{uri:'购物车menu',scale:2,isStatic:true},
 badge:
 this.state.notifyHpCartCount+this.state.notifyPlanCartCount>0?
 
@@ -59784,15 +59790,13 @@ title:title});}else
 
 
 
-selectItem:function(item){var _this3=this;
+selectItem:function(item){
 
 if(Platform.OS==='ios'){
 this.props.navigator.push({
 title:'商品详情',
 component:_ItemDetail2.default,
-leftButtonTitle:'返回',
 navigationBarHidden:false,
-onLeftButtonPress:function(){return _this3.props.navigator.pop();},
 passProps:{
 item:item}});}else 
 
@@ -59802,13 +59806,13 @@ item:item}});}else
 
 
 
-fetchBannerData:function(){var _this4=this;
+fetchBannerData:function(){var _this3=this;
 var bannerUrl=net.hpApi.banner;
 fetch(bannerUrl).
 then(function(response){return response.json();}).
 then(function(_ref){var code=_ref.code;var msg=_ref.msg;var info=_ref.info;
 if(code===1){
-_this4.setState({
+_this3.setState({
 bannerList:info});}}).
 
 
@@ -59817,12 +59821,12 @@ console.log('获取乐夺宝banner失败:'+e);});},
 
 
 
-scrollMsgForHP:function(){var _this5=this;
+scrollMsgForHP:function(){var _this4=this;
 _Util2.default.get(net.hpApi.oneBuyNewPublic+'?pagenum='+0,'',
 function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var results=_ref2.results;
 if(code===1){
 if(results.list.length>0){
-_this5.state.scrollMsgList=[];
+_this4.state.scrollMsgList=[];
 for(var i=0;i<results.list.length;i++){
 var info=results.list[i];
 if(info.user_name){
@@ -59834,13 +59838,13 @@ rv+='*';}
 
 var finalName=name.replace(unFirst,rv);
 var _msg='恭喜 '+finalName+' '+info.price+'元夺得'+info.name;
-_this5.state.scrollMsgList.push({
+_this4.state.scrollMsgList.push({
 title:_msg});}}
 
 
 
-if(_this5.state.scrollMsgList.length===0){
-_this5.state.scrollMsgList.push({
+if(_this4.state.scrollMsgList.length===0){
+_this4.state.scrollMsgList.push({
 title:'一元夺宝, 精彩无限!'});}}}},
 
 
@@ -62253,6 +62257,10 @@ login:URL_COMMON+'login',
 
 changePwd:URL_COMMON+'modifypwd',
 
+getVCode:URL_COMMON+'getCode',
+
+forgetPwd:URL_COMMON+'updatePwd',
+
 coinmeter:URL_COMMON+'coinmeter',
 
 useRate:URL_COMMON+'userate',
@@ -63755,29 +63763,11 @@ title:title});}else
 
 
 
-selectItem:function(item){var _this2=this;
-
-if(Platform.OS==='ios'){
-this.props.navigator.push({
-title:'商品详情',
-component:ItemDetail,
-leftButtonTitle:'返回',
-navigationBarHidden:false,
-onLeftButtonPress:function(){return _this2.props.navigator.pop();},
-passProps:{
-item:item}});}else 
-
-
-{}},
-
-
-
-
-fetchBannerData:function(){var _this3=this;
+fetchBannerData:function(){var _this2=this;
 _Util2.default.get(net.planApi.banner,'',
 function(_ref){var code=_ref.code;var msg=_ref.msg;var info=_ref.info;
 if(code===1){
-_this3.setState({
+_this2.setState({
 bannerList:info});}},
 
 
@@ -63787,13 +63777,13 @@ console.error(e);});},
 
 
 
-scrollMsgForPlan:function(){var _this4=this;
+scrollMsgForPlan:function(){var _this3=this;
 _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 _Util2.default.get(net.planApi.rank,token,
 function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var result=_ref2.result;
 if(code===1&&result.length>0){
-_this4.state.scrollMsgList=[];
+_this3.state.scrollMsgList=[];
 for(var i=0;i<result.length;i++){
 var obj=result[i];
 
@@ -63802,11 +63792,11 @@ var obj=result[i];
 if(obj.winbonus>0){
 var scrollText={title:'用户 '+
 obj.nickName+'，上期盈利 '+obj.winbonus+' 元'};
-_this4.state.scrollMsgList.push(scrollText);}}
+_this3.state.scrollMsgList.push(scrollText);}}
 
 
-if(_this4.state.scrollMsgList.length===0){
-_this4.state.scrollMsgList.push({
+if(_this3.state.scrollMsgList.length===0){
+_this3.state.scrollMsgList.push({
 title:'温馨提示：理性投注，长跟长红'});}}},
 
 
@@ -64371,26 +64361,26 @@ _Util2.default.toast('方案已截止,不可购买');}},
 
 
 
-selectPlan:function(plan){var _this2=this;
+selectPlan:function(plan){
 this.props.navigator.push({
 title:'方案详情',
 component:_PlanDetail2.default,
-leftButtonTitle:'返回',
+
 navigationBarHidden:false,
-onLeftButtonPress:function(){return _this2.props.navigator.pop();},
+
 passProps:{
 planId:plan.plan_id}});},
 
 
 
 
-renderRow:function(plan){var _this3=this;
+renderRow:function(plan){var _this2=this;
 var filterTime=_Util2.default.getDateDiff(this.state.serviceTime,plan.deadline_time,'minute');
 var redHeart=plan.planConfident;
 return (
 _reactNative2.default.createElement(TouchableOpacity,{onPress:this.selectPlan.bind(this,plan)},
 _reactNative2.default.createElement(View,{style:css.planView},
-_reactNative2.default.createElement(Animatable.Image,{ref:function(component){return _this3._animatables[plan.plan_id]=component;},style:css.expertPhoto,source:{uri:plan.expert_photo}}),
+_reactNative2.default.createElement(Animatable.Image,{ref:function(component){return _this2._animatables[plan.plan_id]=component;},style:css.expertPhoto,source:{uri:plan.expert_photo}}),
 _reactNative2.default.createElement(View,{style:css.planInfo},
 _reactNative2.default.createElement(Text,{style:{fontSize:13,fontWeight:'100',marginBottom:4}},
 plan.expert_name),
@@ -64421,7 +64411,7 @@ filterTime>0?filterTime+'分钟':'已截止')),
 
 
 _reactNative2.default.createElement(View,{style:([css.row],{alignItems:'flex-end',marginRight:10})},
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this3._pushCart(_this3,plan.plan_id,filterTime);}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){return _this2._pushCart(_this2,plan.plan_id,filterTime);}},
 _reactNative2.default.createElement(Image,{style:{width:36,height:33},
 source:{uri:filterTime>0?'购物车-选中':'购物车'}}))))));},
 
@@ -65291,7 +65281,7 @@ this.state.user?
 _reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的账单',
-height:'30',
+height:'36',
 fontSize:'12',
 icon:'我的账单',
 onClick:function(){_this9._addNavigator(_Bill2.default,"我的账单");}}),
@@ -65303,7 +65293,7 @@ _reactNative2.default.createElement(View,null),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的订单',
-height:'30',
+height:'36',
 fontSize:'12',
 icon:'我的订单',
 onClick:function(){_this9._addNavigator(_Order2.default,"我的订单");}}),
@@ -65315,15 +65305,15 @@ this.state.user?
 _reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的返佣',
-height:'30',
+height:'36',
 fontSize:'12',
-icon:'我的打赏',
+icon:'我的返佣',
 onClick:function(){_this9._addNavigator(_Commission2.default,"我的返佣");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的团队',
-height:'30',
+height:'36',
 fontSize:'12',
 icon:'我的团队',
 onClick:function(){_this9._addNavigator(_Team2.default,"我的团队");}})):
@@ -65344,7 +65334,7 @@ this.state.user?
 _reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'我的二维码',
-height:'30',
+height:'36',
 fontSize:'12',
 icon:'二维码',
 onClick:function(){_this9._addNavigator(_QR2.default,"我的二维码");}}),
@@ -65356,7 +65346,7 @@ _reactNative2.default.createElement(View,null),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'修改密码',
-height:'30',
+height:'36',
 fontSize:'12',
 icon:'修改密码',
 onClick:function(){_this9._addNavigator(_ChangePwd2.default,"修改密码");}}),
@@ -65364,7 +65354,7 @@ _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
 title:'关于',
-height:'30',
+height:'36',
 fontSize:'12',
 icon:'关于',
 onClick:function(){_this9._addNavigator(_About2.default,"关于");}}),
@@ -65443,13 +65433,13 @@ btnPhotoMsg:{
 width:30,
 height:21,
 right:6,
-borderRadius:4,
-top:2},
+top:9},
 
 btnPhotoSet:{
 width:26,
 height:26,
-left:6},
+left:6,
+top:6},
 
 moneyRow:{
 flexDirection:'row',
@@ -65514,10 +65504,12 @@ line:{
 height:1,
 backgroundColor:'#f4f4f4'}});
 });
-__d('somira/App/Views/User/Login.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+__d('somira/App/Views/User/Login.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var 
 
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _ForgetPwd=require('somira/App/Component/User/ForgetPwd.js');var _ForgetPwd2=babelHelpers.interopRequireDefault(_ForgetPwd);var 
 
 
 
@@ -65570,11 +65562,43 @@ _reactNativeSimpleStore2.default.save('user',info.user);
 _reactNativeSimpleStore2.default.save('userPhone',info.user.user_phone);
 _reactNativeSimpleStore2.default.save('token',info.token);
 
-this.props.navigator.pop();
+_RCTDeviceEventEmitter2.default.emit('loadCartCount');
 
-_RCTDeviceEventEmitter2.default.emit('showPlanSwitch');},
+_RCTDeviceEventEmitter2.default.emit('showPlanSwitch');
 
-render:function(){var _this3=this;
+this.props.navigator.pop();},
+
+forgetPwd:function(d){var _this3=this;
+if(!d.phone){
+_Util2.default.toast('请填写注册手机号!');
+return;}
+
+if(!d.vCode){
+_Util2.default.toast('请填写验证码!');
+return;}
+
+if(!d.password){
+_Util2.default.toast('请填写密码!');
+return;}
+
+
+_Util2.default.post(net.userApi.forgetPwd,'',{
+'phone':d.phone,
+'password':d.password,
+'code':d.vCode,
+'submitType':'forgetpwd'},
+
+function(_ref2){var code=_ref2.code;var msg=_ref2.msg;
+if(code===1){
+_Util2.default.toast('找回密码成功!');
+_this3.props.navigator.pop();}else 
+
+{
+_Util2.default.toast(msg);}});},
+
+
+
+render:function(){var _this4=this;
 return (
 _reactNative2.default.createElement(View,{style:styles.loginform},
 _reactNative2.default.createElement(View,{style:[styles.inputRow,{marginTop:90}]},
@@ -65585,7 +65609,7 @@ clearButtonMode:'while-editing',
 style:styles.input,
 placeholder:'账号',
 value:this.state.userId,
-onChangeText:function(text){return _this3.setState({userId:text});}})),
+onChangeText:function(text){return _this4.setState({userId:text});}})),
 
 _reactNative2.default.createElement(View,{style:[styles.line]}),
 _reactNative2.default.createElement(View,{style:[styles.inputRow,{marginTop:10}]},
@@ -65596,13 +65620,27 @@ clearButtonMode:'while-editing',
 style:styles.input,
 placeholder:'密码',
 secureTextEntry:true,
-onChangeText:function(text){return _this3.setState({pwd:text});}})),
+onChangeText:function(text){return _this4.setState({pwd:text});}})),
 
 _reactNative2.default.createElement(View,{style:[styles.line,{marginTop:2}]}),
 _reactNative2.default.createElement(TouchableHighlight,{style:[styles.btn,styles.marginTop30],underlayColor:'#0057a84a',onPress:this.login},
 _reactNative2.default.createElement(Text,{style:{fontSize:20,fontWeight:'100'}},'登录')),
 
-_reactNative2.default.createElement(View,{style:{flex:1,flexDirection:'row',alignItems:'flex-end'}},
+_reactNative2.default.createElement(TouchableHighlight,{
+style:{flex:1,flexDirection:'row',alignItems:'flex-end'},
+underlayColor:'#ffffff',onPress:function(){
+var data={};
+_this4.props.navigator.push({
+title:'找回密码',
+component:_ForgetPwd2.default,
+navigationBarHidden:false,
+rightButtonTitle:'完成',
+onRightButtonPress:function(){return _this4.forgetPwd(data);},
+passProps:{
+data:data}});}},
+
+
+
 _reactNative2.default.createElement(Text,{style:styles.style_view_register},'忘记密码?'))));}});
 
 
@@ -65670,6 +65708,183 @@ textAlign:'right'}});
 
 module.exports=login;
 });
+__d('somira/App/Component/User/ForgetPwd.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var 
+
+
+
+
+AppRegistry=_reactNative2.default.AppRegistry;var 
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Text=_reactNative2.default.Text;var 
+Image=_reactNative2.default.Image;var 
+View=_reactNative2.default.View;var 
+TouchableHighlight=_reactNative2.default.TouchableHighlight;var 
+TextInput=_reactNative2.default.TextInput;
+
+
+var forgetPwd=_reactNative2.default.createClass({displayName:'forgetPwd',
+getInitialState:function(){
+return {
+userId:"",
+vCode:"",
+password:""};},
+
+
+componentDidMount:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('userPhone').then(function(userPhone){
+if(userPhone){
+_this.setState({
+userId:userPhone});
+
+_this.props.data.phone=userPhone;}});},
+
+
+
+getVerificationCode:function(){var _this2=this;
+if(this.state.userId){
+_Util2.default.post(net.userApi.getVCode,'',{
+'phone':this.state.userId,
+'type':'forgetpwd'},
+
+function(_ref){var code=_ref.code;var msg=_ref.msg;
+if(code===1){
+_Util2.default.toast('验证码已发送至'+_this2.state.userId+',请注意查收!');}else 
+
+{
+_Util2.default.toast('验证码发送失败,请联系客服人员!');}});}else 
+
+
+
+{
+_Util2.default.toast('请填写注册手机号!');}},
+
+
+render:function(){var _this3=this;
+return (
+_reactNative2.default.createElement(View,{style:styles.loginform},
+_reactNative2.default.createElement(View,{style:{marginTop:88,marginBottom:10}},
+_reactNative2.default.createElement(Text,{style:styles.style_view_register},'请设置您的新密码。密码请设置为6位以上的字母、数字、符号，尽量为三者组合，以保障您的账号安全')),
+
+
+
+_reactNative2.default.createElement(View,{style:[styles.line,{marginLeft:-10,marginRight:-10,width:_Util2.default.size['width']}]}),
+_reactNative2.default.createElement(View,{style:styles.inputRow},
+_reactNative2.default.createElement(Text,{style:styles.label},'注册手机号'),
+_reactNative2.default.createElement(TextInput,{
+keyboardType:'phone-pad',
+clearButtonMode:'while-editing',
+style:styles.input,
+placeholder:'请填写手机号',
+value:this.state.userId,
+onChangeText:function(text){
+_this3.setState({userId:text});
+_this3.props.data.phone=text;}}),
+
+_reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:styles.codeBtn,
+onPress:function(){return _this3.getVerificationCode();}},
+_reactNative2.default.createElement(Text,{style:styles.transparentFont},'获取验证码'))),
+
+
+_reactNative2.default.createElement(View,{style:[styles.line]}),
+_reactNative2.default.createElement(View,{style:[styles.inputRow,{marginTop:10}]},
+_reactNative2.default.createElement(Text,{style:styles.label},'验证码'),
+_reactNative2.default.createElement(TextInput,{
+keyboardType:'numeric',
+clearButtonMode:'while-editing',
+style:styles.input,
+placeholder:'请填写验证码',
+onChangeText:function(text){return _this3.props.data.vCode=text;}})),
+
+_reactNative2.default.createElement(View,{style:[styles.line,{marginTop:2}]}),
+_reactNative2.default.createElement(View,{style:[styles.line,{marginTop:20,marginLeft:-10,marginRight:-10,width:_Util2.default.size['width']}]}),
+_reactNative2.default.createElement(View,{style:[styles.inputRow,{marginTop:10}]},
+_reactNative2.default.createElement(Text,{style:styles.label},'新密码'),
+_reactNative2.default.createElement(TextInput,{
+keyboardType:'default',
+clearButtonMode:'while-editing',
+style:styles.input,
+placeholder:'请填写新密码',
+secureTextEntry:true,
+onChangeText:function(text){return _this3.props.data.password=text;}})),
+
+_reactNative2.default.createElement(View,{style:[styles.line,{marginTop:2}]})));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1},
+
+loginform:{
+marginTop:-10,
+backgroundColor:'#ffffff',
+paddingLeft:10,
+paddingRight:10},
+
+line:{
+height:1,
+backgroundColor:'#f4f4f4'},
+
+marginTop30:{
+marginTop:30},
+
+inputRow:{
+backgroundColor:'00000000',
+flexDirection:'row',
+alignItems:'center',
+justifyContent:'center'},
+
+input:{
+height:35,
+borderColor:'#ccc',
+flex:1,
+fontSize:14,
+fontWeight:'100'},
+
+label:{
+width:80,
+fontSize:14,
+fontWeight:'100'},
+
+btn:{
+height:_Util2.default.size['height']*0.068,
+backgroundColor:'#45c9a2',
+justifyContent:'center',
+alignItems:'center',
+borderRadius:10,
+borderWidth:1,
+borderColor:'#ffffff'},
+
+style_view_register:{
+fontSize:12,
+fontWeight:'100',
+color:'#c40001',
+textAlign:'left'},
+
+codeBtn:{
+width:80,
+height:26,
+borderWidth:1,
+borderColor:'#f4f4f4',
+borderRadius:5,
+justifyContent:'center'},
+
+transparentFont:{
+textAlign:'center',
+color:'#000000',
+fontSize:14,
+fontWeight:'100',
+backgroundColor:'rgba(0,152,50,0)'}});
+
+
+
+module.exports=forgetPwd;
+});
 __d('somira/App/Views/User/Setting.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var 
 
 
@@ -65694,9 +65909,11 @@ logout:function(){
 _reactNativeSimpleStore2.default.delete('user');
 _reactNativeSimpleStore2.default.delete('token');
 
-this.props.navigator.pop();
+_RCTDeviceEventEmitter2.default.emit('loadCartCount');
 
-_RCTDeviceEventEmitter2.default.emit('showPlanSwitch');},
+_RCTDeviceEventEmitter2.default.emit('showPlanSwitch');
+
+this.props.navigator.pop();},
 
 render:function(){var _this=this;
 return (
@@ -65787,7 +66004,7 @@ _reactNative2.default.createElement(View,{style:{flexDirection:'row',alignItems:
 
 this.props.icon?
 
-_reactNative2.default.createElement(Image,{style:[styles.iconSize],
+_reactNative2.default.createElement(Image,{style:[styles.iconSize,{marginLeft:-4}],
 source:{uri:this.props.icon}}):
 
 null,
@@ -65807,7 +66024,7 @@ height:20,
 width:20,
 resizeMode:Image.resizeMode.contain}});
 });
-__d('image!arrow_right_grey',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/arrow_right_grey.imageset/arrow_right_grey.png","uri":"arrow_right_grey","width":20,"height":33,"deprecated":true};
+__d('image!arrow_right_grey',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/arrow_right_grey.imageset/arrow_right_grey.png","uri":"arrow_right_grey","width":128,"height":128,"deprecated":true};
 });
 __d('somira/App/Component/User/Bill/Bill.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _MenuItem=require('somira/App/Common/MenuItem.js');var _MenuItem2=babelHelpers.interopRequireDefault(_MenuItem);var _Plan=require('somira/App/Component/User/Bill/Plan.js');var _Plan2=babelHelpers.interopRequireDefault(_Plan);var _Withdraw=require('somira/App/Component/User/Bill/Withdraw.js');var _Withdraw2=babelHelpers.interopRequireDefault(_Withdraw);var _Reward=require('somira/App/Component/User/Bill/Reward.js');var _Reward2=babelHelpers.interopRequireDefault(_Reward);var _Recharge=require('somira/App/Component/User/Bill/Recharge.js');var _Recharge2=babelHelpers.interopRequireDefault(_Recharge);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
 
@@ -66496,13 +66713,11 @@ _reactNative2.default.createElement(_List2.default,{cateId:cateId,onSelect:funct
 
 
 
-selectItem:function(item){var _this2=this;
+selectItem:function(item){
 this.props.navigator.push({
 title:item.pid?'方案详情':'商品详情',
 component:item.pid?_PlanDetail2.default:_ItemDetail2.default,
-leftButtonTitle:'返回',
 navigationBarHidden:false,
-onLeftButtonPress:function(){return _this2.props.navigator.pop();},
 passProps:{
 item:item,
 planId:item.pid}});}});
@@ -68933,9 +69148,9 @@ resizeMode:Image.resizeMode.contain}});
 });
 __d('image!64X64',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/64X64.imageset/64X64.png","uri":"64X64","width":64,"height":64,"deprecated":true};
 });
-__d('image!消息按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/消息按钮.imageset/消息按钮.png","uri":"消息按钮","width":48,"height":36,"deprecated":true};
+__d('image!消息按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/消息按钮.imageset/消息按钮.png","uri":"消息按钮","width":32,"height":32,"deprecated":true};
 });
-__d('image!设置按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/设置按钮.imageset/设置按钮.png","uri":"设置按钮","width":48,"height":48,"deprecated":true};
+__d('image!设置按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/设置按钮.imageset/设置按钮.png","uri":"设置按钮","width":128,"height":128,"deprecated":true};
 });
 __d('image!我的本金',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/我的本金.imageset/我的本金.png","uri":"我的本金","width":44,"height":48,"deprecated":true};
 });
@@ -68998,14 +69213,12 @@ _reactNative2.default.createElement(_ItemList2.default,{cateId:cateId,onSelect:f
 
 
 
-selectItem:function(item){var _this2=this;
+selectItem:function(item){
 if(Platform.OS==='ios'){
 this.props.navigator.push({
 title:item.pid?'方案详情':'商品详情',
 component:item.pid?_PlanDetail2.default:_ItemDetail2.default,
-leftButtonTitle:'返回',
 navigationBarHidden:false,
-onLeftButtonPress:function(){return _this2.props.navigator.pop();},
 passProps:{
 item:item,
 planId:item.pid}});}else 

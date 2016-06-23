@@ -66,7 +66,7 @@ export let userApi = {
   // 获取验证码
   getVCode: URL_COMMON + 'getCode',
   // 忘记用户密码
-  forgetPwd: URL_COMMON + 'updatePwd',  
+  forgetPwd: URL_COMMON + 'updatePwd',
   // 我的本金
   coinmeter: URL_COMMON + 'coinmeter',
   // 我的盈利
