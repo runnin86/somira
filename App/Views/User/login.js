@@ -99,9 +99,6 @@ var login = React.createClass({
                 title: '找回密码',
                 component: ForgetPwd,
                 navigationBarHidden:false,
-                leftButtonTitle: '返回',
-                leftButtonIcon: require('image!返回'),
-                onLeftButtonPress: () => this.props.navigator.pop(),
                 rightButtonTitle: '完成',
                 onRightButtonPress: () => this.forgetPwd(data),
                 passProps:{

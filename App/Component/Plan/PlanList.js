@@ -82,9 +82,9 @@ module.exports = React.createClass({
     this.props.navigator.push({
       title: '方案详情',
       component: PlanDetail,
-      leftButtonTitle: '返回',
+      // leftButtonTitle: '返回',
       navigationBarHidden: false,
-      onLeftButtonPress: () => this.props.navigator.pop(),
+      // onLeftButtonPress: () => this.props.navigator.pop(),
       passProps: {
         planId: plan.plan_id
       }

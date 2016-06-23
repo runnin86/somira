@@ -139,24 +139,6 @@ module.exports = React.createClass({
   		}
     }
   },
-  //选中一行
-  selectItem:function(item){
-    // console.log(item);
-    if (Platform.OS === 'ios') {
-      this.props.navigator.push({
-        title: '商品详情',
-        component: ItemDetail,
-        leftButtonTitle: '返回',
-        navigationBarHidden:false,
-        onLeftButtonPress: () => this.props.navigator.pop(),
-        passProps: {
-          item: item
-        }
-      });
-    }else{
-      //android对应的处理
-    }
-  },
   // 拉取banner数据
   fetchBannerData() {
     Util.get(net.planApi.banner, '',
