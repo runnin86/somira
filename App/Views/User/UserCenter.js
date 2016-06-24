@@ -23,6 +23,7 @@ var {
   Text,
   View,
   ScrollView,
+  RefreshControl,
   Image,
   TouchableOpacity,
   Platform
@@ -34,6 +35,7 @@ module.exports = React.createClass({
     return {
       // user: this.props.user,
       salesImg: '本月',
+      isRefreshing: false,
     };
   },
   componentWillReceiveProps() {
@@ -176,9 +178,25 @@ module.exports = React.createClass({
       });
     }
   },
+  _onRefresh() {
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      this.setState({
+        isRefreshing: false,
+      });
+    }, 5000);
+  },
   render() {
     return (
-      <ScrollView style={css.flex}>
+      <ScrollView style={css.flex}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this._onRefresh}
+            tintColor="#c40001"
+            title="玩命加载中..."
+          />
+        }>
         <Image style={[css.headerImg]} source={{uri: '个人中心背景'}}>
           <View style={css.cellfixed,css.rightBtn}>
             <Button onPress={()=>{console.log('message')}}>
