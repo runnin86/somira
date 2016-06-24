@@ -8,6 +8,7 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 import Util from './../../../Common/Util';
 import * as net from './../../../Network/Interface';
+import Progress from './../../../Common/Progress';
 
 var {
   StyleSheet,
@@ -26,7 +27,8 @@ module.exports = React.createClass({
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
       cateId: 0,
-      totalPrice: 0,
+      planListPageNum: 0,
+      hpListPageNum: 0,
     };
   },
   //只调用一次，在render之后调用
@@ -40,52 +42,64 @@ module.exports = React.createClass({
     this.setState({
       loaded: false,
       cateId: nextProps.cateId,
-    })
+      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+    });
     //拉取数据
     this.fetchData(nextProps.cateId);
   },
   //拉取数据
   fetchData: function(cateId) {
+    // 方案
+    if (cateId === 0) {
+      this.getPlanList();
+    }
+    else if (cateId === 1) {
+      // 乐夺宝
+      this.getHpList();
+    }
+  },
+  getPlanList() {
     Store.get('token').then((token)=>{
-      if (token) {
-        // 方案
-        if (cateId === 0) {
-          Util.post(net.planApi.queryCart, token, {},
-          ({code, msg, result})=>{
-            // 计算总价
-            let tempPrice = 0
-            result.map((p, key)=>{
-              tempPrice += p.amount*p.planAmount;
-            });
+      if (token && this.state.planListPageNum > -1) {
+        Util.post(net.planApi.myplan + '?pagenum=' + this.state.planListPageNum, token, {},
+        ({code, msg, result})=>{
+          if (code === 1) {
             this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(code === 1?result:''),
-              totalPrice: tempPrice,
-              loaded: true
+              loaded: true,
+              dataSource: this.state.dataSource.cloneWithRows(result.length>0?result:''),
+              planListPageNum: result.length === 0?-1:this.state.planListPageNum+1
             });
-          });
-        }
-        else if (cateId === 1) {
-          // 乐夺宝
-          Util.get(net.hpApi.redisCart, token,
-          ({code, msg, info})=>{
-            // 计算总价
-            let tempPrice = 0
-            info.map((h, key)=>{
-              tempPrice += h.amount;
-            });
-            this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(code === 1?info:''),
-              totalPrice: tempPrice,
-              loaded: true
-            });
-          },
-          (e)=>{
-            console.error(e);
-          });
-        }
+          }
+          else {
+            Util.toast(msg);
+          }
+        });
       }
       else {
         Util.toast('您尚未登录!');
+      }
+    });
+  },
+  getHpList() {
+    Store.get('user').then((userdata)=>{
+      if (userdata.user_id && this.state.hpListPageNum > -1) {
+        let param = '?userId=' + userdata.user_id + '&pagenum=' + this.state.hpListPageNum;
+        Util.get(net.hpApi.userOneBuyOrder + param, '',
+        ({code, msg, results})=>{
+          if (code === 1) {
+            this.setState({
+              loaded: true,
+              dataSource: this.state.dataSource.cloneWithRows(results.list.length>0?results.list:''),
+              // hpListPageNum: results.list.length === 0?-1:this.state.hpListPageNum+1
+            });
+          }
+          else {
+            Util.toast(msg);
+          }
+        },
+        (e)=>{
+          console.error(e);
+        });
       }
     });
   },
@@ -110,71 +124,87 @@ module.exports = React.createClass({
   renderRow(item) {
     return (
       <TouchableOpacity onPress={this.props.onSelect.bind(this,item)}>
-          {
-            this.state.cateId === 0
-            ?
-            <View style={[css.row,css.container]}>
-              <View style={css.column}>
-                <Image style={[css.left10,css.bottom10,css.right4,{width: 42,height: 48,}]}
-                  source={{uri: item.expertHead}} />
-                <Text style={[css.fontWeightBold,css.fontSize14,{alignSelf:'center',marginTop:-6,}]}
-                  numberOfLines={1}>
-                  {item.expertName}
+        {
+          this.state.cateId === 0
+          ?
+          <View style={[css.container,{backgroundColor:item.plan_result==='中奖'?'#FFFFF0':'#f9f9f9'}]}>
+            <View style={css.goodRow}>
+              <View style={{flexDirection:'row'}}>
+                <Text style={{fontWeight:'100',fontSize:13}}>
+                  {item.expert_name}
+                </Text>
+                <Text style={{fontWeight:'100',fontSize:10}}>
+                  [{item.plan_name}]
                 </Text>
               </View>
-              <View style={css.flex1}>
-                <View style={[css.row,css.left10,css.right15,css.bottom4]}>
-                  <Text style={[css.fontWeight,css.fontSize14]}>
-                    {item.planName}
-                  </Text>
-                  <Text style={[css.fontWeight2,css.fontSize12,css.flex1,css.textRight]}>
-                    {item.addTime}
+              <View style={{flexDirection:'row'}}>
+                <Image style={{width:14,height:14}} source={require('image!时间')} />
+                <Text style={{fontWeight:'100',fontSize:11,marginLeft:2,}}>
+                  {item.purchase_date}
+                </Text>
+              </View>
+            </View>
+            <View style={[css.goodRow,{alignSelf:'center',marginTop:8,marginBottom:8,backgroundColor:'rgba(0,152,50,0)'}]}>
+              <Text style={[{fontWeight:'100',fontSize:14},item.plan_result==='中奖'?css.shadom:'']}>
+                {item.plan_result===null?'等待开奖':item.plan_result}
+              </Text>
+            </View>
+            <View style={[css.goodRow]}>
+              <View style={css.planBottomLine}>
+                <Text style={{fontWeight:'100',fontSize:10}}>
+                  购买金额 {item.totalPrice}
+                </Text>
+              </View>
+              <View style={[css.planBottomLine,{alignItems:'center'}]}>
+                <Text style={{fontWeight:'100',fontSize:10}}>
+                  倍数 {item.totalMultiple}
+                </Text>
+              </View>
+              <View style={[css.planBottomLine,{alignItems:'flex-end'}]}>
+                <Text style={{fontWeight:'100',fontSize:10}}>
+                  收益 {
+                    item.totalBonus>item.totalPrice
+                    ?
+                    Math.round(parseFloat(item.totalBonus-item.totalPrice)*100)/100
+                    :
+                    0
+                  }
+                </Text>
+              </View>
+            </View>
+          </View>
+          :
+          <View style={[css.container,{flexDirection:'row'}]}>
+            <Image style={{width: 60,height: 60,marginBottom: 10,marginRight: 4}}
+              source={{uri: item.images?item.images.split(',')[0]:''}} />
+            <View style={css.flex1}>
+              <Text style={{fontSize: 14,fontWeight: '400',}} numberOfLines={1}>
+                {'第'+item.number+'期 '+item.name}
+              </Text>
+              <Text style={{fontSize: 11,fontWeight: '100',marginTop:2,marginBottom:2,}} numberOfLines={1}>
+                本期参与人次:{item.payCount}
+              </Text>
+
+              <View style={css.progress}>
+                <Progress progress={(item.totalCount - item.remainingAmount) / item.totalCount}/>
+              </View>
+              <View style={css.goodRow}>
+                <View>
+                  <Text style={{fontWeight:'100',fontSize:10}}>总需</Text>
+                  <Text style={css.redPrice}>
+                    {item.totalCount}
                   </Text>
                 </View>
-                <View style={[css.row,css.left10,css.right15,css.bottom4,css.top4]}>
-                  <View style={css.row}>
-                    <Image style={[css.right4,{width: 12,height: 12}]}
-                      source={require('image!方案详情-收益区')} />
-                    <Text style={[css.fontWeight,css.fontSize12]}>
-                      {item.rangeName}
-                    </Text>
-                  </View>
-                  <View style={[css.row,{right:-40,}]}>
-                    <Image style={[css.right4,{width: 10,height: 14,}]}
-                      source={require('image!单价')} />
-                    <Text style={[css.fontWeight,css.fontSize12,css.flex1]}>
-                      {item.planAmount}元
-                    </Text>
-                  </View>
-                </View>
-    					</View>
-    				</View>
-            :
-            <View style={[css.row,css.container]}>
-              <Image style={[css.bottom10,css.right4,{width: 60,height: 60,}]}
-                source={{uri: item.images?item.images.split(',')[0]:''}} />
-              <View style={css.flex1}>
-                <Text style={[css.fontWeightBold,{fontSize: 14}]} numberOfLines={1}>
-                  {item.name}
-                </Text>
-                <Text style={[css.fontWeight,{fontSize: 9,marginTop:2,marginBottom:2,}]} numberOfLines={1}>
-                  {item.content}
-                </Text>
-                <View style={[css.row,css.top4]}>
-                  <Text style={[css.fontWeightBold,css.fontSize12]}>
-                    需:
-                    <Text style={css.red}>
-                      {item.amount}
-                    </Text>
-                    元
-                  </Text>
-                  <Text style={[css.fontWeight,css.fontSize12,css.flex1,css.textCenter]}>
-                    总价:{item.totalCount}元
+                <View>
+                  <Text style={{fontWeight:'100',fontSize:10}}>剩余</Text>
+                  <Text style={css.whitePrice}>
+                    {item.remainingAmount}
                   </Text>
                 </View>
               </View>
             </View>
-          }
+          </View>
+        }
 			</TouchableOpacity>
     );
   },
@@ -203,59 +233,36 @@ var css = StyleSheet.create({
     backgroundColor : '#eeeeee'
   },
   container: {
-    paddingTop: 8,
-    paddingBottom: 4,
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    paddingRight: 10,
     borderBottomColor : '#eeeeee',
     borderBottomWidth : 1,
     backgroundColor: '#ffffff',
   },
-  center: {
-    alignSelf:'center',
-    justifyContent:'center',
+  goodRow : {
+  	flexDirection : 'row',
+    justifyContent: 'space-between'
   },
-  fontWeight: {
-    fontWeight: '100'
+  planBottomLine: {
+    width: (Util.size['width']-20)/3,
   },
-  fontWeightBold: {
-    fontWeight: '400',
+  shadom: {
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 1,
+    textShadowColor: '#FFD700',
   },
-  fontSize14: {
-    fontSize: 14
+  redPrice : {
+    fontSize : 12,
+    color : '#c40001'
   },
-  fontSize12: {
-    fontSize: 12
+  whitePrice : {
+    fontSize : 12,
+    color : '#b0b0b0'
   },
-  textRight: {
-    textAlign:'right'
-  },
-  textCenter: {
-    textAlign:'center'
-  },
-  red: {
-    color: 'red'
-  },
-  column: {
-    flexDirection: 'column'
-  },
-  row: {
-    flexDirection: 'row'
-  },
-  left10: {
-    marginLeft: 10
-  },
-  right15: {
-    marginRight: 15
-  },
-  right4: {
-    marginRight: 4
-  },
-  bottom4: {
-    marginBottom: 4
-  },
-  bottom10: {
+  progress: {
+    marginTop: 10,
     marginBottom: 10
-  },
-  top4: {
-    marginTop:4
   },
 });

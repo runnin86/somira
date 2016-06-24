@@ -55,12 +55,12 @@ module.exports = React.createClass({
   //选中一行
 	selectItem:function(item){
     this.props.navigator.push({
-      title: item.pid ? '方案详情' : '商品详情',
-      component: item.pid ? PlanDetail : ItemDetail,
+      title: item.plan_id ? '方案详情' : '商品详情',
+      component: item.plan_id ? PlanDetail : ItemDetail,
       navigationBarHidden:false,
       passProps: {
         item: item,
-        planId: item.pid,
+        planId: item.plan_id,
       }
     });
 	},
