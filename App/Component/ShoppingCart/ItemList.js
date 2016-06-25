@@ -291,44 +291,64 @@ module.exports = React.createClass({
       );
     };
     return(
-      <View style={css.flex1}>
+      <View style={[css.flex1,{backgroundColor:'#eeeeee',}]}>
+        {
+          this.state.dataSource.getRowCount() ===0
+          ?
+          <View style={{alignItems:'center',marginTop:40,}}>
+            <Image style={{width: 120,resizeMode:Image.resizeMode.contain,}}
+              source={require('image!温馨提示')}/>
+            {
+              this.state.cateId === 0
+              ?
+              <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+                购物车空空如也,赶快去购买方案吧
+              </Text>
+              :
+              <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+                购物车空空如也,赶快去夺宝吧
+              </Text>
+            }
+          </View>
+          :
+          null
+        }
         <ListView contentInset={{top: 0,bottom:20}}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           style={css.listView}/>
-
-      {
-        this.state.dataSource.getRowCount()>0
-        ?
-        <View style={[css.payArea]}>
-          <View style={css.flex1}>
-            <Text style={[css.payText,
-              this.state.cateId === 0
-              ?
-              {color: 'red'}
-              :
-              {color: '#000000'}
-            ]}>
-              共 {this.state.dataSource.getRowCount()} 件{this.state.cateId === 0?'方案':'商品'},
-              总计 {this.state.totalPrice} 元
-            </Text>
-          </View>
-          <View style={[css.flex1],{width:68}}>
-            <Button onPress={this.payCart}
-              style={[css.payBtn,
+        {
+          this.state.dataSource.getRowCount()>0
+          ?
+          <View style={[css.payArea]}>
+            <View style={css.flex1}>
+              <Text style={[css.payText,
                 this.state.cateId === 0
                 ?
-                {backgroundColor: 'red'}
+                {color: 'red'}
                 :
-                {backgroundColor: '#0894ec'}
+                {color: '#000000'}
               ]}>
-              付款
-            </Button>
+                共 {this.state.dataSource.getRowCount()} 件{this.state.cateId === 0?'方案':'商品'},
+                总计 {this.state.totalPrice} 元
+              </Text>
+            </View>
+            <View style={[css.flex1],{width:68}}>
+              <Button onPress={this.payCart}
+                style={[css.payBtn,
+                  this.state.cateId === 0
+                  ?
+                  {backgroundColor: 'red'}
+                  :
+                  {backgroundColor: '#0894ec'}
+                ]}>
+                付款
+              </Button>
+            </View>
           </View>
-        </View>
-        :
-        null
-      }
+          :
+          null
+        }
       </View>
     );
   },
