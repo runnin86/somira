@@ -470,12 +470,12 @@ var css = StyleSheet.create({
     paddingRight: 10,
   },
   borderTop: {
-    borderTopColor : '#eeeeee',
+    borderTopColor : '#C0C0C0',
     borderTopWidth : 1,
     backgroundColor: '#ffffff',
   },
   borderBottom: {
-    borderBottomColor : '#eeeeee',
+    borderBottomColor : '#C0C0C0',
     borderBottomWidth : 1,
     backgroundColor: '#ffffff',
   },

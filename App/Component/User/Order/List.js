@@ -237,7 +237,7 @@ var css = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 10,
     paddingRight: 10,
-    borderBottomColor : '#eeeeee',
+    borderBottomColor : '#C0C0C0',
     borderBottomWidth : 1,
     backgroundColor: '#ffffff',
   },
