@@ -27,8 +27,10 @@ module.exports = React.createClass({
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
       cateId: 0,
-      planListPageNum: 0,
+      planListPageNum: 1,
       hpListPageNum: 0,
+      planData: [],
+      hpData: [],
     };
   },
   //只调用一次，在render之后调用
@@ -43,6 +45,10 @@ module.exports = React.createClass({
       loaded: false,
       cateId: nextProps.cateId,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      planData: [],
+      planListPageNum: 1,
+      hpData: [],
+      hpListPageNum: 0,
     });
     //拉取数据
     this.fetchData(nextProps.cateId);
@@ -58,16 +64,33 @@ module.exports = React.createClass({
       this.getHpList();
     }
   },
+  loadMore() {
+    let pNum = this.state.planListPageNum;
+    let hNum = this.state.hpListPageNum;
+    this.setState({
+      planListPageNum: pNum !== -1 ? pNum + 1 : -1,
+      hpListPageNum: hNum !== -1 ? hNum + 1 : -1,
+    });
+    //拉取数据
+    this.fetchData(this.state.cateId);
+  },
   getPlanList() {
     Store.get('token').then((token)=>{
       if (token && this.state.planListPageNum > -1) {
         Util.post(net.planApi.myplan + '?pagenum=' + this.state.planListPageNum, token, {},
         ({code, msg, result})=>{
+          // console.log(this.state.planListPageNum + '->' + result.length + '->' + this.state.dataSource.getRowCount());
           if (code === 1) {
+            // 数据填充
+            if (result.length>0) {
+              result.map((v,k) => {
+                this.state.planData.push(v);
+              });
+            }
             this.setState({
               loaded: true,
-              dataSource: this.state.dataSource.cloneWithRows(result.length>0?result:''),
-              planListPageNum: result.length === 0?-1:this.state.planListPageNum+1
+              dataSource: this.state.dataSource.cloneWithRows(this.state.planData),
+              planListPageNum: result.length === 0?-1:this.state.planListPageNum
             });
           }
           else {
@@ -87,10 +110,16 @@ module.exports = React.createClass({
         Util.get(net.hpApi.userOneBuyOrder + param, '',
         ({code, msg, results})=>{
           if (code === 1) {
+            // 数据填充
+            if (results.list.length>0) {
+              results.list.map((v,k) => {
+                this.state.hpData.push(v);
+              });
+            }
             this.setState({
               loaded: true,
-              dataSource: this.state.dataSource.cloneWithRows(results.list.length>0?results.list:''),
-              // hpListPageNum: results.list.length === 0?-1:this.state.hpListPageNum+1
+              dataSource: this.state.dataSource.cloneWithRows(this.state.hpData),
+              hpListPageNum: results.list.length === 0?-1:this.state.hpListPageNum
             });
           }
           else {
@@ -112,10 +141,34 @@ module.exports = React.createClass({
       );
     };
     return(
-      <View style={css.flex1}>
-        <ListView contentInset={{top: 0,bottom:20}}
+      <View style={[css.flex1,{backgroundColor:'#eeeeee',}]}>
+        {
+          this.state.dataSource.getRowCount() ===0
+          ?
+          <View style={{alignItems:'center',marginTop:40,}}>
+            <Image style={{width: 120,resizeMode:Image.resizeMode.contain,}}
+              source={require('image!温馨提示')}/>
+            {
+              this.state.cateId === 0
+              ?
+              <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+                您还没有方案记录,赶快去购买方案吧
+              </Text>
+              :
+              <Text style={{height:20,fontSize: 10, color: 'gray'}}>
+                您还没有一元夺宝记录,赶快去夺宝吧
+              </Text>
+            }
+          </View>
+          :
+          null
+        }
+        <ListView contentInset={{top: 0,bottom:0}}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
+          pageSize={10}
+          onEndReached={this.loadMore}
+          onEndReachedThreshold={1}
           style={css.listView}/>
       </View>
     );
