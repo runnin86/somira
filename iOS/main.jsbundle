@@ -65037,6 +65037,7 @@ StyleSheet=_reactNative2.default.StyleSheet;var
 Text=_reactNative2.default.Text;var 
 View=_reactNative2.default.View;var 
 ScrollView=_reactNative2.default.ScrollView;var 
+RefreshControl=_reactNative2.default.RefreshControl;var 
 Image=_reactNative2.default.Image;var 
 TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
 Platform=_reactNative2.default.Platform;
@@ -65047,7 +65048,8 @@ getInitialState:function(){
 this._getUser();
 return {
 
-salesImg:'本月'};},
+salesImg:'本月',
+isRefreshing:false};},
 
 
 componentWillReceiveProps:function(){
@@ -65190,16 +65192,32 @@ _Util2.default.toast(msg);}});}});}},
 
 
 
-render:function(){var _this9=this;
+_onRefresh:function(){var _this9=this;
+this.setState({isRefreshing:true});
+setTimeout(function(){
+_this9.setState({
+isRefreshing:false});},
+
+5000);},
+
+render:function(){var _this10=this;
 return (
-_reactNative2.default.createElement(ScrollView,{style:css.flex},
+_reactNative2.default.createElement(ScrollView,{style:css.flex,
+refreshControl:
+_reactNative2.default.createElement(RefreshControl,{
+refreshing:this.state.isRefreshing,
+onRefresh:this._onRefresh,
+tintColor:'#c40001',
+title:'玩命加载中...'})},
+
+
 _reactNative2.default.createElement(Image,{style:[css.headerImg],source:{uri:'个人中心背景'}},
 _reactNative2.default.createElement(View,{style:(css.cellfixed,css.rightBtn)},
 _reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){console.log('message');}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoMsg,
 source:require('image!消息按钮')})),
 
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this9._addNavigator(_Setting2.default,"设置");}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this10._addNavigator(_Setting2.default,"设置");}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoSet,
 source:require('image!设置按钮')}))),
 
@@ -65237,7 +65255,7 @@ _reactNative2.default.createElement(Text,{style:[css.rechargeBtnFont,{fontSize:1
 
 _reactNative2.default.createElement(View,{style:css.flexRow},
 _reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:css.withdrawBtn,
-onPress:function(){_this9._addNavigator(_Login2.default,"登录");}},
+onPress:function(){_this10._addNavigator(_Login2.default,"登录");}},
 _reactNative2.default.createElement(Text,{style:[css.transparentFont,{fontSize:18}]},'登录')))),
 
 
@@ -65284,7 +65302,7 @@ title:'我的账单',
 height:'36',
 fontSize:'12',
 icon:'我的账单',
-onClick:function(){_this9._addNavigator(_Bill2.default,"我的账单");}}),
+onClick:function(){_this10._addNavigator(_Bill2.default,"我的账单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]})):
 
 
@@ -65296,7 +65314,7 @@ title:'我的订单',
 height:'36',
 fontSize:'12',
 icon:'我的订单',
-onClick:function(){_this9._addNavigator(_Order2.default,"我的订单");}}),
+onClick:function(){_this10._addNavigator(_Order2.default,"我的订单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 
@@ -65308,7 +65326,7 @@ title:'我的返佣',
 height:'36',
 fontSize:'12',
 icon:'我的返佣',
-onClick:function(){_this9._addNavigator(_Commission2.default,"我的返佣");}}),
+onClick:function(){_this10._addNavigator(_Commission2.default,"我的返佣");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -65316,7 +65334,7 @@ title:'我的团队',
 height:'36',
 fontSize:'12',
 icon:'我的团队',
-onClick:function(){_this9._addNavigator(_Team2.default,"我的团队");}})):
+onClick:function(){_this10._addNavigator(_Team2.default,"我的团队");}})):
 
 
 _reactNative2.default.createElement(View,null),
@@ -65337,7 +65355,7 @@ title:'我的二维码',
 height:'36',
 fontSize:'12',
 icon:'二维码',
-onClick:function(){_this9._addNavigator(_QR2.default,"我的二维码");}}),
+onClick:function(){_this10._addNavigator(_QR2.default,"我的二维码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]})):
 
 
@@ -65349,7 +65367,7 @@ title:'修改密码',
 height:'36',
 fontSize:'12',
 icon:'修改密码',
-onClick:function(){_this9._addNavigator(_ChangePwd2.default,"修改密码");}}),
+onClick:function(){_this10._addNavigator(_ChangePwd2.default,"修改密码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -65357,7 +65375,7 @@ title:'关于',
 height:'36',
 fontSize:'12',
 icon:'关于',
-onClick:function(){_this9._addNavigator(_About2.default,"关于");}}),
+onClick:function(){_this10._addNavigator(_About2.default,"关于");}}),
 
 _reactNative2.default.createElement(View,{style:{marginTop:8,alignItems:'center',justifyContent:'center'}},
 _reactNative2.default.createElement(Image,{style:css.warnning,source:require('image!温馨提示')}),
@@ -65466,12 +65484,12 @@ paddingLeft:10,
 paddingRight:10},
 
 borderTop:{
-borderTopColor:'#eeeeee',
+borderTopColor:'#C0C0C0',
 borderTopWidth:1,
 backgroundColor:'#ffffff'},
 
 borderBottom:{
-borderBottomColor:'#eeeeee',
+borderBottomColor:'#C0C0C0',
 borderBottomWidth:1,
 backgroundColor:'#ffffff'},
 
@@ -66715,12 +66733,12 @@ _reactNative2.default.createElement(_List2.default,{cateId:cateId,onSelect:funct
 
 selectItem:function(item){
 this.props.navigator.push({
-title:item.pid?'方案详情':'商品详情',
-component:item.pid?_PlanDetail2.default:_ItemDetail2.default,
+title:item.plan_id?'方案详情':'商品详情',
+component:item.plan_id?_PlanDetail2.default:_ItemDetail2.default,
 navigationBarHidden:false,
 passProps:{
 item:item,
-planId:item.pid}});}});
+planId:item.plan_id}});}});
 
 
 
@@ -66739,7 +66757,8 @@ __d('somira/App/Component/User/Order/List.js',function(global, require, module, 
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var 
+net=babelHelpers.interopRequireWildcard(_Interface);var _Progress=require('somira/App/Common/Progress.js');var _Progress2=babelHelpers.interopRequireDefault(_Progress);var 
+
 
 
 StyleSheet=_reactNative2.default.StyleSheet;var 
@@ -66758,7 +66777,10 @@ return {
 dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
 loaded:false,
 cateId:0,
-totalPrice:0};},
+planListPageNum:1,
+hpListPageNum:0,
+planData:[],
+hpData:[]};},
 
 
 
@@ -66771,53 +66793,92 @@ componentWillReceiveProps:function(nextProps){
 
 this.setState({
 loaded:false,
-cateId:nextProps.cateId});
+cateId:nextProps.cateId,
+dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+planData:[],
+planListPageNum:1,
+hpData:[],
+hpListPageNum:0});
 
 
 this.fetchData(nextProps.cateId);},
 
 
-fetchData:function(cateId){var _this=this;
-_reactNativeSimpleStore2.default.get('token').then(function(token){
-if(token){
+fetchData:function(cateId){
 
 if(cateId===0){
-_Util2.default.post(net.planApi.queryCart,token,{},
-function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
-
-var tempPrice=0;
-result.map(function(p,key){
-tempPrice+=p.amount*p.planAmount;});
-
-_this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(code===1?result:''),
-totalPrice:tempPrice,
-loaded:true});});}else 
-
-
+this.getPlanList();}else 
 
 if(cateId===1){
 
-_Util2.default.get(net.hpApi.redisCart,token,
-function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var info=_ref2.info;
+this.getHpList();}},
 
-var tempPrice=0;
-info.map(function(h,key){
-tempPrice+=h.amount;});
+
+loadMore:function(){
+var pNum=this.state.planListPageNum;
+var hNum=this.state.hpListPageNum;
+this.setState({
+planListPageNum:pNum!==-1?pNum+1:-1,
+hpListPageNum:hNum!==-1?hNum+1:-1});
+
+
+this.fetchData(this.state.cateId);},
+
+getPlanList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token&&_this.state.planListPageNum>-1){
+_Util2.default.post(net.planApi.myplan+'?pagenum='+_this.state.planListPageNum,token,{},
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+
+if(code===1){
+
+if(result.length>0){
+result.map(function(v,k){
+_this.state.planData.push(v);});}
+
 
 _this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(code===1?info:''),
-totalPrice:tempPrice,
-loaded:true});},
+loaded:true,
+dataSource:_this.state.dataSource.cloneWithRows(_this.state.planData),
+planListPageNum:result.length===0?-1:_this.state.planListPageNum});}else 
 
 
-function(e){
-console.error(e);});}}else 
+{
+_Util2.default.toast(msg);}});}else 
 
 
 
 {
-_Util2.default.toast('您尚未登录!');}});},
+_Util2.default.toast('没有更多数据了!');}});},
+
+
+
+getHpList:function(){var _this2=this;
+_reactNativeSimpleStore2.default.get('user').then(function(userdata){
+if(userdata.user_id&&_this2.state.hpListPageNum>-1){
+var param='?userId='+userdata.user_id+'&pagenum='+_this2.state.hpListPageNum;
+_Util2.default.get(net.hpApi.userOneBuyOrder+param,'',
+function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var results=_ref2.results;
+if(code===1){
+
+if(results.list.length>0){
+results.list.map(function(v,k){
+_this2.state.hpData.push(v);});}
+
+
+_this2.setState({
+loaded:true,
+dataSource:_this2.state.dataSource.cloneWithRows(_this2.state.hpData),
+hpListPageNum:results.list.length===0?-1:_this2.state.hpListPageNum});}else 
+
+
+{
+_Util2.default.toast(msg);}},
+
+
+function(e){
+console.error(e);});}});},
+
 
 
 
@@ -66830,10 +66891,34 @@ _reactNative2.default.createElement(Image,{style:css.loading,source:require('ima
 
 ;
 return (
-_reactNative2.default.createElement(View,{style:css.flex1},
-_reactNative2.default.createElement(ListView,{contentInset:{top:0,bottom:20},
+_reactNative2.default.createElement(View,{style:[css.flex1,{backgroundColor:'#eeeeee'}]},
+
+this.state.dataSource.getRowCount()===0?
+
+_reactNative2.default.createElement(View,{style:{alignItems:'center',marginTop:40}},
+_reactNative2.default.createElement(Image,{style:{width:120,resizeMode:Image.resizeMode.contain},
+source:require('image!温馨提示')}),
+
+this.state.cateId===0?
+
+_reactNative2.default.createElement(Text,{style:{height:20,fontSize:10,color:'gray'}},'您还没有方案记录,赶快去购买方案吧'):
+
+
+
+_reactNative2.default.createElement(Text,{style:{height:20,fontSize:10,color:'gray'}},'您还没有一元夺宝记录,赶快去夺宝吧')):
+
+
+
+
+
+null,
+
+_reactNative2.default.createElement(ListView,{contentInset:{top:0,bottom:0},
 dataSource:this.state.dataSource,
 renderRow:this.renderRow,
+pageSize:10,
+onEndReached:this.loadMore,
+onEndReachedThreshold:1,
 style:css.listView})));},
 
 
@@ -66845,63 +66930,79 @@ _reactNative2.default.createElement(TouchableOpacity,{onPress:this.props.onSelec
 
 this.state.cateId===0?
 
-_reactNative2.default.createElement(View,{style:[css.row,css.container]},
-_reactNative2.default.createElement(View,{style:css.column},
-_reactNative2.default.createElement(Image,{style:[css.left10,css.bottom10,css.right4,{width:42,height:48}],
-source:{uri:item.expertHead}}),
-_reactNative2.default.createElement(Text,{style:[css.fontWeightBold,css.fontSize14,{alignSelf:'center',marginTop:-6}],
-numberOfLines:1},
-item.expertName)),
+_reactNative2.default.createElement(View,{style:[css.container,{backgroundColor:item.plan_result==='中奖'?'#FFFFF0':'#f9f9f9'}]},
+_reactNative2.default.createElement(View,{style:css.goodRow},
+_reactNative2.default.createElement(View,{style:{flexDirection:'row'}},
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:13}},
+item.expert_name),
+
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'[',
+item.plan_name,']')),
 
 
-_reactNative2.default.createElement(View,{style:css.flex1},
-_reactNative2.default.createElement(View,{style:[css.row,css.left10,css.right15,css.bottom4]},
-_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize14]},
-item.planName),
-
-_reactNative2.default.createElement(Text,{style:[css.fontWeight2,css.fontSize12,css.flex1,css.textRight]},
-item.addTime)),
-
-
-_reactNative2.default.createElement(View,{style:[css.row,css.left10,css.right15,css.bottom4,css.top4]},
-_reactNative2.default.createElement(View,{style:css.row},
-_reactNative2.default.createElement(Image,{style:[css.right4,{width:12,height:12}],
-source:require('image!方案详情-收益区')}),
-_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize12]},
-item.rangeName)),
-
-
-_reactNative2.default.createElement(View,{style:[css.row,{right:-40}]},
-_reactNative2.default.createElement(Image,{style:[css.right4,{width:10,height:14}],
-source:require('image!单价')}),
-_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize12,css.flex1]},
-item.planAmount,'元'))))):
+_reactNative2.default.createElement(View,{style:{flexDirection:'row'}},
+_reactNative2.default.createElement(Image,{style:{width:14,height:14},source:require('image!时间')}),
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:11,marginLeft:2}},
+item.purchase_date))),
 
 
 
+_reactNative2.default.createElement(View,{style:[css.goodRow,{alignSelf:'center',marginTop:8,marginBottom:8,backgroundColor:'rgba(0,152,50,0)'}]},
+_reactNative2.default.createElement(Text,{style:[{fontWeight:'100',fontSize:14},item.plan_result==='中奖'?css.shadom:'']},
+item.plan_result===null?'等待开奖':item.plan_result)),
+
+
+_reactNative2.default.createElement(View,{style:[css.goodRow]},
+_reactNative2.default.createElement(View,{style:css.planBottomLine},
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'购买金额 ',
+item.totalPrice)),
+
+
+_reactNative2.default.createElement(View,{style:[css.planBottomLine,{alignItems:'center'}]},
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'倍数 ',
+item.totalMultiple)),
+
+
+_reactNative2.default.createElement(View,{style:[css.planBottomLine,{alignItems:'flex-end'}]},
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'收益 ',
+
+item.totalBonus>item.totalPrice?
+
+Math.round(parseFloat(item.totalBonus-item.totalPrice)*100)/100:
+
+0)))):
 
 
 
-_reactNative2.default.createElement(View,{style:[css.row,css.container]},
-_reactNative2.default.createElement(Image,{style:[css.bottom10,css.right4,{width:60,height:60}],
+
+
+
+_reactNative2.default.createElement(View,{style:[css.container,{flexDirection:'row'}]},
+_reactNative2.default.createElement(Image,{style:{width:60,height:60,marginBottom:10,marginRight:4},
 source:{uri:item.images?item.images.split(',')[0]:''}}),
 _reactNative2.default.createElement(View,{style:css.flex1},
-_reactNative2.default.createElement(Text,{style:[css.fontWeightBold,{fontSize:14}],numberOfLines:1},
-item.name),
+_reactNative2.default.createElement(Text,{style:{fontSize:14,fontWeight:'400'},numberOfLines:1},
+'第'+item.number+'期 '+item.name),
 
-_reactNative2.default.createElement(Text,{style:[css.fontWeight,{fontSize:9,marginTop:2,marginBottom:2}],numberOfLines:1},
-item.content),
-
-_reactNative2.default.createElement(View,{style:[css.row,css.top4]},
-_reactNative2.default.createElement(Text,{style:[css.fontWeightBold,css.fontSize12]},'需:',
-
-_reactNative2.default.createElement(Text,{style:css.red},
-item.amount),'元'),
+_reactNative2.default.createElement(Text,{style:{fontSize:11,fontWeight:'100',marginTop:2,marginBottom:2},numberOfLines:1},'本期参与人次:',
+item.payCount),
 
 
+_reactNative2.default.createElement(View,{style:css.progress},
+_reactNative2.default.createElement(_Progress2.default,{progress:(item.totalCount-item.remainingAmount)/item.totalCount})),
 
-_reactNative2.default.createElement(Text,{style:[css.fontWeight,css.fontSize12,css.flex1,css.textCenter]},'总价:',
-item.totalCount,'元'))))));},
+_reactNative2.default.createElement(View,{style:css.goodRow},
+_reactNative2.default.createElement(View,null,
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'总需'),
+_reactNative2.default.createElement(Text,{style:css.redPrice},
+item.totalCount)),
+
+
+_reactNative2.default.createElement(View,null,
+_reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'剩余'),
+_reactNative2.default.createElement(Text,{style:css.whitePrice},
+item.remainingAmount)))))));},
+
 
 
 
@@ -66935,64 +67036,37 @@ listView:{
 backgroundColor:'#eeeeee'},
 
 container:{
-paddingTop:8,
-paddingBottom:4,
-borderBottomColor:'#eeeeee',
+paddingTop:6,
+paddingBottom:6,
+paddingLeft:10,
+paddingRight:10,
+borderBottomColor:'#C0C0C0',
 borderBottomWidth:1,
 backgroundColor:'#ffffff'},
 
-center:{
-alignSelf:'center',
-justifyContent:'center'},
+goodRow:{
+flexDirection:'row',
+justifyContent:'space-between'},
 
-fontWeight:{
-fontWeight:'100'},
+planBottomLine:{
+width:(_Util2.default.size['width']-20)/3},
 
-fontWeightBold:{
-fontWeight:'400'},
+shadom:{
+textShadowOffset:{width:1,height:1},
+textShadowRadius:1,
+textShadowColor:'#FFD700'},
 
-fontSize14:{
-fontSize:14},
+redPrice:{
+fontSize:12,
+color:'#c40001'},
 
-fontSize12:{
-fontSize:12},
+whitePrice:{
+fontSize:12,
+color:'#b0b0b0'},
 
-textRight:{
-textAlign:'right'},
-
-textCenter:{
-textAlign:'center'},
-
-red:{
-color:'red'},
-
-column:{
-flexDirection:'column'},
-
-row:{
-flexDirection:'row'},
-
-left10:{
-marginLeft:10},
-
-right15:{
-marginRight:15},
-
-right4:{
-marginRight:4},
-
-bottom4:{
-marginBottom:4},
-
-bottom10:{
-marginBottom:10},
-
-top4:{
-marginTop:4}});
-});
-__d('image!方案详情-收益区',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-收益区.imageset/方案详情-收益区.png","uri":"方案详情-收益区","width":26,"height":30,"deprecated":true};
-});
-__d('image!单价',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/单价.imageset/单价.png","uri":"单价","width":26,"height":36,"deprecated":true};
+progress:{
+marginTop:10,
+marginBottom:10}});
 });
 __d('somira/App/Component/User/Commission.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
 
@@ -69156,6 +69230,8 @@ __d('image!我的本金',function(global, require, module, exports) {  module.ex
 });
 __d('image!我的盈利',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/我的盈利.imageset/我的盈利.png","uri":"我的盈利","width":45,"height":48,"deprecated":true};
 });
+__d('image!方案详情-收益区',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-收益区.imageset/方案详情-收益区.png","uri":"方案详情-收益区","width":26,"height":30,"deprecated":true};
+});
 __d('image!方案详情-限购',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-限购.imageset/方案详情-限购.png","uri":"方案详情-限购","width":32,"height":33,"deprecated":true};
 });
 __d('somira/App/Views/Cart/ShoppingCart.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _ItemList=require('somira/App/Component/ShoppingCart/ItemList.js');var _ItemList2=babelHelpers.interopRequireDefault(_ItemList);var _ItemDetail=require('somira/App/Component/HappyPurchase/ItemDetail.js');var _ItemDetail2=babelHelpers.interopRequireDefault(_ItemDetail);var _PlanDetail=require('somira/App/Component/Plan/PlanDetail.js');var _PlanDetail2=babelHelpers.interopRequireDefault(_PlanDetail);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Tabs=require('somira/App/Common/Tabs.js');var _Tabs2=babelHelpers.interopRequireDefault(_Tabs);var 
@@ -69527,12 +69603,32 @@ _reactNative2.default.createElement(Image,{style:css.loading,source:require('ima
 
 ;
 return (
-_reactNative2.default.createElement(View,{style:css.flex1},
+_reactNative2.default.createElement(View,{style:[css.flex1,{backgroundColor:'#eeeeee'}]},
+
+this.state.dataSource.getRowCount()===0?
+
+_reactNative2.default.createElement(View,{style:{alignItems:'center',marginTop:40}},
+_reactNative2.default.createElement(Image,{style:{width:120,resizeMode:Image.resizeMode.contain},
+source:require('image!温馨提示')}),
+
+this.state.cateId===0?
+
+_reactNative2.default.createElement(Text,{style:{height:20,fontSize:10,color:'gray'}},'购物车空空如也,赶快去购买方案吧'):
+
+
+
+_reactNative2.default.createElement(Text,{style:{height:20,fontSize:10,color:'gray'}},'购物车空空如也,赶快去夺宝吧')):
+
+
+
+
+
+null,
+
 _reactNative2.default.createElement(ListView,{contentInset:{top:0,bottom:20},
 dataSource:this.state.dataSource,
 renderRow:this.renderRow,
 style:css.listView}),
-
 
 this.state.dataSource.getRowCount()>0?
 
@@ -69803,6 +69899,8 @@ overflow:'hidden',
 borderWidth:1,
 borderRadius:10,
 borderColor:'#FFFFFF'}});
+});
+__d('image!单价',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/单价.imageset/单价.png","uri":"单价","width":26,"height":36,"deprecated":true};
 });
 __d('image!删除',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/删除.imageset/删除.png","uri":"删除","width":48,"height":48,"deprecated":true};
 });
