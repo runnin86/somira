@@ -31,10 +31,6 @@ module.exports = React.createClass({
    * 首次渲染之前
    */
   componentWillReceiveProps () {
-    //猫头先转
-    this.setState({
-      loaded : false
-    })
     // 方案数据
     this.fetchRangeData();
     // 获取服务器时间
@@ -42,7 +38,10 @@ module.exports = React.createClass({
   },
   //只调用一次，在render之后调用
   componentDidMount() {
-
+    //猫头先转
+    this.setState({
+      loaded : false
+    })
   },
   // 拉取方案区间数据
   fetchRangeData() {

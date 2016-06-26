@@ -26,8 +26,15 @@ module.exports = React.createClass({
     return {
       dataSource: ds.cloneWithRows(this.props.plans),
       serviceTime: this.props.serviceTime,
-      loaded: false
+      // loaded: false
     };
+  },
+  componentWillReceiveProps () {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this.props.plans),
+      serviceTime: this.props.serviceTime,
+    });
+    // console.log(this.props.plans);
   },
   //渲染列表
   renderListView : function(){
