@@ -136,7 +136,7 @@ module.exports = React.createClass({
           </View>
           <View style={[css.row],{alignItems:'flex-end',marginRight:10,}}>
             <Button onPress={()=>this._pushCart(this, plan.plan_id, filterTime)}>
-              <Image style={{width:36,height:33}}
+              <Image style={{width:32,height:32}}
                 source={{uri: filterTime > 0 ? '购物车-选中' : '购物车'}} />
             </Button>
           </View>

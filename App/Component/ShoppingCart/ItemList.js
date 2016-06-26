@@ -393,6 +393,9 @@ module.exports = React.createClass({
                     </Text>
                     元
                   </Text>
+                  <Button onPress={()=>this.delCartPlan(item.pid)}>
+                    <Image style={[css.delBtn,{right:-30}]} source={require('image!删除')} />
+                  </Button>
     						</View>
                 <View style={[css.row,css.left10,css.right15,css.bottom4,css.top4]}>
                   <View style={css.row}>
@@ -411,9 +414,6 @@ module.exports = React.createClass({
                   </View>
                 </View>
     					</View>
-              <Button onPress={()=>this.delCartPlan(item.pid)}>
-                <Image style={css.delBtn} source={require('image!删除')} />
-              </Button>
     				</View>
             :
             <View style={[css.row,css.container]}>
@@ -434,6 +434,9 @@ module.exports = React.createClass({
                   <Button onPress={()=>this.augmentHP(item)}>
                     <Image style={css.priceBtn} source={require('image!ic_goods_add')}/>
                   </Button>
+                  <Button onPress={()=>this.delCartHP(item.id, item.number)}>
+                    <Image style={[css.delBtn,{right:-70}]} source={require('image!删除')} />
+                  </Button>
                 </View>
                 <View style={[css.row,css.top4]}>
                   <Text style={[css.fontWeightBold,css.fontSize12]}>
@@ -448,9 +451,6 @@ module.exports = React.createClass({
                   </Text>
                 </View>
               </View>
-              <Button onPress={()=>this.delCartHP(item.id, item.number)}>
-                <Image style={css.delBtn} source={require('image!删除')} />
-              </Button>
             </View>
           }
 			</TouchableOpacity>
@@ -496,8 +496,6 @@ var css = StyleSheet.create({
     justifyContent:'center',
   },
   delBtn: {
-    right: 10,
-    marginTop: 14,
     height: 40,
     width: 40,
     borderWidth: 0.5,
