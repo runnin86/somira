@@ -123,11 +123,12 @@ module.exports = React.createClass({
         title:title
       });
     }else if (id == 'recharge') {
-      this.props.navigator.push({
-        component:Recharge,
-        navigationBarHidden:false,
-        title:title
-      });
+      // this.props.navigator.push({
+      //   component:Recharge,
+      //   navigationBarHidden:false,
+      //   title:title
+      // });
+      Util.toast('充值功能暂未开放,敬请期待!');
     }else if (id == 'help') {
       if (Platform.OS === 'ios') {
         this.props.navigator.push({
