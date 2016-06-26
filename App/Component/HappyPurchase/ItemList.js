@@ -37,7 +37,7 @@ module.exports = React.createClass({
   componentWillReceiveProps(nextProps) {
     //猫头先转
     this.setState({
-      loaded : false
+      loaded : this.props.cateId!==nextProps.cateId?false:true
     })
     //拉取数据
     this.fetchData(nextProps.cateId);
