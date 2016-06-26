@@ -25,7 +25,8 @@ module.exports = React.createClass({
   render: function() {
     return (
       <View style={css.flex}>
-        <ScrollView stickyHeaderIndices={[2]}>
+        <ScrollView stickyHeaderIndices={[2]}
+          showsVerticalScrollIndicator={false}>
           {/*轮播图*/}
           <Swiper style={css.wrapper} height={Util.size['height']/4.5}
             onMomentumScrollEnd={function(e, state, context){}}

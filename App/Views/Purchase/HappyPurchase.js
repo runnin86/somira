@@ -27,7 +27,8 @@ module.exports = React.createClass({
     var tabDataSource = this.state.tabData;
     return (
       <View style={css.flex}>
-        <ScrollView stickyHeaderIndices={[3]}>
+        <ScrollView stickyHeaderIndices={[3]}
+          showsVerticalScrollIndicator={false}>
           {/*轮播图*/}
           <Swiper style={css.wrapper} height={Util.size['height']/4.5}
             onMomentumScrollEnd={function(e, state, context){}}

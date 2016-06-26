@@ -189,6 +189,7 @@ module.exports = React.createClass({
   render() {
     return (
       <ScrollView style={css.flex}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={this.state.isRefreshing}
