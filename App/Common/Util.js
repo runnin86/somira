@@ -115,7 +115,7 @@ module.exports = {
       flex:1,
       justifyContent:'center',
       alignItems:'center',
-      marginTop:Dimensions.get('window').height/2-150
+      marginTop:Dimensions.get('window').height/2-250
     }}/>,
   getDateDiff: (startTime, endTime, diffType) => {
     // 将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式

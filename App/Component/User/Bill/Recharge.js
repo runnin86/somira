@@ -69,23 +69,21 @@ module.exports = React.createClass({
          ?
          Util.loading
          :
-         null
+         (
+           this.state.dataSource.getRowCount() === 0
+           ?
+           <View style={{marginTop:80,alignItems:'center',justifyContent: 'center'}}>
+             <Image style={styles.warnning} source={require('image!温馨提示')}/>
+             <Text style={{height:20,fontSize: 10,fontWeight:'100', color: '#A9A9A9'}}>
+               您还没有充值记录
+             </Text>
+           </View>
+           :
+           <ListView
+            dataSource={this.state.dataSource}
+            renderRow={this._renderListItem}/>
+         )
        }
-       {
-         this.state.dataSource.getRowCount() === 0
-         ?
-         <View style={{marginTop:80,alignItems:'center',justifyContent: 'center'}}>
-           <Image style={styles.warnning} source={require('image!温馨提示')}/>
-           <Text style={{height:20,fontSize: 10,fontWeight:'100', color: '#A9A9A9'}}>
-             您还没有充值记录
-           </Text>
-         </View>
-         :
-         null
-       }
-       <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this._renderListItem}/>
       </View>
     );
   }
@@ -95,7 +93,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4',
-    marginBottom: -20,
+    marginTop:66,
+    marginBottom: 20,
   },
   loading :{
     marginTop : 10,
