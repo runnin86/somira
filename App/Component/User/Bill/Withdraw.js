@@ -18,7 +18,6 @@ module.exports = React.createClass({
     return {
       dataSource: new ListView.DataSource({rowHasChanged:(row1,row2) =>row1!==row2}),
       loaded: false,
-      showWarning: false,
     };
   },
   componentDidMount: function() {
@@ -33,7 +32,6 @@ module.exports = React.createClass({
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(result.length > 0?result:''),
               loaded: true,
-              showWarning: result.length > 0?false:true,
             });
           }
           else {
@@ -69,12 +67,12 @@ module.exports = React.createClass({
        {
          !this.state.loaded
          ?
-         <Image style={styles.loading} source={require('image!loading')} />
+         Util.loading
          :
          null
        }
        {
-         this.state.showWarning
+         this.state.dataSource.getRowCount() === 0
          ?
          <View style={{marginTop:80,alignItems:'center',justifyContent: 'center'}}>
            <Image style={styles.warnning} source={require('image!温馨提示')}/>
@@ -98,14 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f4f4f4',
     marginBottom: -20,
-  },
-  loading :{
-    marginTop : 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height : 21,
-    resizeMode: Image.resizeMode.contain,
-    width: Util.size['width']
   },
   warnning: {
     width: 100,
