@@ -51,7 +51,7 @@ module.exports = React.createClass({
 
           {/*滚动消息*/}
           <Swiper showsButtons={false} height={40} showsPagination={false}
-            autoplay={true} autoplayTimeout={5} horizontal={false}>
+            autoplay={true} autoplayTimeout={3} horizontal={false}>
             {this.state.scrollMsgList.map(function(item,i){
               return (
                 <View style={css.scrollMsg} key={i}>
@@ -74,7 +74,7 @@ module.exports = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows([[
-        {title:'最新揭晓', id: 'latest', img: '最新揭晓'},
+        {title:'周盈利排行', id: 'latest', img: '盈利排行'},
         {title:'充值', id: 'recharge', img: '充值'},
         {title:'帮助', id: 'help', img: '帮助-1'}
       ]]),
@@ -83,7 +83,7 @@ module.exports = React.createClass({
     };
   },
   //只调用一次，在render之后调用
-  componentDidMount: function() {
+  componentDidMount() {
     // banner数据
     this.fetchBannerData();
     // 获取滚动消息
