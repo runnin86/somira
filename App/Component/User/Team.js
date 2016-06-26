@@ -226,7 +226,7 @@ var css = StyleSheet.create({
     resizeMode:Image.resizeMode.contain,
   },
   iconSize: {
-    marginRight: -10,
+    marginRight: -4,
     height:20,
     width:20,
     resizeMode: Image.resizeMode.contain,
