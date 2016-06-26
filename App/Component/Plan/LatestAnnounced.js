@@ -77,7 +77,7 @@ module.exports = React.createClass({
         <View style={[css.rowCenter,{marginLeft:-10}]}>
           <Text style={{fontSize:12,fontWeight:'100'}}>收益:{row.winBonus}</Text>
         </View>
-        <View style={[css.rowCenter,{marginRight:-76}]}>
+        <View style={[css.rowCenter,{right:-76}]}>
           <View style={[css.rankColor,{backgroundColor:color,borderColor:color}]}>
             <Text style={css.rankNum}>
               {this.state.num}
