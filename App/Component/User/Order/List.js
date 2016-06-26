@@ -40,18 +40,21 @@ module.exports = React.createClass({
   //render 之前调用
   //之所以取nextProps的值而不直接取this.props.cateId 是因为componentWillReceiveProps的更新早于props的更新
   componentWillReceiveProps(nextProps) {
-    //猫头先转
-    this.setState({
-      loaded: false,
-      cateId: nextProps.cateId,
-      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
-      planData: [],
-      planListPageNum: 1,
-      hpData: [],
-      hpListPageNum: 0,
-    });
-    //拉取数据
-    this.fetchData(nextProps.cateId);
+    // 不相等则表明切换tab,需要切换展示数据
+    if (nextProps.cateId !== this.state.cateId) {
+      //猫头先转
+      this.setState({
+        loaded: false,
+        cateId: nextProps.cateId,
+        dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+        planData: [],
+        planListPageNum: 1,
+        hpData: [],
+        hpListPageNum: 0,
+      });
+      //拉取数据
+      this.fetchData(nextProps.cateId);
+    }
   },
   //拉取数据
   fetchData: function(cateId) {
