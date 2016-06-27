@@ -74,8 +74,10 @@ module.exports = React.createClass({
       planListPageNum: pNum !== -1 ? pNum + 1 : -1,
       hpListPageNum: hNum !== -1 ? hNum + 1 : -1,
     });
-    //拉取数据
-    this.fetchData(this.state.cateId);
+    if (this.state.cateId === 1) {
+      //方案不存在分页,无需分页加载数据
+      this.fetchData(this.state.cateId);
+    }
   },
   getPlanList() {
     Store.get('token').then((token)=>{
