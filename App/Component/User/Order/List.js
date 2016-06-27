@@ -137,6 +137,23 @@ module.exports = React.createClass({
       }
     });
   },
+  /*
+   * 是否展示倒计时
+   */
+  isShowTime(t) {
+    let pubTime = new Date(Date.parse(t.replace(/-/g, '/')))
+    let now = new Date()
+    // pubTime.setHours(pubTime.getHours() + 9)
+    // now.setMinutes(now.getMinutes() + 15)
+    if (now < pubTime) {
+      // 展示倒计时
+      return {show: true, time: pubTime}
+    }
+    else {
+      // 展示结果
+      return {show: false, time: pubTime}
+    }
+  },
   //渲染列表
   renderListView : function(){
     //先展示加载中的菊花
@@ -233,7 +250,7 @@ module.exports = React.createClass({
           </View>
           :
           <View style={[css.container,{flexDirection:'row'}]}>
-            <Image style={{width: 60,height: 60,marginBottom: 10,marginRight: 4}}
+            <Image style={{width: 60,height: 60,marginRight: 6,alignSelf:'center'}}
               source={{uri: item.images?item.images.split(',')[0]:''}} />
             <View style={css.flex1}>
               <Text style={{fontSize: 14,fontWeight: '400',}} numberOfLines={1}>
@@ -242,24 +259,67 @@ module.exports = React.createClass({
               <Text style={{fontSize: 11,fontWeight: '100',marginTop:2,marginBottom:2,}} numberOfLines={1}>
                 本期参与人次:{item.payCount}
               </Text>
-
-              <View style={css.progress}>
-                <Progress progress={(item.totalCount - item.remainingAmount) / item.totalCount}/>
-              </View>
-              <View style={css.goodRow}>
+              {
+                // 进行中的展示
+                item.status === '1'
+                ?
                 <View>
-                  <Text style={{fontWeight:'100',fontSize:10}}>总需</Text>
-                  <Text style={css.redPrice}>
-                    {item.totalCount}
+                  <View style={css.progress}>
+                    <Progress progress={(item.totalCount - item.remainingAmount) / item.totalCount}/>
+                  </View>
+                  <View style={css.goodRow}>
+                    <View>
+                      <Text style={{fontWeight:'100',fontSize:10}}>总需</Text>
+                      <Text style={css.redPrice}>
+                        {item.totalCount}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={{fontWeight:'100',fontSize:10}}>剩余</Text>
+                      <Text style={css.whitePrice}>
+                        {item.remainingAmount}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                :
+                null
+              }
+              {
+                // 已揭晓的展示
+                item.status === '0' && !this.isShowTime(item.publicTime).show
+                ?
+                <View>
+                  <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                    中奖号码:
+                    <Text style={{color:'red'}}> {item.luckCode}</Text>
+                  </Text>
+                  <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                    获奖者: {item.user_name}
+                  </Text>
+                  <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                    总需人次:
+                    <Text style={{color:'red'}}> {item.userPayCount}</Text>
+                  </Text>
+                  <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                    日期: {item.publicTime}
                   </Text>
                 </View>
+                :
+                null
+              }
+              {
+                // 倒计时的展示
+                item.status === '0' && this.isShowTime(item.publicTime).show
+                ?
                 <View>
-                  <Text style={{fontWeight:'100',fontSize:10}}>剩余</Text>
-                  <Text style={css.whitePrice}>
-                    {item.remainingAmount}
+                  <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                    揭晓倒计时
                   </Text>
                 </View>
-              </View>
+                :
+                null
+              }
             </View>
           </View>
         }
