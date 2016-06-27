@@ -126,6 +126,8 @@ module.exports = React.createClass({
               Util.toast('购买成功!');
               // 重新拉取数据
               this.fetchData(0);
+              // 设置购物车图标
+              RCTDeviceEventEmitter.emit('loadCartCount');
             }
             else if (code === 2) {
               // 结算异常
@@ -166,6 +168,8 @@ module.exports = React.createClass({
               Util.toast('购买成功!');
               // 重新拉取数据
               this.fetchData(1);
+              // 设置购物车图标
+              RCTDeviceEventEmitter.emit('loadCartCount');
             }
             else {
               Util.toast(msg);
