@@ -83,7 +83,7 @@ module.exports = React.createClass({
           </Swiper>
           <View style={[css.container,css.borderTop,css.borderBottom]}>
             <View>
-              <Text style={{fontSize : 16}} numberOfLines={2}>{item.name}</Text>
+              <Text style={{fontSize : 16}} numberOfLines={2}>第{item.number}期 {item.name}</Text>
               <Text style={{fontWeight : '100',fontSize : 12,marginTop : 4}} numberOfLines={2}>
                 {item.content}
               </Text>
