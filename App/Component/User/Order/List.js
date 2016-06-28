@@ -37,7 +37,6 @@ module.exports = React.createClass({
   },
   //只调用一次，在render之后调用
   componentDidMount() {
-    console.log(this.state.userdata);
     this.fetchData(this.props.cateId);
   },
   //render 之前调用
