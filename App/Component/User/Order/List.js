@@ -317,7 +317,7 @@ module.exports = React.createClass({
                 item.status === '0' && this.isShowTime(item.publicTime).show
                 ?
                 <View>
-                  <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                  <Text style={{fontSize: 13,fontWeight: '100',textAlign:'center',marginTop:10}} numberOfLines={1}>
                     揭晓倒计时
                   </Text>
                   <View style={css.timeView}>
