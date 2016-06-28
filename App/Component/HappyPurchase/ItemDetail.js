@@ -33,27 +33,57 @@ module.exports = React.createClass({
     return {
       showCartBtn: false,
       payPrice: this.props.item.price,
+      userPartakeData: [],
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
     }
   },
   componentDidMount(){
     //拉取参与记录
-    this.fetchParticipation(this.props.item.id, this.props.item.number, 0);
+    this.fetchParticipation(this.props.item.projectId, this.props.item.number, 0);
   },
   //拉取参与记录数据
   fetchParticipation: function(id, number, pagenum) {
     let recordUrl = net.hpApi.all_partake +
       '?projectId=' + id + '&number=' + number + '&pagenum=' + pagenum;
-    fetch(recordUrl)
-    .then((response) => response.json())
-    .then(({code, msg, results}) => {
+    Util.get(recordUrl, '',
+    ({code, msg, results})=>{
       if (code === 1) {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(results.list)
         });
       }
-    }).catch((e) => {
-      console.log('获取乐夺宝参与记录失败:' + e)
+    },
+    (e)=>{
+      console.error(e);
+    });
+    // 用户登录的需要查询参与码
+    Store.get('user').then((userdata)=>{
+      if (userdata.user_id) {
+        this.getUserPartake(userdata.user_id, id, number);
+      }
+    });
+  },
+  getUserPartake(uid, id, number) {
+    let param = '?userId='+uid+'&projectId='+id+'&number='+number;
+    Util.get(net.hpApi.my_partake + param, '',
+    ({code, msg, info})=>{
+      if (code === 1) {
+        let partake = [];
+        for (var i = 0; i < info.split(',').length; i++) {
+          if (info.split(',')[i]) {
+            partake.push(info.split(',')[i]);
+          }
+        }
+        this.setState({
+          userPartakeData: partake,
+        });
+      }
+      else {
+        console.error('获取乐夺宝参与记录失败:' + msg);
+      }
+    },
+    (e)=>{
+      console.error(e);
     });
   },
   render: function() {
@@ -123,15 +153,10 @@ module.exports = React.createClass({
           <Accordion
             sections={[{
               title: '参与码',
-              content: [
-                '您已参与10人次',
-                '参与号码:',
-                '1000482  1000878  1000261  1000110  1000987 1000172',
-                '1000582  1000578  1000561  1000510  1000587 1000572'
-              ]
+              content: []
             }]}
             renderHeader={this._renderHeader}
-            renderContent={this._renderContent}
+            renderContent={this._renderPartakeContent}
             duration={400}
           />
           <View style={{height:4,backgroundColor:'#eee'}}>
@@ -343,7 +368,7 @@ module.exports = React.createClass({
     return (
       <Animatable.View duration={400}
         style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
-        {section.content.map(function(v,i){
+        {section.content.map((v, i)=>{
           return (
             <Animatable.Text key={i} style={css.contentText}
               animation={isActive ? 'bounceIn' : undefined}>
@@ -354,6 +379,36 @@ module.exports = React.createClass({
       </Animatable.View>
     );
   },
+  _renderPartakeContent(section, i, isActive) {
+    // '您已参与'+this.state.userPartakeData.length+'人次',
+    // '参与号码:'
+    let codes = '';
+    this.state.userPartakeData.map((k, v)=>{
+      codes += k + '    ';
+    });
+    return (
+      <Animatable.View duration={400}
+        style={[css.content,css.borderBottom,isActive ? css.active : css.inactive]} transition="backgroundColor">
+        {
+          codes !== ''
+          ?
+          <Animatable.Text key={i} style={{fontSize:12,fontWeight:'100'}}
+            animation={isActive ? 'bounceIn' : undefined}>
+            {'您已参与'+this.state.userPartakeData.length+'人次\n'}
+            {'参与号码:\n'}
+            <Text style={css.contentText}>
+              {codes}
+            </Text>
+          </Animatable.Text>
+          :
+          <Animatable.Text key={i} style={[css.contentText,{textAlign:'center'}]}
+            animation={isActive ? 'bounceIn' : undefined}>
+            您还没有参与记录，赶快购买吧
+          </Animatable.Text>
+        }
+      </Animatable.View>
+    );
+  }
 });
 
 var css = StyleSheet.create({
