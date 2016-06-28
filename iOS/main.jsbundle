@@ -60662,6 +60662,7 @@ justifyContent:'center',
 alignItems:'center',
 marginTop:_Dimensions2.default.get('window').height/2-250}}),
 
+
 getDateDiff:function(startTime,endTime,diffType){
 
 startTime=startTime.replace(/\-/g,'/');
@@ -60690,6 +60691,27 @@ default:
 break;}
 
 return parseInt((eTime.getTime()-sTime.getTime())/parseFloat(divNum,0),0);},
+
+
+dateFormat:function(date,fmt){
+var o={
+'M+':date.getMonth()+1,
+'d+':date.getDate(),
+'H+':date.getHours(),
+'m+':date.getMinutes(),
+'s+':date.getSeconds(),
+'q+':Math.floor((date.getMonth()+3)/3),
+'S':date.getMilliseconds()};
+
+if(/(y+)/.test(fmt)){
+fmt=fmt.replace(RegExp.$1,(date.getFullYear()+'').substr(4-RegExp.$1.length));}
+
+for(var k in o){
+if(new RegExp('('+k+')').test(fmt)){
+fmt=fmt.replace(RegExp.$1,RegExp.$1.length===1?o[k]:('00'+o[k]).substr((''+o[k]).length));}}
+
+
+return fmt;},
 
 
 
@@ -62334,30 +62356,65 @@ getInitialState:function(){
 return {
 showCartBtn:false,
 payPrice:this.props.item.price,
+userPartakeData:[],
 dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}})};},
 
 
 componentDidMount:function(){
+var id=this.props.item.projectId?
 
-this.fetchParticipation(this.props.item.id,this.props.item.number,0);},
+this.props.item.projectId:
+
+this.props.item.id;
+
+this.fetchParticipation(id,this.props.item.number,0);},
 
 
 fetchParticipation:function(id,number,pagenum){var _this=this;
 var recordUrl=net.hpApi.all_partake+
 '?projectId='+id+'&number='+number+'&pagenum='+pagenum;
-fetch(recordUrl).
-then(function(response){return response.json();}).
-then(function(_ref){var code=_ref.code;var msg=_ref.msg;var results=_ref.results;
+_Util2.default.get(recordUrl,'',
+function(_ref){var code=_ref.code;var msg=_ref.msg;var results=_ref.results;
 if(code===1){
 _this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(results.list)});}}).
+dataSource:_this.state.dataSource.cloneWithRows(results.list)});}},
 
 
-catch(function(e){
-console.log('获取乐夺宝参与记录失败:'+e);});},
+
+function(e){
+console.error(e);});
 
 
-render:function(){var _this2=this;
+_reactNativeSimpleStore2.default.get('user').then(function(userdata){
+if(userdata.user_id){
+_this.getUserPartake(userdata.user_id,id,number);}});},
+
+
+
+getUserPartake:function(uid,id,number){var _this2=this;
+var param='?userId='+uid+'&projectId='+id+'&number='+number;
+_Util2.default.get(net.hpApi.my_partake+param,'',
+function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var info=_ref2.info;
+if(code===1){
+var partake=[];
+for(var i=0;i<info.split(',').length;i++){
+if(info.split(',')[i]){
+partake.push(info.split(',')[i]);}}
+
+
+_this2.setState({
+userPartakeData:partake});}else 
+
+
+{
+console.error('获取乐夺宝参与记录失败:'+msg);}},
+
+
+function(e){
+console.error(e);});},
+
+
+render:function(){var _this3=this;
 var item=this.props.item;
 
 var progressNum=(item.totalCount-item.codeCount)/item.totalCount;
@@ -62384,7 +62441,7 @@ _reactNative2.default.createElement(Image,{style:[css.flex,css.img],source:{uri:
 
 _reactNative2.default.createElement(View,{style:[css.container,css.borderTop,css.borderBottom]},
 _reactNative2.default.createElement(View,null,
-_reactNative2.default.createElement(Text,{style:{fontSize:16},numberOfLines:2},item.name),
+_reactNative2.default.createElement(Text,{style:{fontSize:16},numberOfLines:2},'第',item.number,'期 ',item.name),
 _reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:12,marginTop:4},numberOfLines:2},
 item.content),
 
@@ -62424,15 +62481,10 @@ duration:400}),
 _reactNative2.default.createElement(_Accordion2.default,{
 sections:[{
 title:'参与码',
-content:[
-'您已参与10人次',
-'参与号码:',
-'1000482  1000878  1000261  1000110  1000987 1000172',
-'1000582  1000578  1000561  1000510  1000587 1000572']}],
-
+content:[]}],
 
 renderHeader:this._renderHeader,
-renderContent:this._renderContent,
+renderContent:this._renderPartakeContent,
 duration:400}),
 
 _reactNative2.default.createElement(View,{style:{height:4,backgroundColor:'#eee'}},
@@ -62478,23 +62530,23 @@ _reactNative2.default.createElement(Text,{style:{color:'#5f646e',fontSize:14}},'
 
 
 _reactNative2.default.createElement(View,{style:css.priceRow},
-_reactNative2.default.createElement(Text,{onPress:function(){return _this2.setState({payPrice:10});},
+_reactNative2.default.createElement(Text,{onPress:function(){return _this3.setState({payPrice:10});},
 style:{color:this.state.payPrice===10?'#f6383a':'#0894ec',fontSize:14,marginLeft:16}},'10'),
 
 
-_reactNative2.default.createElement(Text,{onPress:function(){return _this2.setState({payPrice:20});},
+_reactNative2.default.createElement(Text,{onPress:function(){return _this3.setState({payPrice:20});},
 style:{color:this.state.payPrice===20?'#f6383a':'#0894ec',fontSize:14}},'20'),
 
 
-_reactNative2.default.createElement(Text,{onPress:function(){return _this2.setState({payPrice:50});},
+_reactNative2.default.createElement(Text,{onPress:function(){return _this3.setState({payPrice:50});},
 style:{color:this.state.payPrice===50?'#f6383a':'#0894ec',fontSize:14}},'50'),
 
 
-_reactNative2.default.createElement(Text,{onPress:function(){return _this2.setState({payPrice:100});},
+_reactNative2.default.createElement(Text,{onPress:function(){return _this3.setState({payPrice:100});},
 style:{color:this.state.payPrice===100?'#f6383a':'#0894ec',fontSize:14}},'100'),
 
 
-_reactNative2.default.createElement(Text,{onPress:function(){return _this2.setState({payPrice:300});},
+_reactNative2.default.createElement(Text,{onPress:function(){return _this3.setState({payPrice:300});},
 style:{color:this.state.payPrice===300?'#f6383a':'#0894ec',fontSize:14,marginRight:16}},'300')),
 
 
@@ -62502,26 +62554,26 @@ style:{color:this.state.payPrice===300?'#f6383a':'#0894ec',fontSize:14,marginRig
 _reactNative2.default.createElement(View,{style:css.priceRow},
 _reactNative2.default.createElement(Image,{
 onTouchStart:function(){
-if(_this2.state.payPrice>_this2.props.item.price){
-_this2.setState({payPrice:_this2.state.payPrice-_this2.props.item.price});}else 
+if(_this3.state.payPrice>_this3.props.item.price){
+_this3.setState({payPrice:_this3.state.payPrice-_this3.props.item.price});}else 
 
-if(_this2.state.payPrice<=_this2.props.item.price){
-_this2.setState({payPrice:_this2.props.item.price});}
+if(_this3.state.payPrice<=_this3.props.item.price){
+_this3.setState({payPrice:_this3.props.item.price});}
 
-_this2.timer=setTimeout(function(){
-_this2.interval=setInterval(function(){
-if(_this2.state.payPrice>_this2.props.item.price){
-_this2.setState({payPrice:_this2.state.payPrice-_this2.props.item.price});}else 
+_this3.timer=setTimeout(function(){
+_this3.interval=setInterval(function(){
+if(_this3.state.payPrice>_this3.props.item.price){
+_this3.setState({payPrice:_this3.state.payPrice-_this3.props.item.price});}else 
 
-if(_this2.state.payPrice<=_this2.props.item.price){
-_this2.setState({payPrice:_this2.props.item.price});}},
+if(_this3.state.payPrice<=_this3.props.item.price){
+_this3.setState({payPrice:_this3.props.item.price});}},
 
 500);},
 1000);},
 
 onTouchEnd:function(){
-_this2.interval&&clearInterval(_this2.interval);
-_this2.timer&&clearTimeout(_this2.timer);},
+_this3.interval&&clearInterval(_this3.interval);
+_this3.timer&&clearTimeout(_this3.timer);},
 
 style:[css.mathBtn,{marginLeft:_Util2.default.size['width']*0.05}],
 source:require("image!ic_goods_reduce")}),
@@ -62533,23 +62585,23 @@ keyboardType:'numeric',
 selectionColor:'red',
 ref:'textInput',
 maxLength:4,
-onChangeText:function(payPrice){return _this2.setState({payPrice:payPrice});},
-onFocus:function(){_this2.refs.textInput.focus();},
+onChangeText:function(payPrice){return _this3.setState({payPrice:payPrice});},
+onFocus:function(){_this3.refs.textInput.focus();},
 defaultValue:this.state.payPrice+'',
 value:this.state.payPrice+''}),
 
 _reactNative2.default.createElement(Image,{
 onTouchStart:function(){
-_this2.setState({payPrice:_this2.state.payPrice+_this2.props.item.price});
-_this2.timer=setTimeout(function(){
-_this2.interval=setInterval(function(){
-_this2.setState({payPrice:_this2.state.payPrice+_this2.props.item.price});},
+_this3.setState({payPrice:_this3.state.payPrice+_this3.props.item.price});
+_this3.timer=setTimeout(function(){
+_this3.interval=setInterval(function(){
+_this3.setState({payPrice:_this3.state.payPrice+_this3.props.item.price});},
 500);},
 1000);},
 
 onTouchEnd:function(){
-_this2.interval&&clearInterval(_this2.interval);
-_this2.timer&&clearTimeout(_this2.timer);},
+_this3.interval&&clearInterval(_this3.interval);
+_this3.timer&&clearTimeout(_this3.timer);},
 
 style:[css.mathBtn,{marginRight:_Util2.default.size['width']*0.05}],
 source:require("image!ic_goods_add")})),
@@ -62567,7 +62619,7 @@ _reactNative2.default.createElement(Text,{style:{color:'#f6383a'}},
 
 
 
-onPay:function(){var _this3=this;
+onPay:function(){var _this4=this;
 var item=this.props.item;
 if(parseFloat(this.state.payPrice)%parseFloat(item.price)>0){
 _Util2.default.toast('参与人次必须是'+item.price+'的倍数');
@@ -62587,18 +62639,18 @@ _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 
 var postBody={
-'recharge_money':_this3.state.payPrice,
+'recharge_money':_this4.state.payPrice,
 'projectId':item.id,
-'payCount':_this3.state.payPrice,
+'payCount':_this4.state.payPrice,
 'phone':'',
 'userId':'',
 'number':item.number};
 
 _Util2.default.post(net.hpApi.ptpay,token,postBody,
-function(_ref2){var code=_ref2.code;var msg=_ref2.msg;
+function(_ref3){var code=_ref3.code;var msg=_ref3.msg;
 if(code===1){
 _Util2.default.toast(msg);
-_this3.setState({showCartBtn:false});}else 
+_this4.setState({showCartBtn:false});}else 
 
 {
 _Util2.default.toast(msg);}});}else 
@@ -62648,7 +62700,37 @@ section.content.map(function(v,i){
 return (
 _reactNative2.default.createElement(Animatable.Text,{key:i,style:css.contentText,
 animation:isActive?'bounceIn':undefined},
-v));})));}});
+v));})));},
+
+
+
+
+
+
+_renderPartakeContent:function(section,i,isActive){
+
+
+var codes='';
+this.state.userPartakeData.map(function(k,v){
+codes+=k+'    ';});
+
+return (
+_reactNative2.default.createElement(Animatable.View,{duration:400,
+style:[css.content,css.borderBottom,isActive?css.active:css.inactive],transition:'backgroundColor'},
+
+codes!==''?
+
+_reactNative2.default.createElement(Animatable.Text,{key:i,style:{fontSize:12,fontWeight:'100'},
+animation:isActive?'bounceIn':undefined},
+'您已参与'+this.state.userPartakeData.length+'人次\n',
+'参与号码:\n',
+_reactNative2.default.createElement(Text,{style:css.contentText},
+codes)):
+
+
+
+_reactNative2.default.createElement(Animatable.Text,{key:i,style:[css.contentText,{textAlign:'center'}],
+animation:isActive?'bounceIn':undefined},'您还没有参与记录，赶快购买吧')));}});
 
 
 
@@ -63328,21 +63410,13 @@ borderTopWidth:1,
 backgroundColor:'#F5FCFF',
 marginTop:0}});
 });
-__d('somira/App/Component/HappyPurchase/LatestAnnounced.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
-
-
-AppRegistry=_reactNative2.default.AppRegistry;var 
-StyleSheet=_reactNative2.default.StyleSheet;var 
-Text=_reactNative2.default.Text;var 
-View=_reactNative2.default.View;var 
-PropTypes=_reactNative2.default.PropTypes;
-
-
-module.exports=_reactNative2.default.createClass({displayName:'exports',
+__d('somira/App/Component/HappyPurchase/LatestAnnounced.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeSkCountdown=require('react-native-sk-countdown/index.js');var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
 
 
 
-propTypes:{
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
 
 
 
@@ -63352,110 +63426,546 @@ propTypes:{
 
 
 
-
-
-name:_reactNative2.default.PropTypes.string},
-
-
-
-
+module.exports=_react2.default.createClass({displayName:'exports',
 getInitialState:function(){
 return {
-on:this.props.on,
-name:this.props.name};},
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+pageNum:0,
+hpData:[],
+loaded:false};},
+
+
+componentDidMount:function(){
+this._getRecordList();},
+
+_getRecordList:function(){var _this=this;
+if(this.state.pageNum>-1){
+_Util2.default.get(net.hpApi.oneBuyNewPublic+'?pagenum='+this.state.pageNum,'',
+function(_ref){var code=_ref.code;var msg=_ref.msg;var results=_ref.results;
+if(code===1){
+
+if(results.list.length>0){
+results.list.map(function(v,k){
+_this.state.hpData.push(v);});}
+
+
+_this.setState({
+loaded:true,
+dataSource:_this.state.dataSource.cloneWithRows(_this.state.hpData),
+pageNum:results.list.length===0?-1:_this.state.pageNum});}else 
+
+
+{
+_Util2.default.toast(msg);}},
+
+
+function(e){
+console.error(e);});}},
 
 
 
 
 
-getDefaultProps:function(){},
+
+isShowTime:function(pubTime){
+var now=_Util2.default.dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss');
+
+var m=_Util2.default.getDateDiff(now,pubTime,'second');
+
+if(m>0){
+
+return {show:true,time:m};}else 
+
+{
+
+return {show:false,time:pubTime};}},
+
+
+_renderListItem:function(item){var _this2=this;
+return (
+_react2.default.createElement(_reactNative.View,null,
+_react2.default.createElement(_reactNative.View,{style:[styles.cell,{flexDirection:'row'}]},
+_react2.default.createElement(_reactNative.Image,{style:{width:60,height:60,marginRight:6,alignSelf:'center'},
+source:{uri:item.images?item.images.split(',')[0]:''}}),
+_react2.default.createElement(_reactNative.View,{style:styles.flex1},
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:14,fontWeight:'400'},numberOfLines:1},
+'第'+item.number+'期 '+item.name),
+
+
+
+item.status==='0'&&!this.isShowTime(item.publicTime).show?
+
+_react2.default.createElement(_reactNative.View,null,
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'中奖号码:',
+
+_react2.default.createElement(_reactNative.Text,{style:{color:'red'}},' ',item.luckCode)),
+
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'获奖者: ',
+item.user_name),
+
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'人次:',
+
+_react2.default.createElement(_reactNative.Text,{style:{color:'red'}},' ',item.payCount)),
+
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'日期: ',
+item.publicTime)):
+
+
+
+null,
+
+
+
+item.status==='0'&&this.isShowTime(item.publicTime).show?
+
+_react2.default.createElement(_reactNative.View,null,
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:13,fontWeight:'100',textAlign:'center',marginTop:10},numberOfLines:1},'揭晓倒计时'),
+
+
+_react2.default.createElement(_reactNative.View,{style:styles.timeView},
+_react2.default.createElement(_reactNativeSkCountdown.CountDownText,{
+style:styles.timeText,
+countType:'date',
+auto:true,
+afterEnd:function(){
+_this2.setState({
+loaded:false,
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+hpData:[],
+pageNum:0});
+
+_this2._getRecordList();},
+
+timeLeft:this.isShowTime(item.publicTime).time,
+step:-1,
+startText:'',
+endText:'',
+intervalText:
+function(date,hour,min,sec){return min+'分'+sec+'秒';}}))):
 
 
 
 
-componentWillMount:function(){},
+
+null))));},
 
 
-
-
-
-
-componentDidMount:function(){},
-
-
-
-
-
-componentWillReceiveProps:function(){},
-
-
-
-
-
-shouldComponentUpdate:function(){},
-
-
-
-
-
-componentWillUpdate:function(){},
-
-
-
-
-
-componentDidUpdate:function(){},
-
-
-
-
-
-commontWillUnmount:function(){},
-
-
-
-
-
-clickHandle:function(){
-this.setState({on:!this.state.on});},
 
 
 
 
 render:function(){
 return (
-_reactNative2.default.createElement(View,{style:css.container},
-_reactNative2.default.createElement(Text,{style:css.welcome},'Welcome to 最新揭晓!'),
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_Util2.default.loading:
 
 
-_reactNative2.default.createElement(Text,{style:css.instructions},'To get started, edit index.ios.js'),
+this.state.dataSource.getRowCount()===0?
 
-
-_reactNative2.default.createElement(Text,{style:css.instructions},'Press Cmd+R to reload,',
-'\n','Cmd+D or shake for dev menu2')));}});
-
-
-
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'揭晓内容敬请期待')):
 
 
 
 
-var css=StyleSheet.create({
+_react2.default.createElement(_reactNative.ListView,{
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem})));}});
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
 container:{
 flex:1,
-justifyContent:'center',
-alignItems:'center',
-backgroundColor:'#F5FCFF'},
+backgroundColor:'#f4f4f4',
+marginTop:66,
+marginBottom:20},
 
-welcome:{
-fontSize:20,
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+recordRow:{
+flexDirection:'row',
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+recordCell:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordCellFixed:{
+flex:1,
+height:46,
+justifyContent:'center'},
+
+recordText:{
+fontSize:12,
+fontWeight:'100',
 textAlign:'center',
 margin:10},
 
-instructions:{
+red:{
+color:'red'},
+
+loading:{
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+height:21,
+resizeMode:_reactNative.Image.resizeMode.contain,
+width:_Util2.default.size['width']},
+
+flex1:{
+flex:1},
+
+listView:{
+backgroundColor:'#eeeeee'},
+
+cell:{
+paddingTop:6,
+paddingBottom:6,
+paddingLeft:10,
+paddingRight:10,
+borderBottomColor:'#C0C0C0',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+goodRow:{
+flexDirection:'row',
+justifyContent:'space-between'},
+
+planBottomLine:{
+width:(_Util2.default.size['width']-20)/3},
+
+shadom:{
+textShadowOffset:{width:1,height:1},
+textShadowRadius:1,
+textShadowColor:'#FFD700'},
+
+redPrice:{
+fontSize:12,
+color:'#c40001'},
+
+whitePrice:{
+fontSize:12,
+color:'#b0b0b0'},
+
+progress:{
+marginTop:10,
+marginBottom:10},
+
+timeView:{
+padding:8,
+marginTop:8,
+backgroundColor:'red',
+borderRadius:8},
+
+timeText:{
 textAlign:'center',
-color:'#333333',
-marginBottom:5}});
+color:'white',
+fontSize:14,
+fontWeight:'500'}});
+});
+__d('react-native-sk-countdown/index.js',function(global, require, module, exports) {  var countDown=require('react-native-sk-countdown/countDown.js');
+var CountDownText=require('react-native-sk-countdown/CountDownText.js');
+
+module.exports={
+countDown:countDown,
+CountDownText:CountDownText};
+});
+__d('react-native-sk-countdown/countDown.js',function(global, require, module, exports) {  var 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+countDown=function(o){
+this.setData(o);};
+
+
+countDown.prototype={
+
+setData:function(o){
+
+this.countType=o.countType;
+this.timerId;
+this.endTime=o.endTime;
+this.startTime=o.startTime;
+this.timeLeft=o.timeLeft;
+this.timePassed=0;
+this.onInterval=o.onInterval;
+this.onEnd=o.onEnd,
+this.step=o.step;
+this.counter=0;
+
+
+if(!this.countType){
+
+return;}
+
+
+if(this.timeLeft&&(this.endTime||this.startTime)){
+
+return;}
+
+
+if(!this.timeLeft&&!(this.endTime||this.startTime)){
+
+return;}
+
+
+
+if(!this.timeLeft&&typeof this.startTime=='undefined'){
+this.startTime=new Date().getTime()/1000;}
+
+
+
+if(!this.timeLeft){
+this.timeLeft=Math.floor(this.seconds(this.endTime)-this.seconds(this.startTime));}
+
+
+
+this.refreshTime(true);},
+
+
+seconds:function(time){
+if(typeof time=="number"||typeof time=='string'&&/^\d+$/.test(time)){
+return time;}
+
+return new Date(time).getTime()/1000;},
+
+
+auto:function(){
+
+var self=this;
+this.timerId=setTimeout(function(){
+if(self.timePassed<=0&&self.step<0){
+self.end();
+return;}
+
+self.refreshTime(true);},
+1000*Math.abs(this.step));},
+
+
+ten:function(t){
+if(t<10){
+t="0"+t;}
+
+return t;},
+
+
+refreshTime:function(isStart){
+var time=0;
+this.timePassed=(this.timeLeft*1000+this.step*1000*this.counter++)/1000;
+if(this.countType=="date"){
+var day=this.ten(Math.floor(this.timePassed/(60*60*24))),
+hour=this.ten(Math.floor(this.timePassed/(60*60))-day*24),
+minute=this.ten(Math.floor(this.timePassed/60)-day*24*60-hour*60),
+second=this.ten(Math.floor(this.timePassed)-day*24*60*60-hour*60*60-minute*60);
+this.onInterval(day,hour,minute,second);}else 
+if(this.countType=="seconds"){
+this.onInterval(this.timePassed);}
+
+if(isStart)
+this.auto();},
+
+
+start:function(){
+clearTimeout(this.timerId);
+this.refreshTime(true);},
+
+
+end:function(){
+clearTimeout(this.timerId);
+this.onEnd(this.timeLeft);},
+
+
+reset:function(){
+this.counter=0;
+clearTimeout(this.timerId);
+this.refreshTime(false);}};
+
+
+
+module.exports=function(o){
+return new countDown(o);};
+});
+__d('react-native-sk-countdown/CountDownText.js',function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+StyleSheet=
+
+React.StyleSheet;var Text=React.Text;
+
+var update=React.addons.update,
+countDown=require('react-native-sk-countdown/countDown.js');
+
+var CountDownText=React.createClass({displayName:'CountDownText',
+counter:null,
+
+getDefaultProps:function(){
+return {
+countType:"seconds",
+onEnd:null,
+timeLeft:0,
+step:-1,
+startText:null,
+intervalText:null,
+endText:null,
+auto:false};},
+
+
+getInitialState:function(){
+return {
+text:this.props.startText};},
+
+
+
+isTimeEquals:function(t1,t2){
+var threshold=2;
+return Math.abs(t1-t2)<threshold;},
+
+
+componentWillReceiveProps:function(nextProps){
+
+var updating=true;
+if(this.props.step==nextProps.step&&this.props.step<0){
+if(this.props.endTime){
+
+
+updating=!this.isTimeEquals(this.props.endTime,nextProps.endTime);}else 
+{
+
+
+updating=!this.isTimeEquals(nextProps.timeLeft,this.counter.timePassed);}}
+
+
+
+if(updating){
+
+this.counter.reset();
+
+var config=update(nextProps,{
+$merge:{
+onInterval:this.onInterval,
+onEnd:this.onEnd}});
+
+
+this.counter.setData(config);
+
+if(nextProps.auto){
+this.start();}}},
+
+
+
+
+onInterval:function(){
+this.setState({text:this.props.intervalText.apply(null,arguments)});},
+
+onEnd:function(timePassed){
+this.setState({text:this.props.endText});
+this.props.afterEnd&&this.props.afterEnd(timePassed);},
+
+componentDidMount:function(){
+
+
+
+
+
+
+
+
+
+
+var config=update(this.props,{
+$merge:{
+onInterval:this.onInterval,
+onEnd:this.onEnd}});
+
+
+this.counter=countDown(config);
+
+
+if(this.counter.timeLeft<=0&&this.counter.step<=0){
+this.end();
+return;}
+
+
+
+if(this.props.auto){
+this.start();}},
+
+
+componentWillUnmount:function(){
+
+this.reset();},
+
+
+start:function(){
+this.counter.start();},
+
+
+end:function(){
+this.counter.end();},
+
+
+reset:function(){
+this.counter.reset();},
+
+render:function(){
+return React.createElement(Text,{style:this.props.style},this.state.text);},
+
+getTimePassed:function(){
+return this.counter.timePassed;}});
+
+
+
+module.exports=CountDownText;
 });
 __d('somira/App/Component/Common/Recharge.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
 
@@ -66758,7 +67268,8 @@ var css=StyleSheet.create({
 flex:{
 flex:1}});
 });
-__d('somira/App/Component/User/Order/List.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+__d('somira/App/Component/User/Order/List.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _reactNativeSkCountdown=require('react-native-sk-countdown/index.js');var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
 
 
 
@@ -66790,7 +67301,8 @@ cateId:0,
 planListPageNum:1,
 hpListPageNum:0,
 planData:[],
-hpData:[]};},
+hpData:[],
+uid:''};},
 
 
 
@@ -66834,8 +67346,10 @@ this.setState({
 planListPageNum:pNum!==-1?pNum+1:-1,
 hpListPageNum:hNum!==-1?hNum+1:-1});
 
+if(this.state.cateId===1){
 
-this.fetchData(this.state.cateId);},
+this.fetchData(this.state.cateId);}},
+
 
 getPlanList:function(){var _this=this;
 _reactNativeSimpleStore2.default.get('token').then(function(token){
@@ -66882,7 +67396,8 @@ _this2.state.hpData.push(v);});}
 _this2.setState({
 loaded:true,
 dataSource:_this2.state.dataSource.cloneWithRows(_this2.state.hpData),
-hpListPageNum:results.list.length===0?-1:_this2.state.hpListPageNum});}else 
+hpListPageNum:results.list.length===0?-1:_this2.state.hpListPageNum,
+uid:userdata.user_id});}else 
 
 
 {
@@ -66893,6 +67408,23 @@ function(e){
 console.error(e);});}});},
 
 
+
+
+
+
+
+isShowTime:function(pubTime){
+var now=_Util2.default.dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss');
+
+var m=_Util2.default.getDateDiff(now,pubTime,'second');
+
+if(m>0){
+
+return {show:true,time:m};}else 
+
+{
+
+return {show:false,time:pubTime};}},
 
 
 
@@ -66937,7 +67469,7 @@ style:css.listView})));},
 
 
 
-renderRow:function(item){
+renderRow:function(item){var _this3=this;
 return (
 _reactNative2.default.createElement(TouchableOpacity,{onPress:this.props.onSelect.bind(this,item)},
 
@@ -66991,7 +67523,7 @@ Math.round(parseFloat(item.totalBonus-item.totalPrice)*100)/100:
 
 
 _reactNative2.default.createElement(View,{style:[css.container,{flexDirection:'row'}]},
-_reactNative2.default.createElement(Image,{style:{width:60,height:60,marginBottom:10,marginRight:4},
+_reactNative2.default.createElement(Image,{style:{width:60,height:60,marginRight:6,alignSelf:'center'},
 source:{uri:item.images?item.images.split(',')[0]:''}}),
 _reactNative2.default.createElement(View,{style:css.flex1},
 _reactNative2.default.createElement(Text,{style:{fontSize:14,fontWeight:'400'},numberOfLines:1},
@@ -67001,6 +67533,10 @@ _reactNative2.default.createElement(Text,{style:{fontSize:11,fontWeight:'100',ma
 item.payCount),
 
 
+
+item.status==='1'?
+
+_reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(View,{style:css.progress},
 _reactNative2.default.createElement(_Progress2.default,{progress:(item.totalCount-item.remainingAmount)/item.totalCount})),
 
@@ -67014,10 +67550,81 @@ item.totalCount)),
 _reactNative2.default.createElement(View,null,
 _reactNative2.default.createElement(Text,{style:{fontWeight:'100',fontSize:10}},'剩余'),
 _reactNative2.default.createElement(Text,{style:css.whitePrice},
-item.remainingAmount)))))));},
+item.remainingAmount)))):
 
 
 
+
+
+null,
+
+
+
+item.status==='0'&&!this.isShowTime(item.publicTime).show?
+
+_reactNative2.default.createElement(View,null,
+_reactNative2.default.createElement(Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'中奖号码:',
+
+_reactNative2.default.createElement(Text,{style:{color:'red'}},' ',item.luckCode)),
+
+_reactNative2.default.createElement(Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'获奖者: ',
+item.user_name),
+
+_reactNative2.default.createElement(Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'人次:',
+
+_reactNative2.default.createElement(Text,{style:{color:'red'}},' ',item.userPayCount)),
+
+_reactNative2.default.createElement(Text,{style:{fontSize:10,fontWeight:'100'},numberOfLines:1},'日期: ',
+item.publicTime)):
+
+
+
+null,
+
+
+
+item.status==='0'&&this.isShowTime(item.publicTime).show?
+
+_reactNative2.default.createElement(View,null,
+_reactNative2.default.createElement(Text,{style:{fontSize:13,fontWeight:'100',textAlign:'center',marginTop:10},numberOfLines:1},'揭晓倒计时'),
+
+
+_reactNative2.default.createElement(View,{style:css.timeView},
+_reactNative2.default.createElement(_reactNativeSkCountdown.CountDownText,{
+style:css.timeText,
+countType:'date',
+auto:true,
+afterEnd:function(){
+_this3.setState({
+loaded:false,
+dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+hpData:[],
+hpListPageNum:0});
+
+_this3.getHpList();},
+
+timeLeft:this.isShowTime(item.publicTime).time,
+step:-1,
+startText:'',
+endText:'',
+intervalText:
+function(date,hour,min,sec){return min+'分'+sec+'秒';}}))):
+
+
+
+
+
+null),
+
+
+
+
+item.status==='0'&&!this.isShowTime(item.publicTime).show?
+
+_reactNative2.default.createElement(Image,{style:{width:32,height:32,alignSelf:'center'},
+source:{uri:item.userId===this.state.uid?'中奖':'未中奖'}}):
+
+null)));},
 
 
 
@@ -67079,7 +67686,19 @@ color:'#b0b0b0'},
 
 progress:{
 marginTop:10,
-marginBottom:10}});
+marginBottom:10},
+
+timeView:{
+padding:8,
+marginTop:8,
+backgroundColor:'red',
+borderRadius:8},
+
+timeText:{
+textAlign:'center',
+color:'white',
+fontSize:14,
+fontWeight:'500'}});
 });
 __d('somira/App/Component/User/Commission.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _reactNativeButton=require('react-native-button/Button.js');var _reactNativeButton2=babelHelpers.interopRequireDefault(_reactNativeButton);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
 
@@ -69440,7 +70059,9 @@ function(_ref3){var code=_ref3.code;var msg=_ref3.msg;var result=_ref3.result;
 if(code===1){
 _Util2.default.toast('购买成功!');
 
-_this2.fetchData(0);}else 
+_this2.fetchData(0);
+
+_RCTDeviceEventEmitter2.default.emit('loadCartCount');}else 
 
 if(code===2){
 
@@ -69480,7 +70101,9 @@ function(_ref4){var code=_ref4.code;var msg=_ref4.msg;
 if(code===1){
 _Util2.default.toast('购买成功!');
 
-_this2.fetchData(1);}else 
+_this2.fetchData(1);
+
+_RCTDeviceEventEmitter2.default.emit('loadCartCount');}else 
 
 {
 _Util2.default.toast(msg);}});})();}}});},

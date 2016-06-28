@@ -408,7 +408,7 @@ module.exports = React.createClass({
           :
           <Animatable.Text key={i} style={[css.contentText,{textAlign:'center'}]}
             animation={isActive ? 'bounceIn' : undefined}>
-            您还没有参与记录，赶快购买吧
+            您还没有参与，赶快购买吧
           </Animatable.Text>
         }
       </Animatable.View>
