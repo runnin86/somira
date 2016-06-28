@@ -349,7 +349,7 @@ module.exports = React.createClass({
               }
             </View>
             {
-              // 已揭晓的展示
+              // 已揭晓->是否中奖展示
               item.status === '0' && !this.isShowTime(item.publicTime).show
               ?
               <Image style={{width: 32,height: 32,alignSelf:'center'}}
