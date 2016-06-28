@@ -38,8 +38,13 @@ module.exports = React.createClass({
     }
   },
   componentDidMount(){
+    let id = this.props.item.projectId
+      ?
+      this.props.item.projectId
+      :
+      this.props.item.id;
     //拉取参与记录
-    this.fetchParticipation(this.props.item.projectId, this.props.item.number, 0);
+    this.fetchParticipation(id, this.props.item.number, 0);
   },
   //拉取参与记录数据
   fetchParticipation: function(id, number, pagenum) {
