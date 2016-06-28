@@ -117,6 +117,7 @@ module.exports = {
       alignItems:'center',
       marginTop:Dimensions.get('window').height/2-250
     }}/>,
+  /*获取时间差*/
   getDateDiff: (startTime, endTime, diffType) => {
     // 将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
     startTime = startTime.replace(/\-/g, '/')
@@ -145,6 +146,27 @@ module.exports = {
         break
     }
     return parseInt((eTime.getTime() - sTime.getTime()) / parseFloat(divNum, 0), 0)
+  },
+  /*时间格式化*/
+  dateFormat: (date, fmt) => {
+    var o = {
+      'M+': date.getMonth() + 1, // 月份
+      'd+': date.getDate(), // 日
+      'H+': date.getHours(), // 小时
+      'm+': date.getMinutes(), // 分
+      's+': date.getSeconds(), // 秒
+      'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
+      'S': date.getMilliseconds() // 毫秒
+    }
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+    }
+    for (var k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+      }
+    }
+    return fmt
   },
   /*
    * m:消息

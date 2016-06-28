@@ -4,6 +4,7 @@
 import React from 'react-native';
 import Store from 'react-native-simple-store';
 import Button from 'react-native-button';
+import {CountDownText} from 'react-native-sk-countdown';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 import Util from './../../../Common/Util';
@@ -140,14 +141,14 @@ module.exports = React.createClass({
   /*
    * 是否展示倒计时
    */
-  isShowTime(t) {
-    let pubTime = new Date(Date.parse(t.replace(/-/g, '/')))
-    let now = new Date()
-    // pubTime.setHours(pubTime.getHours() + 9)
-    // now.setMinutes(now.getMinutes() + 15)
-    if (now < pubTime) {
+  isShowTime(pubTime) {
+    let now = Util.dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss');
+    // 获得开奖时间和现在时间的时间差(秒)
+    let m = Util.getDateDiff(now, pubTime, 'second');
+    // m = 10;
+    if (m > 0) {
       // 展示倒计时
-      return {show: true, time: pubTime}
+      return {show: true, time: m}
     }
     else {
       // 展示结果
@@ -316,6 +317,29 @@ module.exports = React.createClass({
                   <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
                     揭晓倒计时
                   </Text>
+                  <View style={css.timeView}>
+                    <CountDownText
+                        style={css.timeText}
+                        countType='date' // 计时类型：seconds / date
+                        auto={true} // 自动开始
+                        afterEnd={() => {
+                          this.setState({
+                            loaded: false,
+                            dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+                            hpData: [],
+                            hpListPageNum: 0,
+                          });
+                          this.getHpList();
+                        }} // 结束回调
+                        timeLeft={this.isShowTime(item.publicTime).time} // 正向计时 时间起点为0秒
+                        step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
+                        startText='' // 开始的文本
+                        endText='' // 结束的文本
+                        intervalText={
+                          (date, hour, min, sec) => min + '分' + sec + '秒'
+                        }// 定时的文本回调
+                      />
+                  </View>
                 </View>
                 :
                 null
@@ -382,5 +406,17 @@ var css = StyleSheet.create({
   progress: {
     marginTop: 10,
     marginBottom: 10
+  },
+  timeView: {
+    padding: 8,
+    marginTop:8,
+    backgroundColor: 'red',
+    borderRadius: 8,
+  },
+  timeText: {
+    textAlign:'center',
+    color:'white',
+    fontSize:14,
+    fontWeight: '500'
   },
 });
