@@ -32,10 +32,12 @@ module.exports = React.createClass({
       hpListPageNum: 0,
       planData: [],
       hpData: [],
+      uid: '',
     };
   },
   //只调用一次，在render之后调用
   componentDidMount() {
+    console.log(this.state.userdata);
     this.fetchData(this.props.cateId);
   },
   //render 之前调用
@@ -125,7 +127,8 @@ module.exports = React.createClass({
             this.setState({
               loaded: true,
               dataSource: this.state.dataSource.cloneWithRows(this.state.hpData),
-              hpListPageNum: results.list.length === 0?-1:this.state.hpListPageNum
+              hpListPageNum: results.list.length === 0?-1:this.state.hpListPageNum,
+              uid: userdata.user_id,
             });
           }
           else {
@@ -345,6 +348,15 @@ module.exports = React.createClass({
                 null
               }
             </View>
+            {
+              // 已揭晓的展示
+              item.status === '0' && !this.isShowTime(item.publicTime).show
+              ?
+              <Image style={{width: 32,height: 32,alignSelf:'center'}}
+                source={{uri: item.userId===this.state.uid?'中奖':'未中奖'}} />
+              :
+              null
+            }
           </View>
         }
 			</TouchableOpacity>
