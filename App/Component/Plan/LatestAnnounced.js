@@ -33,9 +33,19 @@ module.exports = React.createClass({
         Util.get(net.planApi.rankweek, token,
         ({code, msg, result})=>{
           if (code === 1) {
+            let uid = result.userRank[0].bs_userId;
+            let uNum = 0;
+            // 计算用户是否上榜
+            result.rankList.map((v, k)=>{
+              if (uid === v.userId) {
+                uNum = v.pNum;
+                return;
+              }
+            });
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(result.rankList),
               userRank: result.userRank[0],
+              userNum: uNum,
             });
           }
           else {
@@ -116,7 +126,8 @@ module.exports = React.createClass({
         <View style={[css.bottomArea]}>
           <View style={css.flex}>
             <Text style={[css.bottomText,{color: '#000000'}]}>
-              您上周的盈利金额为{this.state.userRank.winBonus>0?this.state.userRank.winBonus:'0 未上榜'}
+              您上周的盈利金额为{this.state.userRank.winBonus>0?this.state.userRank.winBonus:'0'}
+              {this.state.userNum>0?' 排行 '+this.state.userNum:' 未上榜'}
             </Text>
           </View>
         </View>
