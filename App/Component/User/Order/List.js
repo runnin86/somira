@@ -302,7 +302,7 @@ module.exports = React.createClass({
                     获奖者: {item.user_name}
                   </Text>
                   <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
-                    总需人次:
+                    人次:
                     <Text style={{color:'red'}}> {item.userPayCount}</Text>
                   </Text>
                   <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
