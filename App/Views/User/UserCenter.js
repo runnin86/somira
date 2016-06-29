@@ -16,6 +16,7 @@ import UserTeam from '../../Component/User/Team';
 import QR from '../../Component/User/QR';
 import ChangePwd from '../../Component/User/ChangePwd';
 import About from '../../Component/User/About';
+import Message from '../../Component/User/Message';
 
 var {
   AppRegistry,
@@ -200,7 +201,7 @@ module.exports = React.createClass({
         }>
         <Image style={[css.headerImg]} source={{uri: '个人中心背景'}}>
           <View style={css.cellfixed,css.rightBtn}>
-            <Button onPress={()=>{console.log('message')}}>
+            <Button onPress={()=>{this._addNavigator(Message,"消息列表")}}>
               <Image style={css.btnPhotoMsg}
                 source={require('image!消息按钮')}/>
             </Button>
