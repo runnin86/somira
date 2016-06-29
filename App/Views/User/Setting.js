@@ -21,6 +21,7 @@ var Setting = React.createClass({
 	logout:function(){
 		Store.delete('user');
 		Store.delete('token');
+		Store.delete('globalNoticeId');
 		// 设置购物车图标
 		RCTDeviceEventEmitter.emit('loadCartCount');
 		// 退出后隐藏方案

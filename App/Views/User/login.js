@@ -55,6 +55,8 @@ var login = React.createClass({
     Store.save('user', info.user);
     Store.save('userPhone', info.user.user_phone);
     Store.save('token', info.token);
+    // 读取公告
+    RCTDeviceEventEmitter.emit('loadNotice');
     // 设置购物车图标
 		RCTDeviceEventEmitter.emit('loadCartCount');
     // 判断是否有方案的权限

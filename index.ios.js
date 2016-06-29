@@ -6,7 +6,8 @@ import {
   View,
   StatusBarIOS,
   TabBarIOS,
-  NavigatorIOS
+  NavigatorIOS,
+  Alert,
 } from 'react-native';
 
 import Store from 'react-native-simple-store';
@@ -25,6 +26,7 @@ var somira = React.createClass({
   getDefaultProps () {
   },
   getInitialState(){
+    this.getNotice();
     this.isShowPlan();
     this.getCartCount();
     return {
@@ -46,6 +48,9 @@ var somira = React.createClass({
      *所以看个人权衡是否将组件封装到大的组件，
      *甚至整个页面或者应用就封装到一个组件。
      */
+    RCTDeviceEventEmitter.addListener('loadNotice', ()=>{
+      this.getNotice();
+    });
     RCTDeviceEventEmitter.addListener('showPlanSwitch', ()=>{
       this.isShowPlan();
     });
@@ -111,6 +116,38 @@ var somira = React.createClass({
           notifyPlanCartCount: 0
         });
       }
+    });
+  },
+  getNotice() {
+    // 获取存储的消息ID
+    Store.get('globalNoticeId').then((globalNoticeId)=>{
+      Store.get('token').then((token)=>{
+        if (token) {
+          /*
+           * 获取系统公告
+           */
+          Util.get(net.userApi.notice, token,
+          ({code, msg, result})=>{
+            // console.log(result);
+            if (code === 1 && result) {
+              if (!globalNoticeId || (globalNoticeId && result.notice_id !== globalNoticeId)) {
+                // 不存在和不相等需要新增本地缓存级别的系统通知对象,
+                Store.save('globalNoticeId', result.notice_id);
+                Alert.alert(
+                  result.notice_title,
+                  result.notice_content,
+                  [
+                    {text: '确认', onPress: () => console.log('OK Pressed!')},
+                  ]
+                );
+              }
+            }
+          },
+          (e)=>{
+            console.error(e);
+          });
+        }
+      });
     });
   },
   render: function() {
