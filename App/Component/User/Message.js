@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f4f4f4',
     marginTop:66,
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   warnning: {
     width: 100,
