@@ -54,16 +54,16 @@ module.exports = React.createClass({
             {this.state.msg.msgCreateTime}
           </Text>
         </View>
-        <WebView style={styles.msgRow}
-          contentInset={{top:-66,bottom:-50}}
+        <WebView
+          contentInset={{top:0,bottom:0}}
           html={this.state.msg.msg_content}
           startInLoadingState={this.state.loaded}
           scalesPageToFit={false}
-          scrollEnabled={false}
-          automaticallyAdjustContentInsets={true}
+          scrollEnabled={true}
+          automaticallyAdjustContentInsets={false}
           />
         <View style={styles.bordorBottom}/>
-        <View style={[{alignSelf:'flex-end',padding: 10},styles.msgRow]}>
+        <View style={[{alignSelf:'flex-end'},styles.msgRow]}>
           <Text style={styles.fontCss}>
             收米拉客服
           </Text>
@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
   bordorBottom: {
     borderBottomColor : '#C0C0C0',
     borderBottomWidth : 1,
-    padding: 10,
   },
   msgRow : {
   	flexDirection : 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    padding: 10,
   },
   shadom: {
     textShadowOffset: {width: 1, height: 1},
