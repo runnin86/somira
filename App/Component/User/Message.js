@@ -54,6 +54,15 @@ module.exports = React.createClass({
       }
     });
   },
+  loadMore() {
+    let num = this.state.pageNum;
+    this.setState({
+      pageNum: num !== -1 ? num + 1 : -1,
+    });
+    if (this.state.pageNum > -1) {
+      this._getMessageList();
+    }
+  },
   _renderListItem:function(item){
     // {''+item.msg_title+'|'+item.msg_isread+'|'+item.msg_type+'|'+item.msgCreateTime}
     let co = item.msg_type==='通知公告' ? 'red' : '#9ACD32';
@@ -95,9 +104,13 @@ module.exports = React.createClass({
              </Text>
            </View>
            :
-           <ListView
-            dataSource={this.state.dataSource}
-            renderRow={this._renderListItem}/>
+            <ListView contentInset={{top: 0,bottom:0}}
+              dataSource={this.state.dataSource}
+              renderRow={this._renderListItem}
+              pageSize={10}
+              onEndReached={this.loadMore}
+              onEndReachedThreshold={1}
+              style={styles.listView}/>
          )
        }
       </View>
