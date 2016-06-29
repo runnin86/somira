@@ -4,13 +4,15 @@ import React from 'react';
 import Store from 'react-native-simple-store';
 import Util from './../../Common/Util';
 import * as net from './../../Network/Interface';
+import MessageDetail from './MessageDetail';
 
 import {
   StyleSheet,
   Text,
   View,
   ListView,
-  Image
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 
 module.exports = React.createClass({
@@ -63,11 +65,21 @@ module.exports = React.createClass({
       this._getMessageList();
     }
   },
+  //选中一行
+	selectItem:function(id){
+    this.props.navigator.push({
+      title: '消息详情',
+      component: MessageDetail,
+      navigationBarHidden:false,
+      passProps: {
+        id: id,
+      }
+    });
+	},
   _renderListItem:function(item){
-    // {''+item.msg_title+'|'+item.msg_isread+'|'+item.msg_type+'|'+item.msgCreateTime}
     let co = item.msg_type==='通知公告' ? 'red' : '#9ACD32';
     return (
-      <View>
+      <TouchableOpacity onPress={()=>this.selectItem(item.msg_id)}>
         <View style={[styles.cell,styles.msgRow]}>
           <Image style={{width:6,height:6,alignSelf:'center',justifyContent:'center',marginRight:2}}
             source={{uri: item.msg_isread===1?'banner分页符红':'banner分页符白'}}/>
@@ -83,7 +95,7 @@ module.exports = React.createClass({
             {item.msgCreateTime}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   },
   render() {
