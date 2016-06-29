@@ -1296,6 +1296,7 @@ __d('somira/index.ios.js',function(global, require, module, exports) {  var _rea
 
 
 
+
 net=babelHelpers.interopRequireWildcard(_Interface);
 
 _reactNative.StatusBarIOS.setHidden(false);
@@ -1304,6 +1305,7 @@ var somira=_react2.default.createClass({displayName:'somira',
 getDefaultProps:function(){},
 
 getInitialState:function(){
+this.getNotice();
 this.isShowPlan();
 this.getCartCount();
 return {
@@ -1324,6 +1326,9 @@ componentDidMount:function(){var _this=this;
 
 
 
+
+_RCTDeviceEventEmitter2.default.addListener('loadNotice',function(){
+_this.getNotice();});
 
 _RCTDeviceEventEmitter2.default.addListener('showPlanSwitch',function(){
 _this.isShowPlan();});
@@ -1388,6 +1393,38 @@ notifyPlanCartCount:result.length});}});}else
 _this3.setState({
 notifyHpCartCount:0,
 notifyPlanCartCount:0});}});},
+
+
+
+
+getNotice:function(){
+
+_reactNativeSimpleStore2.default.get('globalNoticeId').then(function(globalNoticeId){
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+
+
+
+_Util2.default.get(net.userApi.notice,token,
+function(_ref3){var code=_ref3.code;var msg=_ref3.msg;var result=_ref3.result;
+
+if(code===1&&result){
+if(!globalNoticeId||globalNoticeId&&result.notice_id!==globalNoticeId){
+
+_reactNativeSimpleStore2.default.save('globalNoticeId',result.notice_id);
+_reactNative.Alert.alert(
+result.notice_title,
+result.notice_content,
+[
+{text:'确认',onPress:function(){return console.log('OK Pressed!');}}]);}}},
+
+
+
+
+
+function(e){
+console.error(e);});}});});},
+
 
 
 
@@ -62730,7 +62767,7 @@ codes)):
 
 
 _reactNative2.default.createElement(Animatable.Text,{key:i,style:[css.contentText,{textAlign:'center'}],
-animation:isActive?'bounceIn':undefined},'您还没有参与记录，赶快购买吧')));}});
+animation:isActive?'bounceIn':undefined},'您还没有参与，赶快购买吧')));}});
 
 
 
@@ -64422,10 +64459,20 @@ _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 _Util2.default.get(net.planApi.rankweek,token,
 function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
-if(code===1){
+if(code===1){(function(){
+var uid=result.userRank[0].bs_userId;
+var uNum=0;
+
+result.rankList.map(function(v,k){
+if(uid===v.userId){
+uNum=v.pNum;
+return;}});
+
+
 _this.setState({
 dataSource:_this.state.dataSource.cloneWithRows(result.rankList),
-userRank:result.userRank[0]});}else 
+userRank:result.userRank[0],
+userNum:uNum});})();}else 
 
 
 {
@@ -64506,7 +64553,8 @@ style:{marginBottom:-40}}),
 _reactNative2.default.createElement(View,{style:[css.bottomArea]},
 _reactNative2.default.createElement(View,{style:css.flex},
 _reactNative2.default.createElement(Text,{style:[css.bottomText,{color:'#000000'}]},'您上周的盈利金额为',
-this.state.userRank.winBonus>0?this.state.userRank.winBonus:'0 未上榜')))));}});
+this.state.userRank.winBonus>0?this.state.userRank.winBonus:'0',
+this.state.userNum>0?' 排行 '+this.state.userNum:' 未上榜')))));}});
 
 
 
@@ -65577,7 +65625,8 @@ __d('somira/App/Views/User/UserCenter.js',function(global, require, module, expo
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var _Bill=require('somira/App/Component/User/Bill/Bill.js');var _Bill2=babelHelpers.interopRequireDefault(_Bill);var _Order=require('somira/App/Component/User/Order/Order.js');var _Order2=babelHelpers.interopRequireDefault(_Order);var _Commission=require('somira/App/Component/User/Commission.js');var _Commission2=babelHelpers.interopRequireDefault(_Commission);var _Team=require('somira/App/Component/User/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var _QR=require('somira/App/Component/User/QR.js');var _QR2=babelHelpers.interopRequireDefault(_QR);var _ChangePwd=require('somira/App/Component/User/ChangePwd.js');var _ChangePwd2=babelHelpers.interopRequireDefault(_ChangePwd);var _About=require('somira/App/Component/User/About.js');var _About2=babelHelpers.interopRequireDefault(_About);var 
+net=babelHelpers.interopRequireWildcard(_Interface);var _Bill=require('somira/App/Component/User/Bill/Bill.js');var _Bill2=babelHelpers.interopRequireDefault(_Bill);var _Order=require('somira/App/Component/User/Order/Order.js');var _Order2=babelHelpers.interopRequireDefault(_Order);var _Commission=require('somira/App/Component/User/Commission.js');var _Commission2=babelHelpers.interopRequireDefault(_Commission);var _Team=require('somira/App/Component/User/Team.js');var _Team2=babelHelpers.interopRequireDefault(_Team);var _QR=require('somira/App/Component/User/QR.js');var _QR2=babelHelpers.interopRequireDefault(_QR);var _ChangePwd=require('somira/App/Component/User/ChangePwd.js');var _ChangePwd2=babelHelpers.interopRequireDefault(_ChangePwd);var _About=require('somira/App/Component/User/About.js');var _About2=babelHelpers.interopRequireDefault(_About);var _Message=require('somira/App/Component/User/Message.js');var _Message2=babelHelpers.interopRequireDefault(_Message);var 
+
 
 
 
@@ -65769,7 +65818,7 @@ title:'玩命加载中...'})},
 
 _reactNative2.default.createElement(Image,{style:[css.headerImg],source:{uri:'个人中心背景'}},
 _reactNative2.default.createElement(View,{style:(css.cellfixed,css.rightBtn)},
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){console.log('message');}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this10._addNavigator(_Message2.default,"消息列表");}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoMsg,
 source:require('image!消息按钮')})),
 
@@ -66136,6 +66185,8 @@ _reactNativeSimpleStore2.default.save('user',info.user);
 _reactNativeSimpleStore2.default.save('userPhone',info.user.user_phone);
 _reactNativeSimpleStore2.default.save('token',info.token);
 
+_RCTDeviceEventEmitter2.default.emit('loadNotice');
+
 _RCTDeviceEventEmitter2.default.emit('loadCartCount');
 
 _RCTDeviceEventEmitter2.default.emit('showPlanSwitch');
@@ -66482,6 +66533,7 @@ falseSwitchIsOn:false};},
 logout:function(){
 _reactNativeSimpleStore2.default.delete('user');
 _reactNativeSimpleStore2.default.delete('token');
+_reactNativeSimpleStore2.default.delete('globalNoticeId');
 
 _RCTDeviceEventEmitter2.default.emit('loadCartCount');
 
@@ -69843,6 +69895,282 @@ width:20,
 resizeMode:Image.resizeMode.contain}});
 });
 __d('image!64X64',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/64X64.imageset/64X64.png","uri":"64X64","width":64,"height":64,"deprecated":true};
+});
+__d('somira/App/Component/User/Message.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _MessageDetail=require('somira/App/Component/User/MessageDetail.js');var _MessageDetail2=babelHelpers.interopRequireDefault(_MessageDetail);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+dataSource:new _reactNative.ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
+pageNum:1,
+listData:[],
+loaded:false};},
+
+
+componentDidMount:function(){
+this._getMessageList();},
+
+_getMessageList:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token&&_this.state.pageNum>-1){
+var param='?pagenum='+_this.state.pageNum+'&pagesize='+10;
+_Util2.default.get(net.userApi.userMessage+param,token,
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+
+if(result.msglist.length>0){
+result.msglist.map(function(v,k){
+_this.state.listData.push(v);});}
+
+
+_this.setState({
+loaded:true,
+dataSource:_this.state.dataSource.cloneWithRows(_this.state.listData),
+pageNum:result.msglist.length===0?-1:_this.state.pageNum});}else 
+
+
+{
+_Util2.default.toast(msg);}},
+
+
+function(e){
+console.error(e);});}});},
+
+
+
+
+loadMore:function(){
+var num=this.state.pageNum;
+this.setState({
+pageNum:num!==-1?num+1:-1});
+
+if(this.state.pageNum>-1){
+this._getMessageList();}},
+
+
+
+selectItem:function(id){
+this.props.navigator.push({
+title:'消息详情',
+component:_MessageDetail2.default,
+navigationBarHidden:false,
+passProps:{
+id:id}});},
+
+
+
+_renderListItem:function(item){var _this2=this;
+var co=item.msg_type==='通知公告'?'red':'#9ACD32';
+return (
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:function(){return _this2.selectItem(item.msg_id);}},
+_react2.default.createElement(_reactNative.View,{style:[styles.cell,styles.msgRow]},
+_react2.default.createElement(_reactNative.Image,{style:{width:6,height:6,alignSelf:'center',justifyContent:'center',marginRight:2},
+source:{uri:item.msg_isread===1?'banner分页符红':'banner分页符白'}}),
+_react2.default.createElement(_reactNative.View,{style:[styles.typeColor,{backgroundColor:co,borderColor:co}]},
+_react2.default.createElement(_reactNative.Text,{style:styles.typeText},
+item.msg_type)),
+
+
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:12,fontWeight:'100',flex:1,margin:4},numberOfLines:2},
+item.msg_title),
+
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:10,fontWeight:'100',margin:4},numberOfLines:1},
+item.msgCreateTime))));},
+
+
+
+
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+
+!this.state.loaded?
+
+_Util2.default.loading:
+
+
+this.state.dataSource.getRowCount()===0?
+
+_react2.default.createElement(_reactNative.View,{style:{marginTop:80,alignItems:'center',justifyContent:'center'}},
+_react2.default.createElement(_reactNative.Image,{style:styles.warnning,source:require('image!温馨提示')}),
+_react2.default.createElement(_reactNative.Text,{style:{height:20,fontSize:10,fontWeight:'100',color:'#A9A9A9'}},'暂时没有消息')):
+
+
+
+
+_react2.default.createElement(_reactNative.ListView,{contentInset:{top:0,bottom:0},
+dataSource:this.state.dataSource,
+renderRow:this._renderListItem,
+pageSize:10,
+onEndReached:this.loadMore,
+onEndReachedThreshold:1,
+style:styles.listView})));}});
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#f4f4f4',
+marginTop:66},
+
+
+warnning:{
+width:100,
+backgroundColor:'transparent',
+resizeMode:_reactNative.Image.resizeMode.contain},
+
+listView:{
+backgroundColor:'#eeeeee'},
+
+cell:{
+paddingLeft:10,
+paddingTop:20,
+paddingBottom:20,
+paddingRight:4,
+borderBottomColor:'#C0C0C0',
+borderBottomWidth:1,
+backgroundColor:'#ffffff'},
+
+msgRow:{
+flexDirection:'row',
+justifyContent:'space-between'},
+
+shadom:{
+textShadowOffset:{width:1,height:1},
+textShadowRadius:1,
+textShadowColor:'#FFD700'},
+
+typeColor:{
+width:68,
+borderWidth:1,
+borderRadius:20},
+
+typeText:{
+fontSize:12,
+fontWeight:'400',
+color:'#ffffff',
+textAlign:'center',
+margin:4}});
+});
+__d('somira/App/Component/User/MessageDetail.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+
+
+
+
+
+
+
+
+module.exports=_react2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+msg:'',
+loaded:false};},
+
+
+componentDidMount:function(){
+this._getMessage();},
+
+_getMessage:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('token').then(function(token){
+if(token){
+_Util2.default.get(net.userApi.queryMessage+'?msgid='+_this.props.id,token,
+function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
+if(code===1){
+_this.setState({
+loaded:true,
+msg:result});}else 
+
+
+{
+_Util2.default.toast(msg);}},
+
+
+function(e){
+console.error(e);});}});},
+
+
+
+
+render:function(){
+return (
+_react2.default.createElement(_reactNative.View,{style:styles.container},
+_react2.default.createElement(_reactNative.View,{style:[styles.msgRow,styles.bordorBottom]},
+_react2.default.createElement(_reactNative.Text,{style:styles.fontCss},
+this.state.msg.msg_type),
+
+_react2.default.createElement(_reactNative.Text,{style:styles.fontCss},
+this.state.msg.msgCreateTime)),
+
+
+_react2.default.createElement(_reactNative.WebView,{
+contentInset:{top:0,bottom:0},
+html:this.state.msg.msg_content,
+startInLoadingState:this.state.loaded,
+scalesPageToFit:false,
+scrollEnabled:true,
+automaticallyAdjustContentInsets:false}),
+
+_react2.default.createElement(_reactNative.View,{style:styles.bordorBottom}),
+_react2.default.createElement(_reactNative.View,{style:[{alignSelf:'flex-end'},styles.msgRow]},
+_react2.default.createElement(_reactNative.Text,{style:styles.fontCss},'收米拉客服'))));}});
+
+
+
+
+
+
+
+
+var styles=_reactNative.StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#ffffff',
+marginTop:66},
+
+bordorBottom:{
+borderBottomColor:'#C0C0C0',
+borderBottomWidth:1},
+
+msgRow:{
+flexDirection:'row',
+justifyContent:'space-between',
+padding:10},
+
+shadom:{
+textShadowOffset:{width:1,height:1},
+textShadowRadius:1,
+textShadowColor:'#FFD700'},
+
+fontCss:{
+fontSize:14,
+fontWeight:'100'}});
 });
 __d('image!消息按钮',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/消息按钮.imageset/消息按钮.png","uri":"消息按钮","width":32,"height":32,"deprecated":true};
 });
