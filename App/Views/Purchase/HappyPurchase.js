@@ -81,7 +81,7 @@ module.exports = React.createClass({
     return {
       dataSource: ds.cloneWithRows([[
         {title:'最新揭晓', id: 'latest', img: '最新揭晓'},
-        // {title:'充值', id: 'recharge', img: '充值'},
+        {title:'充值', id: 'recharge', img: '充值'},
         {title:'帮助', id: 'help', img: '帮助-1'}
       ]]),
       tabData: [
@@ -141,11 +141,11 @@ module.exports = React.createClass({
         title:title
       });
     }else if (id == 'recharge') {
-      // this.props.navigator.push({
-      //   component:Recharge,
-      //   navigationBarHidden:false,
-      //   title:title
-      // });
+      this.props.navigator.push({
+        component:Recharge,
+        navigationBarHidden:false,
+        title:title
+      });
       Util.toast('充值功能暂未开放,敬请期待!');
     }else if (id == 'help') {
       if (Platform.OS === 'ios') {
