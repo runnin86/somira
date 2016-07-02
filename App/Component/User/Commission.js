@@ -35,8 +35,8 @@ module.exports = React.createClass({
             let tempLength = 0;
             let tempMoney = 0;
             result.map((v, k)=>{
-              if (v.status === 0) {
-                // 0可提,1已提
+              if (v.commissionStatus === 4) {
+                // commissionStatus:1已提现 2:提现审核中 3:未达标 4:可提现
                 tempLength += 1;
                 tempMoney += v.total_fee;
               }
@@ -60,19 +60,38 @@ module.exports = React.createClass({
     return (
       <View style={styles.recordRow}>
         <View style={[styles.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
-          <Text style={[{fontWeight : '100',fontSize : 12},rowData.status===0?styles.red:styles.gray]}>
+          <Text style={[{fontWeight : '100',fontSize : 12},rowData.commissionStatus===4?styles.red:styles.gray]}>
             {rowData.from_user_phone}
             <Text style={{fontWeight : '100',fontSize : 10}}>
-              ({rowData.status===0?'可提现':(rowData.status===1?'已提现':'')})
+              ({rowData.commissionStatus===4
+                ?
+                '可提现'
+                :
+                (rowData.commissionStatus===1
+                  ?
+                  '已提现'
+                  :
+                  (rowData.commissionStatus===2
+                    ?
+                    '审核中'
+                    :
+                    rowData.commissionStatus===3
+                    ?
+                    '未达标'
+                    :
+                    ''
+                  )
+                )
+              })
             </Text>
           </Text>
-          <Text style={[{fontWeight : '100',fontSize : 10},rowData.status===0?styles.red:styles.gray]}>
+          <Text style={[{fontWeight : '100',fontSize : 10},rowData.commissionStatus===4?styles.red:styles.gray]}>
             用户所属:{rowData.oneLevelPhone === ''?'':'上级' + rowData.oneLevelPhone}
             {rowData.oneLevelPhone === ''?'直属上级':''}
           </Text>
         </View>
         <View style={[styles.recordCellFixed,{alignItems:'flex-end'}]}>
-          <Text style={[styles.recordText,rowData.status===0?styles.red:styles.gray]}>
+          <Text style={[styles.recordText,rowData.commissionStatus===4?styles.red:styles.gray]}>
             {rowData.total_fee}
           </Text>
         </View>
