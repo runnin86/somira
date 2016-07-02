@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
   },
   cell: {
     paddingLeft: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: 18,
+    paddingBottom: 18,
     paddingRight: 4,
     borderBottomColor : '#C0C0C0',
     borderBottomWidth : 1,
