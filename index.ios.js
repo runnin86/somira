@@ -38,8 +38,7 @@ var somira = React.createClass({
       notifyPlanCartCount: 0,
       showPlan: false,
       notifyUserCount: 0,
-      animationType: 'none',
-      modalVisible: false,
+      showModal: false,
       noticeTitle: '',
       noticeContent: '',
     };
@@ -142,7 +141,7 @@ var somira = React.createClass({
                 Store.save('globalNoticeId', result.notice_id);
                 // 展示modal
                 this.setState({
-                  modalVisible: true,
+                  showModal: true,
                   noticeTitle: result.notice_title,
                   noticeContent: result.notice_content,
                 });
@@ -162,9 +161,6 @@ var somira = React.createClass({
         }
       });
     });
-  },
-  _setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   },
   render: function() {
     // #26292E;#292C33;
@@ -255,7 +251,7 @@ var somira = React.createClass({
         <Modal
           animationType={'fade'}
           transparent={true}
-          visible={this.state.modalVisible}
+          visible={this.state.showModal}
           >
           <View style={css.modalView}>
             <View style={css.innerContainer}>
@@ -267,7 +263,7 @@ var somira = React.createClass({
               </ScrollView>
               <View style={css.line} />
               <TouchableHighlight
-                onPress={this._setModalVisible.bind(this, false)}
+                onPress={()=>{this.setState({showModal: false})}}
                 style={css.modalButton}
                 underlayColor="#a9d9d4">
                   <Text style={css.buttonText}>确认</Text>
