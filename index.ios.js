@@ -8,6 +8,9 @@ import {
   TabBarIOS,
   NavigatorIOS,
   Alert,
+  Modal,
+  ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 
 import Store from 'react-native-simple-store';
@@ -35,6 +38,10 @@ var somira = React.createClass({
       notifyPlanCartCount: 0,
       showPlan: false,
       notifyUserCount: 0,
+      animationType: 'none',
+      modalVisible: false,
+      noticeTitle: '',
+      noticeContent: '',
     };
   },
   componentDidMount() {
@@ -133,13 +140,19 @@ var somira = React.createClass({
               if (!globalNoticeId || (globalNoticeId && result.notice_id !== globalNoticeId)) {
                 // 不存在和不相等需要新增本地缓存级别的系统通知对象,
                 Store.save('globalNoticeId', result.notice_id);
-                Alert.alert(
-                  result.notice_title,
-                  result.notice_content,
-                  [
-                    {text: '确认', onPress: () => console.log('OK Pressed!')},
-                  ]
-                );
+                // 展示modal
+                this.setState({
+                  modalVisible: true,
+                  noticeTitle: result.notice_title,
+                  noticeContent: result.notice_content,
+                });
+                // Alert.alert(
+                //   result.notice_title,
+                //   result.notice_content,
+                //   [
+                //     {text: '确认', onPress: () => console.log('OK Pressed!')},
+                //   ]
+                // );
               }
             }
           },
@@ -150,91 +163,119 @@ var somira = React.createClass({
       });
     });
   },
+  _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
   render: function() {
     // #26292E;#292C33;
     return (
-      <TabBarIOS tintColor="#ed8e07" barTintColor="#000000">
-        {
-          this.state.showPlan
-          ?
+      <View style={css.container}>
+        <TabBarIOS tintColor="#ed8e07" barTintColor="#000000">
+          {
+            this.state.showPlan
+            ?
+            <TabBarIOS.Item
+              title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
+              selected={this.state.selectedTab === 'plan'}
+              onPress={()=>{this.changeTab('plan')}}>
+              <NavigatorIOS style={css.container}
+                barTintColor={Util.headerColor}
+                tintColor={Util.headerTitleColor}
+                titleTextColor={Util.headerTitleColor}
+                navigationBarHidden={false}
+                initialRoute={{
+                  title: '购买方案',
+                  titleTextColor: Util.headerTitleColor,
+                  component: Plan,
+                  wrapperStyle: css.wrapperStyle
+                }}/>
+            </TabBarIOS.Item>
+            :
+            null
+          }
           <TabBarIOS.Item
-            title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
-            selected={this.state.selectedTab === 'plan'}
-            onPress={()=>{this.changeTab('plan')}}>
+            title="一元夺宝" icon={{uri:'乐夺宝',scale:2,isStatic:true}}
+            selected={this.state.selectedTab === 'hp'}
+            onPress={()=>{this.changeTab('hp')}}>
             <NavigatorIOS style={css.container}
               barTintColor={Util.headerColor}
               tintColor={Util.headerTitleColor}
               titleTextColor={Util.headerTitleColor}
               navigationBarHidden={false}
               initialRoute={{
-                title: '购买方案',
+                title: '一元夺宝',
                 titleTextColor: Util.headerTitleColor,
-                component: Plan,
+                component: HappyPurchase,
                 wrapperStyle: css.wrapperStyle
               }}/>
           </TabBarIOS.Item>
-          :
-          null
-        }
-        <TabBarIOS.Item
-          title="一元夺宝" icon={{uri:'乐夺宝',scale:2,isStatic:true}}
-          selected={this.state.selectedTab === 'hp'}
-          onPress={()=>{this.changeTab('hp')}}>
-          <NavigatorIOS style={css.container}
-            barTintColor={Util.headerColor}
-            tintColor={Util.headerTitleColor}
-            titleTextColor={Util.headerTitleColor}
-            navigationBarHidden={false}
-            initialRoute={{
-              title: '一元夺宝',
-              titleTextColor: Util.headerTitleColor,
-              component: HappyPurchase,
-              wrapperStyle: css.wrapperStyle
-            }}/>
-        </TabBarIOS.Item>
 
-        <TabBarIOS.Item
-          title="购物车" icon={{uri:'购物车menu',scale:2,isStatic:true}}
-          badge={
-            this.state.notifyHpCartCount+this.state.notifyPlanCartCount > 0
-            ?
-            this.state.notifyHpCartCount+this.state.notifyPlanCartCount
-            :
-            undefined
-          }
-          selected={this.state.selectedTab === 'sc'}
-          onPress={()=>{this.changeTab('sc')}}>
-          <NavigatorIOS style={css.container}
-            barTintColor={Util.headerColor}
-            tintColor={Util.headerTitleColor}
-            titleTextColor={Util.headerTitleColor}
-            navigationBarHidden={false}
-            initialRoute={{
-              title: '购物车',
-              titleTextColor: Util.headerTitleColor,
-              component: ShoppingCart,
-              wrapperStyle: css.wrapperStyle
-            }}/>
-        </TabBarIOS.Item>
+          <TabBarIOS.Item
+            title="购物车" icon={{uri:'购物车menu',scale:2,isStatic:true}}
+            badge={
+              this.state.notifyHpCartCount+this.state.notifyPlanCartCount > 0
+              ?
+              this.state.notifyHpCartCount+this.state.notifyPlanCartCount
+              :
+              undefined
+            }
+            selected={this.state.selectedTab === 'sc'}
+            onPress={()=>{this.changeTab('sc')}}>
+            <NavigatorIOS style={css.container}
+              barTintColor={Util.headerColor}
+              tintColor={Util.headerTitleColor}
+              titleTextColor={Util.headerTitleColor}
+              navigationBarHidden={false}
+              initialRoute={{
+                title: '购物车',
+                titleTextColor: Util.headerTitleColor,
+                component: ShoppingCart,
+                wrapperStyle: css.wrapperStyle
+              }}/>
+          </TabBarIOS.Item>
 
-        <TabBarIOS.Item
-          title="个人中心" icon={{uri:'个人中心',scale:2,isStatic:true}}
-          badge={this.state.notifyUserCount > 0 ? this.state.notifyUserCount : undefined}
-          selected={this.state.selectedTab === 'uc'}
-          onPress={()=>{this.changeTab('uc')}}>
-          <NavigatorIOS style={css.container}
-            barTintColor={Util.headerColor}
-            tintColor={Util.headerTitleColor}
-            titleTextColor={Util.headerTitleColor}
-            navigationBarHidden={true}
-            initialRoute={{
-              title: '个人中心',
-              titleTextColor: Util.headerTitleColor,
-              component: UserCenter,
-              wrapperStyle: css.wrapperStyle,
-            }}/>
-        </TabBarIOS.Item>
-      </TabBarIOS>
+          <TabBarIOS.Item
+            title="个人中心" icon={{uri:'个人中心',scale:2,isStatic:true}}
+            badge={this.state.notifyUserCount > 0 ? this.state.notifyUserCount : undefined}
+            selected={this.state.selectedTab === 'uc'}
+            onPress={()=>{this.changeTab('uc')}}>
+            <NavigatorIOS style={css.container}
+              barTintColor={Util.headerColor}
+              tintColor={Util.headerTitleColor}
+              titleTextColor={Util.headerTitleColor}
+              navigationBarHidden={true}
+              initialRoute={{
+                title: '个人中心',
+                titleTextColor: Util.headerTitleColor,
+                component: UserCenter,
+                wrapperStyle: css.wrapperStyle,
+              }}/>
+          </TabBarIOS.Item>
+        </TabBarIOS>
+        <Modal
+          animationType={'fade'}
+          transparent={true}
+          visible={this.state.modalVisible}
+          >
+          <View style={css.modalView}>
+            <View style={css.innerContainer}>
+              <Text style={{padding:10,fontSize:16,fontWeight:'500'}}>
+                {this.state.noticeTitle}
+              </Text>
+              <ScrollView style={css.modalContent}>
+                <Text style={{fontSize:14,fontWeight:'100'}}>{this.state.noticeContent}</Text>
+              </ScrollView>
+              <View style={css.line} />
+              <TouchableHighlight
+                onPress={this._setModalVisible.bind(this, false)}
+                style={css.modalButton}
+                underlayColor="#a9d9d4">
+                  <Text style={css.buttonText}>确认</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
     );
   }
 });
@@ -245,7 +286,44 @@ var css = StyleSheet.create({
   },
   container:{
     flex:1
-  }
+  },
+  modalView: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalButton: {
+    // flex: 1,
+    height: 40,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    // overflow: 'hidden',
+    // marginTop: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  modalContent: {
+    height:Util.size['height']*0.3,
+    marginLeft:16,
+    marginRight:16,
+  },
+  buttonText: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'blue',
+  },
+  innerContainer: {
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  line:{
+    height:1,
+    alignSelf: 'stretch',
+    backgroundColor: '#000000',
+    marginTop: 10,
+  },
 });
 
 AppRegistry.registerComponent('somira', () => somira);
