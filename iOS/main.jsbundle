@@ -1297,6 +1297,9 @@ __d('somira/index.ios.js',function(global, require, module, exports) {  var _rea
 
 
 
+
+
+
 net=babelHelpers.interopRequireWildcard(_Interface);
 
 _reactNative.StatusBarIOS.setHidden(false);
@@ -1313,7 +1316,10 @@ selectedTab:'',
 notifyHpCartCount:0,
 notifyPlanCartCount:0,
 showPlan:false,
-notifyUserCount:0};},
+notifyUserCount:0,
+showModal:false,
+noticeTitle:'',
+noticeContent:''};},
 
 
 componentDidMount:function(){var _this=this;
@@ -1397,7 +1403,7 @@ notifyPlanCartCount:0});}});},
 
 
 
-getNotice:function(){
+getNotice:function(){var _this4=this;
 
 _reactNativeSimpleStore2.default.get('globalNoticeId').then(function(globalNoticeId){
 _reactNativeSimpleStore2.default.get('token').then(function(token){
@@ -1412,11 +1418,17 @@ if(code===1&&result){
 if(!globalNoticeId||globalNoticeId&&result.notice_id!==globalNoticeId){
 
 _reactNativeSimpleStore2.default.save('globalNoticeId',result.notice_id);
-_reactNative.Alert.alert(
-result.notice_title,
-result.notice_content,
-[
-{text:'确认',onPress:function(){return console.log('OK Pressed!');}}]);}}},
+
+_this4.setState({
+showModal:true,
+noticeTitle:result.notice_title,
+noticeContent:result.notice_content});}}},
+
+
+
+
+
+
 
 
 
@@ -1429,9 +1441,10 @@ console.error(e);});}});});},
 
 
 
-render:function(){var _this4=this;
+render:function(){var _this5=this;
 
 return (
+_react2.default.createElement(_reactNative.View,{style:css.container},
 _react2.default.createElement(_reactNative.TabBarIOS,{tintColor:'#ed8e07',barTintColor:'#000000'},
 
 this.state.showPlan?
@@ -1439,7 +1452,7 @@ this.state.showPlan?
 _react2.default.createElement(_reactNative.TabBarIOS.Item,{
 title:'购买方案',icon:{uri:'购买方案',scale:2,isStatic:true},
 selected:this.state.selectedTab==='plan',
-onPress:function(){_this4.changeTab('plan');}},
+onPress:function(){_this5.changeTab('plan');}},
 _react2.default.createElement(_reactNative.NavigatorIOS,{style:css.container,
 barTintColor:_Util2.default.headerColor,
 tintColor:_Util2.default.headerTitleColor,
@@ -1458,7 +1471,7 @@ null,
 _react2.default.createElement(_reactNative.TabBarIOS.Item,{
 title:'一元夺宝',icon:{uri:'乐夺宝',scale:2,isStatic:true},
 selected:this.state.selectedTab==='hp',
-onPress:function(){_this4.changeTab('hp');}},
+onPress:function(){_this5.changeTab('hp');}},
 _react2.default.createElement(_reactNative.NavigatorIOS,{style:css.container,
 barTintColor:_Util2.default.headerColor,
 tintColor:_Util2.default.headerTitleColor,
@@ -1482,7 +1495,7 @@ this.state.notifyHpCartCount+this.state.notifyPlanCartCount:
 undefined,
 
 selected:this.state.selectedTab==='sc',
-onPress:function(){_this4.changeTab('sc');}},
+onPress:function(){_this5.changeTab('sc');}},
 _react2.default.createElement(_reactNative.NavigatorIOS,{style:css.container,
 barTintColor:_Util2.default.headerColor,
 tintColor:_Util2.default.headerTitleColor,
@@ -1500,7 +1513,7 @@ _react2.default.createElement(_reactNative.TabBarIOS.Item,{
 title:'个人中心',icon:{uri:'个人中心',scale:2,isStatic:true},
 badge:this.state.notifyUserCount>0?this.state.notifyUserCount:undefined,
 selected:this.state.selectedTab==='uc',
-onPress:function(){_this4.changeTab('uc');}},
+onPress:function(){_this5.changeTab('uc');}},
 _react2.default.createElement(_reactNative.NavigatorIOS,{style:css.container,
 barTintColor:_Util2.default.headerColor,
 tintColor:_Util2.default.headerTitleColor,
@@ -1510,7 +1523,31 @@ initialRoute:{
 title:'个人中心',
 titleTextColor:_Util2.default.headerTitleColor,
 component:_UserCenter2.default,
-wrapperStyle:css.wrapperStyle}}))));}});
+wrapperStyle:css.wrapperStyle}}))),
+
+
+
+_react2.default.createElement(_reactNative.Modal,{
+animationType:'fade',
+transparent:true,
+visible:this.state.showModal},
+
+_react2.default.createElement(_reactNative.View,{style:css.modalView},
+_react2.default.createElement(_reactNative.View,{style:css.innerContainer},
+_react2.default.createElement(_reactNative.Text,{style:{padding:10,fontSize:16,fontWeight:'500'}},
+this.state.noticeTitle),
+
+_react2.default.createElement(_reactNative.ScrollView,{style:css.modalContent},
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:14,fontWeight:'100'}},this.state.noticeContent)),
+
+_react2.default.createElement(_reactNative.View,{style:css.line}),
+_react2.default.createElement(_reactNative.TouchableHighlight,{
+onPress:function(){_this5.setState({showModal:false});},
+style:css.modalButton,
+underlayColor:'#a9d9d4'},
+_react2.default.createElement(_reactNative.Text,{style:css.buttonText},'确认')))))));}});
+
+
 
 
 
@@ -1523,7 +1560,44 @@ wrapperStyle:{
 backgroundColor:'#E7EAEC'},
 
 container:{
-flex:1}});
+flex:1},
+
+modalView:{
+flex:1,
+justifyContent:'center',
+padding:20,
+backgroundColor:'rgba(0, 0, 0, 0.5)'},
+
+modalButton:{
+
+height:40,
+alignSelf:'stretch',
+justifyContent:'center',
+
+
+borderBottomLeftRadius:10,
+borderBottomRightRadius:10},
+
+modalContent:{
+height:_Util2.default.size['height']*0.3,
+marginLeft:16,
+marginRight:16},
+
+buttonText:{
+fontSize:18,
+textAlign:'center',
+color:'blue'},
+
+innerContainer:{
+borderRadius:10,
+alignItems:'center',
+backgroundColor:'#fff'},
+
+line:{
+height:1,
+alignSelf:'stretch',
+backgroundColor:'#000000',
+marginTop:10}});
 
 
 
@@ -59750,7 +59824,7 @@ var ds=new ListView.DataSource({rowHasChanged:function(r1,r2){return r1!==r2;}})
 return {
 dataSource:ds.cloneWithRows([[
 {title:'最新揭晓',id:'latest',img:'最新揭晓'},
-
+{title:'充值',id:'recharge',img:'充值'},
 {title:'帮助',id:'help',img:'帮助-1'}]]),
 
 tabData:[
@@ -59810,10 +59884,10 @@ onLeftButtonPress:function(){return _this2.props.navigator.pop();},
 title:title});}else 
 
 if(id=='recharge'){
-
-
-
-
+this.props.navigator.push({
+component:_Recharge2.default,
+navigationBarHidden:false,
+title:title});
 
 _Util2.default.toast('充值功能暂未开放,敬请期待!');}else 
 if(id=='help'){
@@ -64004,55 +64078,167 @@ return this.counter.timePassed;}});
 
 module.exports=CountDownText;
 });
-__d('somira/App/Component/Common/Recharge.js',function(global, require, module, exports) {  'use strict';var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');
+__d('somira/App/Component/Common/Recharge.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var 
 
 
 
 
 
+Modal=_reactNative2.default.Modal;var 
+StyleSheet=_reactNative2.default.StyleSheet;var 
+Switch=_reactNative2.default.Switch;var 
+Text=_reactNative2.default.Text;var 
+TouchableHighlight=_reactNative2.default.TouchableHighlight;var 
+View=_reactNative2.default.View;var 
+ScrollView=_reactNative2.default.ScrollView;
+
+
+var Button=_reactNative2.default.createClass({displayName:'Button',
+getInitialState:function(){
+return {
+active:false};},
 
 
 
+_onHighlight:function(){
+this.setState({active:true});},
 
-module.exports=_react2.default.createClass({displayName:'exports',
+
+_onUnhighlight:function(){
+this.setState({active:false});},
+
+
 render:function(){
+var colorStyle={
+color:this.state.active?'#fff':'#000'};
+
 return (
-_react2.default.createElement(_reactNative.View,{style:styles.container},
-_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!'),
-
-
-_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.ios.js'),
-
-
-_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Press Cmd+R to reload,',
-'\n','Cmd+D or shake for dev menu')));}});
-
+_reactNative2.default.createElement(TouchableHighlight,{
+onHideUnderlay:this._onUnhighlight,
+onPress:this.props.onPress,
+onShowUnderlay:this._onHighlight,
+style:[styles.button,this.props.style],
+underlayColor:'#a9d9d4'},
+_reactNative2.default.createElement(Text,{style:[styles.buttonText,colorStyle]},this.props.children)));}});
 
 
 
 
 
+module.exports=_reactNative2.default.createClass({displayName:'exports',
+getInitialState:function(){
+return {
+animationType:'none',
+modalVisible:false,
+transparent:false};},
 
-var styles=_reactNative.StyleSheet.create({
+
+
+_setModalVisible:function(visible){
+this.setState({modalVisible:visible});},
+
+
+_setAnimationType:function(type){
+this.setState({animationType:type});},
+
+
+_toggleTransparent:function(){
+this.setState({transparent:!this.state.transparent});},
+
+
+render:function(){var _this=this;
+var modalBackgroundStyle={
+backgroundColor:this.state.transparent?'rgba(0, 0, 0, 0.5)':'#f5fcff'};
+
+var innerContainerTransparentStyle=this.state.transparent?
+{backgroundColor:'#fff',padding:20}:
+null;
+var activeButtonStyle={
+backgroundColor:'#ddd'};
+
+
+return (
+_reactNative2.default.createElement(View,{style:{marginTop:100}},
+_reactNative2.default.createElement(Modal,{
+animationType:this.state.animationType,
+transparent:this.state.transparent,
+visible:this.state.modalVisible,
+onRequestClose:function(){_this._setModalVisible(false);}},
+
+_reactNative2.default.createElement(View,{style:[styles.container,modalBackgroundStyle]},
+_reactNative2.default.createElement(View,{style:[styles.innerContainer,innerContainerTransparentStyle]},
+_reactNative2.default.createElement(ScrollView,null,
+_reactNative2.default.createElement(Text,null,'This modal was presented ',this.state.animationType==='none'?'without':'with',' animation.')),
+
+_reactNative2.default.createElement(Button,{
+onPress:this._setModalVisible.bind(this,false),
+style:styles.modalButton},'Close')))),
+
+
+
+
+
+_reactNative2.default.createElement(View,{style:styles.row},
+_reactNative2.default.createElement(Text,{style:styles.rowTitle},'Animation Type'),
+_reactNative2.default.createElement(Button,{onPress:this._setAnimationType.bind(this,'none'),style:this.state.animationType==='none'?activeButtonStyle:{}},'none'),
+
+
+_reactNative2.default.createElement(Button,{onPress:this._setAnimationType.bind(this,'slide'),style:this.state.animationType==='slide'?activeButtonStyle:{}},'slide'),
+
+
+_reactNative2.default.createElement(Button,{onPress:this._setAnimationType.bind(this,'fade'),style:this.state.animationType==='fade'?activeButtonStyle:{}},'fade')),
+
+
+
+
+_reactNative2.default.createElement(View,{style:styles.row},
+_reactNative2.default.createElement(Text,{style:styles.rowTitle},'Transparent'),
+_reactNative2.default.createElement(Switch,{value:this.state.transparent,onValueChange:this._toggleTransparent})),
+
+
+_reactNative2.default.createElement(Button,{onPress:this._setModalVisible.bind(this,true)},'Present')));}});
+
+
+
+
+
+
+
+var styles=StyleSheet.create({
 container:{
 flex:1,
 justifyContent:'center',
+padding:20},
+
+innerContainer:{
+borderRadius:10,
+alignItems:'center'},
+
+row:{
 alignItems:'center',
-backgroundColor:'#F5FCFF'},
+flex:1,
+flexDirection:'row',
+marginBottom:20},
 
-welcome:{
-fontSize:20,
-textAlign:'center',
-margin:10},
+rowTitle:{
+flex:1,
+fontWeight:'bold'},
 
-instructions:{
-textAlign:'center',
-color:'#333333',
-marginBottom:5}});
+button:{
+borderRadius:5,
+flex:1,
+height:44,
+alignSelf:'stretch',
+justifyContent:'center',
+overflow:'hidden'},
 
+buttonText:{
+fontSize:18,
+margin:5,
+textAlign:'center'},
 
-
-_reactNative.AppRegistry.registerComponent('demo',function(){return demo;});
+modalButton:{
+marginTop:10}});
 });
 __d('somira/App/Component/Common/Help.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var 
 
@@ -67789,7 +67975,7 @@ if(code===1){
 var tempLength=0;
 var tempMoney=0;
 result.map(function(v,k){
-if(v.status===0){
+if(v.commissionStatus===4){
 
 tempLength+=1;
 tempMoney+=v.total_fee;}});
@@ -67814,19 +68000,38 @@ _renderListItem:function(rowData){
 return (
 _react2.default.createElement(_reactNative.View,{style:styles.recordRow},
 _react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-start',marginLeft:10}]},
-_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:12},rowData.status===0?styles.red:styles.gray]},
+_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:12},rowData.commissionStatus===4?styles.red:styles.gray]},
 rowData.from_user_phone,
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'100',fontSize:10}},'(',
-rowData.status===0?'可提现':rowData.status===1?'已提现':'',')')),
+rowData.commissionStatus===4?
+
+'可提现':
+
+rowData.commissionStatus===1?
+
+'已提现':
+
+rowData.commissionStatus===2?
+
+'审核中':
+
+rowData.commissionStatus===3?
+
+'未达标':
+
+'',')')),
 
 
-_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:10},rowData.status===0?styles.red:styles.gray]},'用户所属:',
+
+
+
+_react2.default.createElement(_reactNative.Text,{style:[{fontWeight:'100',fontSize:10},rowData.commissionStatus===4?styles.red:styles.gray]},'用户所属:',
 rowData.oneLevelPhone===''?'':'上级'+rowData.oneLevelPhone,
 rowData.oneLevelPhone===''?'直属上级':'')),
 
 
 _react2.default.createElement(_reactNative.View,{style:[styles.recordCellFixed,{alignItems:'flex-end'}]},
-_react2.default.createElement(_reactNative.Text,{style:[styles.recordText,rowData.status===0?styles.red:styles.gray]},
+_react2.default.createElement(_reactNative.Text,{style:[styles.recordText,rowData.commissionStatus===4?styles.red:styles.gray]},
 rowData.total_fee))));},
 
 
@@ -70045,8 +70250,8 @@ backgroundColor:'#eeeeee'},
 
 cell:{
 paddingLeft:10,
-paddingTop:20,
-paddingBottom:20,
+paddingTop:18,
+paddingBottom:18,
 paddingRight:4,
 borderBottomColor:'#C0C0C0',
 borderBottomWidth:1,
