@@ -1300,6 +1300,8 @@ __d('somira/index.ios.js',function(global, require, module, exports) {  var _rea
 
 
 
+
+
 net=babelHelpers.interopRequireWildcard(_Interface);
 
 _reactNative.StatusBarIOS.setHidden(false);
@@ -1340,7 +1342,29 @@ _RCTDeviceEventEmitter2.default.addListener('showPlanSwitch',function(){
 _this.isShowPlan();});
 
 _RCTDeviceEventEmitter2.default.addListener('loadCartCount',function(){
-_this.getCartCount();});},
+_this.getCartCount();});
+
+_reactNative.PushNotificationIOS.addEventListener('notification',function(notification){
+
+
+
+
+
+
+console.log(notification);
+if(notification){
+_reactNative.AlertIOS.alert(
+'Notification Received',
+'Alert message: '+notification.getAlert(),
+[{
+text:'Dismiss',
+onPress:null}]);}});
+
+
+
+
+_reactNative.PushNotificationIOS.addEventListener('register',function(tk){
+console.log('RN获取的token是:'+tk);});},
 
 
 changeTab:function(tabName){
