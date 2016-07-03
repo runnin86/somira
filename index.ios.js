@@ -11,6 +11,8 @@ import {
   Modal,
   ScrollView,
   TouchableHighlight,
+  AlertIOS,
+  PushNotificationIOS,
 } from 'react-native';
 
 import Store from 'react-native-simple-store';
@@ -62,6 +64,28 @@ var somira = React.createClass({
     });
     RCTDeviceEventEmitter.addListener('loadCartCount', ()=>{
       this.getCartCount();
+    });
+    PushNotificationIOS.addEventListener('notification', (notification)=>{
+      // {
+      //   _data: { xg: { bid: 0, ts: 1467545019 } },
+      //   _alert: '猎豹计划已可购买，速来围观！',
+      //   _sound: 'default',
+      //   _badgeCount: 1
+      // }
+      console.log(notification);
+      if (notification) {
+        AlertIOS.alert(
+          'Notification Received',
+          'Alert message: ' + notification.getAlert(),
+          [{
+            text: 'Dismiss',
+            onPress: null,
+          }]
+        );
+      }
+    });
+    PushNotificationIOS.addEventListener('register', (tk)=>{
+      console.log('RN获取的token是:' + tk);
     });
   },
   changeTab(tabName){

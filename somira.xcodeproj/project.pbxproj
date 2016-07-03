@@ -22,6 +22,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		6B4CF49C1D291E2700C37A36 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */; };
+		6B4CF4A01D291E6C00C37A36 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */; };
+		6B4CF4A21D291E7800C37A36 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */; };
+		6B4CF4A41D291E8100C37A36 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A31D291E8100C37A36 /* CoreTelephony.framework */; };
+		6B4CF4A61D291E8A00C37A36 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A51D291E8A00C37A36 /* libz.tbd */; };
+		6B4CF4A81D291E9200C37A36 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A71D291E9200C37A36 /* Security.framework */; };
 		6B89A0521D0FF9B600B8E6CB /* libRCTToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B89A04E1D0FF9A600B8E6CB /* libRCTToast.a */; };
 		6BBF89921D27AB7200F03F54 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BBF898B1D27AB4B00F03F54 /* libRCTPushNotification.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -151,6 +157,14 @@
 		58AFB0331B5837F100EB7D18 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "App/Resources/icons/icon@2x.png"; sourceTree = "<group>"; };
 		58AFB0361B5837F100EB7D18 /* icon_flat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_flat.png; path = App/Resources/icons/icon_flat.png; sourceTree = "<group>"; };
 		58AFB0371B5837F100EB7D18 /* ruby_china_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ruby_china_logo.png; path = App/Resources/icons/ruby_china_logo.png; sourceTree = "<group>"; };
+		6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "iOS/push/libXG-SDK.a"; sourceTree = "<group>"; };
+		6B4CF49D1D291E3E00C37A36 /* XGPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGPush.h; path = iOS/push/XGPush.h; sourceTree = "<group>"; };
+		6B4CF49E1D291E4400C37A36 /* XGSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGSetting.h; path = iOS/push/XGSetting.h; sourceTree = "<group>"; };
+		6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		6B4CF4A31D291E8100C37A36 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		6B4CF4A51D291E8A00C37A36 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		6B4CF4A71D291E9200C37A36 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6B89A0421D0FF9A600B8E6CB /* RCTToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTToast.xcodeproj; path = "node_modules/react-native/Libraries/Toast/RCTToast.xcodeproj"; sourceTree = "<group>"; };
 		6BBF89811D27AB4B00F03F54 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -169,6 +183,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B4CF4A81D291E9200C37A36 /* Security.framework in Frameworks */,
+				6B4CF4A61D291E8A00C37A36 /* libz.tbd in Frameworks */,
+				6B4CF4A41D291E8100C37A36 /* CoreTelephony.framework in Frameworks */,
+				6B4CF4A21D291E7800C37A36 /* SystemConfiguration.framework in Frameworks */,
+				6B4CF4A01D291E6C00C37A36 /* CFNetwork.framework in Frameworks */,
 				6B89A0521D0FF9B600B8E6CB /* libRCTToast.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -181,6 +200,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				6BBF89921D27AB7200F03F54 /* libRCTPushNotification.a in Frameworks */,
+				6B4CF49C1D291E2700C37A36 /* libXG-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +287,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				6B4CF49D1D291E3E00C37A36 /* XGPush.h */,
+				6B4CF49E1D291E4400C37A36 /* XGSetting.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -343,6 +365,12 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6B4CF4A51D291E8A00C37A36 /* libz.tbd */,
+				6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */,
+				6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */,
+				6B4CF4A31D291E8100C37A36 /* CoreTelephony.framework */,
+				6B4CF4A71D291E9200C37A36 /* Security.framework */,
+				6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				6B89A0421D0FF9A600B8E6CB /* RCTToast.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -713,6 +741,10 @@
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iOS/push",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = somira;
 				PRODUCT_NAME = "收米拉";
@@ -735,6 +767,10 @@
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iOS/push",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = somira;
 				PRODUCT_NAME = "收米拉";
