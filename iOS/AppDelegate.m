@@ -118,7 +118,7 @@
   NSString * deviceTokenStr = [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
   
   // 打印获取的deviceToken的字符串
-  // NSLog(@"[XGPush Demo] 设备token是 %@",deviceTokenStr);
+  NSLog(@"[XGPush Demo] 设备token是 %@",deviceTokenStr);
 }
 
 
