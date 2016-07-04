@@ -19,6 +19,22 @@
 
 @implementation AppDelegate
 
+// 实现RCTBridgeModule协议，需要包含RCT_EXPORT_MODULE()宏
+RCT_EXPORT_MODULE();
+
+RCT_EXPORT_METHOD(addEvent:(NSDictionary *)jsUser)
+{
+  if (jsUser != NULL) {
+    NSNumber *userType = [jsUser valueForKey:@"user_type"];
+    NSString *userPhone = [jsUser objectForKey:@"user_phone"];
+    
+    if ([userType isEqual: @1]) {
+      // 去注册腾讯信鸽
+
+    }
+  }
+}
+
 // app在杀死状态时,推送上报触发
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -92,15 +108,10 @@
   }
 }
 
-// 注册通知设置
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
-  [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
-}
-
 // 注册远程通知token
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+//  self.deviceToken = deviceToken;
   // 设置账号
   [XGPush setAccount:@"18251967031"];
   
