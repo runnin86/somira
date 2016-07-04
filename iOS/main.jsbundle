@@ -1302,7 +1302,9 @@ __d('somira/index.ios.js',function(global, require, module, exports) {  var _rea
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var AppDelegate=require('react-native/Libraries/react-native/react-native.js').NativeModules.AppDelegate;
 
 _reactNative.StatusBarIOS.setHidden(false);
 
@@ -1364,7 +1366,12 @@ onPress:null}]);}});
 
 
 _reactNative.PushNotificationIOS.addEventListener('register',function(tk){
-console.log('RN获取的token是:'+tk);});},
+console.log('RN获取的token是:'+tk);});
+
+
+_reactNativeSimpleStore2.default.get('user').then(function(user){
+
+AppDelegate.addEvent(user);});},
 
 
 changeTab:function(tabName){
@@ -62350,8 +62357,8 @@ backgroundColor:'transparent'},
 progressView:{
 marginTop:20}});
 });
-__d('somira/App/Network/Interface.js',function(global, require, module, exports) {  Object.defineProperty(exports,"__esModule",{value:true});var URL_COMMON='http://api.zqsml.com/api/v1/sml/';
-
+__d('somira/App/Network/Interface.js',function(global, require, module, exports) {  Object.defineProperty(exports,"__esModule",{value:true});
+var URL_COMMON='http://123.57.217.199:9587/api/v1/sml/';
 
 
 var planApi=exports.planApi={
