@@ -77,6 +77,8 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   NSLog(@"=============程序启动成功=============");
+  //设置启动页面时间
+  [NSThread sleepForTimeInterval:3.0];
   return YES;
 }
 
