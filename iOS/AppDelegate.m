@@ -101,7 +101,8 @@
 // 注册远程通知token
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-  [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  // 设置账号
+  [XGPush setAccount:@"18251967031"];
   
   void (^successBlock)(void) = ^(void){
     // 成功之后的处理
@@ -112,9 +113,6 @@
     // 失败之后的处理
     // NSLog(@"[XGPush Demo]注册远程通知token errorBlock");
   };
-  
-  // 设置账号
-  [XGPush setAccount:@"56705295"];
   
   // 注册设备
   NSString * deviceTokenStr = [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
