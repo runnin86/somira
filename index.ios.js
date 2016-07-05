@@ -44,6 +44,7 @@ var somira = React.createClass({
       showModal: false,
       noticeTitle: '',
       noticeContent: '',
+      pushMsgId: null,
     };
   },
   componentDidMount() {
@@ -179,22 +180,22 @@ var somira = React.createClass({
     //   _badgeCount: 1 }
     // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
     if (notification) {
-      AlertIOS.alert(
-        notification._data.msgType + '->' + notification._data.msgId,
-        notification._alert,
-        [{
-          text: 'Dismiss',
-          onPress: null,
-        }]
-      );//c70807ac0d9947249ca5fb573452c5b0
+      // AlertIOS.alert(
+      //   notification._data.msgType + '->' + notification._data.msgId,
+      //   notification._alert,
+      //   [{
+      //     text: 'Dismiss',
+      //     onPress: null,
+      //   }]
+      // );//c70807ac0d9947249ca5fb573452c5b0
       if (notification._data.msgType === '0') {
         // 跳转消息记录(根据msgId查询消息并展示)
         this.setState({
-          msgId: notification._data.msgId,
+          pushMsgId: notification._data.msgId,
           selectedTab : 'uc',
         });
       }
-      else if (notification.msgType === 1) {
+      else if (notification._data.msgType === '1') {
         // 跳转方案列表
         this.setState({
           selectedTab : 'plan',
@@ -285,6 +286,9 @@ var somira = React.createClass({
                 titleTextColor: Util.headerTitleColor,
                 component: UserCenter,
                 wrapperStyle: css.wrapperStyle,
+                passProps:{
+                  msgId: this.state.pushMsgId,
+                }
               }}/>
           </TabBarIOS.Item>
         </TabBarIOS>

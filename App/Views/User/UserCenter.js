@@ -17,6 +17,7 @@ import QR from '../../Component/User/QR';
 import ChangePwd from '../../Component/User/ChangePwd';
 import About from '../../Component/User/About';
 import Message from '../../Component/User/Message';
+import MessageDetail from '../../Component/User/MessageDetail';
 
 var {
   AppRegistry,
@@ -37,10 +38,22 @@ module.exports = React.createClass({
       // user: this.props.user,
       salesImg: '本月',
       isRefreshing: false,
+      mid: null,
     };
   },
   componentWillReceiveProps() {
     this._getUser();
+    if (this.props.msgId && !this.state.mid) {
+      this.state.mid = this.props.msgId;
+      this.props.navigator.push({
+        title: "消息详情",
+        component: MessageDetail,
+        navigationBarHidden:false,
+        passProps:{
+          id: this.state.mid,
+        }
+      });
+    }
   },
   _getUser() {
     // 用户基本信息
