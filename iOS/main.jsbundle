@@ -1277,7 +1277,7 @@ GLOBAL.document.createElement=null;}
 
 GLOBAL.MutationObserver=undefined;})(
 this);
-__d('somira/index.ios.js',function(global, require, module, exports) {  var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _HappyPurchase=require('somira/App/Views/Purchase/HappyPurchase.js');var _HappyPurchase2=babelHelpers.interopRequireDefault(_HappyPurchase);var _Plan=require('somira/App/Views/Plan/Plan.js');var _Plan2=babelHelpers.interopRequireDefault(_Plan);var _UserCenter=require('somira/App/Views/User/UserCenter.js');var _UserCenter2=babelHelpers.interopRequireDefault(_UserCenter);var _ShoppingCart=require('somira/App/Views/Cart/ShoppingCart.js');var _ShoppingCart2=babelHelpers.interopRequireDefault(_ShoppingCart);var _test=require('somira/App/Test/test.js');var _test2=babelHelpers.interopRequireDefault(_test);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+__d('somira/index.ios.js',function(global, require, module, exports) {  var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _HappyPurchase=require('somira/App/Views/Purchase/HappyPurchase.js');var _HappyPurchase2=babelHelpers.interopRequireDefault(_HappyPurchase);var _Plan=require('somira/App/Views/Plan/Plan.js');var _Plan2=babelHelpers.interopRequireDefault(_Plan);var _UserCenter=require('somira/App/Views/User/UserCenter.js');var _UserCenter2=babelHelpers.interopRequireDefault(_UserCenter);var _Message=require('somira/App/Component/User/Message.js');var _Message2=babelHelpers.interopRequireDefault(_Message);var _ShoppingCart=require('somira/App/Views/Cart/ShoppingCart.js');var _ShoppingCart2=babelHelpers.interopRequireDefault(_ShoppingCart);var _test=require('somira/App/Test/test.js');var _test2=babelHelpers.interopRequireDefault(_test);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
 
 
 
@@ -1304,7 +1304,7 @@ __d('somira/index.ios.js',function(global, require, module, exports) {  var _rea
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var AppDelegate=require('react-native/Libraries/react-native/react-native.js').NativeModules.AppDelegate;
+net=babelHelpers.interopRequireWildcard(_Interface);
 
 _reactNative.StatusBarIOS.setHidden(false);
 
@@ -1346,32 +1346,39 @@ _this.isShowPlan();});
 _RCTDeviceEventEmitter2.default.addListener('loadCartCount',function(){
 _this.getCartCount();});
 
+
+_reactNative.PushNotificationIOS.setApplicationIconBadgeNumber(0);
 _reactNative.PushNotificationIOS.addEventListener('notification',function(notification){
 
 
 
 
 
-
-console.log(notification);
 if(notification){
+console.log(notification);
 _reactNative.AlertIOS.alert(
 'Notification Received',
 'Alert message: '+notification.getAlert(),
 [{
 text:'Dismiss',
-onPress:null}]);}});
+onPress:null}]);}});},
 
 
 
 
-_reactNative.PushNotificationIOS.addEventListener('register',function(tk){
-console.log('RN获取的token是:'+tk);});
 
 
-_reactNativeSimpleStore2.default.get('user').then(function(user){
 
-AppDelegate.addEvent(user);});},
+
+
+
+
+
+
+
+
+
+
 
 
 changeTab:function(tabName){
@@ -66349,7 +66356,8 @@ __d('somira/App/Views/User/Login.js',function(global, require, module, exports) 
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);var _ForgetPwd=require('somira/App/Component/User/ForgetPwd.js');var _ForgetPwd2=babelHelpers.interopRequireDefault(_ForgetPwd);var 
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _ForgetPwd=require('somira/App/Component/User/ForgetPwd.js');var _ForgetPwd2=babelHelpers.interopRequireDefault(_ForgetPwd);var AppDelegate=require('react-native/Libraries/react-native/react-native.js').NativeModules.AppDelegate;var 
 
 
 
@@ -66407,6 +66415,8 @@ _RCTDeviceEventEmitter2.default.emit('loadNotice');
 _RCTDeviceEventEmitter2.default.emit('loadCartCount');
 
 _RCTDeviceEventEmitter2.default.emit('showPlanSwitch');
+
+AppDelegate.registerXG(info.user);
 
 this.props.navigator.pop();},
 
@@ -66727,10 +66737,11 @@ backgroundColor:'rgba(0,152,50,0)'}});
 
 module.exports=forgetPwd;
 });
-__d('somira/App/Views/User/Setting.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var 
+__d('somira/App/Views/User/Setting.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);
 
 
 
+var AppDelegate=require('react-native/Libraries/react-native/react-native.js').NativeModules.AppDelegate;var 
 
 
 StyleSheet=_reactNative2.default.StyleSheet;var 
@@ -66755,6 +66766,8 @@ _reactNativeSimpleStore2.default.delete('globalNoticeId');
 _RCTDeviceEventEmitter2.default.emit('loadCartCount');
 
 _RCTDeviceEventEmitter2.default.emit('showPlanSwitch');
+
+AppDelegate.unRegisterXG();
 
 this.props.navigator.pop();},
 
