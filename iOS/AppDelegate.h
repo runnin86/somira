@@ -13,6 +13,5 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeModule>
 
 @property (nonatomic, strong) UIWindow *window;
-@property (nonatomic, copy) NSData *deviceToken;
 
 @end

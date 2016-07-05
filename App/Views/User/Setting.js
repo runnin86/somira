@@ -2,6 +2,7 @@ import React from 'react-native';
 import Util from '../../Common/Util';
 import Store from 'react-native-simple-store';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+var AppDelegate = require('react-native').NativeModules.AppDelegate;
 
 var {
 	StyleSheet,
@@ -26,6 +27,8 @@ var Setting = React.createClass({
 		RCTDeviceEventEmitter.emit('loadCartCount');
 		// 退出后隐藏方案
 		RCTDeviceEventEmitter.emit('showPlanSwitch');
+		// 与ios进行通信,去注册腾讯信鸽
+		AppDelegate.unRegisterXG();
 		// 跳转回用户
     this.props.navigator.pop();
   },

@@ -22,18 +22,31 @@
 // 实现RCTBridgeModule协议，需要包含RCT_EXPORT_MODULE()宏
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(addEvent:(NSDictionary *)jsUser)
+RCT_EXPORT_METHOD(registerXG:(NSDictionary *)jsUser)
 {
   if (jsUser != NULL) {
     NSNumber *userType = [jsUser valueForKey:@"user_type"];
     NSString *userPhone = [jsUser objectForKey:@"user_phone"];
     
     if ([userType isEqual: @1]) {
-      // 去注册腾讯信鸽
-
+      // 注销后再注册
+      void (^successCallback)(void) = ^(void){
+        // 设置账号
+        [XGPush setAccount:userPhone];
+        // 再次注册
+        [self registerNofitication];
+        NSLog(@"再次注册的手机号码为: %@", userPhone);
+      };
+      [XGPush initForReregister:successCallback];
     }
   }
 }
+
+RCT_EXPORT_METHOD(unRegisterXG){
+  [XGPush unRegisterDevice];
+  NSLog(@"======取消腾讯信鸽========");
+}
+
 
 // app在杀死状态时,推送上报触发
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -111,10 +124,6 @@ RCT_EXPORT_METHOD(addEvent:(NSDictionary *)jsUser)
 // 注册远程通知token
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-//  self.deviceToken = deviceToken;
-  // 设置账号
-  [XGPush setAccount:@"18251967031"];
-  
   void (^successBlock)(void) = ^(void){
     // 成功之后的处理
     // NSLog(@"[XGPush Demo]注册远程通知token successBlock");
@@ -126,10 +135,11 @@ RCT_EXPORT_METHOD(addEvent:(NSDictionary *)jsUser)
   };
   
   // 注册设备
-  NSString * deviceTokenStr = [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
-  
-  // 打印获取的deviceToken的字符串
-  NSLog(@"[XGPush Demo] 设备token是 %@",deviceTokenStr);
+  [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
+//  NSString * deviceTokenStr = [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
+//  
+//  // 打印获取的deviceToken的字符串
+//  NSLog(@"[XGPush Demo] 设备token是 %@",deviceTokenStr);
 }
 
 

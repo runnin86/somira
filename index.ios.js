@@ -17,7 +17,6 @@ import {
 
 import Store from 'react-native-simple-store';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-var AppDelegate = require('react-native').NativeModules.AppDelegate;
 
 import HappyPurchase from './App/Views/Purchase/HappyPurchase';
 import Plan from './App/Views/Plan/Plan';
@@ -88,11 +87,6 @@ var somira = React.createClass({
     });
     PushNotificationIOS.addEventListener('register', (tk)=>{
       console.log('RN获取的token是:' + tk);
-    });
-
-    Store.get('user').then((user)=>{
-      // 与ios进行通信,实现信鸽按照手机号注册
-      AppDelegate.addEvent(user);
     });
   },
   changeTab(tabName){

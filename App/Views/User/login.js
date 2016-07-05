@@ -1,6 +1,7 @@
 import React from 'react-native';
 import Store from 'react-native-simple-store';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+var AppDelegate = require('react-native').NativeModules.AppDelegate;
 
 import Util from '../../Common/Util';
 import * as net from '../../Network/Interface';
@@ -61,6 +62,8 @@ var login = React.createClass({
 		RCTDeviceEventEmitter.emit('loadCartCount');
     // 判断是否有方案的权限
     RCTDeviceEventEmitter.emit('showPlanSwitch');
+    // 与ios进行通信,实现信鸽按照手机号注册
+    AppDelegate.registerXG(info.user);
     // 跳转回用户
     this.props.navigator.pop();
   },
