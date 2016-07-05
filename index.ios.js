@@ -21,6 +21,7 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import HappyPurchase from './App/Views/Purchase/HappyPurchase';
 import Plan from './App/Views/Plan/Plan';
 import UserCenter from './App/Views/User/UserCenter';
+import Message from './App/Component/User/Message';
 import ShoppingCart from './App/Views/Cart/ShoppingCart';
 import Test from './App/Test/test';
 import Util from './App/Common/Util';
@@ -66,15 +67,16 @@ var somira = React.createClass({
     RCTDeviceEventEmitter.addListener('loadCartCount', ()=>{
       this.getCartCount();
     });
+    // 设置要在手机主屏幕应用图标上显示的角标数
+    PushNotificationIOS.setApplicationIconBadgeNumber(0);
     PushNotificationIOS.addEventListener('notification', (notification)=>{
-      // {
-      //   _data: { xg: { bid: 0, ts: 1467545019 } },
-      //   _alert: '猎豹计划已可购买，速来围观！',
-      //   _sound: 'default',
-      //   _badgeCount: 1
-      // }
-      console.log(notification);
+      // { _data: { xg: { bid: 0, ts: 1467686578 }, msgId: '001', msgType: 0 },
+      //   _alert: '方案开奖结果通知',
+      //   _sound: undefined,
+      //   _badgeCount: 1 }
+      // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
       if (notification) {
+        console.log(notification);
         AlertIOS.alert(
           'Notification Received',
           'Alert message: ' + notification.getAlert(),
@@ -83,10 +85,21 @@ var somira = React.createClass({
             onPress: null,
           }]
         );
+        // if (notification.msgType === 0) {
+        //   // 跳转消息记录(根据msgId查询消息并展示)
+        //   this.props.navigator.push({
+        //     title: '消息详情',
+        //     component: MessageDetail,
+        //     navigationBarHidden:false,
+        //     passProps: {
+        //       id: notification.msgId,
+        //     }
+        //   });
+        // }
+        // else if (notification.msgType === 1) {
+        //   // 跳转方案列表
+        // }
       }
-    });
-    PushNotificationIOS.addEventListener('register', (tk)=>{
-      console.log('RN获取的token是:' + tk);
     });
   },
   changeTab(tabName){
