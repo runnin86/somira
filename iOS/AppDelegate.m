@@ -148,7 +148,7 @@ RCT_EXPORT_METHOD(unRegisterXG){
 {
   NSLog(@"得到推送消息-> %@", notification);
   [RCTPushNotificationManager didReceiveRemoteNotification:notification];
-  //  推送反馈(app运行时)
+  // 推送反馈(app运行时)
   //[XGPush handleReceiveNotification: notification];
 }
 
