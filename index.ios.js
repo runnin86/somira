@@ -21,7 +21,6 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import HappyPurchase from './App/Views/Purchase/HappyPurchase';
 import Plan from './App/Views/Plan/Plan';
 import UserCenter from './App/Views/User/UserCenter';
-import Message from './App/Component/User/Message';
 import ShoppingCart from './App/Views/Cart/ShoppingCart';
 import Test from './App/Test/test';
 import Util from './App/Common/Util';
@@ -69,38 +68,11 @@ var somira = React.createClass({
     });
     // 设置要在手机主屏幕应用图标上显示的角标数
     PushNotificationIOS.setApplicationIconBadgeNumber(0);
-    PushNotificationIOS.addEventListener('notification', (notification)=>{
-      // { _data: { xg: { bid: 0, ts: 1467686578 }, msgId: '001', msgType: 0 },
-      //   _alert: '方案开奖结果通知',
-      //   _sound: undefined,
-      //   _badgeCount: 1 }
-      // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
-      if (notification) {
-        console.log(notification);
-        AlertIOS.alert(
-          'Notification Received',
-          'Alert message: ' + notification.getAlert(),
-          [{
-            text: 'Dismiss',
-            onPress: null,
-          }]
-        );
-        // if (notification.msgType === 0) {
-        //   // 跳转消息记录(根据msgId查询消息并展示)
-        //   this.props.navigator.push({
-        //     title: '消息详情',
-        //     component: MessageDetail,
-        //     navigationBarHidden:false,
-        //     passProps: {
-        //       id: notification.msgId,
-        //     }
-        //   });
-        // }
-        // else if (notification.msgType === 1) {
-        //   // 跳转方案列表
-        // }
-      }
-    });
+
+    // 运行时,后台运行时
+    PushNotificationIOS.addEventListener('notification', (notification)=>this.processingPush(notification));
+    // 不在运行时，返回初始的通知对象，或者返回null。后续的调用全部会返回null.
+    this.processingPush(PushNotificationIOS.popInitialNotification());
   },
   changeTab(tabName){
     this.setState({
@@ -199,6 +171,36 @@ var somira = React.createClass({
         }
       });
     });
+  },
+  processingPush(notification) {
+    // { _data: { xg: { bid: 0, ts: 1467686578 }, msgId: '001', msgType: 0 },
+    //   _alert: '方案开奖结果通知',
+    //   _sound: undefined,
+    //   _badgeCount: 1 }
+    // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
+    if (notification) {
+      AlertIOS.alert(
+        notification._data.msgType + '->' + notification._data.msgId,
+        notification._alert,
+        [{
+          text: 'Dismiss',
+          onPress: null,
+        }]
+      );//c70807ac0d9947249ca5fb573452c5b0
+      if (notification._data.msgType === '0') {
+        // 跳转消息记录(根据msgId查询消息并展示)
+        this.setState({
+          msgId: notification._data.msgId,
+          selectedTab : 'uc',
+        });
+      }
+      else if (notification.msgType === 1) {
+        // 跳转方案列表
+        this.setState({
+          selectedTab : 'plan',
+        });
+      }
+    }
   },
   render: function() {
     // #26292E;#292C33;
