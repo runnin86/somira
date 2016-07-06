@@ -77,11 +77,27 @@ var somira = React.createClass({
     });
 
     // 运行时,后台运行时
-    PushNotificationIOS.addEventListener('notification', (notification)=>this.processingPush(notification, false));
+    PushNotificationIOS.addEventListener('notification', (notification)=>{
+      if (this.state.appState === 'background') {
+        this.processingPush(notification);
+      }
+      else if (this.state.appState === 'active') {
+        AlertIOS.alert(
+          '提示',
+          notification._alert,
+          [
+            {text: '取消', onPress: null},
+            {text: '去看看', onPress: ()=>{
+              this.processingPush(notification);
+            }},
+          ]
+        );//c70807ac0d9947249ca5fb573452c5b0
+      }
+    });
     // 不在运行时，返回初始的通知对象，或者返回null。后续的调用全部会返回null.
     let initNotification = PushNotificationIOS.popInitialNotification();
     if (initNotification) {
-      this.processingPush(initNotification, true);
+      this.processingPush(initNotification);
     }
   },
   componentWillUnmount: function() {
@@ -184,42 +200,29 @@ var somira = React.createClass({
       });
     });
   },
-  processingPush(notification, first) {
+  processingPush(notification) {
     // { _data: { xg: { bid: 0, ts: 1467686578 }, msgId: '001', msgType: 0 },
     //   _alert: '方案开奖结果通知',
     //   _sound: undefined,
     //   _badgeCount: 1 }
     // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
     if (notification) {
-      // app状态为background或首次启动时要处理推送消息
-      if (this.state.appState === 'background' || first) {
-        if (notification._data.msgType === '0') {
-          // 跳转消息记录(根据msgId查询消息并展示)
-          this.setState({
-            selectedTab : 'uc',
-          });
-          // 防止用户中心未渲染,因此0.8秒后广播,让用户中心渲染后创建监听器
-          setTimeout(()=>{
-            // 广播至用户中心展示消息
-            RCTDeviceEventEmitter.emit('showPushMessage', notification._data.msgId);
-          }, 800);
-        }
-        else if (notification._data.msgType === '1') {
-          // 跳转方案列表
-          this.setState({
-            selectedTab : 'plan',
-          });
-        }
+      if (notification._data.msgType === '0') {
+        // 跳转用户中心
+        this.setState({
+          selectedTab : 'uc',
+        });
+        // 防止用户中心未渲染,因此0.5秒后广播,让用户中心渲染后创建监听器
+        setTimeout(()=>{
+          // 广播至用户中心展示消息
+          RCTDeviceEventEmitter.emit('showPushMessage', notification._data.msgId);
+        }, 500);
       }
-      else if (this.state.appState === 'active') {
-        AlertIOS.alert(
-          '提示',
-          notification._alert,
-          [
-            {text: '取消', onPress: null},
-            {text: '去看看', onPress: null},
-          ]
-        );//c70807ac0d9947249ca5fb573452c5b0
+      else if (notification._data.msgType === '1') {
+        // 跳转方案列表
+        this.setState({
+          selectedTab : 'plan',
+        });
       }
     }
   },
