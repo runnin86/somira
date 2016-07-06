@@ -45,7 +45,6 @@ var somira = React.createClass({
       showModal: false,
       noticeTitle: '',
       noticeContent: '',
-      pushMsgId: null,
       appState: AppStateIOS.currentState,
     };
   },
@@ -197,9 +196,13 @@ var somira = React.createClass({
         if (notification._data.msgType === '0') {
           // 跳转消息记录(根据msgId查询消息并展示)
           this.setState({
-            pushMsgId: notification._data.msgId,
             selectedTab : 'uc',
           });
+          // 防止用户中心未渲染,因此0.8秒后广播,让用户中心渲染后创建监听器
+          setTimeout(()=>{
+            // 广播至用户中心展示消息
+            RCTDeviceEventEmitter.emit('showPushMessage', notification._data.msgId);
+          }, 800);
         }
         else if (notification._data.msgType === '1') {
           // 跳转方案列表
@@ -320,7 +323,6 @@ var somira = React.createClass({
                 component: UserCenter,
                 wrapperStyle: css.wrapperStyle,
                 passProps:{
-                  msgId: this.state.pushMsgId,
                 }
               }}/>
           </TabBarIOS.Item>

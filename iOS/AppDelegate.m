@@ -146,7 +146,7 @@ RCT_EXPORT_METHOD(unRegisterXG){
 // app在前台和后台运行时,推送上报触发
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
-  NSLog(@"得到推送消息-> %@", notification);
+  // NSLog(@"得到推送消息-> %@", notification);
   [RCTPushNotificationManager didReceiveRemoteNotification:notification];
   // 推送反馈(app运行时)
   //[XGPush handleReceiveNotification: notification];

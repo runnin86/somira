@@ -38,22 +38,23 @@ module.exports = React.createClass({
       // user: this.props.user,
       salesImg: '本月',
       isRefreshing: false,
-      mid: null,
     };
   },
   componentWillReceiveProps() {
     this._getUser();
-    if (this.props.msgId && !this.state.mid) {
-      this.state.mid = this.props.msgId;
+  },
+  componentDidMount(){
+    RCTDeviceEventEmitter.addListener('showPushMessage', (mid)=>{
+      // 展示消息详情
       this.props.navigator.push({
         title: "消息详情",
         component: MessageDetail,
         navigationBarHidden:false,
         passProps:{
-          id: this.state.mid,
+          id: mid,
         }
       });
-    }
+    });
   },
   _getUser() {
     // 用户基本信息
