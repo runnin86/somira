@@ -276,7 +276,7 @@ var css = StyleSheet.create({
   },
   scrollText: {
     marginLeft: 4,
-    fontSize: 14,
+    fontSize: 15,
     color: '#FFFFFF',
     backgroundColor: '#66CC66',
     alignSelf: 'center',

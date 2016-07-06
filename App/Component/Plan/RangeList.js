@@ -207,7 +207,7 @@ var styles = StyleSheet.create({
     paddingVertical: 10,
   },
   rangeNameText: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '100',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 1,

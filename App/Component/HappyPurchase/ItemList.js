@@ -110,8 +110,8 @@ module.exports = React.createClass({
         <View style={css.container}>
           <Animatable.Image ref={component => this._animatables[item.id] = component} style={css.goodImg} source={{uri : img}} />
           <View style={css.goodInfo}>
-            <Text style={css.goodTit,{fontSize : 14}} numberOfLines={2}>{item.name}</Text>
-            <Text style={css.goodTit,{fontWeight : '100',fontSize : 10,marginTop : 4}} numberOfLines={1}>{item.content}</Text>
+            <Text style={css.goodTit,{fontSize : 15}} numberOfLines={2}>{item.name}</Text>
+            <Text style={css.goodTit,{fontWeight : '100',fontSize : 13,marginTop : 4}} numberOfLines={1}>{item.content}</Text>
             {/*
             <View style={css.goodRow}>
               <Text style={css.redPrice}><Text style={css.yen}>&yen;</Text> {item.orderprice || item.codeCount}</Text>

@@ -106,7 +106,7 @@ module.exports = React.createClass({
         <View style={css.planView}>
           <Animatable.Image ref={component => this._animatables[plan.plan_id] = component} style={css.expertPhoto} source={{uri : plan.expert_photo}} />
           <View style={css.planInfo}>
-            <Text style={{fontSize : 13,fontWeight:'100',marginBottom:4,}}>
+            <Text style={{fontSize : 15,fontWeight:'100',marginBottom:4,}}>
               {plan.expert_name}
             </Text>
             <View style={{flexDirection: 'row'}}>
@@ -130,7 +130,7 @@ module.exports = React.createClass({
           <View style={[css.row,{marginRight:20,}]}>
             <Image style={{width:24,height:26}}
               source={require('image!时间')} />
-            <Text style={{fontWeight : '100',fontSize : 10,marginLeft : 4}}>
+            <Text style={{fontWeight : '100',fontSize : 12,marginLeft : 4}}>
               {filterTime > 0 ? filterTime + '分钟' : '已截止'}
             </Text>
           </View>

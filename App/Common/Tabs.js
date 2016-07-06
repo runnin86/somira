@@ -99,12 +99,12 @@ var css = StyleSheet.create({
   },
   itemText : {
     color : '#757575',
-    fontSize : 14,
+    fontSize : 15,
     textAlign: 'center'
   },
   itemActiveText : {
     color : '#D91D36',
-    fontSize : 14,
+    fontSize : 15,
     fontWeight : '700'
   },
   contentStyle : {

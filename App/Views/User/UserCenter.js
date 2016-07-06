@@ -301,8 +301,8 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的账单'
-              height='36'
-              fontSize='12'
+              height='40'
+              fontSize='14'
               icon='我的账单'
               onClick={()=>{this._addNavigator(UserBill,"我的账单")}}/>
             <View style={[css.line]} />
@@ -313,8 +313,8 @@ module.exports = React.createClass({
 
         <MenuItem
           title='我的订单'
-          height='36'
-          fontSize='12'
+          height='40'
+          fontSize='14'
           icon='我的订单'
           onClick={()=>{this._addNavigator(UserOrder,"我的订单")}}/>
         <View style={[css.line]} />
@@ -325,16 +325,16 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的返佣'
-              height='36'
-              fontSize='12'
+              height='40'
+              fontSize='14'
               icon='我的返佣'
               onClick={()=>{this._addNavigator(UserCommission,"我的返佣")}}/>
             <View style={[css.line]} />
 
             <MenuItem
               title='我的团队'
-              height='36'
-              fontSize='12'
+              height='40'
+              fontSize='14'
               icon='我的团队'
               onClick={()=>{this._addNavigator(UserTeam,"我的团队")}}/>
           </View>
@@ -354,8 +354,8 @@ module.exports = React.createClass({
           <View>
             <MenuItem
               title='我的二维码'
-              height='36'
-              fontSize='12'
+              height='40'
+              fontSize='14'
               icon='二维码'
               onClick={()=>{this._addNavigator(QR,"我的二维码")}}/>
             <View style={[css.line]} />
@@ -366,22 +366,22 @@ module.exports = React.createClass({
 
         <MenuItem
           title='修改密码'
-          height='36'
-          fontSize='12'
+          height='40'
+          fontSize='14'
           icon='修改密码'
           onClick={()=>{this._addNavigator(ChangePwd,"修改密码")}}/>
         <View style={[css.line]} />
 
         <MenuItem
           title='关于'
-          height='36'
-          fontSize='12'
+          height='40'
+          fontSize='14'
           icon='关于'
           onClick={()=>{this._addNavigator(About,"关于")}}/>
 
         <View style={{marginTop:8,alignItems:'center',justifyContent: 'center'}}>
           <Image style={css.warnning} source={require('image!温馨提示')}/>
-          <Text style={{height:20,fontSize: 10,fontWeight:'100', color: 'red'}}>
+          <Text style={{height:20,fontSize: 13,fontWeight:'100', color: 'red'}}>
             所有商品抽奖活动与苹果公司(Apple Inc.)无关
           </Text>
         </View>
@@ -396,7 +396,7 @@ var css = StyleSheet.create({
     marginTop: -20,
   },
   headerImg: {
-    height: 174,
+    height: 180,
     paddingTop: 16,
     resizeMode: Image.resizeMode.cover,
   },
@@ -404,7 +404,7 @@ var css = StyleSheet.create({
     marginTop: 7,
     marginRight:5,
     width:Util.size['width']*0.46,
-    height:30,
+    height:36,
     borderWidth:1,
     borderColor:'#ffffff',
     borderRadius:4,
@@ -419,7 +419,7 @@ var css = StyleSheet.create({
     marginTop: 7,
     marginLeft:5,
     width:Util.size['width']*0.46,
-    height:30,
+    height:36,
     borderRadius:4,
     backgroundColor: 'white',
     justifyContent:'center',
@@ -474,7 +474,7 @@ var css = StyleSheet.create({
   },
   money: {
     textAlign: 'center',
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: '100',
     color: '#FFFFFF',
     marginTop:2,

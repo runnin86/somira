@@ -221,7 +221,7 @@ var css = StyleSheet.create({
   },
   tipsText: {
     marginTop: 6,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '100',
   },
   tipsImg: {
@@ -238,7 +238,7 @@ var css = StyleSheet.create({
   },
   scrollText: {
     marginLeft: 4,
-    fontSize: 14,
+    fontSize: 15,
     color: '#FFFFFF',
     backgroundColor: '#cb4a4a',
     alignSelf: 'center',
