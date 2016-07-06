@@ -13,6 +13,7 @@ import {
   TouchableHighlight,
   AlertIOS,
   PushNotificationIOS,
+  AppStateIOS,
 } from 'react-native';
 
 import Store from 'react-native-simple-store';
@@ -45,6 +46,7 @@ var somira = React.createClass({
       noticeTitle: '',
       noticeContent: '',
       pushMsgId: null,
+      appState: AppStateIOS.currentState,
     };
   },
   componentDidMount() {
@@ -70,15 +72,25 @@ var somira = React.createClass({
     // 设置要在手机主屏幕应用图标上显示的角标数
     PushNotificationIOS.setApplicationIconBadgeNumber(0);
 
-    // 运行时,后台运行时
-    PushNotificationIOS.addEventListener('notification', (notification)=>this.processingPush(notification));
-    // 不在运行时，返回初始的通知对象，或者返回null。后续的调用全部会返回null.
-    this.processingPush(PushNotificationIOS.popInitialNotification());
-  },
-  changeTab(tabName){
-    this.setState({
-      selectedTab : tabName
+    // 运行状态变更监听
+    AppStateIOS.addEventListener('change', (appState)=>{
+      this.setState({appState});
     });
+
+    // 运行时,后台运行时
+    PushNotificationIOS.addEventListener('notification', (notification)=>this.processingPush(notification, false));
+    // 不在运行时，返回初始的通知对象，或者返回null。后续的调用全部会返回null.
+    let initNotification = PushNotificationIOS.popInitialNotification();
+    if (initNotification) {
+      this.processingPush(initNotification, true);
+    }
+  },
+  componentWillUnmount: function() {
+    PushNotificationIOS.removeEventListener('notification');
+    AppStateIOS.removeEventListener('change');
+    RCTDeviceEventEmitter.removeEventListener('loadCartCount');
+    RCTDeviceEventEmitter.removeEventListener('showPlanSwitch');
+    RCTDeviceEventEmitter.removeEventListener('loadNotice');
   },
   isShowPlan() {
     // 根据用户类型判断是否展示方案
@@ -173,7 +185,7 @@ var somira = React.createClass({
       });
     });
   },
-  processingPush(notification) {
+  processingPush(notification, first) {
     // { _data: { xg: { bid: 0, ts: 1467686578 }, msgId: '001', msgType: 0 },
     //   _alert: '方案开奖结果通知',
     //   _sound: undefined,
@@ -188,18 +200,24 @@ var somira = React.createClass({
       //     onPress: null,
       //   }]
       // );//c70807ac0d9947249ca5fb573452c5b0
-      if (notification._data.msgType === '0') {
-        // 跳转消息记录(根据msgId查询消息并展示)
-        this.setState({
-          pushMsgId: notification._data.msgId,
-          selectedTab : 'uc',
-        });
+      // app状态为background或首次启动时要处理推送消息
+      if (this.state.appState === 'background' || first) {
+        if (notification._data.msgType === '0') {
+          // 跳转消息记录(根据msgId查询消息并展示)
+          this.setState({
+            pushMsgId: notification._data.msgId,
+            selectedTab : 'uc',
+          });
+        }
+        else if (notification._data.msgType === '1') {
+          // 跳转方案列表
+          this.setState({
+            selectedTab : 'plan',
+          });
+        }
       }
-      else if (notification._data.msgType === '1') {
-        // 跳转方案列表
-        this.setState({
-          selectedTab : 'plan',
-        });
+      else if (this.state.appState === 'active') {
+        AlertIOS.alert('标题党', '运行中收到推送消息的处理');
       }
     }
   },
@@ -214,7 +232,11 @@ var somira = React.createClass({
             <TabBarIOS.Item
               title="购买方案" icon={{uri:'购买方案',scale:2,isStatic:true}}
               selected={this.state.selectedTab === 'plan'}
-              onPress={()=>{this.changeTab('plan')}}>
+              onPress={()=>{
+                this.setState({
+                  selectedTab : 'plan'
+                })
+              }}>
               <NavigatorIOS style={css.container}
                 barTintColor={Util.headerColor}
                 tintColor={Util.headerTitleColor}
@@ -233,7 +255,11 @@ var somira = React.createClass({
           <TabBarIOS.Item
             title="一元夺宝" icon={{uri:'乐夺宝',scale:2,isStatic:true}}
             selected={this.state.selectedTab === 'hp'}
-            onPress={()=>{this.changeTab('hp')}}>
+            onPress={()=>{
+              this.setState({
+                selectedTab : 'hp'
+              })
+            }}>
             <NavigatorIOS style={css.container}
               barTintColor={Util.headerColor}
               tintColor={Util.headerTitleColor}
@@ -257,7 +283,11 @@ var somira = React.createClass({
               undefined
             }
             selected={this.state.selectedTab === 'sc'}
-            onPress={()=>{this.changeTab('sc')}}>
+            onPress={()=>{
+              this.setState({
+                selectedTab : 'sc'
+              })
+            }}>
             <NavigatorIOS style={css.container}
               barTintColor={Util.headerColor}
               tintColor={Util.headerTitleColor}
@@ -275,7 +305,11 @@ var somira = React.createClass({
             title="个人中心" icon={{uri:'个人中心',scale:2,isStatic:true}}
             badge={this.state.notifyUserCount > 0 ? this.state.notifyUserCount : undefined}
             selected={this.state.selectedTab === 'uc'}
-            onPress={()=>{this.changeTab('uc')}}>
+            onPress={()=>{
+              this.setState({
+                selectedTab : 'uc'
+              })
+            }}>
             <NavigatorIOS style={css.container}
               barTintColor={Util.headerColor}
               tintColor={Util.headerTitleColor}
