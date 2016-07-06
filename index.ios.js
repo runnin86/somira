@@ -192,14 +192,6 @@ var somira = React.createClass({
     //   _badgeCount: 1 }
     // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
     if (notification) {
-      // AlertIOS.alert(
-      //   notification._data.msgType + '->' + notification._data.msgId,
-      //   notification._alert,
-      //   [{
-      //     text: 'Dismiss',
-      //     onPress: null,
-      //   }]
-      // );//c70807ac0d9947249ca5fb573452c5b0
       // app状态为background或首次启动时要处理推送消息
       if (this.state.appState === 'background' || first) {
         if (notification._data.msgType === '0') {
@@ -217,7 +209,14 @@ var somira = React.createClass({
         }
       }
       else if (this.state.appState === 'active') {
-        AlertIOS.alert('标题党', '运行中收到推送消息的处理');
+        AlertIOS.alert(
+          '提示',
+          notification._alert,
+          [
+            {text: '取消', onPress: null},
+            {text: '去看看', onPress: null},
+          ]
+        );//c70807ac0d9947249ca5fb573452c5b0
       }
     }
   },
