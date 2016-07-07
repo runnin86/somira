@@ -73,10 +73,10 @@ module.exports = React.createClass({
     return (
       <View>
         <View style={[styles.cell,{flexDirection:'row'}]}>
-          <Image style={{width: 60,height: 60,marginRight: 6,alignSelf:'center'}}
+          <Image style={{width: 80,height: 80,marginRight: 14,alignSelf:'center'}}
             source={{uri: item.images?item.images.split(',')[0]:''}} />
           <View style={styles.flex1}>
-            <Text style={{fontSize: 14,fontWeight: '400',}} numberOfLines={1}>
+            <Text style={{fontSize: 16,fontWeight: '400',marginBottom:4}} numberOfLines={1}>
               {'第'+item.number+'期 '+item.name}
             </Text>
             {
@@ -84,18 +84,18 @@ module.exports = React.createClass({
               item.status === '0' && !this.isShowTime(item.publicTime).show
               ?
               <View>
-                <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                <Text style={{fontSize: 12,fontWeight: '100'}} numberOfLines={1}>
                   中奖号码:
                   <Text style={{color:'red'}}> {item.luckCode}</Text>
                 </Text>
-                <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                <Text style={{fontSize: 12,fontWeight: '100'}} numberOfLines={1}>
                   获奖者: {item.user_name}
                 </Text>
-                <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                <Text style={{fontSize: 12,fontWeight: '100'}} numberOfLines={1}>
                   人次:
                   <Text style={{color:'red'}}> {item.payCount}</Text>
                 </Text>
-                <Text style={{fontSize: 10,fontWeight: '100'}} numberOfLines={1}>
+                <Text style={{fontSize: 12,fontWeight: '100'}} numberOfLines={1}>
                   日期: {item.publicTime}
                 </Text>
               </View>

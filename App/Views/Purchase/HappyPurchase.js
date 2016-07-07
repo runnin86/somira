@@ -81,7 +81,7 @@ module.exports = React.createClass({
     return {
       dataSource: ds.cloneWithRows([[
         {title:'最新揭晓', id: 'latest', img: '最新揭晓'},
-        {title:'充值', id: 'recharge', img: '充值'},
+        // {title:'充值', id: 'recharge', img: '充值'},
         {title:'帮助', id: 'help', img: '帮助-1'}
       ]]),
       tabData: [
