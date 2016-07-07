@@ -63,7 +63,7 @@ module.exports = React.createClass({
     });
     // 用户登录的需要查询参与码
     Store.get('user').then((userdata)=>{
-      if (userdata.user_id) {
+      if (userdata && userdata.user_id) {
         this.getUserPartake(userdata.user_id, id, number);
       }
     });
