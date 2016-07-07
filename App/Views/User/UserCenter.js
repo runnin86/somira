@@ -281,7 +281,7 @@ module.exports = React.createClass({
                   this.state.user.user_type === 1
                   ?
                   <Button containerStyle={css.withdrawBtn}
-                    onPress={()=>{console.log('提现')}}>
+                    onPress={()=>{Util.toast('攻城狮正加班加点攻克中。。。')}}>
                     <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
                   </Button>
                   :
