@@ -291,7 +291,11 @@ var somira = React.createClass({
             onPress={()=>{
               this.setState({
                 selectedTab : 'sc'
-              })
+              });
+              setTimeout(()=>{
+                // 广播至购物车刷新
+                RCTDeviceEventEmitter.emit('refreshCart');
+              }, 500);
             }}>
             <NavigatorIOS style={css.container}
               barTintColor={Util.headerColor}

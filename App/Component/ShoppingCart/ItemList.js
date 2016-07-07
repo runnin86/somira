@@ -25,13 +25,17 @@ module.exports = React.createClass({
     return {
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
-      cateId: 0,
+      cateId: this.props.cateId,
       totalPrice: 0,
+      warnningText: '',
     };
   },
   //只调用一次，在render之后调用
   componentDidMount() {
     this.fetchData(this.props.cateId);
+    RCTDeviceEventEmitter.addListener('refreshCart', ()=>{
+      this.fetchData(this.props.cateId);
+    });
   },
   //render 之前调用
   //之所以取nextProps的值而不直接取this.props.cateId 是因为componentWillReceiveProps的更新早于props的更新
@@ -61,7 +65,8 @@ module.exports = React.createClass({
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(code === 1?result:''),
               totalPrice: tempPrice,
-              loaded: true
+              loaded: true,
+              warnningText: '购物车空空如也,赶快去购买方案吧'
             });
           });
         }
@@ -77,7 +82,8 @@ module.exports = React.createClass({
             this.setState({
               dataSource: this.state.dataSource.cloneWithRows(code === 1?info:''),
               totalPrice: tempPrice,
-              loaded: true
+              loaded: true,
+              warnningText: '购物车空空如也,赶快去夺宝吧'
             });
           },
           (e)=>{
@@ -86,6 +92,10 @@ module.exports = React.createClass({
         }
       }
       else {
+        this.setState({
+          loaded: true,
+          warnningText: '您还没有登录,赶快登录参与夺宝吧'
+        });
         Util.toast('您尚未登录!');
       }
     });
@@ -302,17 +312,9 @@ module.exports = React.createClass({
           <View style={{alignItems:'center',marginTop:40,}}>
             <Image style={{width: 120,resizeMode:Image.resizeMode.contain,}}
               source={require('image!温馨提示')}/>
-            {
-              this.state.cateId === 0
-              ?
               <Text style={{height:20,fontSize: 10, color: 'gray'}}>
-                购物车空空如也,赶快去购买方案吧
+                {this.state.warnningText}
               </Text>
-              :
-              <Text style={{height:20,fontSize: 10, color: 'gray'}}>
-                购物车空空如也,赶快去夺宝吧
-              </Text>
-            }
           </View>
           :
           null
