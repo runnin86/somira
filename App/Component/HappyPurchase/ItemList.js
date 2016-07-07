@@ -45,16 +45,16 @@ module.exports = React.createClass({
   //拉取数据
   fetchData: function(cateId) {
     let API = net.hpApi.home + (cateId> 0 ? '?price=' + cateId : '');
-    fetch(API)
-    .then((response) => response.json())
-    .then(({code, msg, results}) => {
+    Util.get(API, '',
+    ({code, msg, results})=>{
       if (code === 1) {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(results.list),
           loaded: true
         });
       }
-    }).catch((e) => {
+    },
+    (e)=>{
       console.log('获取乐夺宝商品列表失败:' + e)
     });
   },

@@ -178,17 +178,17 @@ module.exports = React.createClass({
   //拉取数据
   fetchBannerData: function() {
     let bannerUrl = net.hpApi.banner;
-    fetch(bannerUrl)
-        .then((response) => response.json())
-        .then(({code, msg, info}) => {
-          if (code === 1) {
-            this.setState({
-              bannerList: info
-            });
-          }
-      }).catch((e) => {
-        console.log('获取乐夺宝banner失败:' + e)
-      });
+    Util.get(bannerUrl, '',
+    ({code, msg, info})=>{
+      if (code === 1) {
+        this.setState({
+          bannerList: info
+        });
+      }
+    },
+    (e)=>{
+      console.log('获取乐夺宝banner失败:' + e)
+    });
   },
   // 获取滚动消息
   scrollMsgForHP() {
