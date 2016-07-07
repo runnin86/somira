@@ -225,30 +225,76 @@ module.exports = React.createClass({
             </Button>
           </View>
           <View style={css.cellfixed}>
-            <Image style={css.userPhoto}
-              source={require('image!默认头像')}/>
+            <View style={
+              this.state.user && this.state.user.user_type === 0
+              ?
+              css.baseUserRow
+              :
+              null
+            }>
+              <Image style={css.userPhoto} source={require('image!默认头像')}/>
+              {
+                this.state.user && this.state.user.user_type === 0
+                ?
+                <View style={{marginLeft:14,height:56}}>
+                  <Text style={[css.transparentFont,{fontSize:18,lineHeight:28,}]}>
+                    {
+                      this.state.user.user_nickname
+                      ?
+                      this.state.user.user_nickname
+                      :
+                      this.state.user.user_name
+                    }
+                  </Text>
+                  <Text style={[css.transparentFont,{fontSize:14,marginTop:4}]}>
+                    余额 {this.state.userate ? this.state.userate : 0}
+                  </Text>
+                </View>
+                :
+                null
+              }
+            </View>
           </View>
           {
             this.state.user
             ?
             <View>
-              <View style={css.cellfixed}>
-                <Text style={[css.transparentFont,{fontSize:18}]}>
-                  {
-                    this.state.user.user_nickname
-                    ?
-                    this.state.user.user_nickname
-                    :
-                    this.state.user.user_name
-                  }
-                </Text>
-              </View>
+              {
+                this.state.user.user_type === 1
+                ?
+                <View style={css.cellfixed}>
+                  <Text style={[css.transparentFont,{fontSize:18}]}>
+                    {
+                      this.state.user.user_nickname
+                      ?
+                      this.state.user.user_nickname
+                      :
+                      this.state.user.user_name
+                    }
+                  </Text>
+                </View>
+                :
+                null
+              }
               <View style={css.flexRow}>
-                <Button containerStyle={css.withdrawBtn}
-                  onPress={()=>{console.log('提现')}}>
-                  <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
-                </Button>
-                <Button containerStyle={css.rechargeBtn}
+                {
+                  this.state.user.user_type === 1
+                  ?
+                  <Button containerStyle={css.withdrawBtn}
+                    onPress={()=>{console.log('提现')}}>
+                    <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
+                  </Button>
+                  :
+                  null
+                }
+                <Button containerStyle={[css.rechargeBtn,{
+                  width:
+                  this.state.user.user_type === 1
+                  ?
+                  Util.size['width'] * 0.46
+                  :
+                  Util.size['width'] * 0.68
+                }]}
                   onPress={()=>{Util.toast('充值功能暂未开放,敬请期待!')}}>
                   <Text style={[css.rechargeBtnFont,{fontSize:16}]}>充值</Text>
                 </Button>
@@ -265,7 +311,7 @@ module.exports = React.createClass({
         </Image>
 
         {
-          this.state.user
+          this.state.user && this.state.user.user_type === 1
           ?
           <View style={css.moneyRow}>
             <View style={{justifyContent:'center',marginLeft:10}}>
@@ -296,7 +342,7 @@ module.exports = React.createClass({
           操作菜单开始
         */}
         {
-          this.state.user
+          this.state.user && this.state.user.user_type === 1
           ?
           <View>
             <MenuItem
@@ -320,7 +366,7 @@ module.exports = React.createClass({
         <View style={[css.line]} />
 
         {
-          this.state.user
+          this.state.user && this.state.user.user_type === 1
           ?
           <View>
             <MenuItem
@@ -349,7 +395,7 @@ module.exports = React.createClass({
         </View>
 
         {
-          this.state.user
+          this.state.user && this.state.user.user_type === 1
           ?
           <View>
             <MenuItem
@@ -418,7 +464,6 @@ var css = StyleSheet.create({
   rechargeBtn:{
     marginTop: 7,
     marginLeft:5,
-    width:Util.size['width']*0.46,
     height:36,
     borderRadius:4,
     backgroundColor: 'white',
@@ -524,4 +569,8 @@ var css = StyleSheet.create({
     height:1,
     backgroundColor: '#f4f4f4',
   },
+  baseUserRow:{
+    flexDirection:'row',
+    marginLeft:Util.size['width'] * 0.2,
+  }
 });
