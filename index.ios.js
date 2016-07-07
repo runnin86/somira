@@ -14,6 +14,7 @@ import {
   AlertIOS,
   PushNotificationIOS,
   AppStateIOS,
+  NetInfo,
 } from 'react-native';
 
 import Store from 'react-native-simple-store';
@@ -49,6 +50,15 @@ var somira = React.createClass({
     };
   },
   componentDidMount() {
+    NetInfo.fetch().done(
+      (connectionInfo) => {
+        if (connectionInfo === 'none') {
+          Util.toast('网络未连接');
+        }
+      }
+    );
+    // 网络监听
+    NetInfo.addEventListener('change', this._handleConnectionInfoChange);
     /*
      *非父子组件间的通信
      *使用全局事件 Pub/Sub 模式，
@@ -106,6 +116,7 @@ var somira = React.createClass({
     RCTDeviceEventEmitter.removeEventListener('loadCartCount');
     RCTDeviceEventEmitter.removeEventListener('showPlanSwitch');
     RCTDeviceEventEmitter.removeEventListener('loadNotice');
+    NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
   },
   isShowPlan() {
     // 根据用户类型判断是否展示方案
@@ -224,6 +235,11 @@ var somira = React.createClass({
           selectedTab : 'plan',
         });
       }
+    }
+  },
+  _handleConnectionInfoChange: function(connectionInfo) {
+    if (connectionInfo === 'none') {
+      Util.toast('网络未连接');
     }
   },
   render: function() {
