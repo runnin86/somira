@@ -179,7 +179,7 @@ module.exports = {
       message: m,
       duration: d ? d : 'short',//[short,long]
       position: p ? p : 'bottom',//[top,center,bottom]
-      addPixelsY: y ? y : -76,
+      addPixelsY: y ? y : Dimensions.get('window').height * -0.34,
     });
   }
 };
