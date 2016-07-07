@@ -93,6 +93,7 @@ module.exports = React.createClass({
       }
       else {
         this.setState({
+          dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
           loaded: true,
           warnningText: '您还没有登录,赶快登录参与夺宝吧'
         });

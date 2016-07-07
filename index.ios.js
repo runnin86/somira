@@ -293,6 +293,8 @@ var somira = React.createClass({
                 selectedTab : 'sc'
               });
               setTimeout(()=>{
+                // tab页的展示
+                RCTDeviceEventEmitter.emit('showPlanSwitch');
                 // 广播至购物车刷新
                 RCTDeviceEventEmitter.emit('refreshCart');
               }, 500);

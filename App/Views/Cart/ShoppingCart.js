@@ -21,13 +21,19 @@ module.exports = React.createClass({
   componentWillReceiveProps() {
   },
   componentDidMount(){
-    Store.get('user').then((userdata)=>{
-      if (userdata) {
+    RCTDeviceEventEmitter.addListener('showPlanSwitch', ()=>{
+      Store.get('user').then((userdata)=>{
+        let cid = 1;
+        let utype = 0;
+        if (userdata) {
+          cid = userdata.user_type === 0 ? 1 : 0;
+          utype = userdata.user_type;
+        }
         this.setState({
-          userType:userdata.user_type,
-          cateId:userdata.user_type===0?1:0
+          cateId: cid,
+          userType: utype,
         })
-      }
+      });
     });
   },
   getInitialState: function() {
