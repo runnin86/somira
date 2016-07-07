@@ -42,7 +42,14 @@ module.exports = {
     .then((responseText) => {
       callback(JSON.parse(responseText));
       // callback(responseText);
-    }).done();
+    })
+    .catch(error => {
+      React.AlertIOS.alert(
+        'Error',
+        'There seems to be an issue connecting to the network.'
+      );
+    })
+    .done();
   },
   // post请求
   post: function (url, token, data, callback) {
@@ -61,7 +68,14 @@ module.exports = {
     .then((responseText) => {
       callback(JSON.parse(responseText));
       // callback(responseText);
-    }).done();
+    })
+    .catch(error => {
+      React.AlertIOS.alert(
+        'Error',
+        'There seems to be an issue connecting to the network.'
+      );
+    })
+    .done();
   },
   // get请求
   get: function (url, token, successCallback, failCallback) {
@@ -78,10 +92,12 @@ module.exports = {
       .then((responseText) => {
         successCallback(JSON.parse(responseText));
       })
-      .catch(function(err){
-        console.log("错误信息:" + err);
-        failCallback(err);
-      });
+      .catch(error => {
+        React.AlertIOS.alert(
+          'Error',
+          'There seems to be an issue connecting to the network.'
+        );
+      })
   },
   // put请求
   put: function (url, token, data, callback) {
@@ -99,7 +115,14 @@ module.exports = {
     .then((response) => response.text())
     .then((responseText) => {
       callback(JSON.parse(responseText));
-    }).done();
+    })
+    .catch(error => {
+      React.AlertIOS.alert(
+        'Error',
+        'There seems to be an issue connecting to the network.'
+      );
+    })
+    .done();
   },
   log:function (obj){
     var description = "";
