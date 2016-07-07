@@ -97,6 +97,7 @@ module.exports = {
           'Error',
           'There seems to be an issue connecting to the network.'
         );
+        // failCallback(error);
       })
   },
   // put请求
