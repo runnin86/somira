@@ -133,9 +133,6 @@ module.exports = React.createClass({
           else {
             Util.toast(msg);
           }
-        },
-        (e)=>{
-          console.error(e);
         });
       }
     });

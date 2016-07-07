@@ -220,9 +220,6 @@ module.exports = React.createClass({
           }
         }
       }
-    },
-    (e)=>{
-      console.error(e);
     });
   }
 });

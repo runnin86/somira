@@ -53,9 +53,6 @@ module.exports = React.createClass({
           loaded: true
         });
       }
-    },
-    (e)=>{
-      console.log('获取乐夺宝商品列表失败:' + e)
     });
   },
   //渲染列表

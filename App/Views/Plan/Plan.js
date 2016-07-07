@@ -150,9 +150,6 @@ module.exports = React.createClass({
           bannerList: info
         });
       }
-    },
-    (e)=>{
-      console.error(e);
     });
   },
   // 获取滚动消息
@@ -180,9 +177,6 @@ module.exports = React.createClass({
               });
             }
           }
-        },
-        (e)=>{
-          console.error(e);
         });
       }
     });

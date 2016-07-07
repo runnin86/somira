@@ -85,9 +85,6 @@ module.exports = React.createClass({
               loaded: true,
               warnningText: '购物车空空如也,赶快去夺宝吧'
             });
-          },
-          (e)=>{
-            console.error(e);
           });
         }
       }

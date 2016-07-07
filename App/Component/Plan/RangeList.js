@@ -87,9 +87,6 @@ module.exports = React.createClass({
             // 退出后隐藏方案
             RCTDeviceEventEmitter.emit('showPlanSwitch');
           }
-        },
-        (e)=>{
-          console.error(e);
         });
       }
     });
@@ -106,9 +103,6 @@ module.exports = React.createClass({
               serviceTime: result
             });
           }
-        },
-        (e)=>{
-          console.error(e);
         });
       }
     });

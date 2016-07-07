@@ -89,9 +89,6 @@ module.exports = React.createClass({
               serviceTime: result
             });
           }
-        },
-        (e)=>{
-          console.error(e);
         });
       }
     });

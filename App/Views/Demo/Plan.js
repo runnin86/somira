@@ -136,9 +136,6 @@ module.exports = React.createClass({
           bannerList: info
         });
       }
-    },
-    (e)=>{
-      console.error(e);
     });
   }
 });

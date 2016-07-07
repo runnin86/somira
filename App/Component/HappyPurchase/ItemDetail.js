@@ -86,9 +86,6 @@ module.exports = React.createClass({
       else {
         console.error('获取乐夺宝参与记录失败:' + msg);
       }
-    },
-    (e)=>{
-      console.error(e);
     });
   },
   render: function() {
