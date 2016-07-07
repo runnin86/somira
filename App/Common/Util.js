@@ -44,10 +44,8 @@ module.exports = {
       // callback(responseText);
     })
     .catch(error => {
-      React.AlertIOS.alert(
-        'Error',
-        'There seems to be an issue connecting to the network.'
-      );
+      console.log(error);
+      this.toast('网络请求异常');
     })
     .done();
   },
@@ -70,10 +68,8 @@ module.exports = {
       // callback(responseText);
     })
     .catch(error => {
-      React.AlertIOS.alert(
-        'Error',
-        'There seems to be an issue connecting to the network.'
-      );
+      console.log(error);
+      this.toast('网络请求异常');
     })
     .done();
   },
@@ -93,10 +89,8 @@ module.exports = {
         successCallback(JSON.parse(responseText));
       })
       .catch(error => {
-        React.AlertIOS.alert(
-          'Error',
-          'There seems to be an issue connecting to the network.'
-        );
+        console.log(error);
+        this.toast('网络请求异常');
         // failCallback(error);
       })
   },
@@ -118,10 +112,8 @@ module.exports = {
       callback(JSON.parse(responseText));
     })
     .catch(error => {
-      React.AlertIOS.alert(
-        'Error',
-        'There seems to be an issue connecting to the network.'
-      );
+      console.log(error);
+      this.toast('网络请求异常');
     })
     .done();
   },
