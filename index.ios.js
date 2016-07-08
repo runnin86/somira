@@ -218,7 +218,7 @@ var somira = React.createClass({
     //   _badgeCount: 1 }
     // msgType:0 跳转消息记录 msgTpye:1 跳转方案列表
     if (notification) {
-      if (notification._data.msgType === '0') {
+      if (notification._data.msgType === 0) {
         // 跳转用户中心
         this.setState({
           selectedTab : 'uc',
@@ -229,7 +229,7 @@ var somira = React.createClass({
           RCTDeviceEventEmitter.emit('showPushMessage', notification._data.msgId);
         }, 500);
       }
-      else if (notification._data.msgType === '1') {
+      else if (notification._data.msgType === 1) {
         // 跳转方案列表
         this.setState({
           selectedTab : 'plan',
