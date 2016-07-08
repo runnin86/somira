@@ -1497,7 +1497,7 @@ processingPush:function(notification){
 
 
 if(notification){
-if(notification._data.msgType==='0'){
+if(notification._data.msgType===0){
 
 this.setState({
 selectedTab:'uc'});
@@ -1508,7 +1508,7 @@ setTimeout(function(){
 _RCTDeviceEventEmitter2.default.emit('showPushMessage',notification._data.msgId);},
 500);}else 
 
-if(notification._data.msgType==='1'){
+if(notification._data.msgType===1){
 
 this.setState({
 selectedTab:'plan'});}}},
@@ -67601,7 +67601,8 @@ margin:10},
 red:{
 color:'red'}});
 });
-__d('somira/App/Component/User/Order/Order.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _List=require('somira/App/Component/User/Order/List.js');var _List2=babelHelpers.interopRequireDefault(_List);var _ItemDetail=require('somira/App/Component/HappyPurchase/ItemDetail.js');var _ItemDetail2=babelHelpers.interopRequireDefault(_ItemDetail);var _PlanDetail=require('somira/App/Component/Plan/PlanDetail.js');var _PlanDetail2=babelHelpers.interopRequireDefault(_PlanDetail);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Tabs=require('somira/App/Common/Tabs.js');var _Tabs2=babelHelpers.interopRequireDefault(_Tabs);var 
+__d('somira/App/Component/User/Order/Order.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _List=require('somira/App/Component/User/Order/List.js');var _List2=babelHelpers.interopRequireDefault(_List);var _ItemDetail=require('somira/App/Component/HappyPurchase/ItemDetail.js');var _ItemDetail2=babelHelpers.interopRequireDefault(_ItemDetail);var _PlanDetail=require('somira/App/Component/Plan/PlanDetail.js');var _PlanDetail2=babelHelpers.interopRequireDefault(_PlanDetail);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Tabs=require('somira/App/Common/Tabs.js');var _Tabs2=babelHelpers.interopRequireDefault(_Tabs);var 
+
 
 
 
@@ -67624,33 +67625,47 @@ componentWillReceiveProps:function(){},
 
 getInitialState:function(){
 return {
-cateId:0};},
+cateId:null,
+userType:null};},
 
 
-render:function(){var _this=this;
+componentDidMount:function(){var _this=this;
+_reactNativeSimpleStore2.default.get('user').then(function(userdata){
+var cid=1;
+var utype=0;
+if(userdata){
+cid=userdata.user_type===0?1:0;
+utype=userdata.user_type;}
+
+_this.setState({
+cateId:cid,
+userType:utype});});},
+
+
+
+render:function(){var _this2=this;
 var cateId=this.state.cateId;
-var userType=1;
 var tabDataSource=[
-{code:0,name:'方案'},
+this.state.userType===1?{code:0,name:'方案'}:{},
 {code:1,name:'一元夺宝',link:'',icon:''}];
 
 return (
 _reactNative2.default.createElement(View,{style:[css.flex,{marginTop:62}]},
 
 
-userType===1?
+this.state.userType===1?
 
 _reactNative2.default.createElement(_Tabs2.default,{
 initData:{tabDataSource:tabDataSource},
 updateCateItem:
-function(cateId){return _this.setState({cateId:cateId});}}):
+function(cateId){return _this2.setState({cateId:cateId});}}):
 
 
 _reactNative2.default.createElement(View,null),
 
 
 
-_reactNative2.default.createElement(_List2.default,{cateId:cateId,onSelect:function(item){return _this.selectItem(item);}})));},
+_reactNative2.default.createElement(_List2.default,{cateId:cateId,onSelect:function(item){return _this2.selectItem(item);}})));},
 
 
 
@@ -67702,7 +67717,7 @@ getInitialState:function(){
 return {
 dataSource:new ListView.DataSource({rowHasChanged:function(row1,row2){return row1!==row2;}}),
 loaded:false,
-cateId:0,
+cateId:this.props.cateId,
 planListPageNum:1,
 hpListPageNum:0,
 planData:[],
