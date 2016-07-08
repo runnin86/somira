@@ -1,4 +1,5 @@
 import React from 'react-native';
+import Store from 'react-native-simple-store';
 
 import OrderList from './List';
 import ItemDetail from '../../../Component/HappyPurchase/ItemDetail';
@@ -21,21 +22,35 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
     return {
-      cateId : 0
+      cateId: null,
+      userType: null,
     };
+  },
+  componentDidMount(){
+    Store.get('user').then((userdata)=>{
+      let cid = 1;
+      let utype = 0;
+      if (userdata) {
+        cid = userdata.user_type === 0 ? 1 : 0;
+        utype = userdata.user_type;
+      }
+      this.setState({
+        cateId: cid,
+        userType: utype,
+      })
+    });
   },
   render: function() {
     var cateId = this.state.cateId;
-    var userType = 1;
     var tabDataSource = [
-      {code: 0, name: '方案'},
+      this.state.userType===1?{code: 0, name: '方案'}:{},
       {code: 1, name: '一元夺宝', link: '', icon: ''}
     ];
     return (
       <View style={[css.flex,{marginTop:62}]}>
         {/*用户区分是否展示tab*/}
         {
-          userType===1
+          this.state.userType===1
           ?
           <Tabs
             initData={{tabDataSource}}

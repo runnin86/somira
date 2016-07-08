@@ -27,7 +27,7 @@ module.exports = React.createClass({
     return {
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
-      cateId: 0,
+      cateId: this.props.cateId,
       planListPageNum: 1,
       hpListPageNum: 0,
       planData: [],
