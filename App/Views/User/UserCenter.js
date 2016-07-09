@@ -215,10 +215,16 @@ module.exports = React.createClass({
         }>
         <Image style={[css.headerImg]} source={{uri: '个人中心背景'}}>
           <View style={css.cellfixed,css.rightBtn}>
-            <Button onPress={()=>{this._addNavigator(Message,"消息列表")}}>
-              <Image style={css.btnPhotoMsg}
-                source={require('image!消息按钮')}/>
-            </Button>
+            {
+              this.state.user && this.state.user.user_type === 1
+              ?
+              <Button onPress={()=>{this._addNavigator(Message,"消息列表")}}>
+                <Image style={css.btnPhotoMsg}
+                  source={require('image!消息按钮')}/>
+              </Button>
+              :
+              null
+            }
             <Button onPress={()=>{this._addNavigator(Setting,"设置")}}>
               <Image style={css.btnPhotoSet}
                 source={require('image!设置按钮')}/>
