@@ -22,63 +22,31 @@ module.exports = React.createClass({
     return (
       <ScrollView contentContainerStyle={css.stage}>
         <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>1. 充值问题?</Text>
+          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>1. 注册问题?</Text>
           <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            继续充值
+            目前注册仅支持网页端进行注册，请访问收米拉网站进行注册。
           </Text>
         </View>
 
         <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>2. 如何领奖?</Text>
+          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>2. 充值问题?</Text>
           <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            单注100万元以下奖金直接打到您的账户，
-            可以随时消费提现；
-            单注100万元以上奖金，请您放心，如果你中了大奖，
-            我们会有专人及时联系你，并全程协助您安全领奖。
+            因支付渠道正在加紧申请当中，充值目前只能通过联系客服进行
           </Text>
         </View>
 
         <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>3. 提现问题?</Text>
+          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>3. 领奖问题?</Text>
           <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            找客服
+            如您参与一元夺宝获得宝贝，客服会第一时间联系您，
+            将宝贝快递至您手中，后续会更新系统自动发货。
           </Text>
         </View>
 
         <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>4. 如何领奖?</Text>
+          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>4. 声明</Text>
           <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            单注100万元以下奖金直接打到您的账户，
-            可以随时消费提现；
-            单注100万元以上奖金，请您放心，如果你中了大奖，
-            我们会有专人及时联系你，并全程协助您安全领奖。
-          </Text>
-        </View>
-
-        <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>5. 如何领奖?</Text>
-          <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            单注100万元以下奖金直接打到您的账户，
-            可以随时消费提现；
-            单注100万元以上奖金，请您放心，如果你中了大奖，
-            我们会有专人及时联系你，并全程协助您安全领奖。
-          </Text>
-        </View>
-
-        <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>1. 充值问题?</Text>
-          <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            继续充值
-          </Text>
-        </View>
-
-        <View style={{left:10,marginTop:16}}>
-          <Text style={{flex: 1, fontSize: 14, color: 'red',top:-6}}>2. 如何领奖?</Text>
-          <Text style={{flex: 1, fontSize: 12, width:Util.size['width']-40,left:14}}>
-            单注100万元以下奖金直接打到您的账户，
-            可以随时消费提现；
-            单注100万元以上奖金，请您放心，如果你中了大奖，
-            我们会有专人及时联系你，并全程协助您安全领奖。
+            所有商品抽奖活动与苹果公司(Apple Inc.)无关。
           </Text>
         </View>
 
