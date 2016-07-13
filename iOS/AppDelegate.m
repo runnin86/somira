@@ -13,6 +13,8 @@
 
 #import "RCTPushNotificationManager.h"
 
+#import "RCTHotUpdate.h"
+
 #import "XGPush.h"
 
 #import "XGSetting.h"
@@ -80,8 +82,7 @@ RCT_EXPORT_METHOD(unRegisterXG){
    * `inet` value under `en0:`) and make sure your computer and iOS device are
    * on the same Wi-Fi network.
    */
-  
-  // jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.3:8081/index.ios.bundle"];
+  // jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.3:8081/index.ios.bundle?platform=ios&dev=true"];
   
   /**
    * OPTION 2
@@ -93,7 +94,14 @@ RCT_EXPORT_METHOD(unRegisterXG){
    * see http://facebook.github.io/react-native/docs/runningondevice.html
    */
 
-  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  
+#if DEBUG
+  // 原来的jsCodeLocation
+  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+#else
+  jsCodeLocation=[RCTHotUpdate bundleURL];
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"somira"

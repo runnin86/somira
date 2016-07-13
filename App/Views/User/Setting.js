@@ -10,7 +10,25 @@ var {
 	Text,
   TouchableHighlight,
   SwitchIOS,
+	TouchableOpacity,
+	Platform,
+	Alert,
 } = React;
+
+import {
+	isFirstTime,
+  isRolledBack,
+  packageVersion,
+  currentVersion,
+  checkUpdate,
+  downloadUpdate,
+  switchVersion,
+  switchVersionLater,
+  markSuccess,
+} from 'react-native-update';
+
+import _updateConfig from './../../../update.json';
+const {appKey} = _updateConfig[Platform.OS];
 
 var Setting = React.createClass({
   getInitialState: function() {
@@ -18,6 +36,35 @@ var Setting = React.createClass({
       // user:null,
       falseSwitchIsOn: false,
     };
+  },
+	doUpdate(info) {
+    downloadUpdate(info).then(hash => {
+      Alert.alert('提示', '下载完毕,是否重启应用?', [
+        {text: '是', onPress: ()=>{switchVersion(hash);}},
+        {text: '否',},
+        {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+      ]);
+    }).catch(err => {
+      Alert.alert('提示', '更新失败.');
+    });
+  },
+  checkUpdate() {
+    checkUpdate(appKey).then(info => {
+      if (info.expired) {
+        Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
+          {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+        ]);
+      } else if (info.upToDate) {
+        Alert.alert('提示', '您的应用版本已是最新.');
+      } else {
+        Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
+          {text: '是', onPress: ()=>{this.doUpdate(info)}},
+          {text: '否',},
+        ]);
+      }
+    }).catch(err => {
+      Alert.alert('提示', '更新失败.');
+    });
   },
 	logout:function(){
 		Store.delete('user');
@@ -67,14 +114,16 @@ var Setting = React.createClass({
 					null
 				}
 
-        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}>
+				<TouchableOpacity
+				  style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}
+				  onPress={this.checkUpdate}>
           <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
-            版本更新1.10
+            当前版本
           </Text>
-          <Text style={{flex:1,color:'gray',fontSize:12,fontWeight:'100',textAlign:'right',}}>
-            已是最新版本
+          <Text style={{flex:1,color:'red',fontSize:12,fontWeight:'100',textAlign:'right',}}>
+            {packageVersion}
           </Text>
-        </View>
+				</TouchableOpacity>
 
         <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
           <Text style={{color:'#ffffff',fontSize:18}}>退出登录</Text>
