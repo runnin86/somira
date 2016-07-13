@@ -24,8 +24,14 @@ self.navigationController.tabBarController.tabBar.hidden=self.navigationControll
 
 # pushy操作相关(https://github.com/reactnativecn/react-native-pushy)
 1.进入项目根目录下执行: $ pushy login
+
 2.选择应用: $ pushy selectApp --platform ios
+
 3.上传ipa: $ pushy uploadIpa Payload.ipa
+
 4.发布热更新版本: $ pushy bundle --platform ios
+
   将来使用pushy publish --platform ios <ppkFile>来发布版本
+
   将来使用pushy update --platform ios 来使得对应包版本的用户更新
+  
