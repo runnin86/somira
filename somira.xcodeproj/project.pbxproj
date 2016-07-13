@@ -22,6 +22,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		6B16ABF11D35D5A6000FEE3E /* libRCTHotUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B16ABE61D35D566000FEE3E /* libRCTHotUpdate.a */; };
+		6B248B8A1D3498C7000691B8 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */; };
 		6B4CF49C1D291E2700C37A36 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */; };
 		6B4CF4A01D291E6C00C37A36 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */; };
 		6B4CF4A21D291E7800C37A36 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */; };
@@ -97,6 +99,13 @@
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
 		};
+		6B16ABE51D35D566000FEE3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B16ABDF1D35D566000FEE3E /* RCTHotUpdate.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 91C5EFFF1C76ECA90037E727;
+			remoteInfo = RCTHotUpdate;
+		};
 		6B89A04D1D0FF9A600B8E6CB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6B89A0421D0FF9A600B8E6CB /* RCTToast.xcodeproj */;
@@ -157,6 +166,8 @@
 		58AFB0331B5837F100EB7D18 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "App/Resources/icons/icon@2x.png"; sourceTree = "<group>"; };
 		58AFB0361B5837F100EB7D18 /* icon_flat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_flat.png; path = App/Resources/icons/icon_flat.png; sourceTree = "<group>"; };
 		58AFB0371B5837F100EB7D18 /* ruby_china_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ruby_china_logo.png; path = App/Resources/icons/ruby_china_logo.png; sourceTree = "<group>"; };
+		6B16ABDF1D35D566000FEE3E /* RCTHotUpdate.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHotUpdate.xcodeproj; path = "node_modules/react-native-update/ios/RCTHotUpdate.xcodeproj"; sourceTree = "<group>"; };
+		6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "iOS/push/libXG-SDK.a"; sourceTree = "<group>"; };
 		6B4CF49D1D291E3E00C37A36 /* XGPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGPush.h; path = iOS/push/XGPush.h; sourceTree = "<group>"; };
 		6B4CF49E1D291E4400C37A36 /* XGSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGSetting.h; path = iOS/push/XGSetting.h; sourceTree = "<group>"; };
@@ -183,6 +194,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B16ABF11D35D5A6000FEE3E /* libRCTHotUpdate.a in Frameworks */,
+				6B248B8A1D3498C7000691B8 /* libbz2.1.0.tbd in Frameworks */,
 				6B4CF4A81D291E9200C37A36 /* Security.framework in Frameworks */,
 				6B4CF4A61D291E8A00C37A36 /* libz.tbd in Frameworks */,
 				6B4CF4A41D291E8100C37A36 /* CoreTelephony.framework in Frameworks */,
@@ -338,6 +351,14 @@
 			name = icons;
 			sourceTree = "<group>";
 		};
+		6B16ABE01D35D566000FEE3E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B16ABE61D35D566000FEE3E /* libRCTHotUpdate.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6B89A0431D0FF9A600B8E6CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +386,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */,
 				6B4CF4A51D291E8A00C37A36 /* libz.tbd */,
 				6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */,
 				6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */,
@@ -382,6 +404,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				6B16ABDF1D35D566000FEE3E /* RCTHotUpdate.xcodeproj */,
 				6BBF89811D27AB4B00F03F54 /* RCTPushNotification.xcodeproj */,
 			);
 			name = Libraries;
@@ -494,6 +517,10 @@
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
 				{
+					ProductGroup = 6B16ABE01D35D566000FEE3E /* Products */;
+					ProjectRef = 6B16ABDF1D35D566000FEE3E /* RCTHotUpdate.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302BC1ABCB91800DB3ED1 /* Products */;
 					ProjectRef = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
 				},
@@ -597,6 +624,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6B16ABE61D35D566000FEE3E /* libRCTHotUpdate.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTHotUpdate.a;
+			remoteRef = 6B16ABE51D35D566000FEE3E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		6B89A04E1D0FF9A600B8E6CB /* libRCTToast.a */ = {
@@ -746,6 +780,7 @@
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../../../react-native/React/**",
 					"$(SRCROOT)/node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/node_modules/react-native-update/ios/**",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -773,6 +808,7 @@
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../../../react-native/React/**",
 					"$(SRCROOT)/node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/node_modules/react-native-update/ios/**",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
