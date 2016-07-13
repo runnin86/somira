@@ -54,13 +54,14 @@ var Setting = React.createClass({
 		this.setState({load: true});
     checkUpdate(appKey).then(info => {
       if (info.expired) {
-        Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
+        Alert.alert('提示', '您的应用版本已过期,请前往应用商店下载新的版本', [
           {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
         ]);
       } else if (info.upToDate) {
         Alert.alert('提示', '您的应用版本已是最新.');
       } else {
-        Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
+				// info.name
+        Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
           {text: '是', onPress: ()=>{this.doUpdate(info)}},
           {text: '否',},
         ]);
