@@ -13,6 +13,7 @@ var {
 	TouchableOpacity,
 	Platform,
 	Alert,
+	ActivityIndicatorIOS,
 } = React;
 
 import {
@@ -35,6 +36,7 @@ var Setting = React.createClass({
     return {
       // user:null,
       falseSwitchIsOn: false,
+			load: false,
     };
   },
 	doUpdate(info) {
@@ -49,6 +51,7 @@ var Setting = React.createClass({
     });
   },
   checkUpdate() {
+		this.setState({load: true});
     checkUpdate(appKey).then(info => {
       if (info.expired) {
         Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
@@ -62,6 +65,7 @@ var Setting = React.createClass({
           {text: '否',},
         ]);
       }
+			this.setState({load: false});
     }).catch(err => {
       Alert.alert('提示', '更新失败.');
     });
@@ -116,7 +120,7 @@ var Setting = React.createClass({
 
 				<TouchableOpacity
 				  style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}
-				  onPress={this.checkUpdate}>
+				  onPress={!this.state.load?this.checkUpdate:null}>
           <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
             当前版本
           </Text>
@@ -128,6 +132,9 @@ var Setting = React.createClass({
         <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
           <Text style={{color:'#ffffff',fontSize:18}}>退出登录</Text>
         </TouchableHighlight>
+				<ActivityIndicatorIOS
+				  animating={this.state.load}
+				  style={styles.acl} color="#aa00aa" />
       </View>
     );
   },
@@ -147,6 +154,11 @@ var styles = StyleSheet.create({
 	line:{
     height:1,
     backgroundColor: '#f4f4f4',
+  },
+	acl: {
+    alignItems: 'center',
+    justifyContent: 'center',
+		marginTop:Util.size['height']/2-180
   },
 });
 
