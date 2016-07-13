@@ -1277,7 +1277,7 @@ GLOBAL.document.createElement=null;}
 
 GLOBAL.MutationObserver=undefined;})(
 this);
-__d('somira/index.ios.js',function(global, require, module, exports) {  var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _HappyPurchase=require('somira/App/Views/Purchase/HappyPurchase.js');var _HappyPurchase2=babelHelpers.interopRequireDefault(_HappyPurchase);var _Plan=require('somira/App/Views/Plan/Plan.js');var _Plan2=babelHelpers.interopRequireDefault(_Plan);var _UserCenter=require('somira/App/Views/User/UserCenter.js');var _UserCenter2=babelHelpers.interopRequireDefault(_UserCenter);var _ShoppingCart=require('somira/App/Views/Cart/ShoppingCart.js');var _ShoppingCart2=babelHelpers.interopRequireDefault(_ShoppingCart);var _test=require('somira/App/Test/test.js');var _test2=babelHelpers.interopRequireDefault(_test);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
+__d('somira/index.ios.js',function(global, require, module, exports) {  var _react=require('react/react.js');var _react2=babelHelpers.interopRequireDefault(_react);var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNativeUpdate=require('react-native-update/lib/index.js');var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _HappyPurchase=require('somira/App/Views/Purchase/HappyPurchase.js');var _HappyPurchase2=babelHelpers.interopRequireDefault(_HappyPurchase);var _Plan=require('somira/App/Views/Plan/Plan.js');var _Plan2=babelHelpers.interopRequireDefault(_Plan);var _UserCenter=require('somira/App/Views/User/UserCenter.js');var _UserCenter2=babelHelpers.interopRequireDefault(_UserCenter);var _ShoppingCart=require('somira/App/Views/Cart/ShoppingCart.js');var _ShoppingCart2=babelHelpers.interopRequireDefault(_ShoppingCart);var _test=require('somira/App/Test/test.js');var _test2=babelHelpers.interopRequireDefault(_test);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Interface=require('somira/App/Network/Interface.js');var 
 
 
 
@@ -1305,7 +1305,25 @@ __d('somira/index.ios.js',function(global, require, module, exports) {  var _rea
 
 
 
-net=babelHelpers.interopRequireWildcard(_Interface);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+net=babelHelpers.interopRequireWildcard(_Interface);var _update=require('somira/update.json');var _update2=babelHelpers.interopRequireDefault(_update);var 
+
+
+appKey=_update2.default[_reactNative.Platform.OS].appKey;
 
 _reactNative.StatusBarIOS.setHidden(false);
 
@@ -1326,6 +1344,17 @@ showModal:false,
 noticeTitle:'',
 noticeContent:'',
 appState:_reactNative.AppStateIOS.currentState};},
+
+
+componentWillMount:function(){
+if(_reactNativeUpdate.isFirstTime){
+
+
+
+
+(0,_reactNativeUpdate.markSuccess)();}else 
+if(_reactNativeUpdate.isRolledBack){}},
+
 
 
 componentDidMount:function(){var _this=this;
@@ -1386,8 +1415,10 @@ _this.processingPush(notification);}}]);}});
 
 var initNotification=_reactNative.PushNotificationIOS.popInitialNotification();
 if(initNotification){
-this.processingPush(initNotification);}},
+this.processingPush(initNotification);}
 
+
+this.checkUpdate();},
 
 componentWillUnmount:function(){
 _reactNative.PushNotificationIOS.removeEventListener('notification');
@@ -1397,25 +1428,54 @@ _RCTDeviceEventEmitter2.default.removeEventListener('showPlanSwitch');
 _RCTDeviceEventEmitter2.default.removeEventListener('loadNotice');
 _reactNative.NetInfo.removeEventListener('change',this._handleConnectionInfoChange);},
 
-isShowPlan:function(){var _this2=this;
+doUpdate:function(info){
+(0,_reactNativeUpdate.downloadUpdate)(info).then(function(hash){
+_reactNative.Alert.alert('提示','下载完毕,是否重启应用?',[
+{text:'是',onPress:function(){(0,_reactNativeUpdate.switchVersion)(hash);}},
+{text:'否'},
+{text:'下次启动时',onPress:function(){(0,_reactNativeUpdate.switchVersionLater)(hash);}}]);}).
+
+catch(function(err){
+_reactNative.Alert.alert('提示','更新失败.');});},
+
+
+checkUpdate:function(){var _this2=this;
+(0,_reactNativeUpdate.checkUpdate)(appKey).then(function(info){
+if(info.expired){
+_reactNative.Alert.alert('提示','您的应用版本已更新,请前往应用商店下载新的版本',[
+{text:'确定',onPress:function(){info.downloadUrl&&_reactNative.Linking.openURL(info.downloadUrl);}}]);}else 
+
+if(info.upToDate){}else 
+
+{
+_reactNative.Alert.alert('提示','检查到新的版本'+info.name+',是否下载?\n'+info.description,[
+{text:'是',onPress:function(){_this2.doUpdate(info);}},
+{text:'否'}]);}}).
+
+
+catch(function(err){
+_reactNative.Alert.alert('提示','更新失败.');});},
+
+
+isShowPlan:function(){var _this3=this;
 
 _reactNativeSimpleStore2.default.get('user').then(function(user){
 if(user&&user.user_type===1){
-_this2.setState({
+_this3.setState({
 showPlan:true,
-selectedTab:_this2.state.selectedTab?_this2.state.selectedTab:'plan'});}else 
+selectedTab:_this3.state.selectedTab?_this3.state.selectedTab:'plan'});}else 
 
 
 {
-_this2.setState({
+_this3.setState({
 showPlan:false,
-selectedTab:_this2.state.selectedTab?_this2.state.selectedTab:'hp'});}});},
+selectedTab:_this3.state.selectedTab?_this3.state.selectedTab:'hp'});}});},
 
 
 
 
 
-getCartCount:function(){var _this3=this;
+getCartCount:function(){var _this4=this;
 _reactNativeSimpleStore2.default.get('token').then(function(token){
 if(token){
 
@@ -1424,7 +1484,7 @@ if(token){
 _Util2.default.get(net.hpApi.redisCart,token,
 function(_ref){var code=_ref.code;var msg=_ref.msg;var info=_ref.info;
 if(info){
-_this3.setState({
+_this4.setState({
 notifyHpCartCount:info.length});}},
 
 
@@ -1438,21 +1498,21 @@ console.error(e);});
 _Util2.default.post(net.planApi.queryCart,token,{},
 function(_ref2){var code=_ref2.code;var msg=_ref2.msg;var result=_ref2.result;
 if(code===1&&result){
-_this3.setState({
+_this4.setState({
 notifyPlanCartCount:result.length});}});}else 
 
 
 
 
 {
-_this3.setState({
+_this4.setState({
 notifyHpCartCount:0,
 notifyPlanCartCount:0});}});},
 
 
 
 
-getNotice:function(){var _this4=this;
+getNotice:function(){var _this5=this;
 
 _reactNativeSimpleStore2.default.get('globalNoticeId').then(function(globalNoticeId){
 _reactNativeSimpleStore2.default.get('token').then(function(token){
@@ -1468,7 +1528,7 @@ if(!globalNoticeId||globalNoticeId&&result.notice_id!==globalNoticeId){
 
 _reactNativeSimpleStore2.default.save('globalNoticeId',result.notice_id);
 
-_this4.setState({
+_this5.setState({
 showModal:true,
 noticeTitle:result.notice_title,
 noticeContent:result.notice_content});}}},
@@ -1521,7 +1581,7 @@ if(connectionInfo==='none'){
 _Util2.default.toast('网络未连接');}},
 
 
-render:function(){var _this5=this;
+render:function(){var _this6=this;
 
 return (
 _react2.default.createElement(_reactNative.View,{style:css.container},
@@ -1533,7 +1593,7 @@ _react2.default.createElement(_reactNative.TabBarIOS.Item,{
 title:'购买方案',icon:{uri:'购买方案',scale:2,isStatic:true},
 selected:this.state.selectedTab==='plan',
 onPress:function(){
-_this5.setState({
+_this6.setState({
 selectedTab:'plan'});}},
 
 
@@ -1556,7 +1616,7 @@ _react2.default.createElement(_reactNative.TabBarIOS.Item,{
 title:'一元夺宝',icon:{uri:'乐夺宝',scale:2,isStatic:true},
 selected:this.state.selectedTab==='hp',
 onPress:function(){
-_this5.setState({
+_this6.setState({
 selectedTab:'hp'});}},
 
 
@@ -1584,7 +1644,7 @@ undefined,
 
 selected:this.state.selectedTab==='sc',
 onPress:function(){
-_this5.setState({
+_this6.setState({
 selectedTab:'sc'});
 
 setTimeout(function(){
@@ -1612,7 +1672,7 @@ title:'个人中心',icon:{uri:'个人中心',scale:2,isStatic:true},
 badge:this.state.notifyUserCount>0?this.state.notifyUserCount:undefined,
 selected:this.state.selectedTab==='uc',
 onPress:function(){
-_this5.setState({
+_this6.setState({
 selectedTab:'uc'});}},
 
 
@@ -1646,7 +1706,7 @@ _react2.default.createElement(_reactNative.Text,{style:{fontSize:14,fontWeight:'
 
 _react2.default.createElement(_reactNative.View,{style:css.line}),
 _react2.default.createElement(_reactNative.TouchableHighlight,{
-onPress:function(){_this5.setState({showModal:false});},
+onPress:function(){_this6.setState({showModal:false});},
 style:css.modalButton,
 underlayColor:'#a9d9d4'},
 _react2.default.createElement(_reactNative.Text,{style:css.buttonText},'确认')))))));}});
@@ -59819,6 +59879,108 @@ return ReactMount.getNodeFromInstance(componentOrElement);}
 
 module.exports=findDOMNode;
 });
+__d('react-native-update/lib/index.js',function(global, require, module, exports) {  Object.defineProperty(exports,"__esModule",{value:true});exports.isRolledBack=exports.isFirstTime=exports.currentVersion=exports.packageVersion=exports.downloadRootDir=undefined;exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+checkUpdate=checkUpdate;exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+downloadUpdate=downloadUpdate;exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+switchVersion=switchVersion;exports.
+
+
+
+switchVersionLater=switchVersionLater;exports.
+
+
+
+markSuccess=markSuccess;var _reactNative=require('react-native/Libraries/react-native/react-native.js');var HotUpdate=require('react-native/Libraries/react-native/react-native.js').NativeModules.HotUpdate;var host='http://update.reactnative.cn/api';var downloadRootDir=exports.downloadRootDir=HotUpdate.downloadRootDir;var packageVersion=exports.packageVersion=HotUpdate.packageVersion;var currentVersion=exports.currentVersion=HotUpdate.currentVersion;var isFirstTime=exports.isFirstTime=HotUpdate.isFirstTime;var isRolledBack=exports.isRolledBack=HotUpdate.isRolledBack;function checkUpdate(APPKEY){var resp;return regeneratorRuntime.async(function checkUpdate$(_context){while(1){switch(_context.prev=_context.next){case 0:_context.next=2;return regeneratorRuntime.awrap(fetch(host+'/checkUpdate/'+APPKEY,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({packageVersion:packageVersion,hash:currentVersion})}));case 2:resp=_context.sent;if(!(resp.status!==200)){_context.next=9;break;}_context.t0=Error;_context.next=7;return regeneratorRuntime.awrap(resp.json());case 7:_context.t1=_context.sent.message;throw new _context.t0(_context.t1);case 9:_context.next=11;return regeneratorRuntime.awrap(resp.json());case 11:return _context.abrupt('return',_context.sent);case 12:case 'end':return _context.stop();}}},null,this);}function downloadUpdate(options){return regeneratorRuntime.async(function downloadUpdate$(_context2){while(1){switch(_context2.prev=_context2.next){case 0:if(options.update){_context2.next=2;break;}return _context2.abrupt('return');case 2:if(!options.diffUrl){_context2.next=7;break;}_context2.next=5;return regeneratorRuntime.awrap(HotUpdate.downloadPatchFromPpk({updateUrl:options.diffUrl,hashName:options.hash,originHashName:currentVersion}));case 5:_context2.next=14;break;case 7:if(!options.pdiffUrl){_context2.next=12;break;}_context2.next=10;return regeneratorRuntime.awrap(HotUpdate.downloadPatchFromPackage({updateUrl:options.pdiffUrl,hashName:options.hash}));case 10:_context2.next=14;break;case 12:_context2.next=14;return regeneratorRuntime.awrap(HotUpdate.downloadUpdate({updateUrl:options.updateUrl,hashName:options.hash}));case 14:return _context2.abrupt('return',options.hash);case 15:case 'end':return _context2.stop();}}},null,this);}function switchVersion(hash){return regeneratorRuntime.async(function switchVersion$(_context3){while(1){switch(_context3.prev=_context3.next){case 0:HotUpdate.reloadUpdate({hashName:hash});case 1:case 'end':return _context3.stop();}}},null,this);}function switchVersionLater(hash){return regeneratorRuntime.async(function switchVersionLater$(_context4){while(1){switch(_context4.prev=_context4.next){case 0:HotUpdate.setNeedUpdate({hashName:hash});case 1:case 'end':return _context4.stop();}}},null,this);}function markSuccess(){
+HotUpdate.markSuccess();}
+
+
+
+_reactNative.NativeAppEventEmitter.addListener('RCTHotUpdateDownloadProgress',function(params){});
+
+
+
+_reactNative.NativeAppEventEmitter.addListener('RCTHotUpdateUnzipProgress',function(params){});
+});
 __d('react-native-simple-store/dist/index.js',function(global, require, module, exports) {  'use strict';
 
 var _reactNative=require('react-native/Libraries/react-native/react-native.js');
@@ -66826,7 +66988,7 @@ backgroundColor:'rgba(0,152,50,0)'}});
 
 module.exports=forgetPwd;
 });
-__d('somira/App/Views/User/Setting.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);
+__d('somira/App/Views/User/Setting.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _reactNativeUpdate=require('react-native-update/lib/index.js');var _update=require('somira/update.json');var _update2=babelHelpers.interopRequireDefault(_update);
 
 
 
@@ -66837,14 +66999,61 @@ StyleSheet=_reactNative2.default.StyleSheet;var
 View=_reactNative2.default.View;var 
 Text=_reactNative2.default.Text;var 
 TouchableHighlight=_reactNative2.default.TouchableHighlight;var 
-SwitchIOS=_reactNative2.default.SwitchIOS;
+SwitchIOS=_reactNative2.default.SwitchIOS;var 
+TouchableOpacity=_reactNative2.default.TouchableOpacity;var 
+Platform=_reactNative2.default.Platform;var 
+Alert=_reactNative2.default.Alert;var 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+appKey=_update2.default[Platform.OS].appKey;
 
 var Setting=_reactNative2.default.createClass({displayName:'Setting',
 getInitialState:function(){
 return {
 
 falseSwitchIsOn:false};},
+
+
+doUpdate:function(info){
+(0,_reactNativeUpdate.downloadUpdate)(info).then(function(hash){
+Alert.alert('提示','下载完毕,是否重启应用?',[
+{text:'是',onPress:function(){(0,_reactNativeUpdate.switchVersion)(hash);}},
+{text:'否'},
+{text:'下次启动时',onPress:function(){(0,_reactNativeUpdate.switchVersionLater)(hash);}}]);}).
+
+catch(function(err){
+Alert.alert('提示','更新失败.');});},
+
+
+checkUpdate:function(){var _this=this;
+(0,_reactNativeUpdate.checkUpdate)(appKey).then(function(info){
+if(info.expired){
+Alert.alert('提示','您的应用版本已更新,请前往应用商店下载新的版本',[
+{text:'确定',onPress:function(){info.downloadUrl&&Linking.openURL(info.downloadUrl);}}]);}else 
+
+if(info.upToDate){
+Alert.alert('提示','您的应用版本已是最新.');}else 
+{
+Alert.alert('提示','检查到新的版本'+info.name+',是否下载?\n'+info.description,[
+{text:'是',onPress:function(){_this.doUpdate(info);}},
+{text:'否'}]);}}).
+
+
+catch(function(err){
+Alert.alert('提示','更新失败.');});},
 
 
 logout:function(){
@@ -66860,7 +67069,7 @@ AppDelegate.unRegisterXG();
 
 this.props.navigator.pop();},
 
-render:function(){var _this=this;
+render:function(){var _this2=this;
 return (
 _reactNative2.default.createElement(View,{style:{backgroundColor:'#eef0f3',marginTop:68,height:_Util2.default.size['height']}},
 
@@ -66872,7 +67081,7 @@ _reactNative2.default.createElement(Text,{style:{flex:1,color:'#333333',fontSize
 
 
 _reactNative2.default.createElement(SwitchIOS,{
-onValueChange:function(value){return _this.setState({falseSwitchIsOn:value});},
+onValueChange:function(value){return _this2.setState({falseSwitchIsOn:value});},
 style:{marginBottom:4},
 value:this.state.falseSwitchIsOn})),
 
@@ -66884,7 +67093,7 @@ _reactNative2.default.createElement(Text,{style:{flex:1,color:'#333333',fontSize
 
 
 _reactNative2.default.createElement(SwitchIOS,{
-onValueChange:function(value){return _this.setState({falseSwitchIsOn:value});},
+onValueChange:function(value){return _this2.setState({falseSwitchIsOn:value});},
 style:{marginTop:4,marginBottom:4},
 value:true})),
 
@@ -66895,11 +67104,13 @@ _reactNative2.default.createElement(View,{style:[styles.line]})):
 null,
 
 
-_reactNative2.default.createElement(View,{style:{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}},
-_reactNative2.default.createElement(Text,{style:{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}},'版本更新1.10'),
+_reactNative2.default.createElement(TouchableOpacity,{
+style:{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16},
+onPress:this.checkUpdate},
+_reactNative2.default.createElement(Text,{style:{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}},'当前版本'),
 
 
-_reactNative2.default.createElement(Text,{style:{flex:1,color:'gray',fontSize:12,fontWeight:'100',textAlign:'right'}},'已是最新版本')),
+_reactNative2.default.createElement(Text,{style:{flex:1,color:'red',fontSize:12,fontWeight:'100',textAlign:'right'}},_reactNativeUpdate.packageVersion)),
 
 
 
@@ -66930,6 +67141,13 @@ backgroundColor:'#f4f4f4'}});
 
 
 module.exports=Setting;
+});
+__d('somira/update.json',function(global, require, module, exports) {  module.exports = {
+    "ios": {
+        "appId": 2214,
+        "appKey": "tAnCJxkHaGFM55s1glpJMYPjzJQZCxfO"
+    }
+};
 });
 __d('somira/App/Common/MenuItem.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var 
 
