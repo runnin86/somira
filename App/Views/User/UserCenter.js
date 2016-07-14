@@ -28,7 +28,8 @@ var {
   RefreshControl,
   Image,
   TouchableOpacity,
-  Platform
+  Platform,
+  AlertIOS,
 } = React;
 
 module.exports = React.createClass({
@@ -201,6 +202,9 @@ module.exports = React.createClass({
       });
     }, 5000);
   },
+  doWithDraw() {
+    console.log('执行提现');
+  },
   render() {
     return (
       <ScrollView style={css.flex}
@@ -287,7 +291,26 @@ module.exports = React.createClass({
                   this.state.user.user_type === 1
                   ?
                   <Button containerStyle={css.withdrawBtn}
-                    onPress={()=>{Util.toast('攻城狮正加班加点攻克中。。。')}}>
+                    onPress={()=>{
+                      {
+                        this.state.userate < 10
+                        ?
+                        Util.toast('盈利暂时不满足提现条件哦!')
+                        :
+                        AlertIOS.prompt(
+                          '请输入提现金额',
+                          '您可以提现的金额为:' + this.state.userate + '元',
+                          [{
+                             text: '确认',
+                             onPress: this.doWithDraw,
+                          }, {
+                             text: '取消',
+                             style: 'cancel',
+                          }],
+                          this.saveResponse
+                         )
+                      }
+                    }}>
                     <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
                   </Button>
                   :
