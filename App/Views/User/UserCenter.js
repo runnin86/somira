@@ -297,18 +297,19 @@ module.exports = React.createClass({
                         ?
                         Util.toast('盈利暂时不满足提现条件哦!')
                         :
-                        AlertIOS.prompt(
+                        AlertIOS.alert(
                           '请输入提现金额',
                           '您可以提现的金额为:' + this.state.userate + '元',
                           [{
                              text: '确认',
                              onPress: this.doWithDraw,
+                             style: 'destructive',
                           }, {
                              text: '取消',
                              style: 'cancel',
                           }],
-                          this.saveResponse
-                         )
+                          'plain-text'//secure-text
+                        )
                       }
                     }}>
                     <Text style={[css.transparentFont,{fontSize:16}]}>提现</Text>
