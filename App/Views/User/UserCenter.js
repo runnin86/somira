@@ -39,6 +39,7 @@ module.exports = React.createClass({
       // user: this.props.user,
       salesImg: '本月',
       isRefreshing: false,
+      userToken: null,
     };
   },
   componentWillReceiveProps() {
@@ -55,6 +56,13 @@ module.exports = React.createClass({
           id: mid,
         }
       });
+    });
+    Store.get('token').then((token)=>{
+      if (token) {
+        this.setState({
+          userToken: token
+        });
+      }
     });
   },
   _getUser() {
@@ -117,22 +125,20 @@ module.exports = React.createClass({
     });
   },
   _switchSales() {
-    Store.get('token').then((token)=>{
-      if (token) {
-        if (this.state.salesImg === '本月') {
-          this.setState({
-            salesImg: '上月'
-          });
-          this._getLastsales(token);
-        }
-        else {
-          this.setState({
-            salesImg: '本月'
-          });
-          this._getUsersales(token);
-        }
+    if (this.state.userToken) {
+      if (this.state.salesImg === '本月') {
+        this.setState({
+          salesImg: '上月'
+        });
+        this._getLastsales(this.state.userToken);
       }
-    });
+      else {
+        this.setState({
+          salesImg: '本月'
+        });
+        this._getUsersales(this.state.userToken);
+      }
+    }
   },
   _addNavigator: function(component, title){
     if (!this.state.user) {
@@ -202,8 +208,38 @@ module.exports = React.createClass({
       });
     }, 5000);
   },
-  doWithDraw() {
-    console.log('执行提现');
+  doWithDraw(wm) {
+    let m = parseInt(wm);
+    if (!Number.isInteger(m)) {
+      Util.toast('请输入正确的提现金额');
+      return false;
+    }
+    if ((Math.round(m * 100) / 100) < 10) {
+      Util.toast('提现金额不能少于10元');
+    }
+    else if (m > this.state.userate){
+      Util.toast('提现金额不能大于'+this.state.userate+'元');
+    }
+    else {
+      if (this.state.userToken) {
+        Util.post(net.userApi.withdraw, this.state.userToken, {
+          'wtype': '1',
+          'wmoney': m,
+        },
+        ({code, msg, result})=>{
+          if (code === 1) {
+            Util.toast('恭喜您，提现成功!\n工作人员会在3个工作日内与您联系');
+            this._getUserate(this.state.userToken);
+          }
+          else {
+            Util.toast('提现失败:' + msg);
+          }
+        });
+      }
+      else {
+        Util.toast('会话失效,请重新登录');
+      }
+    }
   },
   render() {
     return (
@@ -302,7 +338,7 @@ module.exports = React.createClass({
                           '您可以提现的金额为:' + this.state.userate + '元',
                           [{
                              text: '确认',
-                             onPress: this.doWithDraw,
+                             onPress: (text)=>{this.doWithDraw(text)},
                              style: 'destructive',
                           }, {
                              text: '取消',
