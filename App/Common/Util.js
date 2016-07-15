@@ -84,15 +84,15 @@ module.exports = {
       }
     };
     fetch(url, fetchOptions)
-      .then((response) => response.text())
-      .then((responseText) => {
-        successCallback(JSON.parse(responseText));
-      })
-      .catch(error => {
-        console.log(error);
-        this.toast('网络请求异常');
-        // failCallback(error);
-      })
+    .then((response) => response.text())
+    .then((responseText) => {
+      successCallback(JSON.parse(responseText));
+    })
+    .catch(error => {
+      console.log(error);
+      this.toast('网络请求异常');
+      // failCallback(error);
+    });
   },
   // put请求
   put: function (url, token, data, callback) {
