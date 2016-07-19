@@ -3,6 +3,7 @@
 import React from 'react';
 import Store from 'react-native-simple-store';
 import Button from 'react-native-button';
+import md5 from 'md5';
 import Util from '../../Common/Util';
 import * as net from '../../Network/Interface';
 
@@ -11,7 +12,8 @@ import {
   Text,
   View,
   ListView,
-  Image
+  Image,
+  AlertIOS,
 } from 'react-native';
 
 module.exports = React.createClass({
@@ -99,7 +101,57 @@ module.exports = React.createClass({
     );
   },
   doWithDraw() {
-    console.log('进行提现。。。');
+    if (this.state.withDrawLength === 0 && this.state.withDrawMoney === 0) {
+      Util.toast('可提现金额为0');
+      return
+    }
+    Store.get('user').then((user)=>{
+      AlertIOS.alert(
+        '密码验证',
+        '为了保障财产安全,请输入您的登录密码',
+        [{
+           text: '确认',
+           onPress: (text)=>{
+             if (md5(text) === user.user_pass) {
+               AlertIOS.alert(
+                 '确认',
+                 '提取所有佣金:' + this.state.withDrawMoney + '元?',
+                 [{
+                    text: '确认',
+                    onPress: ()=>{
+                      Store.get('token').then((token)=>{
+                        Util.post(net.userApi.withdraw, token, {
+                          wtype: '2',
+                          wmoney: this.state.withDrawMoney
+                        },
+                        ({code, msg, result})=>{
+                          if (code === 1) {
+                            Util.toast('恭喜您，提现成功!\n工作人员会在3个工作日内与您联系');
+                            this._getRecordList();
+                          }
+                          else {
+                            Util.toast('提现失败:' + msg);
+                          }
+                        });
+                      });
+                    },
+                    style: 'destructive',
+                 }, {
+                    text: '取消',
+                    style: 'cancel',
+                 }]);
+             } else {
+               Util.toast('输入密码错误');
+             }
+           },
+           style: 'destructive',
+        }, {
+           text: '取消',
+           style: 'cancel',
+        }],
+        'secure-text'
+      )
+    });
   },
   render() {
     return (
@@ -125,9 +177,6 @@ module.exports = React.createClass({
          )
        }
 
-      {
-        this.state.withDrawLength>0
-        ?
         <View style={[styles.bottomArea]}>
           <View style={styles.flex1}>
             <Text style={[styles.bottomText,
@@ -148,9 +197,6 @@ module.exports = React.createClass({
             </Button>
           </View>
         </View>
-        :
-        null
-      }
       </View>
     );
   }
