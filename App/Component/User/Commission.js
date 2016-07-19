@@ -60,9 +60,9 @@ module.exports = React.createClass({
     return (
       <View style={styles.recordRow}>
         <View style={[styles.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
-          <Text style={[{fontWeight : '100',fontSize : 12},rowData.commissionStatus===4?styles.red:styles.gray]}>
+          <Text style={[{fontWeight : '100',fontSize : 15},rowData.commissionStatus===4?styles.red:styles.gray]}>
             {rowData.from_user_phone}
-            <Text style={{fontWeight : '100',fontSize : 10}}>
+            <Text style={{fontWeight : '100',fontSize : 12}}>
               ({rowData.commissionStatus===4
                 ?
                 '可提现'
@@ -85,7 +85,7 @@ module.exports = React.createClass({
               })
             </Text>
           </Text>
-          <Text style={[{fontWeight : '100',fontSize : 10},rowData.commissionStatus===4?styles.red:styles.gray]}>
+          <Text style={[{fontWeight : '100',fontSize : 12},rowData.commissionStatus===4?styles.red:styles.gray]}>
             用户所属:{rowData.oneLevelPhone === ''?'':'上级' + rowData.oneLevelPhone}
             {rowData.oneLevelPhone === ''?'直属上级':''}
           </Text>
@@ -181,11 +181,11 @@ const styles = StyleSheet.create({
   },
   recordCellFixed: {
     flex: 1,
-    height: 46,
+    height: 60,
     justifyContent : 'center'
   },
   recordText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '500',
     textAlign: 'center',
     margin: 10
