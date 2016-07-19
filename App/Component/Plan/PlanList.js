@@ -92,6 +92,8 @@ module.exports = React.createClass({
       // leftButtonTitle: '返回',
       navigationBarHidden: false,
       // onLeftButtonPress: () => this.props.navigator.pop(),
+      rightButtonColor: '#f4c600',
+      rightButtonIcon: {uri: '赏'},
       passProps: {
         planId: plan.plan_id
       }
