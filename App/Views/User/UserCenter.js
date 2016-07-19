@@ -39,7 +39,6 @@ module.exports = React.createClass({
       // user: this.props.user,
       salesImg: '本月',
       isRefreshing: false,
-      userToken: null,
     };
   },
   componentWillReceiveProps() {
@@ -56,13 +55,6 @@ module.exports = React.createClass({
           id: mid,
         }
       });
-    });
-    Store.get('token').then((token)=>{
-      if (token) {
-        this.setState({
-          userToken: token
-        });
-      }
     });
   },
   _getUser() {
@@ -125,20 +117,22 @@ module.exports = React.createClass({
     });
   },
   _switchSales() {
-    if (this.state.userToken) {
-      if (this.state.salesImg === '本月') {
-        this.setState({
-          salesImg: '上月'
-        });
-        this._getLastsales(this.state.userToken);
+    Store.get('token').then((token)=>{
+      if (token) {
+        if (this.state.salesImg === '本月') {
+          this.setState({
+            salesImg: '上月'
+          });
+          this._getLastsales(token);
+        }
+        else {
+          this.setState({
+            salesImg: '本月'
+          });
+          this._getUsersales(token);
+        }
       }
-      else {
-        this.setState({
-          salesImg: '本月'
-        });
-        this._getUsersales(this.state.userToken);
-      }
-    }
+    });
   },
   _addNavigator: function(component, title){
     if (!this.state.user) {
@@ -221,24 +215,26 @@ module.exports = React.createClass({
       Util.toast('提现金额不能大于'+this.state.userate+'元');
     }
     else {
-      if (this.state.userToken) {
-        Util.post(net.userApi.withdraw, this.state.userToken, {
-          'wtype': '1',
-          'wmoney': m,
-        },
-        ({code, msg, result})=>{
-          if (code === 1) {
-            Util.toast('恭喜您，提现成功!\n工作人员会在3个工作日内与您联系');
-            this._getUserate(this.state.userToken);
-          }
-          else {
-            Util.toast('提现失败:' + msg);
-          }
-        });
-      }
-      else {
-        Util.toast('会话失效,请重新登录');
-      }
+      Store.get('token').then((token)=>{
+        if (token) {
+          Util.post(net.userApi.withdraw, token, {
+            'wtype': '1',
+            'wmoney': m,
+          },
+          ({code, msg, result})=>{
+            if (code === 1) {
+              Util.toast('恭喜您，提现成功!\n工作人员会在3个工作日内与您联系');
+              this._getUserate(token);
+            }
+            else {
+              Util.toast('提现失败:' + msg);
+            }
+          });
+        }
+        else {
+          Util.toast('会话失效,请重新登录');
+        }
+      });
     }
   },
   render() {
