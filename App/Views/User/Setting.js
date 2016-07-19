@@ -119,7 +119,7 @@ var Setting = React.createClass({
 					null
 				}
 
-				<TouchableOpacity
+				<View
 				  style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}
 				  onPress={!this.state.load?this.checkUpdate:null}>
           <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
@@ -128,7 +128,7 @@ var Setting = React.createClass({
           <Text style={{flex:1,color:'red',fontSize:12,fontWeight:'100',textAlign:'right',}}>
             {packageVersion}
           </Text>
-				</TouchableOpacity>
+				</View>
 
         <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
           <Text style={{color:'#ffffff',fontSize:18}}>退出登录</Text>
