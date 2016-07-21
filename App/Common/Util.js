@@ -126,7 +126,7 @@ module.exports = {
     alert(description);
   },
   /*loading效果*/
-  loading: <ActivityIndicatorIOS color="#3E00FF"
+  loading: <ActivityIndicatorIOS color="#ea8010"
     style={{
       flex:1,
       justifyContent:'center',
