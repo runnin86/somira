@@ -20,6 +20,7 @@ import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
 import ActionSheet from 'react-native-action-sheet';
 import Button from 'react-native-button';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as net from './../../Network/Interface';
 
 module.exports = React.createClass({
@@ -29,6 +30,8 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       showCartBtn: false,
+      showReward: false,
+      rewardMoney: 8.8,
       attachInfo: '',
       certList: '',
       expertHistory: '',
@@ -48,6 +51,17 @@ module.exports = React.createClass({
     this.fetchServiceTime();
     //拉取参与记录
     // this.fetchParticipation(this.props.plan.id, this.props.plan.number, 0);
+    this.listener = RCTDeviceEventEmitter.addListener('rewardPlan', (pid)=>{
+      if (!this.state.showReward) {
+        this.setState({
+          showCartBtn: false,
+          showReward: true,
+        });
+      }
+    });
+  },
+  componentWillUnmount: function() {
+    this.listener.remove();
   },
   fetchPlan(pid) {
     // 获取方案的明细,需要token数据
@@ -196,7 +210,7 @@ module.exports = React.createClass({
             onSubmit={this.onPay}
             onCancel={this.onCancel}
             cancelText={'确认'}
-            buttonStyle={{marginTop:6, borderRadius:6,height:Util.size['height']*0.068,backgroundColor:'#f6383a'}}
+            buttonStyle={{marginTop:6, borderRadius:6,height:Util.size['height']*0.078,backgroundColor:'#f6383a'}}
             textStyle={{color:'#FFFFFF'}}>
             <ActionSheet.Button
               buttonStyle={{borderBottomWidth:1,borderColor: '#D3D3D3',}}>
@@ -291,8 +305,123 @@ module.exports = React.createClass({
               </Text>
             </ActionSheet.Button>
         </ActionSheet>
+        <ActionSheet
+            visible={this.state.showReward}
+            onSubmit={this.onReward}
+            onCancel={this.onCancel}
+            cancelText={'打赏'}
+            buttonStyle={{
+              marginTop:6,
+              borderRadius:6,
+              height:Util.size['height']*0.068,
+              backgroundColor:'#f5d996'
+            }}
+            textStyle={{color:'#f6383a'}}>
+            <Image style={[css.rewardBackImg]} source={{uri: '打赏背景'}}>
+              <View style={{top:36}}>
+                <View style={css.rewardRow}>
+                  <Image style={[css.rewardSelectImg,{marginLeft:6}]}
+                    source={{uri: this.state.rewardMoney===8.8?'打赏固定数额选中':''}}>
+                    <Text onPress={()=>this.setState({rewardMoney:8.8})}
+                      style={{
+                        color: this.state.rewardMoney===8.8?'#f6383a':'rgb(245, 217, 150)',
+                        fontSize:14,
+                        textAlign:'center'
+                      }}>
+                      8.8
+                    </Text>
+                  </Image>
+                  <Image style={css.rewardSelectImg}
+                    source={{uri: this.state.rewardMoney===18.8?'打赏固定数额选中':''}}>
+                    <Text onPress={()=>this.setState({rewardMoney:18.8})}
+                      style={{
+                        color: this.state.rewardMoney===18.8?'#f6383a':'rgb(245, 217, 150)',
+                        fontSize:14,
+                        textAlign:'center'
+                      }}>
+                      18.8
+                    </Text>
+                  </Image>
+                  <Image style={[css.rewardSelectImg,{marginRight:6}]}
+                    source={{uri: this.state.rewardMoney===88.8?'打赏固定数额选中':''}}>
+                    <Text onPress={()=>this.setState({rewardMoney:88.8})}
+                      style={{
+                        color: this.state.rewardMoney===88.8?'#f6383a':'rgb(245, 217, 150)',
+                        fontSize:14,
+                        textAlign:'center'
+                      }}>
+                      88.8
+                    </Text>
+                  </Image>
+                </View>
+                <View style={css.rewardRow}>
+                  <Image
+                    onTouchStart={()=>{
+                      if (this.state.rewardMoney > 8.8) {
+                        this.setState({rewardMoney:this.state.rewardMoney-1})
+                      }
+                      else {
+                        this.setState({rewardMoney:8.8})
+                      }
+                      this.timer = setTimeout(()=>{
+                        this.interval = setInterval(()=>{
+                          if (this.state.rewardMoney > 8.8) {
+                            this.setState({rewardMoney:this.state.rewardMoney-1})
+                          }
+                          else {
+                            this.setState({rewardMoney:8.8})
+                          }
+                        },500);
+                      },1000);
+                    }}
+                    onTouchEnd={()=>{
+                      this.interval && clearInterval(this.interval);
+                      this.timer && clearTimeout(this.timer);
+                    }}
+                    style={[css.rewardBtn,{marginLeft:Util.size['width']*0.05}]}
+                    source={require("image!ic_goods_reduce")}/>
+                  <TextInput
+                     style={css.textInput}
+                     autoCapitalize = 'none'
+                     editable={false}
+                     keyboardType='numeric'
+                     selectionColor={'red'}
+                     ref='textInput'
+                     maxLength={4}
+                     onChangeText={(rewardMoney) => this.setState({rewardMoney})}
+                     onFocus={() => {this.refs.textInput.focus()}}
+                     defaultValue={this.state.rewardMoney+''}
+                     value={this.state.rewardMoney+''}
+                   />
+                  <Image
+                    onTouchStart={()=>{
+                      this.setState({rewardMoney:this.state.rewardMoney+1})
+                      this.timer = setTimeout(()=>{
+                        this.interval = setInterval(()=>{
+                          this.setState({rewardMoney:this.state.rewardMoney+1})
+                        },500);
+                      },1000);
+                    }}
+                    onTouchEnd={()=>{
+                      this.interval && clearInterval(this.interval);
+                      this.timer && clearTimeout(this.timer);
+                    }}
+                    style={[css.rewardBtn,{marginRight:Util.size['width']*0.05}]}
+                    source={require("image!ic_goods_add")}/>
+                </View>
+                <View style={{alignItems:'center',marginTop:20}}>
+                  <Text style={{color: '#f5d996',fontSize:14,fontWeight:'500'}}>
+                    赏{' ' + this.state.rewardMoney + ' '}元
+                  </Text>
+                </View>
+              </View>
+            </Image>
+        </ActionSheet>
       </View>
     );
+  },
+  onReward() {
+    console.log(this.props.planId);
   },
   onPay() {
     let plan = this.state.plan;
@@ -334,7 +463,10 @@ module.exports = React.createClass({
     });
   },
   onCancel() {
-    this.setState({showCartBtn:false});
+    this.setState({
+      showCartBtn:false,
+      showReward: false
+    });
   },
   onOpen() {
     if (this.state.disabledPayBtn) {
@@ -512,7 +644,7 @@ var css = StyleSheet.create({
     borderColor: '#FFFFFF',
   },
   priceRow: {
-    height:Util.size['height']*0.068,
+    height:Util.size['height']*0.078,
     flexDirection : 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -538,5 +670,24 @@ var css = StyleSheet.create({
     height:Util.size['width']*0.088,
     width:Util.size['width']*0.088,
     tintColor: '#000000',
+  },
+  rewardBackImg: {
+    height: 180,
+    resizeMode: Image.resizeMode.stretch,
+  },
+  rewardRow: {
+    height:40,
+    flexDirection : 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  rewardBtn: {
+    height:Util.size['width']*0.088,
+    width:Util.size['width']*0.088,
+    tintColor: '#f5d996',
+  },
+  rewardSelectImg: {
+    width: 70,
+    resizeMode: Image.resizeMode.stretch,
   },
 });

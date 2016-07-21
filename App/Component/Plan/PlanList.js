@@ -94,6 +94,10 @@ module.exports = React.createClass({
       // onLeftButtonPress: () => this.props.navigator.pop(),
       rightButtonColor: '#f4c600',
       rightButtonIcon: {uri: '赏'},
+      onRightButtonPress: () => {
+        // 打赏
+        RCTDeviceEventEmitter.emit('rewardPlan', plan.plan_id);
+      },
       passProps: {
         planId: plan.plan_id
       }
