@@ -13,7 +13,8 @@ var {
   View,
   ListView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  AlertIOS
 } = React;
 
 import * as Animatable from 'react-native-animatable';
@@ -421,7 +422,30 @@ module.exports = React.createClass({
     );
   },
   onReward() {
-    console.log(this.props.planId);
+    console.log(this.state.plan);
+    AlertIOS.alert(
+      '提示',
+      '您要给[' + this.state.plan.expert_name + ']打赏 ￥' + this.state.rewardMoney,
+      [{
+         text: '赏',
+         onPress: ()=>{
+           Store.get('token').then((token)=>{
+             Util.post(net.planApi.doreward, token, {
+               'pid': this.state.plan.plan_id,
+               'amount': this.state.rewardMoney
+             },
+             ({code, msg})=>{
+               this.setState({showReward: false});
+               // 结果信息
+               Util.toast(msg);
+             });
+           });
+         },
+         style: 'destructive',
+      }, {
+         text: '取消',
+         style: 'cancel',
+      }]);
   },
   onPay() {
     let plan = this.state.plan;
