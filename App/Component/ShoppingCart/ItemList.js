@@ -17,6 +17,9 @@ var {
   View,
   Platform,
   TouchableOpacity,
+  LinkingIOS,
+  AlertIOS,
+  AppStateIOS,
 } = React;
 
 module.exports = React.createClass({
@@ -35,6 +38,15 @@ module.exports = React.createClass({
     this.fetchData(this.props.cateId);
     RCTDeviceEventEmitter.addListener('refreshCart', ()=>{
       this.fetchData(this.props.cateId);
+    });
+    // 运行状态变更监听
+    AppStateIOS.addEventListener('change', (appState)=>{
+      if (appState === 'active') {
+        // 刷新购物车
+        this.fetchData(this.state.cateId);
+        // 设置购物车图标
+        RCTDeviceEventEmitter.emit('loadCartCount');
+      }
     });
   },
   //render 之前调用
@@ -151,36 +163,74 @@ module.exports = React.createClass({
         else if(this.state.cateId === 1) {
           // 刷新购物车
           this.fetchData(1);
-          // 购物车商品数组
-          let spcarlist = [];
-          this.state.dataSource._dataBlob.s1.map((h, key)=>{
-            spcarlist.push({
-              'name': h.name,
-              'number': h.number,
-              'payCount': h.amount,
-              'projectId': h.id,
-              'recharge_money': h.amount
-            });
-          });
-          // 组装请求消息体
-          let postBody = {
-            'spcarInfos': {
-              'totalmoney': this.state.totalPrice,
-              'spcarlist': spcarlist
-            }
-          }
-          // 发起支付请求
-          Util.post(net.hpApi.cartPay, token, postBody,
-          ({code, msg})=>{
-            if (code === 1) {
-              Util.toast('购买成功!');
-              // 重新拉取数据
-              this.fetchData(1);
-              // 设置购物车图标
-              RCTDeviceEventEmitter.emit('loadCartCount');
-            }
-            else {
-              Util.toast(msg);
+          Store.get('user').then((userdata)=>{
+            if (userdata) {
+              if (userdata.user_type === 0) {
+                AlertIOS.alert(
+                  '提示',
+                  '前往支付平台完成结算？',
+                  [{
+                     text: '是',
+                     onPress: ()=>{
+                       console.log(net.h5 + '/checkout/' + token + '/' + userdata.user_pass);
+                       LinkingIOS.openURL(net.h5 + '/checkout/' + token + '/' + userdata.user_pass);
+                      //  AlertIOS.alert(
+                      //    '提示',
+                      //    '支付是否完成？',
+                      //    [{
+                      //       text: '是',
+                      //       onPress: ()=>{
+                      //         console.log('重新拉取参与记录');
+                      //       },
+                      //       style: 'destructive',
+                      //    }, {
+                      //       text: '否',
+                      //       onPress: ()=>{
+                      //         this.setState({showCartBtn:true});
+                      //       },
+                      //       style: 'cancel',
+                      //    }]);
+                     },
+                     style: 'destructive',
+                  }, {
+                     text: '否',
+                     style: 'cancel',
+                  }]);
+              }
+              else {
+                // 购物车商品数组
+                let spcarlist = [];
+                this.state.dataSource._dataBlob.s1.map((h, key)=>{
+                  spcarlist.push({
+                    'name': h.name,
+                    'number': h.number,
+                    'payCount': h.amount,
+                    'projectId': h.id,
+                    'recharge_money': h.amount
+                  });
+                });
+                // 组装请求消息体
+                let postBody = {
+                  'spcarInfos': {
+                    'totalmoney': this.state.totalPrice,
+                    'spcarlist': spcarlist
+                  }
+                }
+                // 发起支付请求
+                Util.post(net.hpApi.cartPay, token, postBody,
+                ({code, msg})=>{
+                  if (code === 1) {
+                    Util.toast('购买成功!');
+                    // 重新拉取数据
+                    this.fetchData(1);
+                    // 设置购物车图标
+                    RCTDeviceEventEmitter.emit('loadCartCount');
+                  }
+                  else {
+                    Util.toast(msg);
+                  }
+                });
+              }
             }
           });
         }

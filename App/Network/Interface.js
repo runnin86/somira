@@ -2,6 +2,7 @@
 const URL_COMMON = 'http://123.57.217.199:9587/api/v1/sml/'
 // 15939306231
 // C.E. Sunshine Internet technology (Beijing) Co., Ltd.
+export let h5 = 'http://localhost:8080';
 // 方案接口地址
 export let planApi = {
   // banner地址

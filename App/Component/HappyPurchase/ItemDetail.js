@@ -3,6 +3,7 @@
 import React from 'react-native';
 import Swiper from 'react-native-swiper';
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 import Progress from '../../Common/Progress';
 import Util from '../../Common/Util';
@@ -16,7 +17,7 @@ var {
   View,
   ListView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } = React;
 
 import * as Animatable from 'react-native-animatable';
@@ -308,26 +309,51 @@ module.exports = React.createClass({
       return
     }
 
-    // 支付请求
     Store.get('token').then((token)=>{
       if (token) {
-        // 购物车商品数组
-        let postBody = {
-          'recharge_money': this.state.payPrice,
-          'projectId': item.id,
-          'payCount': this.state.payPrice,
-          'phone': '',
-          'userId': '',
-          'number': item.number
-        };
-        Util.post(net.hpApi.ptpay, token, postBody,
-        ({code, msg})=>{
-          if (code === 1) {
-            Util.toast(msg);
-            this.setState({showCartBtn:false});
-          }
-          else {
-            Util.toast(msg);
+        Store.get('user').then((userdata)=>{
+          if (userdata) {
+            if (userdata.user_type === 0) {
+              // 加入购物车，由购物车内统一跳转至H5支付
+              Util.post(net.hpApi.redisCart, token, {
+                'projectId': item.id,
+                'number': item.number,
+                'amount': this.state.payPrice
+              },
+              ({code, msg})=>{
+                if (code === 1) {
+                  Util.toast('已加入购物车');
+                  // 设置购物车图标
+                  RCTDeviceEventEmitter.emit('loadCartCount');
+                  this.setState({showCartBtn:false});
+                }
+                else {
+                  Util.toast(msg);
+                  console.error('加入购物车失败:' + msg);
+                }
+              });
+            }
+            else {
+              // 直接支付
+              let postBody = {
+                'recharge_money': this.state.payPrice,
+                'projectId': item.id,
+                'payCount': this.state.payPrice,
+                'phone': '',
+                'userId': '',
+                'number': item.number
+              };
+              Util.post(net.hpApi.ptpay, token, postBody,
+              ({code, msg})=>{
+                if (code === 1) {
+                  Util.toast(msg);
+                  this.setState({showCartBtn:false});
+                }
+                else {
+                  Util.toast(msg);
+                }
+              });
+            }
           }
         });
       }
