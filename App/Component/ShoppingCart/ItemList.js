@@ -172,24 +172,7 @@ module.exports = React.createClass({
                   [{
                      text: '是',
                      onPress: ()=>{
-                       console.log(net.h5 + '/checkout/' + token + '/' + userdata.user_pass);
                        LinkingIOS.openURL(net.h5 + '/checkout/' + token + '/' + userdata.user_pass);
-                      //  AlertIOS.alert(
-                      //    '提示',
-                      //    '支付是否完成？',
-                      //    [{
-                      //       text: '是',
-                      //       onPress: ()=>{
-                      //         console.log('重新拉取参与记录');
-                      //       },
-                      //       style: 'destructive',
-                      //    }, {
-                      //       text: '否',
-                      //       onPress: ()=>{
-                      //         this.setState({showCartBtn:true});
-                      //       },
-                      //       style: 'cancel',
-                      //    }]);
                      },
                      style: 'destructive',
                   }, {
