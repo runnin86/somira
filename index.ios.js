@@ -176,7 +176,8 @@ var somira = React.createClass({
         ]);
       }
     }).catch(err => {
-      Alert.alert('提示', '更新失败.');
+      console.error('更新失败.' + err);
+      // Alert.alert('提示', '更新失败.');
     });
   },
   isShowPlan() {
