@@ -120,7 +120,7 @@ var somira = React.createClass({
       if (this.state.appState === 'background') {
         this.processingPush(notification);
       }
-      else if (this.state.appState === 'active') {
+      else if (this.state.appState === 'active' && this.state.showPlan) {
         AlertIOS.alert(
           '提示',
           notification._alert,
@@ -151,11 +151,17 @@ var somira = React.createClass({
   },
   doUpdate(info) {
     downloadUpdate(info).then(hash => {
-      Alert.alert('提示', '下载完毕,是否重启应用?', [
-        {text: '是', onPress: ()=>{switchVersion(hash);}},
-        {text: '否',},
-        {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
-      ]);
+      if (this.state.showPlan) {
+        Alert.alert('提示', '下载完毕,是否重启应用?', [
+          {text: '是', onPress: ()=>{switchVersion(hash);}},
+          {text: '否',},
+          {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+        ]);
+      }
+      else {
+        // 不提示则下次启动时生效
+        switchVersionLater(hash);
+      }
     }).catch(err => {
       Alert.alert('提示', '更新失败.');
     });
@@ -170,10 +176,16 @@ var somira = React.createClass({
         // Alert.alert('提示', '您的应用版本已是最新.');
       } else {
         // info.name
-        Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
-          {text: '是', onPress: ()=>{this.doUpdate(info)}},
-          {text: '否',},
-        ]);
+        if (this.state.showPlan) {
+          Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
+            {text: '是', onPress: ()=>{this.doUpdate(info)}},
+            {text: '否',},
+          ]);
+        }
+        else {
+          // 直接更新
+          this.doUpdate(info);
+        }
       }
     }).catch(err => {
       console.error('更新失败.' + err);
@@ -239,7 +251,7 @@ var somira = React.createClass({
     // 获取存储的消息ID
     Store.get('globalNoticeId').then((globalNoticeId)=>{
       Store.get('token').then((token)=>{
-        if (token) {
+        if (token && this.state.showPlan) {
           /*
            * 获取系统公告
            */
