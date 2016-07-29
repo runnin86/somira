@@ -51,24 +51,30 @@ var Setting = React.createClass({
     });
   },
   checkUpdate() {
-		this.setState({load: true});
-    checkUpdate(appKey).then(info => {
-      if (info.expired) {
-        Alert.alert('提示', '您的应用版本已过期,请前往应用商店下载新的版本', [
-          {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
-        ]);
-      } else if (info.upToDate) {
-        Alert.alert('提示', '您的应用版本已是最新.');
-      } else {
-				// info.name
-        Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
-          {text: '是', onPress: ()=>{this.doUpdate(info)}},
-          {text: '否',},
-        ]);
+		// 根据用户类型判断是否展示方案
+    Store.get('user').then((user)=>{
+      if (user && user.user_type === 1) {
+				// 方案可看用户才可去检查更新
+				this.setState({load: true});
+		    checkUpdate(appKey).then(info => {
+		      if (info.expired) {
+		        Alert.alert('提示', '您的应用版本已过期,请前往应用商店下载新的版本', [
+		          {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+		        ]);
+		      } else if (info.upToDate) {
+		        Alert.alert('提示', '您的应用版本已是最新.');
+		      } else {
+						// info.name
+		        Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
+		          {text: '是', onPress: ()=>{this.doUpdate(info)}},
+		          {text: '否',},
+		        ]);
+		      }
+					this.setState({load: false});
+		    }).catch(err => {
+		      Alert.alert('提示', '更新失败.');
+		    });
       }
-			this.setState({load: false});
-    }).catch(err => {
-      Alert.alert('提示', '更新失败.');
     });
   },
 	logout:function(){
@@ -119,7 +125,7 @@ var Setting = React.createClass({
 					null
 				}
 
-				<View
+				<TouchableOpacity
 				  style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}
 				  onPress={!this.state.load?this.checkUpdate:null}>
           <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
@@ -128,7 +134,7 @@ var Setting = React.createClass({
           <Text style={{flex:1,color:'red',fontSize:12,fontWeight:'100',textAlign:'right',}}>
             {packageVersion}
           </Text>
-				</View>
+				</TouchableOpacity>
 
         <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
           <Text style={{color:'#ffffff',fontSize:18}}>退出登录</Text>
