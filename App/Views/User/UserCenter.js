@@ -246,7 +246,12 @@ module.exports = React.createClass({
       [
         {text: '取消', onPress: null},
         {text: '立即充值', onPress: ()=>{
-          PayUtil.addEvent('weixinPay', this.state.user, 1000);
+          if (this.state.user.user_type === 1) {
+            PayUtil.addEvent('wx', this.state.user.user_phone, 1000, '2');
+          }
+          else {
+             Util.toast('账户异常,请联系管理员。');
+          }
         }},
       ]
     );

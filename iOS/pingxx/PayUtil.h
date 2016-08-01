@@ -15,9 +15,6 @@
   UITextField *mTextField;
 }
 
-@property(nonatomic, retain)NSString *channel;
-@property(nonatomic, retain)NSString *payType;
-
 - (void)showAlertWait;
 - (void)showAlertMessage:(NSString*)msg;
 - (void)hideAlert;

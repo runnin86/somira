@@ -46,80 +46,70 @@ URL Schemes 需要在 Xcode 的 Info 标签页的 URL Types 中添加，\
 // 实现RCTBridgeModule协议，需要包含RCT_EXPORT_MODULE()宏
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(addEvent:(NSString *)weixinPay jsUser:(NSDictionary *)jsUser money:(int)money)
+RCT_EXPORT_METHOD(addEvent:(NSString *)channel phone:(NSString *)phone money:(int)money payType:(NSString *)payType)
 {
-  if (jsUser != NULL && money!= 0) {
-    NSNumber *userType = [jsUser valueForKey:@"user_type"];
-    NSString *userPhone = [jsUser objectForKey:@"user_phone"];
-    
-    if ([userType isEqual: @1]) {
-      NSLog(@"充值用户: %@,充值金额: %i", userPhone, money);
-      
-      self.channel = @"wx";
-      self.payType = @"2";
-      long long amount = money;
-      if (amount == 0) {
-        return;
-      }
-      NSString *amountStr = [NSString stringWithFormat:@"%lld", amount];
-      NSURL* url = [NSURL URLWithString:kUrl];
-      NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-      
-      NSDictionary* dict = @{
-                              @"channel" : self.channel,
-                              @"amount"  : amountStr,
-                              @"uPhone" : userPhone,
-                              @"payType" : self.payType
-                            };
-      NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-      NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-      [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
-      [postRequest setHTTPMethod:@"POST"];
-      [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-      
-      PayUtil * __weak weakSelf = self;
-      NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-      [self showAlertWait];
-      [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-          NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-          [weakSelf hideAlert];
-          if (httpResponse.statusCode != 200) {
-            NSLog(@"statusCode=%ld error = %@", (long)httpResponse.statusCode, connectionError);
-            [weakSelf showAlertMessage:kErrorNet];
-            return;
-          }
-          if (connectionError != nil) {
-            NSLog(@"error = %@", connectionError);
-            [weakSelf showAlertMessage:kErrorNet];
-            return;
-          }
-          NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-          // 提取服务器返回的charge对象
-          NSDictionary *chargeDic = [self dictionaryWithJsonString:charge];
-          NSString *finalCharge = [chargeDic objectForKey:@"chargeObj"];
-          
-          NSLog(@"charge= %@", finalCharge);
-          [Pingpp createPayment:finalCharge
-                 viewController:weakSelf
-                   appURLScheme:kUrlScheme
-                 withCompletion:^(NSString *result, PingppError *error) {
-                   NSLog(@"completion block: %@", result);
-                   if (error == nil) {
-                     NSLog(@"PingppError is nil");
-                   } else {
-                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-                   }
-                   [weakSelf showAlertMessage:result];
-                 }];
-        });
-      }];
+  NSLog(@"充值渠道：%@,充值用户: %@,充值金额: %i,充值方式: %@", channel, phone, money, payType);
+  if (phone != NULL && money!= 0) {
+    long long amount = money;
+    if (amount == 0) {
+      return;
     }
+    NSString *amountStr = [NSString stringWithFormat:@"%lld", amount];
+    NSURL* url = [NSURL URLWithString:kUrl];
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
+    NSDictionary* dict = @{
+                           @"channel" : channel,
+                           @"amount"  : amountStr,
+                           @"uPhone" : phone,
+                           @"payType" : payType
+                          };
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    PayUtil * __weak weakSelf = self;
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [self showAlertWait];
+    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        [weakSelf hideAlert];
+        if (httpResponse.statusCode != 200) {
+          NSLog(@"statusCode=%ld error = %@", (long)httpResponse.statusCode, connectionError);
+          [weakSelf showAlertMessage:kErrorNet];
+          return;
+        }
+        if (connectionError != nil) {
+          NSLog(@"error = %@", connectionError);
+          [weakSelf showAlertMessage:kErrorNet];
+          return;
+        }
+        NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        // 提取服务器返回的charge对象
+        NSDictionary *chargeDic = [self dictionaryWithJsonString:charge];
+        NSString *finalCharge = [chargeDic objectForKey:@"chargeObj"];
+        
+        NSLog(@"charge= %@", finalCharge);
+        [Pingpp createPayment:finalCharge
+               viewController:weakSelf
+                 appURLScheme:kUrlScheme
+               withCompletion:^(NSString *result, PingppError *error) {
+                 NSLog(@"completion block: %@", result);
+                 if (error == nil) {
+                   NSLog(@"PingppError is nil");
+                 } else {
+                   NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                 }
+                 [weakSelf showAlertMessage:result];
+               }];
+      });
+    }];
   }
 }
-
-@synthesize channel;
 
 - (void)showAlertWait
 {
