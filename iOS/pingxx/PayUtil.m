@@ -13,9 +13,16 @@
 // 实现RCTBridgeModule协议，需要包含RCT_EXPORT_MODULE()宏
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(weixinPay)
+RCT_EXPORT_METHOD(addEvent:(NSString *)weixinPay jsUser:(NSDictionary *)jsUser money:(int)money)
 {
-  NSLog(@"再次注册的手机号码为: %@", @"进入方法");
+  if (jsUser != NULL && money!= 0) {
+    NSNumber *userType = [jsUser valueForKey:@"user_type"];
+    NSString *userPhone = [jsUser objectForKey:@"user_phone"];
+    
+    if ([userType isEqual: @1]) {
+      NSLog(@"充值用户: %@,充值金额: %i", userPhone, money);
+    }
+  }
 }
 
 @end

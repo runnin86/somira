@@ -240,7 +240,7 @@ module.exports = React.createClass({
   },
   rechargeFn() {
     Util.toast('充值功能暂未开放,敬请期待!');
-    console.log(PayUtil);
+    PayUtil.addEvent('weixinPay', this.state.user, 1000);
   },
   render() {
     return (
