@@ -239,8 +239,17 @@ module.exports = React.createClass({
     }
   },
   rechargeFn() {
-    Util.toast('充值功能暂未开放,敬请期待!');
-    PayUtil.addEvent('weixinPay', this.state.user, 1000);
+    // Util.toast('充值功能暂未开放,敬请期待!');
+    AlertIOS.alert(
+      '充值提示',
+      "(您要对账号"+this.state.user.user_phone+"进行充值)\n￥1000.00",
+      [
+        {text: '取消', onPress: null},
+        {text: '立即充值', onPress: ()=>{
+          PayUtil.addEvent('weixinPay', this.state.user, 1000);
+        }},
+      ]
+    );
   },
   render() {
     return (
