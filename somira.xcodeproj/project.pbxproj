@@ -36,7 +36,6 @@
 		6B313F1D1D4F2484007A86C5 /* libpingppcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313F091D4F2484007A86C5 /* libpingppcore.a */; };
 		6B313F1E1D4F2484007A86C5 /* libpingpp+one.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313F0B1D4F2484007A86C5 /* libpingpp+one.a */; };
 		6B313F1F1D4F2484007A86C5 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6B313F0D1D4F2484007A86C5 /* Pingpp.bundle */; };
-		6B313F201D4F2484007A86C5 /* PayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B313F101D4F2484007A86C5 /* PayUtil.m */; };
 		6B313F211D4F2484007A86C5 /* PingPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B313F121D4F2484007A86C5 /* PingPay.m */; };
 		6B313F231D4F2528007A86C5 /* libpingpp+network.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313F221D4F2528007A86C5 /* libpingpp+network.a */; };
 		6B313F251D4F2538007A86C5 /* libpingppcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313F241D4F2538007A86C5 /* libpingppcore.a */; };
@@ -206,8 +205,6 @@
 		6B313F0C1D4F2484007A86C5 /* Pingpp+One.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pingpp+One.h"; sourceTree = "<group>"; };
 		6B313F0D1D4F2484007A86C5 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
 		6B313F0E1D4F2484007A86C5 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
-		6B313F0F1D4F2484007A86C5 /* PayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayUtil.h; sourceTree = "<group>"; };
-		6B313F101D4F2484007A86C5 /* PayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayUtil.m; sourceTree = "<group>"; };
 		6B313F111D4F2484007A86C5 /* PingPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingPay.h; sourceTree = "<group>"; };
 		6B313F121D4F2484007A86C5 /* PingPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingPay.m; sourceTree = "<group>"; };
 		6B313F221D4F2528007A86C5 /* libpingpp+network.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpingpp+network.a"; path = "iOS/pingxx/lib/Dependencies/Network/libpingpp+network.a"; sourceTree = "<group>"; };
@@ -438,8 +435,6 @@
 			isa = PBXGroup;
 			children = (
 				6B313EF51D4F2484007A86C5 /* lib */,
-				6B313F0F1D4F2484007A86C5 /* PayUtil.h */,
-				6B313F101D4F2484007A86C5 /* PayUtil.m */,
 				6B313F111D4F2484007A86C5 /* PingPay.h */,
 				6B313F121D4F2484007A86C5 /* PingPay.m */,
 			);
@@ -879,7 +874,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B313F211D4F2484007A86C5 /* PingPay.m in Sources */,
-				6B313F201D4F2484007A86C5 /* PayUtil.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);

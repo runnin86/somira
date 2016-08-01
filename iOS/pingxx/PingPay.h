@@ -1,21 +1,18 @@
 //
-//  pingPay.h
+//  PayUtil.h
 //  somira
 //
-//  Created by sml_design on 16/7/29.
+//  Created by sml_design on 16/8/1.
 //  Copyright © 2016年 Facebook. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "RCTBridgeModule.h"
 
-@interface ViewController : UIViewController<UIAlertViewDelegate, UITextFieldDelegate>
+@interface PingPay : UIViewController<UIAlertViewDelegate, RCTBridgeModule>
 {
   UIAlertView* mAlert;
-  UITextField *mTextField;
 }
-
-@property(nonatomic, retain)NSString *channel;
-@property(nonatomic ,retain)UITextField *mTextField;
 
 - (void)showAlertWait;
 - (void)showAlertMessage:(NSString*)msg;

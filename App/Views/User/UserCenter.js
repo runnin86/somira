@@ -18,7 +18,7 @@ import ChangePwd from '../../Component/User/ChangePwd';
 import About from '../../Component/User/About';
 import Message from '../../Component/User/Message';
 import MessageDetail from '../../Component/User/MessageDetail';
-var PayUtil = require('react-native').NativeModules.PayUtil;
+var PingPay = require('react-native').NativeModules.PingPay;
 
 var {
   AppRegistry,
@@ -247,7 +247,7 @@ module.exports = React.createClass({
         {text: '取消', onPress: null},
         {text: '立即充值', onPress: ()=>{
           if (this.state.user.user_type === 1) {
-            PayUtil.addEvent('wx', this.state.user.user_phone, 1000, '2');
+            PingPay.addEvent('wx', this.state.user.user_phone, 1000, '2');
           }
           else {
              Util.toast('账户异常,请联系管理员。');
