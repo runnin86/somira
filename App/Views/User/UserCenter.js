@@ -18,6 +18,7 @@ import ChangePwd from '../../Component/User/ChangePwd';
 import About from '../../Component/User/About';
 import Message from '../../Component/User/Message';
 import MessageDetail from '../../Component/User/MessageDetail';
+var PayUtil = require('react-native').NativeModules.PayUtil;
 
 var {
   AppRegistry,
@@ -237,6 +238,10 @@ module.exports = React.createClass({
       });
     }
   },
+  rechargeFn() {
+    Util.toast('充值功能暂未开放,敬请期待!');
+    console.log(PayUtil);
+  },
   render() {
     return (
       <ScrollView style={css.flex}
@@ -357,7 +362,7 @@ module.exports = React.createClass({
                   :
                   Util.size['width'] * 0.68
                 }]}
-                  onPress={()=>{Util.toast('充值功能暂未开放,敬请期待!')}}>
+                  onPress={()=>{this.rechargeFn()}}>
                   <Text style={[css.rechargeBtnFont,{fontSize:16}]}>充值</Text>
                 </Button>
               </View>

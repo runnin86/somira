@@ -24,6 +24,9 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		6B16ABF11D35D5A6000FEE3E /* libRCTHotUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B16ABE61D35D566000FEE3E /* libRCTHotUpdate.a */; };
 		6B248B8A1D3498C7000691B8 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */; };
+		6B313EBD1D4EF670007A86C5 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313EBA1D4EF670007A86C5 /* libXG-SDK.a */; };
+		6B313EF11D4F22B3007A86C5 /* libpingpp+network.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313EF01D4F22B3007A86C5 /* libpingpp+network.a */; };
+		6B313EF31D4F22C4007A86C5 /* libpingppcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B313EF21D4F22C4007A86C5 /* libpingppcore.a */; };
 		6B4CF49C1D291E2700C37A36 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */; };
 		6B4CF4A01D291E6C00C37A36 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */; };
 		6B4CF4A21D291E7800C37A36 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */; };
@@ -32,6 +35,11 @@
 		6B4CF4A81D291E9200C37A36 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4CF4A71D291E9200C37A36 /* Security.framework */; };
 		6B89A0521D0FF9B600B8E6CB /* libRCTToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B89A04E1D0FF9A600B8E6CB /* libRCTToast.a */; };
 		6BBF89921D27AB7200F03F54 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BBF898B1D27AB4B00F03F54 /* libRCTPushNotification.a */; };
+		6BD12BE41D4B45E000C68541 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD12BE31D4B45E000C68541 /* QuartzCore.framework */; };
+		6BD12BE61D4B45FD00C68541 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD12BE51D4B45FD00C68541 /* CoreMotion.framework */; };
+		6BD12BE81D4B460B00C68541 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD12BE71D4B460B00C68541 /* libc++.tbd */; };
+		6BD12BEA1D4B462600C68541 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD12BE91D4B462600C68541 /* libsqlite3.0.tbd */; };
+		6BD12BEC1D4B463300C68541 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD12BEB1D4B463300C68541 /* libstdc++.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -168,9 +176,12 @@
 		58AFB0371B5837F100EB7D18 /* ruby_china_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ruby_china_logo.png; path = App/Resources/icons/ruby_china_logo.png; sourceTree = "<group>"; };
 		6B16ABDF1D35D566000FEE3E /* RCTHotUpdate.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHotUpdate.xcodeproj; path = "node_modules/react-native-update/ios/RCTHotUpdate.xcodeproj"; sourceTree = "<group>"; };
 		6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		6B313EBA1D4EF670007A86C5 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
+		6B313EBB1D4EF670007A86C5 /* XGPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
+		6B313EBC1D4EF670007A86C5 /* XGSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGSetting.h; sourceTree = "<group>"; };
+		6B313EF01D4F22B3007A86C5 /* libpingpp+network.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpingpp+network.a"; path = "pingxx/lib/Dependencies/Network/libpingpp+network.a"; sourceTree = "<group>"; };
+		6B313EF21D4F22C4007A86C5 /* libpingppcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpingppcore.a; path = pingxx/lib/libpingppcore.a; sourceTree = "<group>"; };
 		6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "iOS/push/libXG-SDK.a"; sourceTree = "<group>"; };
-		6B4CF49D1D291E3E00C37A36 /* XGPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGPush.h; path = iOS/push/XGPush.h; sourceTree = "<group>"; };
-		6B4CF49E1D291E4400C37A36 /* XGSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGSetting.h; path = iOS/push/XGSetting.h; sourceTree = "<group>"; };
 		6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6B4CF4A31D291E8100C37A36 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -178,6 +189,11 @@
 		6B4CF4A71D291E9200C37A36 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6B89A0421D0FF9A600B8E6CB /* RCTToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTToast.xcodeproj; path = "node_modules/react-native/Libraries/Toast/RCTToast.xcodeproj"; sourceTree = "<group>"; };
 		6BBF89811D27AB4B00F03F54 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		6BD12BE31D4B45E000C68541 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6BD12BE51D4B45FD00C68541 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		6BD12BE71D4B460B00C68541 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		6BD12BE91D4B462600C68541 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		6BD12BEB1D4B463300C68541 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,18 +210,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B16ABF11D35D5A6000FEE3E /* libRCTHotUpdate.a in Frameworks */,
-				6B248B8A1D3498C7000691B8 /* libbz2.1.0.tbd in Frameworks */,
-				6B4CF4A81D291E9200C37A36 /* Security.framework in Frameworks */,
+				6BD12BEC1D4B463300C68541 /* libstdc++.tbd in Frameworks */,
+				6BD12BEA1D4B462600C68541 /* libsqlite3.0.tbd in Frameworks */,
 				6B4CF4A61D291E8A00C37A36 /* libz.tbd in Frameworks */,
+				6BD12BE81D4B460B00C68541 /* libc++.tbd in Frameworks */,
+				6BD12BE61D4B45FD00C68541 /* CoreMotion.framework in Frameworks */,
 				6B4CF4A41D291E8100C37A36 /* CoreTelephony.framework in Frameworks */,
+				6BD12BE41D4B45E000C68541 /* QuartzCore.framework in Frameworks */,
+				6B4CF4A81D291E9200C37A36 /* Security.framework in Frameworks */,
 				6B4CF4A21D291E7800C37A36 /* SystemConfiguration.framework in Frameworks */,
 				6B4CF4A01D291E6C00C37A36 /* CFNetwork.framework in Frameworks */,
+				6B16ABF11D35D5A6000FEE3E /* libRCTHotUpdate.a in Frameworks */,
+				6B248B8A1D3498C7000691B8 /* libbz2.1.0.tbd in Frameworks */,
 				6B89A0521D0FF9B600B8E6CB /* libRCTToast.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
+				6B313EF31D4F22C4007A86C5 /* libpingppcore.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
@@ -214,6 +236,8 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				6BBF89921D27AB7200F03F54 /* libRCTPushNotification.a in Frameworks */,
 				6B4CF49C1D291E2700C37A36 /* libXG-SDK.a in Frameworks */,
+				6B313EF11D4F22B3007A86C5 /* libpingpp+network.a in Frameworks */,
+				6B313EBD1D4EF670007A86C5 /* libXG-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,12 +320,11 @@
 		13B07FAE1A68108700A75B9A /* somira */ = {
 			isa = PBXGroup;
 			children = (
+				6B313EB91D4EF670007A86C5 /* push */,
 				58AFB01D1B58374800EB7D18 /* Supporting Files */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				6B4CF49D1D291E3E00C37A36 /* XGPush.h */,
-				6B4CF49E1D291E4400C37A36 /* XGSetting.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -359,6 +382,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6B313EB91D4EF670007A86C5 /* push */ = {
+			isa = PBXGroup;
+			children = (
+				6B313EBA1D4EF670007A86C5 /* libXG-SDK.a */,
+				6B313EBB1D4EF670007A86C5 /* XGPush.h */,
+				6B313EBC1D4EF670007A86C5 /* XGSetting.h */,
+			);
+			name = push;
+			path = iOS/push;
+			sourceTree = "<group>";
+		};
 		6B89A0431D0FF9A600B8E6CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,13 +420,20 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */,
+				6B313EF21D4F22C4007A86C5 /* libpingppcore.a */,
+				6B313EF01D4F22B3007A86C5 /* libpingpp+network.a */,
+				6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */,
 				6B4CF4A51D291E8A00C37A36 /* libz.tbd */,
+				6B248B891D3498C7000691B8 /* libbz2.1.0.tbd */,
+				6BD12BEB1D4B463300C68541 /* libstdc++.tbd */,
+				6BD12BE91D4B462600C68541 /* libsqlite3.0.tbd */,
+				6BD12BE71D4B460B00C68541 /* libc++.tbd */,
+				6BD12BE51D4B45FD00C68541 /* CoreMotion.framework */,
+				6BD12BE31D4B45E000C68541 /* QuartzCore.framework */,
 				6B4CF49F1D291E6C00C37A36 /* CFNetwork.framework */,
 				6B4CF4A11D291E7800C37A36 /* SystemConfiguration.framework */,
 				6B4CF4A31D291E8100C37A36 /* CoreTelephony.framework */,
 				6B4CF4A71D291E9200C37A36 /* Security.framework */,
-				6B4CF49B1D291E2700C37A36 /* libXG-SDK.a */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				6B89A0421D0FF9A600B8E6CB /* RCTToast.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -774,6 +815,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: soMira Network Technology Co., Ltd. (6CCBM32UC9)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/Alipay",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -787,6 +832,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iOS/push",
+					"$(PROJECT_DIR)/pingxx/lib",
+					"$(PROJECT_DIR)/pingxx/lib/Dependencies/Network",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/ApplePay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/UnionPay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/Yeepay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Dependencies/Network",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Dependencies/WebView",
+					"$(PROJECT_DIR)/iOS/pingxx/lib",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/One",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = somira;
@@ -802,6 +857,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: soMira Network Technology Co., Ltd. (6CCBM32UC9)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/Alipay",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -815,6 +874,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iOS/push",
+					"$(PROJECT_DIR)/pingxx/lib",
+					"$(PROJECT_DIR)/pingxx/lib/Dependencies/Network",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/ApplePay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/UnionPay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Channels/Yeepay",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Dependencies/Network",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/Dependencies/WebView",
+					"$(PROJECT_DIR)/iOS/pingxx/lib",
+					"$(PROJECT_DIR)/iOS/pingxx/lib/One",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = somira;
