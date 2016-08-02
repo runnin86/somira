@@ -1,9 +1,16 @@
-// const URL_COMMON = 'http://api.zqsml.com/api/v1/sml/'
-const URL_COMMON = 'http://123.57.217.199:9587/api/v1/sml/'
 // 15939306231
 // C.E. Sunshine Internet technology (Beijing) Co., Ltd.
+
+// const URL_COMMON = 'http://api.zqsml.com/api/v1/sml/'
+const URL_COMMON = 'http://123.57.217.199:9587/api/v1/sml/'
+
 // export let h5 = 'http://h5.zqsml.com'
 export let h5 = 'http://123.57.217.199:3030'
+
+// 服务端创建并返回 charge 的 URL 地址(http://218.244.151.190/demo/charge)
+export let chargeUrl = 'http://test.zcsml.com/pay/pingxxPay.do'
+// export let chargeUrl = 'http://218.244.151.190/demo/charge'
+
 // 方案接口地址
 export let planApi = {
   // banner地址

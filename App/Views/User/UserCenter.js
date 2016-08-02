@@ -246,13 +246,13 @@ module.exports = React.createClass({
         [
           {text: '取消', onPress: null},
           {text: '立即充值', onPress: ()=>{
-            PingPay.addEvent('wx', this.state.user.user_phone, 1000, '2');
+            PingPay.addEvent('wx', net.chargeUrl, this.state.user.user_phone, 1000, '2');
           }},
         ]
       );
     }
     else {
-      Util.toast('充值功能暂未开放,敬请期待!');      
+      Util.toast('充值功能暂未开放,敬请期待!');
     }
   },
   render() {

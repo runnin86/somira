@@ -37,17 +37,16 @@ URL Schemes 需要在 Xcode 的 Info 标签页的 URL Types 中添加，\
 对于微信支付来说，必须添加一项值为微信平台上注册的应用程序 id（"wx" 开头的字符串）作为 URL Scheme。
 #define kUrlScheme      @"wxadccc645716a9348" // 这个是你定义的 URL Scheme，支付宝、微信支付、银联和测试模式需要。
 
-// 你的服务端创建并返回 charge 的 URL 地址
-#define kUrl            @"http://test.zcsml.com/pay/pingxxPay.do"
-//#define kUrl            @"http://218.244.151.190/demo/charge"
-
 @implementation PingPay
 
 // 实现RCTBridgeModule协议，需要包含RCT_EXPORT_MODULE()宏
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(addEvent:(NSString *)channel phone:(NSString *)phone money:(int)money payType:(NSString *)payType)
-{
+RCT_EXPORT_METHOD(addEvent:(NSString *)channel
+                  chargeUrl:(NSString *)chargeUrl
+                  phone:(NSString *)phone
+                  money:(int)money
+                  payType:(NSString *)payType) {
   NSLog(@"充值渠道：%@,充值用户: %@,充值金额: %i,充值方式: %@", channel, phone, money, payType);
   if (phone != NULL && money!= 0) {
     long long amount = money;
@@ -55,7 +54,7 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)channel phone:(NSString *)phone money:(in
       return;
     }
     NSString *amountStr = [NSString stringWithFormat:@"%lld", amount];
-    NSURL* url = [NSURL URLWithString:kUrl];
+    NSURL* url = [NSURL URLWithString:chargeUrl];
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
     NSDictionary* dict = @{
