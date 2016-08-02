@@ -31,6 +31,88 @@ import {
 import _updateConfig from './../../../update.json';
 const {appKey} = _updateConfig[Platform.OS];
 
+var VersionLabel = React.createClass({
+	getInitialState: function() {
+		return {
+			canCheck: false,
+		};
+	},
+	componentDidMount() {
+		// 根据用户类型判断是否展示方案
+		Store.get('user').then((user)=>{
+			if (user && user.user_type === 1) {
+				this.setState({canCheck: true});
+			}
+		});
+	},
+  render: function() {
+		const labelCss = {flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16};
+		const text1 = {flex:1,color:'#333333',fontSize:14,fontWeight:'100'};
+		const text2 = {flex:1,color:'red',fontSize:12,fontWeight:'100',textAlign:'right',};
+    return (
+			<View>
+			  {
+					this.state.canCheck
+					?
+					<TouchableOpacity
+						style={labelCss}
+						onPress={this.checkUpdate}>
+						<Text style={text1}>
+							当前版本
+						</Text>
+						<Text style={text2}>
+							{packageVersion}
+						</Text>
+					</TouchableOpacity>
+					:
+					<View
+						style={labelCss}>
+						<Text style={text1}>
+							当前版本
+						</Text>
+						<Text style={text2}>
+							{packageVersion}
+						</Text>
+					</View>
+				}
+			</View>
+    );
+  },
+	checkUpdate() {
+		// 方案可看用户才可去检查更新
+		this.props.callback(true);
+		checkUpdate(appKey).then(info => {
+			if (info.expired) {
+				Alert.alert('提示', '您的应用版本已过期,请前往应用商店下载新的版本', [
+					{text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+				]);
+			} else if (info.upToDate) {
+				Alert.alert('提示', '您的应用版本已是最新.');
+			} else {
+				// info.name
+				Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
+					{text: '是', onPress: ()=>{this.doUpdate(info)}},
+					{text: '否',},
+				]);
+			}
+			this.props.callback(false);
+		}).catch(err => {
+			Alert.alert('提示', '更新失败.');
+		});
+	},
+	doUpdate(info) {
+		downloadUpdate(info).then(hash => {
+			Alert.alert('提示', '下载完毕,是否重启应用?', [
+				{text: '是', onPress: ()=>{switchVersion(hash);}},
+				{text: '否',},
+				{text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+			]);
+		}).catch(err => {
+			Alert.alert('提示', '更新失败.');
+		});
+	}
+});
+
 var Setting = React.createClass({
   getInitialState: function() {
     return {
@@ -38,44 +120,6 @@ var Setting = React.createClass({
       falseSwitchIsOn: false,
 			load: false,
     };
-  },
-	doUpdate(info) {
-    downloadUpdate(info).then(hash => {
-      Alert.alert('提示', '下载完毕,是否重启应用?', [
-        {text: '是', onPress: ()=>{switchVersion(hash);}},
-        {text: '否',},
-        {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
-      ]);
-    }).catch(err => {
-      Alert.alert('提示', '更新失败.');
-    });
-  },
-  checkUpdate() {
-		// 根据用户类型判断是否展示方案
-    Store.get('user').then((user)=>{
-      if (user && user.user_type === 1) {
-				// 方案可看用户才可去检查更新
-				this.setState({load: true});
-		    checkUpdate(appKey).then(info => {
-		      if (info.expired) {
-		        Alert.alert('提示', '您的应用版本已过期,请前往应用商店下载新的版本', [
-		          {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
-		        ]);
-		      } else if (info.upToDate) {
-		        Alert.alert('提示', '您的应用版本已是最新.');
-		      } else {
-						// info.name
-		        Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
-		          {text: '是', onPress: ()=>{this.doUpdate(info)}},
-		          {text: '否',},
-		        ]);
-		      }
-					this.setState({load: false});
-		    }).catch(err => {
-		      Alert.alert('提示', '更新失败.');
-		    });
-      }
-    });
   },
 	logout:function(){
 		Store.delete('user');
@@ -90,6 +134,11 @@ var Setting = React.createClass({
 		// 跳转回用户
     this.props.navigator.pop();
   },
+	_callback(load) {
+		this.setState({
+      load: load,
+    });
+	},
   render: function() {
     return (
       <View style={{backgroundColor:'#eef0f3',marginTop:68,height:Util.size['height'],}}>
@@ -125,23 +174,14 @@ var Setting = React.createClass({
 					null
 				}
 
-				<TouchableOpacity
-				  style={{flexDirection:'row',alignItems:'center',backgroundColor:'#ffffff',height:40,paddingLeft:20,paddingRight:16}}
-				  onPress={!this.state.load?this.checkUpdate:null}>
-          <Text style={{flex:1,color:'#333333',fontSize:14,fontWeight:'100'}}>
-            当前版本
-          </Text>
-          <Text style={{flex:1,color:'red',fontSize:12,fontWeight:'100',textAlign:'right',}}>
-            {packageVersion}
-          </Text>
-				</TouchableOpacity>
+        <VersionLabel callback={this._callback}/>
 
         <TouchableHighlight style={[styles.btn]} underlayColor='#0057a84a' onPress={this.logout}>
           <Text style={{color:'#ffffff',fontSize:18}}>退出登录</Text>
         </TouchableHighlight>
 				<ActivityIndicatorIOS
-				  animating={this.state.load}
-				  style={styles.acl} color="#aa00aa" />
+					animating={this.state.load}
+					style={styles.acl} color="#aa00aa" />
       </View>
     );
   },
