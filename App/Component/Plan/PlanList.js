@@ -107,8 +107,38 @@ module.exports = React.createClass({
   renderRow(plan) {
     let filterTime = Util.getDateDiff(this.state.serviceTime, plan.deadline_time, 'minute');
     let redHeart = plan.planConfident;
+    let limit = null;
+    if (this.props.limit) {
+      this.props.limit.map((v,k) => {
+        if (plan.plan_id === v.planId) {
+          limit = v;
+        }
+      });
+    }
     return (
       <TouchableOpacity onPress={this.selectPlan.bind(this, plan)}>
+        {
+          limit
+          ?
+          <View style={css.limitTitle}>
+            <View style={css.row}>
+              <Text style={css.limitText}>
+                限购金额为您可用余额的{limit.limitConfig*100}%
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={css.limitText}>
+                当日可购
+                <Text style={{color:'#FFD700'}}>
+                  {limit.limitAmount}
+                </Text>
+                元
+              </Text>
+            </View>
+          </View>
+          :
+          null
+        }
         <View style={css.planView}>
           <Animatable.Image ref={component => this._animatables[plan.plan_id] = component} style={css.expertPhoto} source={{uri : plan.expert_photo}} />
           <View style={css.planInfo}>
@@ -176,8 +206,8 @@ var css = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderTopColor: '#eeeeee',
-    borderTopWidth: 1,
+    borderBottomColor: '#eeeeee',
+    borderBottomWidth: 1,
   },
   expertPhoto : {
     width : 42,
@@ -195,5 +225,17 @@ var css = StyleSheet.create({
   },
   redPrice : {
     color : '#c40001',
+  },
+  limitTitle: {
+    flexDirection: 'row',
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    marginBottom: -8
+  },
+  limitText: {
+    fontSize: 12,
+    fontWeight: '100',
+    alignSelf: 'center',
+    justifyContent: 'center',
   }
 });

@@ -51,6 +51,7 @@ module.exports = React.createClass({
         Util.get(net.planApi.plan, token,
         ({code, msg, result})=>{
           if (code === 1) {
+            // console.log(result.limitPlans);
             // console.log(result.rangeList)
             // console.log(r.range_name + '->' + (r.rangeSaleLimit-r.rangeSaled));
             let ranges = [];
@@ -58,11 +59,12 @@ module.exports = React.createClass({
             let nav = this.props.navigator;
             result.rangeList.map(function (r, key) {
               ranges.push({
+                rangeId: r.range_id,
                 rangeName: r.range_name,
                 surplus: r.rangeSaleLimit-r.rangeSaled,
                 render: function() {
                   return (
-                    <PlanList plans={r.plans} serviceTime={sTime} navigator={nav}/>
+                    <PlanList plans={r.plans} limit={result.limitPlans} serviceTime={sTime} navigator={nav}/>
                   );
                 },
               });
@@ -108,7 +110,7 @@ module.exports = React.createClass({
     });
   },
   getBlock: function(example: Example, i) {
-    var {rangeName, surplus, platform} = example;
+    var {rangeId, rangeName, surplus, platform} = example;
     if (platform) {
       if (Platform.OS !== platform) {
         return null;
@@ -144,7 +146,18 @@ module.exports = React.createClass({
             <Image style={styles.rangeNameImg}
               source={require('image!方案详情-限购')} />
             <Text style={styles.rangeNameText}>
-              {surplus>=0 ? '限购剩余 ' + surplus + '元': '不限购'}
+              {surplus>=0
+                ?
+                '限购剩余 ' + surplus + '元'
+                :
+                (
+                  rangeId === '005'
+                  ?
+                  '个人限购区'
+                  :
+                  null
+                )
+              }
             </Text>
           </View>
         </View>
