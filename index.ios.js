@@ -154,8 +154,8 @@ var somira = React.createClass({
       if (this.state.showPlan) {
         Alert.alert('提示', '下载完毕,是否重启应用?', [
           {text: '是', onPress: ()=>{switchVersion(hash);}},
-          {text: '否',},
-          {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+          // {text: '否',},
+          // {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
         ]);
       }
       else {
@@ -177,9 +177,9 @@ var somira = React.createClass({
       } else {
         // info.name
         if (this.state.showPlan) {
-          Alert.alert('提示', '检测到系统优化,是否下载?\n'+ info.description, [
+          Alert.alert('提示', '检测到系统优化,请下载更新!\n'+ info.description, [
             {text: '是', onPress: ()=>{this.doUpdate(info)}},
-            {text: '否',},
+            // {text: '否',},
           ]);
         }
         else {

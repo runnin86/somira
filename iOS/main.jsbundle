@@ -1432,9 +1432,9 @@ doUpdate:function(info){var _this2=this;
 (0,_reactNativeUpdate.downloadUpdate)(info).then(function(hash){
 if(_this2.state.showPlan){
 _reactNative.Alert.alert('提示','下载完毕,是否重启应用?',[
-{text:'是',onPress:function(){(0,_reactNativeUpdate.switchVersion)(hash);}},
-{text:'否'},
-{text:'下次启动时',onPress:function(){(0,_reactNativeUpdate.switchVersionLater)(hash);}}]);}else 
+{text:'是',onPress:function(){(0,_reactNativeUpdate.switchVersion)(hash);}}]);}else 
+
+
 
 
 {
@@ -1456,9 +1456,9 @@ if(info.upToDate){}else
 {
 
 if(_this3.state.showPlan){
-_reactNative.Alert.alert('提示','检测到系统优化,是否下载?\n'+info.description,[
-{text:'是',onPress:function(){_this3.doUpdate(info);}},
-{text:'否'}]);}else 
+_reactNative.Alert.alert('提示','检测到系统优化,请下载更新!\n'+info.description,[
+{text:'是',onPress:function(){_this3.doUpdate(info);}}]);}else 
+
 
 
 {
