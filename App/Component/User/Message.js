@@ -34,8 +34,9 @@ module.exports = React.createClass({
         Util.get(net.userApi.userMessage + param, token,
         ({code, msg, result})=>{
           if (code === 1) {
+            let len = !(result instanceof Array) ? result.msglist.length : 0;
             // 数据填充
-            if (result.msglist.length>0) {
+            if (len>0) {
               result.msglist.map((v,k) => {
                 this.state.listData.push(v);
               });
@@ -43,7 +44,7 @@ module.exports = React.createClass({
             this.setState({
               loaded: true,
               dataSource: this.state.dataSource.cloneWithRows(this.state.listData),
-              pageNum: result.msglist.length === 0 ? -1 : this.state.pageNum,
+              pageNum: len === 0 ? -1 : this.state.pageNum,
             });
           }
           else {

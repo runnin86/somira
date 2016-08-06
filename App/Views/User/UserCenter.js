@@ -239,21 +239,21 @@ module.exports = React.createClass({
     }
   },
   rechargeFn() {
-    if (this.state.user.user_type === 1) {
-      AlertIOS.alert(
-        '充值提示',
-        "(您要对账号"+this.state.user.user_phone+"进行充值)\n￥1000.00",
-        [
-          {text: '取消', onPress: null},
-          {text: '立即充值', onPress: ()=>{
-            PingPay.addEvent('wx', net.chargeUrl, this.state.user.user_phone, 1000, '2');
-          }},
-        ]
-      );
-    }
-    else {
+    // if (this.state.user.user_type === 1) {
+    //   AlertIOS.alert(
+    //     '充值提示',
+    //     "(您要对账号"+this.state.user.user_phone+"进行充值)\n￥1000.00",
+    //     [
+    //       {text: '取消', onPress: null},
+    //       {text: '立即充值', onPress: ()=>{
+    //         PingPay.addEvent('wx', net.chargeUrl, this.state.user.user_phone, 1000, '2');
+    //       }},
+    //     ]
+    //   );
+    // }
+    // else {
       Util.toast('充值功能暂未开放,敬请期待!');
-    }
+    // }
   },
   render() {
     return (
