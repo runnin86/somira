@@ -161,6 +161,40 @@ module.exports = React.createClass({
               </View>
             </View>
           </Image>
+          {
+            !this.state.plan.plan_content
+            ?
+            <View style={[css.goodRow,css.rangeView]}>
+              <View style={{flex:1,flexDirection:'row'}}>
+                <Image style={css.rangeNameImg}
+                  source={require('image!方案详情-收益区')} />
+                <Text style={css.rangeNameText}>
+                  {this.state.plan.range_name}
+                </Text>
+              </View>
+              <View style={{flexDirection:'row'}}>
+                <Image style={css.rangeNameImg}
+                  source={require('image!方案详情-限购')} />
+                <Text style={css.rangeNameText}>
+                  {
+                    this.state.plan.range_salelimit>0 && this.state.plan.personLimit === '-1'
+                    ?
+                    '限购剩余'+(this.state.plan.range_salelimit-this.state.plan.saledAmount)+'元'
+                    :
+                    (
+                      this.state.plan.personLimit !== '-1'
+                      ?
+                      '最多可购买'+this.state.plan.personLimit+'元'
+                      :
+                      null
+                    )
+                  }
+                </Text>
+              </View>
+            </View>
+            :
+            null
+          }
           <Accordion
             sections={[{
               title: '方案内容',
@@ -713,5 +747,21 @@ var css = StyleSheet.create({
   rewardSelectImg: {
     width: 70,
     resizeMode: Image.resizeMode.stretch,
+  },
+  rangeView: {
+    padding: 13,
+    backgroundColor:'#3c3d42',
+  },
+  rangeNameImg: {
+    width: 14,
+    height: 15,
+    marginRight:4,
+  },
+  rangeNameText: {
+    fontSize: 12,
+    fontWeight: '100',
+    color: '#FFFFFF',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
 });
