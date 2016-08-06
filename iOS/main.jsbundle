@@ -65149,16 +65149,18 @@ function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
 if(code===1){(function(){
 
 
+
 var ranges=[];
 var sTime=_this.state.serviceTime;
 var nav=_this.props.navigator;
 result.rangeList.map(function(r,key){
 ranges.push({
+rangeId:r.range_id,
 rangeName:r.range_name,
 surplus:r.rangeSaleLimit-r.rangeSaled,
 render:function(){
 return (
-_react2.default.createElement(_PlanList2.default,{plans:r.plans,serviceTime:sTime,navigator:nav}));}});});
+_react2.default.createElement(_PlanList2.default,{plans:r.plans,limit:result.limitPlans,serviceTime:sTime,navigator:nav}));}});});
 
 
 
@@ -65204,7 +65206,7 @@ serviceTime:result});}});}});},
 
 
 getBlock:function(example,i){var 
-rangeName=example.rangeName;var surplus=example.surplus;var platform=example.platform;
+rangeId=example.rangeId;var rangeName=example.rangeName;var surplus=example.surplus;var platform=example.platform;
 if(platform){
 if(Platform.OS!==platform){
 return null;}}
@@ -65240,7 +65242,18 @@ _react2.default.createElement(View,{style:styles.row},
 _react2.default.createElement(Image,{style:styles.rangeNameImg,
 source:require('image!方案详情-限购')}),
 _react2.default.createElement(Text,{style:styles.rangeNameText},
-surplus>=0?'限购剩余 '+surplus+'元':'不限购'))),
+surplus>=0?
+
+'限购剩余 '+surplus+'元':
+
+
+rangeId==='005'?
+
+'个人限购区':
+
+null))),
+
+
 
 
 
@@ -65455,8 +65468,38 @@ planId:plan.plan_id}});},
 renderRow:function(plan){var _this2=this;
 var filterTime=_Util2.default.getDateDiff(this.state.serviceTime,plan.deadline_time,'minute');
 var redHeart=plan.planConfident;
+var limit=null;
+if(this.props.limit){
+this.props.limit.map(function(v,k){
+if(plan.plan_id===v.planId){
+limit=v;}});}
+
+
+
 return (
 _reactNative2.default.createElement(TouchableOpacity,{onPress:this.selectPlan.bind(this,plan)},
+
+limit?
+
+_reactNative2.default.createElement(View,{style:css.limitTitle},
+_reactNative2.default.createElement(View,{style:css.row},
+_reactNative2.default.createElement(Text,{style:css.limitText},'限购金额为您可用余额的',
+limit.limitConfig*100,'%')),
+
+
+_reactNative2.default.createElement(View,{style:{flexDirection:'row'}},
+_reactNative2.default.createElement(Text,{style:css.limitText},'当日可购',
+
+_reactNative2.default.createElement(Text,{style:{color:'#FFD700'}},
+limit.limitAmount),'元'))):
+
+
+
+
+
+
+null,
+
 _reactNative2.default.createElement(View,{style:css.planView},
 _reactNative2.default.createElement(Animatable.Image,{ref:function(component){return _this2._animatables[plan.plan_id]=component;},style:css.expertPhoto,source:{uri:plan.expert_photo}}),
 _reactNative2.default.createElement(View,{style:css.planInfo},
@@ -65524,8 +65567,8 @@ flex:1,
 flexDirection:'row',
 alignItems:'center',
 justifyContent:'center',
-borderTopColor:'#eeeeee',
-borderTopWidth:1},
+borderBottomColor:'#eeeeee',
+borderBottomWidth:1},
 
 expertPhoto:{
 width:42,
@@ -65542,7 +65585,19 @@ flexDirection:'row',
 alignItems:'center'},
 
 redPrice:{
-color:'#c40001'}});
+color:'#c40001'},
+
+limitTitle:{
+flexDirection:'row',
+paddingHorizontal:8,
+paddingVertical:8,
+marginBottom:-8},
+
+limitText:{
+fontSize:12,
+fontWeight:'100',
+alignSelf:'center',
+justifyContent:'center'}});
 });
 __d('somira/App/Component/Plan/PlanDetail.js',function(global, require, module, exports) {  'use strict';var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _reactNativeAnimatable=require('react-native-animatable/index.js');var 
 
@@ -65706,6 +65761,40 @@ parseInt(this.state.summary.winrate*100,0),'%')))),
 
 
 
+
+
+!this.state.plan.plan_content?
+
+_reactNative2.default.createElement(View,{style:[css.goodRow,css.rangeView]},
+_reactNative2.default.createElement(View,{style:{flex:1,flexDirection:'row'}},
+_reactNative2.default.createElement(Image,{style:css.rangeNameImg,
+source:require('image!方案详情-收益区')}),
+_reactNative2.default.createElement(Text,{style:css.rangeNameText},
+this.state.plan.range_name)),
+
+
+_reactNative2.default.createElement(View,{style:{flexDirection:'row'}},
+_reactNative2.default.createElement(Image,{style:css.rangeNameImg,
+source:require('image!方案详情-限购')}),
+_reactNative2.default.createElement(Text,{style:css.rangeNameText},
+
+this.state.plan.range_salelimit>0&&this.state.plan.personLimit==='-1'?
+
+'限购剩余'+(this.state.plan.range_salelimit-this.state.plan.saledAmount)+'元':
+
+
+this.state.plan.personLimit!=='-1'?
+
+'最多可购买'+this.state.plan.personLimit+'元':
+
+null))):
+
+
+
+
+
+
+null,
 
 _reactNative2.default.createElement(_Accordion2.default,{
 sections:[{
@@ -66258,7 +66347,27 @@ tintColor:'#f5d996'},
 
 rewardSelectImg:{
 width:70,
-resizeMode:Image.resizeMode.stretch}});
+resizeMode:Image.resizeMode.stretch},
+
+rangeView:{
+padding:13,
+backgroundColor:'#3c3d42'},
+
+rangeNameImg:{
+width:14,
+height:15,
+marginRight:4},
+
+rangeNameText:{
+fontSize:12,
+fontWeight:'100',
+color:'#FFFFFF',
+alignSelf:'center',
+justifyContent:'center'}});
+});
+__d('image!方案详情-收益区',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-收益区.imageset/方案详情-收益区.png","uri":"方案详情-收益区","width":26,"height":30,"deprecated":true};
+});
+__d('image!方案详情-限购',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-限购.imageset/方案详情-限购.png","uri":"方案详情-限购","width":32,"height":33,"deprecated":true};
 });
 __d('image!时间',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/时间.imageset/时间.png","uri":"时间","width":24,"height":26,"deprecated":true};
 });
@@ -66502,24 +66611,24 @@ _Util2.default.toast('会话失效,请重新登录');}});}},
 
 
 
-rechargeFn:function(){var _this12=this;
-if(this.state.user.user_type===1){
-AlertIOS.alert(
-'充值提示',
-"(您要对账号"+this.state.user.user_phone+"进行充值)\n￥1000.00",
-[
-{text:'取消',onPress:null},
-{text:'立即充值',onPress:function(){
-PingPay.addEvent('wx',net.chargeUrl,_this12.state.user.user_phone,1000,'2');}}]);}else 
+rechargeFn:function(){
 
 
 
 
-{
-_Util2.default.toast('充值功能暂未开放,敬请期待!');}},
 
 
-render:function(){var _this13=this;
+
+
+
+
+
+
+
+_Util2.default.toast('充值功能暂未开放,敬请期待!');},
+
+
+render:function(){var _this12=this;
 return (
 _reactNative2.default.createElement(ScrollView,{style:css.flex,
 showsVerticalScrollIndicator:false,
@@ -66536,14 +66645,14 @@ _reactNative2.default.createElement(View,{style:(css.cellfixed,css.rightBtn)},
 
 this.state.user&&this.state.user.user_type===1?
 
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this13._addNavigator(_Message2.default,"消息列表");}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this12._addNavigator(_Message2.default,"消息列表");}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoMsg,
 source:require('image!消息按钮')})):
 
 
 null,
 
-_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this13._addNavigator(_Setting2.default,"设置");}},
+_reactNative2.default.createElement(_reactNativeButton2.default,{onPress:function(){_this12._addNavigator(_Setting2.default,"设置");}},
 _reactNative2.default.createElement(Image,{style:css.btnPhotoSet,
 source:require('image!设置按钮')}))),
 
@@ -66607,16 +66716,16 @@ this.state.user.user_type===1?
 _reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:css.withdrawBtn,
 onPress:function(){
 {
-_this13.state.userate<10?
+_this12.state.userate<10?
 
 _Util2.default.toast('盈利暂时不满足提现条件哦!'):
 
 AlertIOS.alert(
 '请输入提现金额',
-'您可以提现的金额为:'+_this13.state.userate+'元',
+'您可以提现的金额为:'+_this12.state.userate+'元',
 [{
 text:'确认',
-onPress:function(text){_this13.doWithDraw(text);},
+onPress:function(text){_this12.doWithDraw(text);},
 style:'destructive'},
 {
 text:'取消',
@@ -66639,7 +66748,7 @@ _Util2.default.size['width']*0.46:
 
 _Util2.default.size['width']*0.68}],
 
-onPress:function(){_this13.rechargeFn();}},
+onPress:function(){_this12.rechargeFn();}},
 _reactNative2.default.createElement(Text,{style:[css.rechargeBtnFont,{fontSize:16}]},'充值')))):
 
 
@@ -66647,7 +66756,7 @@ _reactNative2.default.createElement(Text,{style:[css.rechargeBtnFont,{fontSize:1
 
 _reactNative2.default.createElement(View,{style:css.flexRow},
 _reactNative2.default.createElement(_reactNativeButton2.default,{containerStyle:css.withdrawBtn,
-onPress:function(){_this13._addNavigator(_Login2.default,"登录");}},
+onPress:function(){_this12._addNavigator(_Login2.default,"登录");}},
 _reactNative2.default.createElement(Text,{style:[css.transparentFont,{fontSize:18}]},'登录')))),
 
 
@@ -66694,7 +66803,7 @@ title:'我的账单',
 height:'40',
 fontSize:'14',
 icon:'我的账单',
-onClick:function(){_this13._addNavigator(_Bill2.default,"我的账单");}}),
+onClick:function(){_this12._addNavigator(_Bill2.default,"我的账单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]})):
 
 
@@ -66706,7 +66815,7 @@ title:'我的订单',
 height:'40',
 fontSize:'14',
 icon:'我的订单',
-onClick:function(){_this13._addNavigator(_Order2.default,"我的订单");}}),
+onClick:function(){_this12._addNavigator(_Order2.default,"我的订单");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 
@@ -66718,7 +66827,7 @@ title:'我的返佣',
 height:'40',
 fontSize:'14',
 icon:'我的返佣',
-onClick:function(){_this13._addNavigator(_Commission2.default,"我的返佣");}}),
+onClick:function(){_this12._addNavigator(_Commission2.default,"我的返佣");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -66726,7 +66835,7 @@ title:'我的团队',
 height:'40',
 fontSize:'14',
 icon:'我的团队',
-onClick:function(){_this13._addNavigator(_Team2.default,"我的团队");}})):
+onClick:function(){_this12._addNavigator(_Team2.default,"我的团队");}})):
 
 
 _reactNative2.default.createElement(View,null),
@@ -66747,7 +66856,7 @@ title:'我的二维码',
 height:'40',
 fontSize:'14',
 icon:'二维码',
-onClick:function(){_this13._addNavigator(_QR2.default,"我的二维码");}}),
+onClick:function(){_this12._addNavigator(_QR2.default,"我的二维码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]})):
 
 
@@ -66759,7 +66868,7 @@ title:'修改密码',
 height:'40',
 fontSize:'14',
 icon:'修改密码',
-onClick:function(){_this13._addNavigator(_ChangePwd2.default,"修改密码");}}),
+onClick:function(){_this12._addNavigator(_ChangePwd2.default,"修改密码");}}),
 _reactNative2.default.createElement(View,{style:[css.line]}),
 
 _reactNative2.default.createElement(_MenuItem2.default,{
@@ -66767,7 +66876,7 @@ title:'关于',
 height:'40',
 fontSize:'14',
 icon:'关于',
-onClick:function(){_this13._addNavigator(_About2.default,"关于");}}),
+onClick:function(){_this12._addNavigator(_About2.default,"关于");}}),
 
 _reactNative2.default.createElement(View,{style:{marginTop:8,alignItems:'center',justifyContent:'center'}},
 _reactNative2.default.createElement(Image,{style:css.warnning,source:require('image!温馨提示')}),
@@ -71232,8 +71341,9 @@ var param='?pagenum='+_this.state.pageNum+'&pagesize='+10;
 _Util2.default.get(net.userApi.userMessage+param,token,
 function(_ref){var code=_ref.code;var msg=_ref.msg;var result=_ref.result;
 if(code===1){
+var len=!(result instanceof Array)?result.msglist.length:0;
 
-if(result.msglist.length>0){
+if(len>0){
 result.msglist.map(function(v,k){
 _this.state.listData.push(v);});}
 
@@ -71241,7 +71351,7 @@ _this.state.listData.push(v);});}
 _this.setState({
 loaded:true,
 dataSource:_this.state.dataSource.cloneWithRows(_this.state.listData),
-pageNum:result.msglist.length===0?-1:_this.state.pageNum});}else 
+pageNum:len===0?-1:_this.state.pageNum});}else 
 
 
 {
@@ -71473,10 +71583,6 @@ __d('image!设置按钮',function(global, require, module, exports) {  module.ex
 __d('image!我的本金',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/我的本金.imageset/我的本金.png","uri":"我的本金","width":44,"height":48,"deprecated":true};
 });
 __d('image!我的盈利',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/我的盈利.imageset/我的盈利.png","uri":"我的盈利","width":45,"height":48,"deprecated":true};
-});
-__d('image!方案详情-收益区',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-收益区.imageset/方案详情-收益区.png","uri":"方案详情-收益区","width":26,"height":30,"deprecated":true};
-});
-__d('image!方案详情-限购',function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/sml_design/Desktop/git/somira/iOS/Images.xcassets/方案详情-限购.imageset/方案详情-限购.png","uri":"方案详情-限购","width":32,"height":33,"deprecated":true};
 });
 __d('somira/App/Views/Cart/ShoppingCart.js',function(global, require, module, exports) {  var _reactNative=require('react-native/Libraries/react-native/react-native.js');var _reactNative2=babelHelpers.interopRequireDefault(_reactNative);var _reactNativeSimpleStore=require('react-native-simple-store/dist/index.js');var _reactNativeSimpleStore2=babelHelpers.interopRequireDefault(_reactNativeSimpleStore);var _RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');var _RCTDeviceEventEmitter2=babelHelpers.interopRequireDefault(_RCTDeviceEventEmitter);var _ItemList=require('somira/App/Component/ShoppingCart/ItemList.js');var _ItemList2=babelHelpers.interopRequireDefault(_ItemList);var _ItemDetail=require('somira/App/Component/HappyPurchase/ItemDetail.js');var _ItemDetail2=babelHelpers.interopRequireDefault(_ItemDetail);var _PlanDetail=require('somira/App/Component/Plan/PlanDetail.js');var _PlanDetail2=babelHelpers.interopRequireDefault(_PlanDetail);var _Util=require('somira/App/Common/Util.js');var _Util2=babelHelpers.interopRequireDefault(_Util);var _Tabs=require('somira/App/Common/Tabs.js');var _Tabs2=babelHelpers.interopRequireDefault(_Tabs);var 
 
