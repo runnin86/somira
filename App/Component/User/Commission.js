@@ -177,26 +177,32 @@ module.exports = React.createClass({
          )
        }
 
-        <View style={[styles.bottomArea]}>
-          <View style={styles.flex1}>
-            <Text style={[styles.bottomText,
-              this.state.cateId === 0
-              ?
-              {color: 'red'}
-              :
-              {color: '#000000'}
-            ]}>
-              共 {this.state.withDrawLength} 条可提现,
-              总额 {this.state.withDrawMoney}
-            </Text>
-          </View>
-          <View style={[styles.flex1],{width:68}}>
-            <Button onPress={this.doWithDraw}
-              style={[styles.bottomBtn,{backgroundColor: '#4cd964'}]}>
-              提现
-            </Button>
-          </View>
-        </View>
+       {
+         this.state.dataSource.getRowCount() === 0
+         ?
+         null
+         :
+         <View style={[styles.bottomArea]}>
+           <View style={styles.flex1}>
+             <Text style={[styles.bottomText,
+               this.state.cateId === 0
+               ?
+               {color: 'red'}
+               :
+               {color: '#000000'}
+             ]}>
+               共 {this.state.withDrawLength} 条可提现,
+               总额 {this.state.withDrawMoney}
+             </Text>
+           </View>
+           <View style={[styles.flex1],{width:68}}>
+             <Button onPress={this.doWithDraw}
+               style={[styles.bottomBtn,{backgroundColor: '#4cd964'}]}>
+               提现
+             </Button>
+           </View>
+         </View>
+       }
       </View>
     );
   }
