@@ -86,7 +86,7 @@ module.exports = React.createClass({
               {item.msg_type}
             </Text>
           </View>
-          <Text style={{fontSize: 12,fontWeight: '100',flex:1,margin:4}} numberOfLines={2}>
+          <Text style={{fontSize: 12,fontWeight: '500',flex:1,margin:6}} numberOfLines={2}>
             {item.msg_title}
           </Text>
           <Text style={{fontSize: 10,fontWeight: '100',margin:4}} numberOfLines={1}>
@@ -144,10 +144,10 @@ const styles = StyleSheet.create({
     backgroundColor : '#eeeeee'
   },
   cell: {
-    paddingLeft: 10,
-    paddingTop: 18,
-    paddingBottom: 18,
-    paddingRight: 4,
+    paddingLeft: 6,
+    paddingTop: 14,
+    paddingBottom: 14,
+    paddingRight: 6,
     borderBottomColor : '#C0C0C0',
     borderBottomWidth : 1,
     backgroundColor: '#ffffff',
@@ -163,14 +163,15 @@ const styles = StyleSheet.create({
   },
   typeColor: {
     width:68,
+    height:28,
     borderWidth:1,
     borderRadius:20,
   },
   typeText: {
     fontSize:12,
-    fontWeight:'400',
+    fontWeight:'200',
     color:'#ffffff',
     textAlign:'center',
-    margin:4,
+    margin:6,
   },
 });
