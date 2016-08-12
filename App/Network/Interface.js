@@ -8,7 +8,9 @@ const URL_COMMON = 'http://123.57.217.199:9587/api/v1/sml/'
 export let h5 = 'http://123.57.217.199:3030'
 
 // 服务端创建并返回 charge 的 URL 地址(http://218.244.151.190/demo/charge)
-export let chargeUrl = 'http://test.zcsml.com/pay/pingxxPay.do'
+export let chargeUrl = 'http://reg.zqsml.com/pay/pingxxPay.do'
+// export let chargeUrl = 'http://192.168.199.117:8080/pay/pingxxPay.do'
+// export let chargeUrl = 'http://test.zcsml.com/pay/pingxxPay.do'
 // export let chargeUrl = 'http://218.244.151.190/demo/charge'
 
 // 方案接口地址
