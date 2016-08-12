@@ -66,6 +66,7 @@ var forgetPwd = React.createClass({
           <TextInput
             keyboardType='phone-pad'
             clearButtonMode='while-editing'
+            keyboardAppearance = 'dark'
             style={styles.input}
             placeholder="请填写手机号"
             value={this.state.userId}
@@ -84,6 +85,7 @@ var forgetPwd = React.createClass({
           <TextInput
             keyboardType ='numeric'
             clearButtonMode='while-editing'
+            keyboardAppearance = 'dark'
             style={styles.input}
             placeholder="请填写验证码"
             onChangeText={(text) => this.props.data.vCode = text}/>
@@ -95,6 +97,7 @@ var forgetPwd = React.createClass({
           <TextInput
             keyboardType ='default'
             clearButtonMode='while-editing'
+            keyboardAppearance = 'dark'
             style={styles.input}
             placeholder="请填写新密码"
             secureTextEntry={true}

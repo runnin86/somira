@@ -32,6 +32,7 @@ var changePwd = React.createClass({
           <TextInput
             keyboardType ='default'
             clearButtonMode='while-editing'
+            keyboardAppearance = 'dark'
             style={styles.input}
             placeholder="请填写旧密码"
             secureTextEntry={true}
@@ -43,6 +44,7 @@ var changePwd = React.createClass({
           <TextInput
             keyboardType ='default'
             clearButtonMode='while-editing'
+            keyboardAppearance = 'dark'
             style={styles.input}
             placeholder="请填写新密码"
             secureTextEntry={true}

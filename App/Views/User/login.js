@@ -104,6 +104,7 @@ var login = React.createClass({
           <Text style={styles.label} >账号</Text>
           <TextInput
             keyboardType ='numeric'
+            keyboardAppearance = 'dark'
             clearButtonMode='while-editing'
             style={styles.input}
             placeholder="账号"
@@ -115,11 +116,14 @@ var login = React.createClass({
           <Text style={styles.label}>密码</Text>
           <TextInput
             keyboardType ='default'
+            keyboardAppearance = 'dark'
             clearButtonMode='while-editing'
             style={styles.input}
             placeholder="密码"
+            returnKeyType="done"
             secureTextEntry={true}
-            onChangeText={(text) => this.setState({pwd: text})}/>
+            onChangeText={(text) => this.setState({pwd: text})}
+            onSubmitEditing={this.login}/>
         </View>
         <View style={[styles.line,{marginTop:2}]} />
         <TouchableHighlight style={[styles.btn,styles.marginTop30]} underlayColor='#0057a84a' onPress={this.login}>
