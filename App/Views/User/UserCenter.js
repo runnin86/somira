@@ -520,6 +520,7 @@ var css = StyleSheet.create({
   flex: {
     flex: 1,
     marginTop: -20,
+    marginBottom: 40,
   },
   headerImg: {
     height: 180,
