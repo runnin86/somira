@@ -292,7 +292,7 @@ module.exports = React.createClass({
                       else {
                         this.setState({totalMultiple:1})
                       }
-                    },500);
+                    },100);
                   },1000);
                 }}
                 onTouchEnd={()=>{
@@ -320,7 +320,7 @@ module.exports = React.createClass({
                   this.timer = setTimeout(()=>{
                     this.interval = setInterval(()=>{
                       this.setState({totalMultiple:this.state.totalMultiple+1})
-                    },500);
+                    },100);
                   },1000);
                 }}
                 onTouchEnd={()=>{

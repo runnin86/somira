@@ -243,7 +243,7 @@ module.exports = React.createClass({
                       else if (this.state.payPrice <= this.props.item.price) {
                         this.setState({payPrice:this.props.item.price})
                       }
-                    },500);
+                    },100);
                   },1000);
                 }}
                 onTouchEnd={()=>{
@@ -271,7 +271,7 @@ module.exports = React.createClass({
                   this.timer = setTimeout(()=>{
                     this.interval = setInterval(()=>{
                       this.setState({payPrice:this.state.payPrice+this.props.item.price})
-                    },500);
+                    },100);
                   },1000);
                 }}
                 onTouchEnd={()=>{
