@@ -310,6 +310,8 @@ var somira = React.createClass({
         });
       }
     }
+    // 设置要在手机主屏幕应用图标上显示的角标数
+    PushNotificationIOS.setApplicationIconBadgeNumber(0);
   },
   _handleConnectionInfoChange: function(connectionInfo) {
     if (connectionInfo === 'none') {

@@ -42,6 +42,13 @@ module.exports = React.createClass({
     this.setState({
       loaded : false
     })
+    this.listener = RCTDeviceEventEmitter.addListener('refreshPlan', ()=>{
+      // 方案数据
+      this.fetchRangeData();
+    });
+  },
+  componentWillUnmount: function() {
+    this.listener.remove();
   },
   // 拉取方案区间数据
   fetchRangeData() {

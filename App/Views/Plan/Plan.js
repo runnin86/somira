@@ -1,6 +1,7 @@
 import React from 'react-native';
 import Swiper from 'react-native-swiper';
 import Store from 'react-native-simple-store';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 import Util from '../../Common/Util';
 import LatestAnnounced from '../../Component/Plan/LatestAnnounced';
@@ -18,6 +19,7 @@ var {
   ListView,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
   Platform,
 } = React;
 
@@ -26,7 +28,15 @@ module.exports = React.createClass({
     return (
       <View style={css.flex}>
         <ScrollView stickyHeaderIndices={[2]}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh}
+              tintColor="#c40001"
+              title={"上次刷新:"+this.state.refreshedTime}
+            />
+          }>
           {/*轮播图*/}
           <Swiper style={css.wrapper} height={Util.size['height']/4.5}
             onMomentumScrollEnd={function(e, state, context){}}
@@ -80,6 +90,8 @@ module.exports = React.createClass({
       ]]),
       scrollMsgList: [{ title: '温馨提示: 理性投注,长跟长红!' }],
       bannerList: [],
+      isRefreshing: false,
+      refreshedTime: Util.dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss'),
     };
   },
   //只调用一次，在render之后调用
@@ -180,7 +192,21 @@ module.exports = React.createClass({
         });
       }
     });
-  }
+  },
+  _onRefresh() {
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      RCTDeviceEventEmitter.emit('refreshPlan');
+      this.setState({
+        isRefreshing: false,
+      });
+      setTimeout(() => {
+        this.setState({
+          refreshedTime: Util.dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss'),
+        });
+      }, 1000);
+    }, 1500);
+  },
 });
 
 var css = StyleSheet.create({
