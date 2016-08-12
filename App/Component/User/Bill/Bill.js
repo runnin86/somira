@@ -31,26 +31,26 @@ module.exports = React.createClass({
       <View style={styles.container}>
         <MenuItem
           title='方案记录'
-          height='40'
-          fontSize='14'
+          height='46'
+          fontSize='16'
           onClick={()=>{this._addNavigator(Plan, "方案记录")}}/>
         <View style={[styles.line]} />
         <MenuItem
           title='提现'
-          height='40'
-          fontSize='14'
+          height='46'
+          fontSize='16'
           onClick={()=>{this._addNavigator(Withdraw, "提现记录")}}/>
         <View style={[styles.line]} />
         <MenuItem
           title='充值'
-          height='40'
-          fontSize='14'
+          height='46'
+          fontSize='16'
           onClick={()=>{this._addNavigator(Recharge, "充值记录")}}/>
         <View style={[styles.line]} />
         <MenuItem
           title='打赏'
-          height='40'
-          fontSize='14'
+          height='46'
+          fontSize='16'
           onClick={()=>{this._addNavigator(Reward, "打赏记录")}}/>
       </View>
     );
