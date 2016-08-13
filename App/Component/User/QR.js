@@ -51,12 +51,21 @@ module.exports = React.createClass({
     return (
       <View style={css.container}>
         <Image style={[css.backgroundImg,css.center]} source={{uri: 'qrbackground'}}>
-          <View style={[css.center,{marginTop: -(Util.size['height']*0.292)}]}>
-            <QRCode
-              value={this.state.text}
-              size={Util.size['width']*0.44}
-              bgColor='#FFFFFF'
-              fgColor='#000000'/>
+          <View style={[css.center,{
+            marginTop: -(Util.size['height']*0.292),
+            height: Util.size['width']*0.44,
+          }]}>
+            {
+              this.state.text !== ''
+              ?
+              <QRCode
+                value={this.state.text}
+                size={Util.size['width']*0.44}
+                bgColor='#FFFFFF'
+                fgColor='#000000'/>
+              :
+              null
+            }
           </View>
           <View style={css.textArea}>
             <Text style={css.textDesc}>
