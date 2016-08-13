@@ -20,27 +20,12 @@ function renderCanvas(canvas) {
   var cells = this.cells;
   var cellWidth = this.size / cells.length;
   var cellHeight = this.size / cells.length;
-  var nRoundedWidth = Math.round(cellWidth);
-  var nRoundedHeight = Math.round(cellHeight);
-  cells.forEach(function(row, rowIndex) {
-    row.forEach(function(column, columnIndex) {
-      var nLeft = columnIndex * cellWidth;
-      var nTop = rowIndex * cellHeight;
-      ctx.fillStyle = ctx.strokeStyle = column ? bgColor : fgColor;
-      ctx.lineWidth = 1;
-      ctx.fillRect(nLeft, nTop, cellWidth, cellHeight);
-      ctx.strokeRect(
-        Math.floor(nLeft) + 0.5,
-        Math.floor(nTop) + 0.5,
-        nRoundedWidth,
-        nRoundedHeight
-      );
-      ctx.strokeRect(
-        Math.ceil(nLeft) - 0.5,
-        Math.ceil(nTop) - 0.5,
-        nRoundedWidth,
-        nRoundedHeight
-      );
+  cells.forEach(function(row, rdx) {
+    row.forEach(function(cell, cdx) {
+      ctx.fillStyle = cell ? fgColor : bgColor;
+      var w = (Math.ceil((cdx + 1) * cellWidth) - Math.floor(cdx * cellWidth))
+      var h = (Math.ceil((rdx + 1) * cellHeight) - Math.floor(rdx * cellHeight))
+      ctx.fillRect(Math.round(cdx * cellWidth), Math.round(rdx * cellHeight), w, h)
     });
   });
 }

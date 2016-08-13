@@ -60,8 +60,8 @@ module.exports = React.createClass({
               ?
               <QRCode
                 value={this.state.text}
-                size={Util.size['width']*0.44}
-                bgColor='#FFFFFF'
+                size={Util.size['width']*0.46}
+                bgColor='#FFF7FF'
                 fgColor='#000000'/>
               :
               null
