@@ -61,29 +61,38 @@ module.exports = React.createClass({
           </Text>
         </View>
 
-          <TouchableHighlight underlayColor="#dad9d7"
-            style={{marginTop: 10}}
-            onPress={()=>{LinkingIOS.openURL('tel://4008710088')}}>
-            <View style={css.recordRow}>
-              <View style={[css.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
-                <View style={css.newRow}>
-                  <Text style={{marginLeft:6}}>
-                    客服电话
-                  </Text>
-                </View>
-              </View>
-
-              <View style={[css.recordCellFixed,{alignItems:'flex-end',marginRight:10,}]}>
-                <View style={css.newRow}>
-                  <Text style={[{marginLeft:6},this.props.fontClass]}>
-                    400-8710-088
-                  </Text>
-                  <Image style={[css.iconSize]}
-                    source={require('image!arrow_right_grey')} />
-                </View>
+        <TouchableHighlight underlayColor="#dad9d7"
+          style={{marginTop: 10}}
+          onPress={()=>{LinkingIOS.openURL('tel://4008710088')}}>
+          <View style={css.recordRow}>
+            <View style={[css.recordCellFixed,{alignItems: 'flex-start',marginLeft:10,}]}>
+              <View style={css.newRow}>
+                <Text style={{marginLeft:6}}>
+                  客服电话
+                </Text>
               </View>
             </View>
-          </TouchableHighlight>
+
+            <View style={[css.recordCellFixed,{alignItems:'flex-end',marginRight:10,}]}>
+              <View style={css.newRow}>
+                <Text style={[{marginLeft:6},this.props.fontClass]}>
+                  400-8710-088
+                </Text>
+                <Image style={[css.iconSize]}
+                  source={require('image!arrow_right_grey')} />
+              </View>
+            </View>
+          </View>
+        </TouchableHighlight>
+
+        <View style={{marginTop:20,alignItems:'center',justifyContent: 'center'}}>
+          <Text style={{height:20,fontSize: 12,fontWeight:'100', color: 'gray'}}>
+            Copyright ©2011-2016
+          </Text>
+          <Text style={{height:20,fontSize: 12,fontWeight:'100', color: 'gray'}}>
+            收米拉网络科技有限公司
+          </Text>
+        </View>
       </View>
     );
   }
