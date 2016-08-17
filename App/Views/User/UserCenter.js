@@ -140,9 +140,14 @@ module.exports = React.createClass({
       this.props.navigator.push({
         component:Login,
         navigationBarHidden:false,
+        title:'登录',
+        animationSubtype:'fromTop',
         // tintColor:'#FFFFFF',
         // barTintColor: '#FFFFFF',
-        title:'登录'
+        leftButtonTitle: '取消',
+        onLeftButtonPress: () => {
+          this.props.navigator.pop();
+        }
       });
     }
     else {
