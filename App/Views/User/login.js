@@ -65,7 +65,7 @@ var login = React.createClass({
     // 与ios进行通信,实现信鸽按照手机号注册
     AppDelegate.registerXG(info.user);
     // 跳转回用户
-    this.props.navigator.pop();
+    this.props.navigator.pop(['rippleEffect', 'fromBottom']);
   },
   forgetPwd(d) {
     if (!d.phone) {

@@ -136,19 +136,18 @@ module.exports = React.createClass({
     });
   },
   _addNavigator: function(component, title){
-    if (!this.state.user) {
+    if (!this.state.user && title !== '关于') {
       this.props.navigator.push({
         component:Login,
         navigationBarHidden:false,
         title:'登录',
-        animationSubtype:'fromTop',
         // tintColor:'#FFFFFF',
         // barTintColor: '#FFFFFF',
         leftButtonTitle: '取消',
         onLeftButtonPress: () => {
-          this.props.navigator.pop();
+          this.props.navigator.pop(['reveal', 'fromBottom']);
         }
-      });
+      }, ['moveIn', 'fromTop']);
     }
     else {
       var data = {};
