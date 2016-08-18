@@ -132,7 +132,7 @@ var Setting = React.createClass({
 		// 与ios进行通信,去注册腾讯信鸽
 		AppDelegate.unRegisterXG();
 		// 跳转回用户
-    this.props.navigator.pop();
+    this.props.navigator.pop(['rippleEffect', 'fromBottom']);
   },
 	_callback(load) {
 		this.setState({
