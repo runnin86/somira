@@ -90,7 +90,7 @@ module.exports = React.createClass({
             Copyright ©2011-2016
           </Text>
           <Text style={{height:20,fontSize: 12,fontWeight:'100', color: 'gray'}}>
-            收米拉网络科技有限公司
+            中盛阳光（北京）科技有限公司
           </Text>
         </View>
       </View>
