@@ -151,12 +151,12 @@ module.exports = React.createClass({
             <View style={css.goodRow}>
               <View>
                 <Text style={{fontWeight:'100',fontSize:14,backgroundColor:'rgba(0,152,50,0)'}}>
-                  方案数:{this.state.summary.planTotalNum}
+                  方案数:{this.state.summary?this.state.summary.planTotalNum:''}
                 </Text>
               </View>
               <View>
                 <Text style={{fontWeight:'100',fontSize:14,backgroundColor:'rgba(0,152,50,0)'}}>
-                  胜率:{parseInt(this.state.summary.winrate*100, 0)}%
+                  胜率:{this.state.summary?parseInt(this.state.summary.winrate*100, 0)+'%':'  '}
                 </Text>
               </View>
             </View>
